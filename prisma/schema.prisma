@@ -1,0 +1,97 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model AdminUser {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String   @default("admin")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Inquiry {
+  id          String   @id @default(uuid())
+  name        String
+  email       String
+  company     String?
+  service     String
+  budget      String?
+  timeline    String?
+  description String
+  status      String   @default("NEW") // NEW, CONTACTED, IN_REVIEW, ARCHIVED
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Service {
+  id           String   @id @default(uuid())
+  slug         String   @unique
+  title        String
+  shortDesc    String
+  fullDesc     String
+  icon         String
+  capabilities String   // JSON array string
+  deliverables String   // JSON array string
+  process      String   // JSON array string
+  faqs         String   // JSON array string
+  sortOrder    Int      @default(0)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Project {
+  id           String   @id @default(uuid())
+  slug         String   @unique
+  title        String
+  client       String
+  category     String   // Websites, E-commerce, Digital Marketing, Branding, AI & Applications
+  summary      String
+  challenge    String?
+  solution     String?
+  results      String?  // JSON array string
+  services     String   // JSON array string
+  technologies String   // JSON array string
+  liveUrl      String?
+  imageUrl     String
+  featured     Boolean  @default(false)
+  sortOrder    Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Testimonial {
+  id         String   @id @default(uuid())
+  clientName String
+  role       String
+  company    String
+  quote      String
+  rating     Int      @default(5)
+  project    String?
+  avatarUrl  String?
+  featured   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+}
+
+model NewsletterSubscriber {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  subscribedAt DateTime @default(now())
+  isActive     Boolean  @default(true)
+}
+
+model Setting {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  value     String
+  updatedAt DateTime @updatedAt
+}

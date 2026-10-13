@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <rect width="120" height="120" rx="28" fill="#060709"/>
+  <!-- Glowing subtle backlight -->
+  <circle cx="60" cy="60" r="45" fill="#FC6603" opacity="0.15" filter="blur(10px)"/>
+  <!-- Stylized Alphalinkx 'al' brandmark -->
+  <g transform="translate(14, 14) scale(0.92)">
+    <!-- Right tall ascender 'l' with angular top -->
+    <path d="M 68 8 L 84 8 L 84 66 C 84 76, 78 86, 68 90 C 58 94, 46 90, 42 82 C 38 74, 42 66, 48 64 C 54 62, 62 65, 68 70 L 68 8 Z" fill="#FC6603" />
+    <!-- Angular cut on top of the 'l' stem -->
+    <polygon points="68,8 84,0 84,8" fill="#FC6603"/>
+    <!-- Left loop of 'a' swooping smoothly into the 'l' -->
+    <path d="M 44 26 C 26 26, 12 40, 12 58 C 12 76, 26 90, 44 90 C 58 90, 70 82, 74 70 C 66 66, 58 64, 48 64 C 36 64, 28 70, 28 58 C 28 46, 36 40, 48 40 C 56 40, 64 43, 68 48 L 74 38 C 66 30, 56 26, 44 26 Z" fill="#FC6603"/>
+    <!-- Dynamic inner negative space -->
+    <ellipse cx="44" cy="58" rx="14" ry="14" fill="#060709"/>
+  </g>
+</svg>

@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-orange: #FC6603;
+  --brand-orange-glow: rgba(252, 102, 3, 0.4);
+  --bg-deep: #060709;
+  --bg-surface: #0B0D13;
+  --bg-card: #10131C;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #060709;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1F2433;
+  border-radius: 9999px;
+  border: 2px solid #060709;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FC6603;
+}
+
+/* Subtle Tech Grid Background */
+.bg-tech-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+}
+
+.bg-radial-glow {
+  background: radial-gradient(circle at 50% 0%, rgba(252, 102, 3, 0.15) 0%, transparent 60%);
+}
+
+.bg-radial-glow-bottom {
+  background: radial-gradient(circle at 50% 100%, rgba(252, 102, 3, 0.12) 0%, transparent 60%);
+}
+
+/* Glassmorphism Cards */
+.glass-panel {
+  background: rgba(16, 19, 28, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.glass-panel:hover {
+  border-color: rgba(252, 102, 3, 0.25);
+  box-shadow: 0 12px 40px 0 rgba(252, 102, 3, 0.08);
+}
+
+.glass-button {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-button:hover {
+  background: rgba(252, 102, 3, 0.1);
+  border-color: rgba(252, 102, 3, 0.5);
+  transform: translateY(-2px);
+}
+
+/* Orange Glow utilities */
+.text-glow {
+  text-shadow: 0 0 20px rgba(252, 102, 3, 0.5);
+}
+
+.box-glow {
+  box-shadow: 0 0 25px rgba(252, 102, 3, 0.3);
+}
+
+.box-glow-sm {
+  box-shadow: 0 0 15px rgba(252, 102, 3, 0.2);
+}
+
+/* Hide canvas outlines */
+canvas {
+  outline: none !important;
+  border: none !important;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+

@@ -15,12 +15,19 @@ export const ProjectsPage: React.FC = () => {
     fetchProjects().then((data) => setProjects(data));
   }, []);
 
-  const categories = ['All', 'Websites', 'AI & Applications', 'E-commerce', 'App Development', 'Branding'];
+  const categories = ['All', 'SEO & AEO', 'Web Development', 'Google & Meta Ads', 'Social Media', 'AI & Infrastructure'];
 
   const filteredProjects =
     selectedCategory === 'All'
       ? projects
-      : projects.filter((p) => p.category === selectedCategory);
+      : projects.filter((p) => {
+          if (selectedCategory === 'SEO & AEO') return p.category.includes('Marketing') || p.category.includes('SEO');
+          if (selectedCategory === 'Web Development') return p.category.includes('Web') || p.category.includes('commerce');
+          if (selectedCategory === 'Google & Meta Ads') return p.category.includes('Marketing') || p.category.includes('Branding');
+          if (selectedCategory === 'Social Media') return p.category.includes('Marketing') || p.category.includes('Branding');
+          if (selectedCategory === 'AI & Infrastructure') return p.category.includes('AI') || p.category.includes('App');
+          return p.category === selectedCategory;
+        });
 
   return (
     <div className="pt-32 pb-24 bg-[#060709] bg-tech-grid min-h-screen">

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Compass, Cpu, Gauge, BarChart3, Users, MessageSquareCode } from 'lucide-react';
+import { Compass, Cpu, Gauge, BarChart3, Users, MessageSquareCode, ArrowUpRight } from 'lucide-react';
 
 export const WhyUsBentoSection: React.FC = () => {
   return (
@@ -17,12 +17,12 @@ export const WhyUsBentoSection: React.FC = () => {
           </p>
         </div>
 
-        {/* Bento Grid: 5 carefully balanced asymmetric cells */}
+        {/* Bento Grid: 5 carefully balanced asymmetric cells with diverse backgrounds */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
-          {/* Cell 1: Strategy-Led Execution (Large 8 cols, with orange gradient accent) */}
-          <div className="md:col-span-7 lg:col-span-8 glass-panel rounded-3xl p-8 sm:p-10 border border-white/10 relative overflow-hidden bg-gradient-to-br from-[#121522] via-[#0D101A] to-[#0A0C13]">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-[#FC6603]/15 rounded-full blur-3xl pointer-events-none" />
-            <div className="w-12 h-12 rounded-2xl bg-zinc-900 border border-white/10 flex items-center justify-center text-[#FC6603] mb-6">
+          {/* Cell 1: Strategy-Led Execution (Large 8 cols, with vivid brand radial ambient) */}
+          <div className="md:col-span-7 lg:col-span-8 glass-panel rounded-3xl p-8 sm:p-12 border border-white/10 relative overflow-hidden bg-gradient-to-br from-[#121626] via-[#0D101A] to-[#0A0C13]">
+            <div className="absolute top-0 right-0 w-80 h-80 bg-[#FC6603]/15 rounded-full blur-3xl pointer-events-none" />
+            <div className="w-12 h-12 rounded-2xl bg-zinc-900 border border-white/10 flex items-center justify-center text-[#FC6603] mb-6 shadow-[0_0_20px_rgba(252,102,3,0.2)]">
               <Compass className="w-6 h-6" />
             </div>
             <span className="text-xs font-mono text-[#FC6603] tracking-wider uppercase font-semibold">
@@ -37,8 +37,8 @@ export const WhyUsBentoSection: React.FC = () => {
           </div>
 
           {/* Cell 2: Performance-Conscious Engineering (5 cols, telemetry metric visual) */}
-          <div className="md:col-span-5 lg:col-span-4 glass-panel rounded-3xl p-8 border border-white/10 relative overflow-hidden bg-gradient-to-b from-[#10131E] to-[#0B0D14]">
-            <div className="w-12 h-12 rounded-2xl bg-zinc-900 border border-white/10 flex items-center justify-center text-[#FC6603] mb-6">
+          <div className="md:col-span-5 lg:col-span-4 glass-panel rounded-3xl p-8 border border-white/10 relative overflow-hidden bg-gradient-to-b from-[#141828] to-[#0B0D16]">
+            <div className="w-12 h-12 rounded-2xl bg-zinc-900 border border-white/10 flex items-center justify-center text-[#FC6603] mb-6 shadow-[0_0_20px_rgba(252,102,3,0.2)]">
               <Gauge className="w-6 h-6" />
             </div>
             <span className="text-xs font-mono text-[#FC6603] tracking-wider uppercase font-semibold">
@@ -51,7 +51,7 @@ export const WhyUsBentoSection: React.FC = () => {
               Optimized bundle sizes, tree-shaking, and hardware-accelerated 3D shaders ensure instantaneous navigation.
             </p>
             {/* Speed Gauge Metric Card */}
-            <div className="p-4 rounded-2xl bg-black/50 border border-white/10 flex items-center justify-between">
+            <div className="p-4 rounded-2xl bg-black/60 border border-white/10 flex items-center justify-between">
               <div>
                 <span className="text-2xl font-display font-bold text-emerald-400">99</span>
                 <span className="text-xs text-zinc-400 ml-1">/100</span>
@@ -65,7 +65,7 @@ export const WhyUsBentoSection: React.FC = () => {
           </div>
 
           {/* Cell 3: Design & Code In Sync (4 cols) */}
-          <div className="md:col-span-4 glass-panel rounded-3xl p-8 border border-white/10 bg-[#0E1017]">
+          <div className="md:col-span-4 glass-panel rounded-3xl p-8 border border-white/10 bg-gradient-to-b from-[#0F121C] to-[#080A10]">
             <div className="w-12 h-12 rounded-2xl bg-zinc-900 border border-white/10 flex items-center justify-center text-[#FC6603] mb-6">
               <Users className="w-6 h-6" />
             </div>
@@ -81,7 +81,7 @@ export const WhyUsBentoSection: React.FC = () => {
           </div>
 
           {/* Cell 4: Practical AI Integration (4 cols, with dark tech pattern) */}
-          <div className="md:col-span-4 glass-panel rounded-3xl p-8 border border-white/10 relative overflow-hidden bg-gradient-to-br from-[#121626] to-[#0A0C14]">
+          <div className="md:col-span-4 glass-panel rounded-3xl p-8 border border-white/10 relative overflow-hidden bg-gradient-to-br from-[#161B2E] to-[#0B0D18]">
             <div className="w-12 h-12 rounded-2xl bg-zinc-900 border border-white/10 flex items-center justify-center text-[#FC6603] mb-6">
               <Cpu className="w-6 h-6" />
             </div>
@@ -97,7 +97,7 @@ export const WhyUsBentoSection: React.FC = () => {
           </div>
 
           {/* Cell 5: Transparent Communication (4 cols) */}
-          <div className="md:col-span-4 glass-panel rounded-3xl p-8 border border-white/10 bg-[#0E1017]">
+          <div className="md:col-span-4 glass-panel rounded-3xl p-8 border border-white/10 bg-gradient-to-b from-[#0F121C] to-[#080A10]">
             <div className="w-12 h-12 rounded-2xl bg-zinc-900 border border-white/10 flex items-center justify-center text-[#FC6603] mb-6">
               <MessageSquareCode className="w-6 h-6" />
             </div>

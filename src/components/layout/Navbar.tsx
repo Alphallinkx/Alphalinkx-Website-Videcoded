@@ -1,352 +1,345 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { motion, AnimatePresence } from 'motion/react';
-import { Logo } from '../common/Logo';
-import {
-  Code2,
-  Search,
-  TrendingUp,
-  Smartphone,
-  Palette,
-  Cpu,
-  ChevronDown,
-  Menu,
-  X,
-  ArrowRight,
-  Sparkles,
-} from 'lucide-react';
+import { SERVICE_CATEGORIES, BRAND } from '../../content/siteContent';
 
 export const Navbar: React.FC = () => {
-  const [scrolled, setScrolled] = useState(false);
-  const [servicesOpen, setServicesOpen] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentY = window.scrollY;
+
+          // Header background blur threshold
+          setIsScrolled(currentY > 30);
+
+          // Hide on scroll down, show on scroll up
+          if (currentY > 150) {
+            if (currentY > lastScrollY && !isMegaMenuOpen && !isMobileMenuOpen) {
+              setIsVisible(false);
+            } else {
+              setIsVisible(true);
+            }
+          } else {
+            setIsVisible(true);
+          }
+
+          setLastScrollY(currentY);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
+
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [lastScrollY, isMegaMenuOpen, isMobileMenuOpen]);
 
   // Close menus on route change
   useEffect(() => {
-    setServicesOpen(false);
-    setMobileMenuOpen(false);
+    setIsMegaMenuOpen(false);
+    setIsMobileMenuOpen(false);
   }, [location.pathname]);
 
-  const navServices = [
-    {
-      title: 'Website Development',
-      slug: 'website-development',
-      icon: Code2,
-      desc: 'High-performance React & Next.js architectures',
-    },
-    {
-      title: 'SEO Strategy',
-      slug: 'seo',
-      icon: Search,
-      desc: 'Technical search dominance & organic authority',
-    },
-    {
-      title: 'Digital Marketing',
-      slug: 'digital-marketing',
-      icon: TrendingUp,
-      desc: 'High-ROAS paid acquisition & conversion engines',
-    },
-    {
-      title: 'App Development',
-      slug: 'app-development',
-      icon: Smartphone,
-      desc: 'Native iOS, Android & SaaS cloud products',
-    },
-    {
-      title: 'Graphic Design',
-      slug: 'graphic-designing',
-      icon: Palette,
-      desc: 'Futuristic brand systems & visual identities',
-    },
-    {
-      title: 'AI Development',
-      slug: 'ai-development',
-      icon: Cpu,
-      desc: 'Autonomous agentic workflows & LLM pipelines',
-    },
-  ];
-
-  const isActive = (path: string) => {
-    if (path === '/' && location.pathname === '/') return true;
-    if (path !== '/' && location.pathname.startsWith(path)) return true;
-    return false;
-  };
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen || isMegaMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen, isMegaMenuOpen]);
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? 'bg-[#060709]/85 backdrop-blur-md border-b border-white/10 py-3.5 shadow-2xl shadow-black/80'
-          : 'bg-transparent py-5'
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <Logo size="md" />
-
-          {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center gap-1 xl:gap-2" aria-label="Main Navigation">
-            <Link
-              to="/"
-              className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${
-                isActive('/') && location.pathname === '/'
-                  ? 'text-[#FC6603] bg-[#FC6603]/10 font-semibold'
-                  : 'text-zinc-300 hover:text-white hover:bg-white/5'
-              }`}
-            >
-              Home
-            </Link>
-
-            <Link
-              to="/about"
-              className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${
-                isActive('/about')
-                  ? 'text-[#FC6603] bg-[#FC6603]/10 font-semibold'
-                  : 'text-zinc-300 hover:text-white hover:bg-white/5'
-              }`}
-            >
-              About
-            </Link>
-
-            {/* Services Dropdown */}
-            <div
-              className="relative"
-              onMouseEnter={() => setServicesOpen(true)}
-              onMouseLeave={() => setServicesOpen(false)}
-            >
-              <button
-                type="button"
-                className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg text-sm font-medium transition-colors focus:outline-none ${
-                  isActive('/services')
-                    ? 'text-[#FC6603] bg-[#FC6603]/10 font-semibold'
-                    : 'text-zinc-300 hover:text-white hover:bg-white/5'
-                }`}
-                onClick={() => setServicesOpen(!servicesOpen)}
-                aria-expanded={servicesOpen}
-              >
-                <span>Services</span>
-                <ChevronDown
-                  className={`w-4 h-4 transition-transform duration-200 ${
-                    servicesOpen ? 'rotate-180 text-[#FC6603]' : ''
-                  }`}
-                />
-              </button>
-
-              <AnimatePresence>
-                {servicesOpen && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10, scale: 0.98 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    exit={{ opacity: 0, y: 8, scale: 0.98 }}
-                    transition={{ duration: 0.18 }}
-                    className="absolute top-full left-1/2 -translate-x-1/2 pt-2 w-[540px] z-50"
-                  >
-                    <div className="glass-panel rounded-2xl p-4 shadow-2xl border border-white/10 bg-[#0B0D13]/95 backdrop-blur-xl">
-                      <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/10 px-2">
-                        <span className="text-xs font-mono tracking-wider text-zinc-400 uppercase">
-                          Our Capabilities
-                        </span>
-                        <Link
-                          to="/services"
-                          className="text-xs text-[#FC6603] hover:underline flex items-center gap-1 font-medium"
-                        >
-                          View all services <ArrowRight className="w-3 h-3" />
-                        </Link>
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-2">
-                        {navServices.map((service) => {
-                          const IconComp = service.icon;
-                          return (
-                            <Link
-                              key={service.slug}
-                              to={`/services/${service.slug}`}
-                              className="group flex items-start gap-3 p-2.5 rounded-xl transition-all duration-200 hover:bg-[#FC6603]/10 border border-transparent hover:border-[#FC6603]/20"
-                            >
-                              <div className="w-8 h-8 rounded-lg bg-zinc-900 border border-white/10 flex items-center justify-center shrink-0 group-hover:bg-[#FC6603] group-hover:text-black transition-colors">
-                                <IconComp className="w-4 h-4 text-[#FC6603] group-hover:text-black transition-colors" />
-                              </div>
-                              <div className="min-w-0">
-                                <div className="text-sm font-medium text-white group-hover:text-[#FC6603] transition-colors truncate">
-                                  {service.title}
-                                </div>
-                                <div className="text-xs text-zinc-400 line-clamp-1">
-                                  {service.desc}
-                                </div>
-                              </div>
-                            </Link>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
-            <Link
-              to="/projects"
-              className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${
-                isActive('/projects')
-                  ? 'text-[#FC6603] bg-[#FC6603]/10 font-semibold'
-                  : 'text-zinc-300 hover:text-white hover:bg-white/5'
-              }`}
-            >
-              Projects
-            </Link>
-
-            <Link
-              to="/#process"
-              className="px-3.5 py-2 rounded-lg text-sm font-medium text-zinc-300 hover:text-white hover:bg-white/5 transition-colors"
-              onClick={() => {
-                if (location.pathname === '/') {
-                  document.getElementById('process')?.scrollIntoView({ behavior: 'smooth' });
-                }
-              }}
-            >
-              Process
-            </Link>
-
-            <Link
-              to="/contact"
-              className={`px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${
-                isActive('/contact')
-                  ? 'text-[#FC6603] bg-[#FC6603]/10 font-semibold'
-                  : 'text-zinc-300 hover:text-white hover:bg-white/5'
-              }`}
-            >
-              Contact
-            </Link>
-          </nav>
-
-          {/* Right Action / CTA */}
-          <div className="hidden lg:flex items-center gap-3">
-            <Link
-              to="/admin"
-              className="text-xs font-mono text-zinc-400 hover:text-white transition-colors px-2 py-1"
-              title="Admin Portal"
-            >
-              Portal
-            </Link>
-
-            <Link
-              to="/contact"
-              className="relative inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-white bg-[#FC6603] hover:bg-[#FF771E] active:scale-[0.98] transition-all duration-200 shadow-[0_0_20px_rgba(252,102,3,0.35)] group overflow-hidden"
-            >
-              {/* Pulsing Beacon Dot */}
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-white"></span>
+    <>
+      <header
+        role="banner"
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          isVisible ? 'translate-y-0' : '-translate-y-full'
+        } ${
+          isScrolled
+            ? 'bg-[#0A0A0B]/85 backdrop-blur-xl border-b border-white/[0.08] py-3.5 shadow-2xl'
+            : 'bg-transparent py-5'
+        }`}
+      >
+        <div className="max-w-[1400px] mx-auto px-6 md:px-10 flex items-center justify-between">
+          {/* Logo on Left */}
+          <Link
+            to="/"
+            className="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF5A1F] rounded-lg"
+            aria-label="AlphaLinkx Home"
+          >
+            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#161619] to-[#0A0A0B] border border-white/15 flex items-center justify-center group-hover:border-[#FF5A1F] transition-colors duration-200">
+              <span className="font-display font-black text-lg text-[#FF5A1F] tracking-tighter">
+                AL
               </span>
-              <span>Start a Project</span>
-              <ArrowRight className="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1" />
-            </Link>
-          </div>
+            </div>
+            <div className="flex flex-col">
+              <span className="font-display font-bold text-base tracking-tight text-white group-hover:text-[#FF5A1F] transition-colors duration-200">
+                {BRAND.name}
+              </span>
+              <span className="font-mono text-[9px] text-[#8A8A8E] tracking-widest uppercase -mt-0.5">
+                // GROWTH AGENCY
+              </span>
+            </div>
+          </Link>
 
-          {/* Mobile Menu Button */}
-          <div className="flex lg:hidden items-center gap-2">
-            <Link
-              to="/contact"
-              className="px-3 py-1.5 rounded-full text-xs font-semibold text-white bg-[#FC6603] hover:bg-[#FF771E]"
+          {/* Links Center (Desktop) */}
+          <nav
+            aria-label="Main Navigation"
+            className="hidden md:flex items-center gap-1 bg-[#111113]/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/[0.08]"
+          >
+            <a
+              href="/#work"
+              className="px-4 py-1.5 text-xs font-mono tracking-wider uppercase text-[#8A8A8E] hover:text-white transition-colors duration-150"
             >
-              Let's Talk
-            </Link>
+              Work
+            </a>
+
+            {/* Mega menu trigger for services */}
             <button
               type="button"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-xl bg-zinc-900 border border-white/10 text-white hover:text-[#FC6603] focus:outline-none"
-              aria-label="Toggle Navigation Menu"
+              onClick={() => setIsMegaMenuOpen(!isMegaMenuOpen)}
+              className={`px-4 py-1.5 text-xs font-mono tracking-wider uppercase flex items-center gap-1.5 transition-colors duration-150 ${
+                isMegaMenuOpen ? 'text-[#FF5A1F]' : 'text-[#8A8A8E] hover:text-white'
+              }`}
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              <span>Services</span>
+              <svg
+                className={`w-3 h-3 transition-transform duration-200 ${
+                  isMegaMenuOpen ? 'rotate-180 text-[#FF5A1F]' : ''
+                }`}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+
+            <a
+              href="/#about"
+              className="px-4 py-1.5 text-xs font-mono tracking-wider uppercase text-[#8A8A8E] hover:text-white transition-colors duration-150"
+            >
+              About
+            </a>
+
+            <a
+              href="/#process"
+              className="px-4 py-1.5 text-xs font-mono tracking-wider uppercase text-[#8A8A8E] hover:text-white transition-colors duration-150"
+            >
+              Process
+            </a>
+
+            <a
+              href="/#faq"
+              className="px-4 py-1.5 text-xs font-mono tracking-wider uppercase text-[#8A8A8E] hover:text-white transition-colors duration-150"
+            >
+              FAQ
+            </a>
+          </nav>
+
+          {/* CTA Right (Desktop) & Mobile Hamburger */}
+          <div className="flex items-center gap-4">
+            <Link
+              to="/contact"
+              className="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full text-xs font-mono uppercase tracking-wider font-semibold text-white bg-gradient-to-r from-[#FF5A1F] to-[#FF8A3D] hover:shadow-[0_0_25px_rgba(255,90,31,0.45)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
+              data-cursor="CONNECT"
+            >
+              <span>Let's Talk</span>
+              <span className="ml-2">→</span>
+            </Link>
+
+            {/* Mobile hamburger */}
+            <button
+              type="button"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-full bg-[#111113] border border-white/10 text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF5A1F]"
+              aria-label="Toggle navigation menu"
+              aria-expanded={isMobileMenuOpen}
+            >
+              <span
+                className={`w-5 h-0.5 bg-white transition-all duration-200 ${
+                  isMobileMenuOpen ? 'rotate-45 translate-y-1' : '-translate-y-1'
+                }`}
+              />
+              <span
+                className={`w-5 h-0.5 bg-white transition-all duration-200 ${
+                  isMobileMenuOpen ? '-rotate-45 -translate-y-0.5' : 'translate-y-1'
+                }`}
+              />
             </button>
           </div>
         </div>
-      </div>
+      </header>
 
-      {/* Mobile Animated Slide-Down Menu */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25 }}
-            className="lg:hidden bg-[#060709]/98 border-b border-white/10 overflow-hidden"
-          >
-            <div className="max-w-7xl mx-auto px-4 py-6 space-y-4">
-              <div className="flex flex-col space-y-2">
-                <Link
-                  to="/"
-                  className="px-3 py-2 rounded-lg text-base font-medium text-white hover:bg-white/5"
-                >
-                  Home
-                </Link>
-                <Link
-                  to="/about"
-                  className="px-3 py-2 rounded-lg text-base font-medium text-white hover:bg-white/5"
-                >
-                  About Us
-                </Link>
-                <Link
-                  to="/services"
-                  className="px-3 py-2 rounded-lg text-base font-medium text-[#FC6603] hover:bg-white/5"
-                >
-                  All Capabilities & Services
-                </Link>
-                <div className="pl-4 grid grid-cols-1 gap-1 border-l border-white/10 my-1">
-                  {navServices.map((s) => (
-                    <Link
-                      key={s.slug}
-                      to={`/services/${s.slug}`}
-                      className="py-1.5 text-sm text-zinc-400 hover:text-white"
-                    >
-                      {s.title}
-                    </Link>
-                  ))}
-                </div>
-                <Link
-                  to="/projects"
-                  className="px-3 py-2 rounded-lg text-base font-medium text-white hover:bg-white/5"
-                >
-                  Selected Work
-                </Link>
-                <Link
-                  to="/contact"
-                  className="px-3 py-2 rounded-lg text-base font-medium text-white hover:bg-white/5"
-                >
-                  Project Inquiry
-                </Link>
-                <Link
-                  to="/admin"
-                  className="px-3 py-2 rounded-lg text-sm font-mono text-zinc-400 hover:text-white"
-                >
-                  Admin Dashboard Portal
-                </Link>
+      {/* Services Mega Menu Overlay (Desktop) */}
+      {isMegaMenuOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Services Mega Menu"
+          className="fixed inset-0 top-[68px] z-40 bg-[#0A0A0B]/95 backdrop-blur-2xl border-b border-white/[0.08] overflow-y-auto animate-in fade-in duration-200"
+        >
+          <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-12">
+            <div className="flex items-center justify-between pb-6 mb-8 border-b border-white/10">
+              <div>
+                <p className="font-mono text-xs uppercase tracking-widest text-[#FF5A1F]">
+                  // CORE CAPABILITIES
+                </p>
+                <h3 className="font-display text-2xl font-bold text-white mt-1">
+                  Engineered for Search, AI, and Revenue Conversion
+                </h3>
               </div>
-
-              <div className="pt-4 border-t border-white/10">
-                <Link
-                  to="/contact"
-                  className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-center font-semibold text-white bg-[#FC6603]"
-                >
-                  <span>Start Your Project</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
+              <button
+                type="button"
+                onClick={() => setIsMegaMenuOpen(false)}
+                className="font-mono text-xs text-[#8A8A8E] hover:text-white uppercase px-3 py-1.5 rounded border border-white/10"
+              >
+                Close ✕
+              </button>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </header>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+              {SERVICE_CATEGORIES.map((cat) => (
+                <Link
+                  key={cat.id}
+                  to={`/services/${cat.slug}`}
+                  onClick={() => setIsMegaMenuOpen(false)}
+                  className="group flex flex-col p-5 rounded-2xl bg-[#111113]/60 border border-white/[0.07] hover:border-[#FF5A1F]/50 hover:bg-[#161619] transition-all duration-200"
+                >
+                  <span className="font-mono text-xs text-[#FF5A1F] font-bold">
+                    {cat.number}
+                  </span>
+                  <h4 className="font-display font-bold text-base text-white mt-2 group-hover:text-[#FF5A1F] transition-colors">
+                    {cat.name}
+                  </h4>
+                  <p className="text-xs text-[#8A8A8E] mt-2 line-clamp-2">
+                    {cat.description}
+                  </p>
+                  <div className="mt-4 pt-3 border-t border-white/5 flex flex-wrap gap-1.5">
+                    {cat.chips.slice(0, 3).map((chip) => (
+                      <span
+                        key={chip}
+                        className="text-[10px] font-mono text-[#8A8A8E] bg-white/[0.04] px-2 py-0.5 rounded"
+                      >
+                        {chip}
+                      </span>
+                    ))}
+                  </div>
+                </Link>
+              ))}
+            </div>
+
+            <div className="mt-10 p-6 rounded-2xl bg-gradient-to-r from-[#FF5A1F]/10 via-transparent to-transparent border border-[#FF5A1F]/20 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div>
+                <span className="font-mono text-xs text-[#FF5A1F] uppercase tracking-wider">
+                  Need a full-stack growth retainer?
+                </span>
+                <p className="text-sm text-white mt-0.5">
+                  We unite web engineering, AI answer optimization, and paid acquisition into one compounding machine.
+                </p>
+              </div>
+              <Link
+                to="/contact"
+                onClick={() => setIsMegaMenuOpen(false)}
+                className="shrink-0 px-6 py-2.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider text-black bg-[#FF5A1F] hover:bg-[#FF8A3D] transition-colors"
+              >
+                Request Growth Audit →
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Full-screen Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-40 bg-[#0A0A0B] flex flex-col justify-between px-8 pt-28 pb-12 overflow-y-auto animate-in fade-in duration-200"
+        >
+          <div className="flex flex-col gap-6">
+            <span className="font-mono text-xs text-[#FF5A1F] tracking-widest uppercase">
+              // ALPHALINKX MENU
+            </span>
+
+            <a
+              href="/#work"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="font-display text-4xl font-extrabold text-white hover:text-[#FF5A1F] transition-colors"
+            >
+              Work
+            </a>
+
+            <div className="flex flex-col gap-3 py-2 border-y border-white/10">
+              <span className="font-mono text-xs text-[#8A8A8E] tracking-wider uppercase">
+                Services:
+              </span>
+              {SERVICE_CATEGORIES.map((cat) => (
+                <Link
+                  key={cat.id}
+                  to={`/services/${cat.slug}`}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="font-display text-xl text-white/90 hover:text-[#FF5A1F] pl-3 flex items-center justify-between"
+                >
+                  <span>{cat.name}</span>
+                  <span className="font-mono text-xs text-[#FF5A1F]">{cat.number}</span>
+                </Link>
+              ))}
+            </div>
+
+            <a
+              href="/#about"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="font-display text-4xl font-extrabold text-white hover:text-[#FF5A1F] transition-colors"
+            >
+              About
+            </a>
+
+            <a
+              href="/#process"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="font-display text-4xl font-extrabold text-white hover:text-[#FF5A1F] transition-colors"
+            >
+              Process
+            </a>
+
+            <a
+              href="/#faq"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="font-display text-4xl font-extrabold text-white hover:text-[#FF5A1F] transition-colors"
+            >
+              FAQ
+            </a>
+          </div>
+
+          <div className="pt-8 border-t border-white/10 flex flex-col gap-4">
+            <Link
+              to="/contact"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="w-full py-4 text-center rounded-xl bg-gradient-to-r from-[#FF5A1F] to-[#FF8A3D] font-mono font-bold text-sm text-white uppercase tracking-wider"
+            >
+              Start a Project →
+            </Link>
+            <div className="flex items-center justify-between font-mono text-xs text-[#8A8A8E]">
+              <span>{BRAND.email}</span>
+              <span>{BRAND.est}</span>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };

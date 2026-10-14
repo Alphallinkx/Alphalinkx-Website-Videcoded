@@ -1,13 +1,15 @@
 import React, { useEffect } from 'react';
 import { HeroSection } from '../components/home/HeroSection';
-import { TrustMarquee } from '../components/home/TrustMarquee';
-import { AboutSection } from '../components/home/AboutSection';
-import { ServicesSection } from '../components/home/ServicesSection';
-import { FeaturedProjectsSection } from '../components/home/FeaturedProjectsSection';
-import { WhyUsBentoSection } from '../components/home/WhyUsBentoSection';
-import { ProcessTimelineSection } from '../components/home/ProcessTimelineSection';
-import { TechStackSection } from '../components/home/TechStackSection';
-import { TestimonialsSection } from '../components/home/TestimonialsSection';
+import { ServicesTicker } from '../components/home/ServicesTicker';
+import { ShowreelSection } from '../components/home/ShowreelSection';
+import { ClientLogoMarquee } from '../components/home/ClientLogoMarquee';
+import { SpellItOutSection } from '../components/home/SpellItOutSection';
+import { SelectedWorkSection } from '../components/home/SelectedWorkSection';
+import { ServicesListSection } from '../components/home/ServicesListSection';
+import { NetworkProcessSection } from '../components/home/NetworkProcessSection';
+import { StatsSection } from '../components/home/StatsSection';
+import { TestimonialsCarousel } from '../components/home/TestimonialsCarousel';
+import { FaqSection } from '../components/home/FaqSection';
 import { InquirySection } from '../components/home/InquirySection';
 
 export const HomePage: React.FC = () => {
@@ -16,36 +18,44 @@ export const HomePage: React.FC = () => {
   }, []);
 
   return (
-    <main className="w-full">
-      {/* Section 01: 3D Hero */}
+    <main className="w-full bg-[#0A0A0B] text-[#F5F5F4] overflow-hidden selection:bg-[#FF5A1F] selection:text-black">
+      {/* 01. HERO: "Growth, Linked." (3D Centerpiece + Rotating Word + Meta Row) */}
       <HeroSection />
 
-      {/* Section 02: Trust Marquee (Single marquee per page rule) */}
-      <TrustMarquee />
+      {/* 02. SERVICES TICKER: Dual infinite marquees tilted -3° with velocity skew */}
+      <ServicesTicker />
 
-      {/* Section 03: About Alphalinkx */}
-      <AboutSection />
+      {/* 03. SHOWREEL: Expanding video card (60% to full-bleed) + PLAY cursor */}
+      <ShowreelSection />
 
-      {/* Section 04: Services & Capabilities */}
-      <ServicesSection />
+      {/* 04. CLIENT LOGO MARQUEE: Trusted by grayscale to orange-white hover */}
+      <ClientLogoMarquee />
 
-      {/* Section 05: Featured Projects */}
-      <FeaturedProjectsSection />
+      {/* 05. "SPELL IT OUT": Pinned Horizontal Scroll across 10 A-L-P-H-A-L-I-N-K-X panels */}
+      <SpellItOutSection />
 
-      {/* Section 06: Why Choose Us (Bento Grid) */}
-      <WhyUsBentoSection />
+      {/* 06. SELECTED WORK: Asymmetric 2-column parallax with video hover preview */}
+      <SelectedWorkSection />
 
-      {/* Section 07: 4-Stage Process Timeline */}
-      <ProcessTimelineSection />
+      {/* 07. SERVICES: Interactive 3D category blocks with sub-service chips */}
+      <ServicesListSection />
 
-      {/* Section 08: Technology Constellation */}
-      <TechStackSection />
+      {/* 08. THE NETWORK: 3D Constellation Process Section (4 Glowing Nodes) */}
+      <NetworkProcessSection />
 
-      {/* Section 09: Testimonials */}
-      <TestimonialsSection />
+      {/* 09. STATS: Results, not fluff (Count-up numbers + witty one-liners) */}
+      <StatsSection />
 
-      {/* Section 10: Multi-Step Project Inquiry */}
+      {/* 10. TESTIMONIALS: 3D tilt cards with DRAG cursor */}
+      <TestimonialsCarousel />
+
+      {/* 11. FAQ: Smooth accordion with rotating "+" icon */}
+      <FaqSection />
+
+      {/* 12. BIG CTA + MULTI-STEP CONTACT FORM: "LET'S LINK UP." + Chip selections */}
       <InquirySection />
     </main>
   );
 };
+
+export default HomePage;

@@ -1,46 +1,57 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, Text } from '@react-three/drei';
+import { Float, Html } from '@react-three/drei';
 import * as THREE from 'three';
 
 interface TechNodeProps {
   position: [number, number, number];
   name: string;
+  category: string;
   color?: string;
 }
 
-function TechNode({ position, name, color = '#FC6603' }: TechNodeProps) {
+function TechNode({ position, name, category, color = '#FC6603' }: TechNodeProps) {
   const meshRef = useRef<THREE.Mesh>(null);
+  const [hovered, setHovered] = useState(false);
 
   useFrame((state) => {
     if (meshRef.current) {
-      meshRef.current.rotation.x = Math.sin(state.clock.getElapsedTime() + position[0]) * 0.2;
+      const t = state.clock.getElapsedTime();
+      meshRef.current.rotation.x = Math.sin(t + position[0]) * 0.2;
+      meshRef.current.rotation.y = Math.cos(t + position[1]) * 0.2;
     }
   });
 
   return (
-    <Float speed={2} rotationIntensity={0.5} floatIntensity={0.7} position={position}>
-      <mesh ref={meshRef}>
-        <sphereGeometry args={[0.22, 24, 24]} />
+    <Float speed={2} rotationIntensity={0.4} floatIntensity={0.6} position={position}>
+      <mesh
+        ref={meshRef}
+        onPointerOver={() => setHovered(true)}
+        onPointerOut={() => setHovered(false)}
+        scale={hovered ? 1.3 : 1}
+      >
+        <sphereGeometry args={[0.24, 24, 24]} />
         <meshStandardMaterial
-          color={color}
+          color={hovered ? '#FFFFFF' : color}
           emissive={color}
-          emissiveIntensity={0.6}
+          emissiveIntensity={hovered ? 1.2 : 0.6}
           roughness={0.2}
           metalness={0.8}
         />
       </mesh>
-      {/* 3D Label */}
-      <Text
-        position={[0, 0.42, 0]}
-        fontSize={0.2}
-        color="#F8FAFC"
-        anchorX="center"
-        anchorY="middle"
-        font="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff"
-      >
-        {name}
-      </Text>
+
+      {/* HTML Node Label (Self-Contained & Crisp) */}
+      <Html position={[0, 0.42, 0]} center distanceFactor={10} zIndexRange={[10, 0]}>
+        <div className="select-none pointer-events-none whitespace-nowrap">
+          <div className="px-2.5 py-1 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-[11px] font-mono text-zinc-200 flex items-center gap-1.5 shadow-lg">
+            <span
+              className="w-1.5 h-1.5 rounded-full"
+              style={{ backgroundColor: color }}
+            />
+            <span className="font-semibold text-white">{name}</span>
+          </div>
+        </div>
+      </Html>
     </Float>
   );
 }
@@ -48,21 +59,21 @@ function TechNode({ position, name, color = '#FC6603' }: TechNodeProps) {
 function ConstellationCluster() {
   const groupRef = useRef<THREE.Group>(null);
 
-  const nodes: { name: string; pos: [number, number, number]; color: string }[] = [
-    { name: 'React 19', pos: [0, 0.2, 0], color: '#61DAFB' },
-    { name: 'Three.js / WebGL', pos: [-2.2, 1.2, -0.5], color: '#FC6603' },
-    { name: 'TypeScript', pos: [2.3, 1.1, -0.6], color: '#3178C6' },
-    { name: 'Node.js & Express', pos: [-1.8, -1.3, 0.4], color: '#68A063' },
-    { name: 'PostgreSQL', pos: [1.9, -1.2, 0.5], color: '#336791' },
-    { name: 'Autonomous AI', pos: [0, 2.3, -0.2], color: '#FC6603' },
-    { name: 'Next.js & Edge', pos: [-3.2, 0, -1], color: '#FFFFFF' },
-    { name: 'Tailwind CSS', pos: [3.2, 0, -1], color: '#38BDF8' },
+  const nodes: { name: string; category: string; pos: [number, number, number]; color: string }[] = [
+    { name: 'React 19', category: 'Frontend', pos: [0, 0.3, 0], color: '#61DAFB' },
+    { name: 'Three.js / WebGL', category: 'Creative 3D', pos: [-2.2, 1.2, -0.4], color: '#FC6603' },
+    { name: 'TypeScript', category: 'Language', pos: [2.3, 1.1, -0.5], color: '#3178C6' },
+    { name: 'Node.js & Express', category: 'Backend', pos: [-1.9, -1.3, 0.4], color: '#68A063' },
+    { name: 'PostgreSQL', category: 'Database', pos: [1.9, -1.2, 0.5], color: '#336791' },
+    { name: 'Autonomous AI', category: 'Intelligence', pos: [0, 2.3, -0.2], color: '#FC6603' },
+    { name: 'Next.js & Edge', category: 'Fullstack', pos: [-3.2, 0, -0.8], color: '#FFFFFF' },
+    { name: 'Tailwind CSS', category: 'Styling', pos: [3.2, 0, -0.8], color: '#38BDF8' },
   ];
 
   useFrame((state) => {
     if (groupRef.current) {
-      groupRef.current.rotation.y = state.clock.getElapsedTime() * 0.08 + state.mouse.x * 0.2;
-      groupRef.current.rotation.x = state.mouse.y * 0.15;
+      groupRef.current.rotation.y = state.clock.getElapsedTime() * 0.08 + state.mouse.x * 0.25;
+      groupRef.current.rotation.x = state.mouse.y * 0.18;
     }
   });
 
@@ -92,7 +103,13 @@ function ConstellationCluster() {
 
       {/* Technology Nodes */}
       {nodes.map((node, i) => (
-        <TechNode key={i} position={node.pos} name={node.name} color={node.color} />
+        <TechNode
+          key={i}
+          position={node.pos}
+          name={node.name}
+          category={node.category}
+          color={node.color}
+        />
       ))}
     </group>
   );

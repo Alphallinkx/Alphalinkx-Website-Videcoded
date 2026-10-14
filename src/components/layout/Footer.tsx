@@ -1,251 +1,173 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Logo } from '../common/Logo';
-import { subscribeNewsletter } from '../../lib/api';
-import { ArrowRight, CheckCircle2, Mail, Phone, MapPin, Send } from 'lucide-react';
+import { BRAND, SERVICE_CATEGORIES } from '../../content/siteContent';
 
 export const Footer: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [subscribed, setSubscribed] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
+  const [spotlightPos, setSpotlightPos] = useState({ x: 50, y: 50 });
+  const wordmarkRef = useRef<HTMLDivElement>(null);
 
-  const handleSubscribe = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email || !email.includes('@')) {
-      setErrorMsg('Please enter a valid email address.');
-      return;
-    }
-    setLoading(true);
-    setErrorMsg('');
-    try {
-      await subscribeNewsletter(email);
-      setSubscribed(true);
-      setEmail('');
-    } catch (err: any) {
-      setErrorMsg(err.message || 'Subscription failed.');
-    } finally {
-      setLoading(false);
-    }
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!wordmarkRef.current) return;
+    const rect = wordmarkRef.current.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setSpotlightPos({ x, y });
   };
 
-  const services = [
-    { title: 'Website Development', slug: 'website-development' },
-    { title: 'Technical SEO', slug: 'seo' },
-    { title: 'Digital Marketing & Growth', slug: 'digital-marketing' },
-    { title: 'App & Cloud Products', slug: 'app-development' },
-    { title: 'Brand & Visual Systems', slug: 'graphic-designing' },
-    { title: 'Autonomous AI Solutions', slug: 'ai-development' },
-  ];
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
-    <footer className="relative bg-[#060709] border-t border-white/10 pt-20 pb-12 overflow-hidden">
-      {/* Background Ambient Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-48 bg-radial-glow pointer-events-none opacity-50" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Top Newsletter & Callout Strip */}
-        <div className="glass-panel rounded-3xl p-8 sm:p-12 mb-16 border border-white/10 relative overflow-hidden bg-gradient-to-r from-[#0E1017] via-[#10131C] to-[#141824]">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-7">
-              <span className="inline-block px-3 py-1 rounded-full text-xs font-mono font-semibold tracking-wider text-[#FC6603] bg-[#FC6603]/10 uppercase mb-3">
-                Digital Intelligence Brief
+    <footer
+      role="contentinfo"
+      className="relative bg-[#0A0A0B] border-t border-white/[0.08] pt-20 pb-12 overflow-hidden select-none"
+    >
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+        {/* Navigation Columns */}
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-10 pb-20 border-b border-white/10">
+          {/* Col 1: Brand & Positioning (Col 2 on Large) */}
+          <div className="col-span-2 lg:col-span-2 pr-6">
+            <Link to="/" className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg bg-[#161619] border border-white/15 flex items-center justify-center">
+                <span className="font-display font-black text-sm text-[#FF5A1F]">
+                  AL
+                </span>
+              </div>
+              <span className="font-display font-black text-xl text-white tracking-tight">
+                {BRAND.name}
               </span>
-              <h3 className="text-2xl sm:text-3xl font-display font-bold text-white tracking-tight">
-                Stay Ahead of Digital Transformation.
-              </h3>
-              <p className="text-zinc-400 text-sm sm:text-base mt-2 max-w-xl">
-                Get our monthly executive breakdown of high-performance web engineering, AI breakthroughs, and conversion architectures. Zero spam.
-              </p>
-            </div>
-
-            <div className="lg:col-span-5">
-              {subscribed ? (
-                <div className="flex items-center gap-3 p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
-                  <CheckCircle2 className="w-5 h-5 shrink-0" />
-                  <span className="text-sm font-medium">
-                    You're in! Check your inbox for our latest digital insights.
-                  </span>
-                </div>
-              ) : (
-                <form onSubmit={handleSubscribe} className="relative flex flex-col sm:flex-row gap-2">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter your business email"
-                    required
-                    className="flex-1 px-4 py-3.5 rounded-full bg-black/60 border border-white/15 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-[#FC6603] focus:ring-1 focus:ring-[#FC6603] transition-all"
-                  />
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="px-6 py-3.5 rounded-full bg-[#FC6603] hover:bg-[#FF771E] active:scale-[0.98] text-white text-sm font-semibold transition-all flex items-center justify-center gap-2 shrink-0 disabled:opacity-60 shadow-[0_0_15px_rgba(252,102,3,0.3)]"
-                  >
-                    <span>{loading ? 'Subscribing...' : 'Join Intel'}</span>
-                    <Send className="w-4 h-4" />
-                  </button>
-                </form>
-              )}
-              {errorMsg && (
-                <p className="text-rose-400 text-xs mt-2 pl-3">{errorMsg}</p>
-              )}
-            </div>
-          </div>
-        </div>
-
-        {/* Main Footer Links Columns */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-16 border-b border-white/10">
-          {/* Brand Info */}
-          <div className="lg:col-span-4 space-y-4">
-            <Logo size="lg" />
-            <p className="text-zinc-400 text-sm leading-relaxed max-w-sm mt-3">
-              We design and build bespoke digital experiences, high-performance web systems, and intelligent AI architectures that elevate ambitious businesses into market leaders.
+            </Link>
+            <p className="font-sans text-xs sm:text-sm text-[#8A8A8E] mt-4 max-w-sm leading-relaxed">
+              High-performance web development, Generative Engine Optimization (GEO), Answer Engine Optimization (AEO), and high-ROAS paid media engineering.
             </p>
-            <div className="pt-2 text-xs font-mono text-zinc-500 flex flex-col gap-1.5">
-              <span className="flex items-center gap-2">
-                <MapPin className="w-3.5 h-3.5 text-[#FC6603]" />
-                Silicon Valley · New York · London
-              </span>
-              <span className="flex items-center gap-2">
-                <Mail className="w-3.5 h-3.5 text-[#FC6603]" />
-                <a href="mailto:hello@alphalinkx.com" className="hover:text-white transition-colors">
-                  hello@alphalinkx.com
-                </a>
-              </span>
-              <span className="flex items-center gap-2">
-                <Phone className="w-3.5 h-3.5 text-[#FC6603]" />
-                +1 (800) 450-LINK
-              </span>
+            <div className="mt-6 flex items-center gap-3 font-mono text-xs text-[#FF5A1F]">
+              <span className="w-2 h-2 rounded-full bg-[#FF5A1F] animate-pulse" />
+              <span>GLOBAL SIGNAL NODES: ACTIVE</span>
             </div>
           </div>
 
-          {/* Navigation Links */}
-          <div className="lg:col-span-2">
-            <h4 className="text-xs font-mono tracking-widest text-zinc-400 uppercase font-bold mb-4">
-              Explore
-            </h4>
-            <ul className="space-y-2.5 text-sm">
-              <li>
-                <Link to="/" className="text-zinc-300 hover:text-[#FC6603] transition-colors">
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link to="/about" className="text-zinc-300 hover:text-[#FC6603] transition-colors">
-                  About Agency
-                </Link>
-              </li>
-              <li>
-                <Link to="/projects" className="text-zinc-300 hover:text-[#FC6603] transition-colors">
-                  Selected Work
-                </Link>
-              </li>
-              <li>
-                <Link to="/contact" className="text-zinc-300 hover:text-[#FC6603] transition-colors">
-                  Start a Project
-                </Link>
-              </li>
-              <li>
-                <Link to="/admin" className="text-zinc-400 hover:text-white transition-colors font-mono text-xs">
-                  Admin Dashboard
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Core Services */}
-          <div className="lg:col-span-3">
-            <h4 className="text-xs font-mono tracking-widest text-zinc-400 uppercase font-bold mb-4">
-              Capabilities
-            </h4>
-            <ul className="space-y-2.5 text-sm">
-              {services.map((service) => (
-                <li key={service.slug}>
+          {/* Col 2: Services */}
+          <div className="space-y-4">
+            <span className="font-mono text-xs uppercase tracking-widest text-[#FF5A1F] block">
+              // SERVICES
+            </span>
+            <ul className="space-y-2.5 font-sans text-xs sm:text-sm text-[#8A8A8E]">
+              {SERVICE_CATEGORIES.map((cat) => (
+                <li key={cat.id}>
                   <Link
-                    to={`/services/${service.slug}`}
-                    className="text-zinc-300 hover:text-[#FC6603] transition-colors"
+                    to={`/services/${cat.slug}`}
+                    className="hover:text-white transition-colors"
                   >
-                    {service.title}
+                    {cat.name}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Socials & Ready to Talk */}
-          <div className="lg:col-span-3 space-y-4">
-            <h4 className="text-xs font-mono tracking-widest text-zinc-400 uppercase font-bold mb-4">
-              Connect
-            </h4>
-            <p className="text-zinc-400 text-xs leading-relaxed">
-              Have an ambitious challenge? Let's engineer something memorable together.
-            </p>
-            <div className="flex items-center gap-3">
-              <a
-                href="https://twitter.com/alphalinkx"
-                target="_blank"
-                rel="noreferrer"
-                className="w-9 h-9 rounded-full bg-zinc-900 border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:border-[#FC6603] hover:bg-[#FC6603]/10 transition-colors text-xs font-bold"
-                aria-label="X Twitter"
-              >
-                𝕏
-              </a>
-              <a
-                href="https://linkedin.com/company/alphalinkx"
-                target="_blank"
-                rel="noreferrer"
-                className="w-9 h-9 rounded-full bg-zinc-900 border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:border-[#FC6603] hover:bg-[#FC6603]/10 transition-colors text-xs font-bold"
-                aria-label="LinkedIn"
-              >
-                in
-              </a>
-              <a
-                href="https://github.com/alphalinkx"
-                target="_blank"
-                rel="noreferrer"
-                className="w-9 h-9 rounded-full bg-zinc-900 border border-white/10 flex items-center justify-center text-zinc-400 hover:text-white hover:border-[#FC6603] hover:bg-[#FC6603]/10 transition-colors text-xs font-bold"
-                aria-label="GitHub"
-              >
-                git
-              </a>
-            </div>
+          {/* Col 3: Company */}
+          <div className="space-y-4">
+            <span className="font-mono text-xs uppercase tracking-widest text-[#FF5A1F] block">
+              // COMPANY
+            </span>
+            <ul className="space-y-2.5 font-sans text-xs sm:text-sm text-[#8A8A8E]">
+              <li>
+                <a href="/#about" className="hover:text-white transition-colors">
+                  About Us
+                </a>
+              </li>
+              <li>
+                <a href="/#work" className="hover:text-white transition-colors">
+                  Case Studies
+                </a>
+              </li>
+              <li>
+                <a href="/#process" className="hover:text-white transition-colors">
+                  4-Node Process
+                </a>
+              </li>
+              <li>
+                <a href="/#faq" className="hover:text-white transition-colors">
+                  FAQ
+                </a>
+              </li>
+              <li>
+                <Link to="/contact" className="hover:text-white transition-colors">
+                  Contact
+                </Link>
+              </li>
+            </ul>
+          </div>
 
-            <div className="pt-2">
-              <Link
-                to="/contact"
-                className="inline-flex items-center gap-2 text-xs font-semibold text-[#FC6603] hover:text-[#FF8833] group"
-              >
-                <span>Initiate a Project Brief</span>
-                <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </div>
+          {/* Col 4: Contact & Socials */}
+          <div className="space-y-4">
+            <span className="font-mono text-xs uppercase tracking-widest text-[#FF5A1F] block">
+              // DIRECT CHANNELS
+            </span>
+            <ul className="space-y-2.5 font-sans text-xs sm:text-sm text-[#8A8A8E]">
+              <li>
+                <a
+                  href={`mailto:${BRAND.email}`}
+                  className="hover:text-white transition-colors font-mono text-xs"
+                >
+                  {BRAND.email}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={BRAND.whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#FF5A1F] transition-colors font-mono text-xs text-white"
+                >
+                  WhatsApp Direct →
+                </a>
+              </li>
+              <li className="pt-2 font-mono text-[11px] text-[#8A8A8E]">
+                {BRAND.location}
+              </li>
+            </ul>
           </div>
         </div>
 
-        {/* Massive Editorial Watermark Typography */}
-        <div className="py-8 select-none overflow-hidden opacity-10 flex justify-center pointer-events-none">
-          <span className="font-display font-extrabold text-[12vw] tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-transparent leading-none">
+        {/* Giant Mouse-Reactive ALPHALINKX Wordmark */}
+        <div
+          ref={wordmarkRef}
+          onMouseMove={handleMouseMove}
+          className="relative py-14 sm:py-20 text-center overflow-hidden cursor-crosshair"
+        >
+          <h2
+            className="font-display font-black text-6xl sm:text-8xl md:text-[140px] lg:text-[180px] leading-none tracking-tighter uppercase select-none transition-all duration-75"
+            style={{
+              backgroundImage: `radial-gradient(circle 280px at ${spotlightPos.x}% ${spotlightPos.y}%, #FF5A1F 0%, rgba(255, 90, 31, 0.4) 40%, rgba(255, 255, 255, 0.08) 80%)`,
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+            }}
+          >
             ALPHALINKX
-          </span>
+          </h2>
         </div>
 
-        {/* Bottom Legal & Copyright Bar */}
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-zinc-500 gap-4">
-          <p>
-            © {new Date().getFullYear()} Alphalinkx Digital Agency. All rights reserved.
-          </p>
+        {/* Bottom Bar: Copyright & Back to Top */}
+        <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between font-mono text-xs text-[#8A8A8E] gap-4">
+          <p>© 2024 ALPHALINKX // built to grow.</p>
+
           <div className="flex items-center gap-6">
-            <Link to="/privacy-policy" className="hover:text-zinc-300 transition-colors">
-              Privacy Policy
+            <Link to="/privacy-policy" className="hover:text-white transition-colors">
+              Privacy
             </Link>
-            <Link to="/terms-of-service" className="hover:text-zinc-300 transition-colors">
-              Terms of Service
+            <Link to="/terms-of-service" className="hover:text-white transition-colors">
+              Terms
             </Link>
-            <span className="text-zinc-600">·</span>
-            <span className="font-mono text-[11px] text-zinc-400">
-              Built with precision & 3D WebGL
-            </span>
+            <button
+              type="button"
+              onClick={scrollToTop}
+              className="flex items-center gap-1.5 text-white hover:text-[#FF5A1F] transition-colors uppercase font-bold"
+            >
+              <span>Back to top</span>
+              <span>↑</span>
+            </button>
           </div>
         </div>
       </div>

@@ -41,19 +41,17 @@ Derived directly from the official **Alphalinkx** logo:
 
 ## 3. Site Map & Routes
 
-- `/` — **Homepage** (10 Immersive Sections)
-  1. *Section 01:* Navigation with services mega-dropdown & live beacon CTA
-  2. *Section 02:* Cinematic 3D Hero with interactive sculpture & particle field
-  3. *Section 03:* Trust Marquee (single marquee per page rule)
-  4. *Section 04:* About Alphalinkx (editorial narrative & core pillars)
-  5. *Section 05:* Services & Capabilities (6 core capability cards)
-  6. *Section 06:* Selected Work (browser-framed project gallery & case study modal)
-  7. *Section 07:* Why Choose Alphalinkx (asymmetric bento grid)
-  8. *Section 08:* 4-Stage Phased Engine (interactive timeline tabs)
-  9. *Section 09:* Technology & Innovation (3D tech constellation)
-  10. *Section 10:* Verified Endorsements (attributions compliant with line limits)
-  11. *Section 11:* Multi-Step Project Inquiry & Brief submission
-  12. *Section 12:* Premium Footer with newsletter subscription & legal links
+- `/` — **Homepage** (Consolidated, Non-Redundant Editorial Flow)
+  1. *Header:* Accessible single-line navigation with services preview & "Discuss Your Project" CTA
+  2. *3D Hero:* Oversized typography with masked line reveals, signature connected 3D monument & accessible pause/play
+  3. *Technology Ecosystem:* Honest tooling marquee with pause behavior and screen-reader deduplication
+  4. *Selected Work:* Asymmetrical editorial showcase of authentic client applications with verified outcome metrics
+  5. *Capabilities & Services:* Editorial accordion suite with deliverables and process blueprints
+  6. *Positioning & Architecture:* Consolidated narrative uniting strategy, engineering, and 3D tech constellation
+  7. *4-Stage Methodology:* Numbered phase scrubber (Discover, Strategize, Design & Build, Launch & Optimize)
+  8. *Leadership Perspectives:* Grounded founder and executive feedback
+  9. *Project Inquiry:* 4-step interactive brief transmitter wired to PostgreSQL / SQLite backend
+  10. *Footer:* Typographic AlphaLinkx watermark, active newsletter integration, and verified legal links
 - `/about` — Dedicated agency story, metrics, and core code
 - `/services` — All capabilities directory
 - `/services/:slug` — Dedicated blueprints for each of the 6 specializations:

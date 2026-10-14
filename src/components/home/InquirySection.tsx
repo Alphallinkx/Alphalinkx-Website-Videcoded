@@ -1,452 +1,401 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import React, { useState, useRef } from 'react';
 import confetti from 'canvas-confetti';
-import { submitInquiry } from '../../lib/api';
-import {
-  Send,
-  CheckCircle2,
-  AlertCircle,
-  Sparkles,
-  ArrowRight,
-  ArrowLeft,
-  Mail,
-  User,
-  Building2,
-  FileText,
-} from 'lucide-react';
+import { FORM_OPTIONS, BRAND } from '../../content/siteContent';
 
 export const InquirySection: React.FC = () => {
-  const [step, setStep] = useState(1);
-  const [loading, setLoading] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [currentStep, setCurrentStep] = useState(1);
+  const totalSteps = 4;
+
+  // Form state
+  const [interests, setInterests] = useState<string[]>([]);
+  const [budget, setBudget] = useState<string>('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [website, setWebsite] = useState('');
+  const [message, setMessage] = useState('');
+  const [referral, setReferral] = useState<string>('');
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  // Form State
-  const [formData, setFormData] = useState({
-    service: 'Website Development',
-    budget: '$25k – $50k',
-    timeline: '1–2 Months',
-    name: '',
-    email: '',
-    company: '',
-    description: '',
-    honeypot: '', // Spam bot trap
-  });
+  // Mouse follow gradient on headline
+  const headlineRef = useRef<HTMLHeadingElement>(null);
+  const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
 
-  const servicesList = [
-    'Website Development',
-    'AI Development',
-    'App Development',
-    'Digital Marketing',
-    'Search Engine Optimization (SEO)',
-    'Graphic Design & Branding',
-  ];
-
-  const budgetOptions = [
-    '$10k – $25k',
-    '$25k – $50k',
-    '$50k – $100k',
-    '$100k+',
-  ];
-
-  const timelineOptions = [
-    'ASAP (< 1 Month)',
-    '1–2 Months',
-    '2–4 Months',
-    'Flexible / Long-term',
-  ];
-
-  const handleNext = () => {
-    setErrorMessage('');
-    if (step === 1 && !formData.service) {
-      setErrorMessage('Please select a service category.');
-      return;
-    }
-    if (step === 2 && !formData.budget) {
-      setErrorMessage('Please select an estimated budget range.');
-      return;
-    }
-    if (step === 3 && !formData.timeline) {
-      setErrorMessage('Please select an estimated timeline.');
-      return;
-    }
-    setStep((prev) => prev + 1);
+  const handleMouseMove = (e: React.MouseEvent<HTMLHeadingElement>) => {
+    if (!headlineRef.current) return;
+    const rect = headlineRef.current.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setMousePos({ x, y });
   };
 
-  const handlePrev = () => {
-    setErrorMessage('');
-    setStep((prev) => prev - 1);
+  const toggleInterest = (val: string) => {
+    if (interests.includes(val)) {
+      setInterests(interests.filter((i) => i !== val));
+    } else {
+      setInterests([...interests, val]);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
     setErrorMessage('');
 
-    if (!formData.name.trim() || formData.name.trim().length < 2) {
-      setErrorMessage('Please provide your full name.');
-      return;
-    }
-
-    if (!formData.email.trim() || !formData.email.includes('@')) {
-      setErrorMessage('Please provide a valid business email address.');
-      return;
-    }
-
-    if (!formData.description.trim() || formData.description.trim().length < 10) {
-      setErrorMessage('Please describe your project (minimum 10 characters).');
-      return;
-    }
-
-    setLoading(true);
-
     try {
-      const res = await submitInquiry({
-        name: formData.name,
-        email: formData.email,
-        company: formData.company,
-        service: formData.service,
-        budget: formData.budget,
-        timeline: formData.timeline,
-        description: formData.description,
-        honeypot: formData.honeypot,
+      const payload = {
+        name,
+        email,
+        phone,
+        company: website,
+        service: interests.join(', ') || 'General Growth Scope',
+        budget: budget || '$3k – $7k',
+        timeline: referral || 'Immediate',
+        description: message || `Referral source: ${referral || 'Direct'}. Selected budget: ${budget}`,
+      };
+
+      const res = await fetch('/api/inquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
       });
 
-      if (res.success) {
-        setSubmitted(true);
-        // Trigger celebratory confetti
-        confetti({
-          particleCount: 80,
-          spread: 70,
-          origin: { y: 0.6 },
-          colors: ['#FC6603', '#FFA055', '#FFFFFF'],
-        });
+      if (!res.ok) {
+        throw new Error('Brief submission failed. Please try again or reach out on WhatsApp.');
       }
-    } catch (err: any) {
-      setErrorMessage(err.message || 'Failed to submit inquiry. Please try again.');
+
+      setIsSuccess(true);
+
+      // Confetti celebration
+      confetti({
+        particleCount: 80,
+        spread: 90,
+        origin: { y: 0.6 },
+        colors: ['#FF5A1F', '#FF8A3D', '#FFFFFF'],
+      });
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setErrorMessage(err.message);
+      } else {
+        setErrorMessage('Failed to send brief. Please reach out via WhatsApp.');
+      }
     } finally {
-      setLoading(false);
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <section id="contact" className="relative py-28 bg-[#090B10] border-t border-white/[0.08] overflow-hidden">
-      {/* Background Ambient Radial Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[750px] h-[750px] bg-radial-glow pointer-events-none opacity-40" />
-
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="text-xs font-mono font-semibold tracking-widest text-[#FC6603] uppercase">
-            START A PROJECT
+    <section
+      id="contact"
+      aria-label="Multi-Step Project Inquiry"
+      className="relative py-28 md:py-44 bg-[#0A0A0B] overflow-hidden"
+    >
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+        {/* Massive Headline with Mouse-Follow Gradient */}
+        <div className="text-center mb-16">
+          <span className="font-mono text-xs uppercase tracking-widest text-[#FF5A1F] block mb-3">
+            // 10 KICKOFF SPRINT
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold text-white tracking-tight mt-3">
-            LET'S BUILD SOMETHING MEANINGFUL.
+          <h2
+            ref={headlineRef}
+            onMouseMove={handleMouseMove}
+            className="font-display font-black text-6xl sm:text-8xl md:text-9xl tracking-tighter uppercase select-none transition-colors duration-150"
+            style={{
+              backgroundImage: `radial-gradient(circle at ${mousePos.x}% ${mousePos.y}%, #FF8A3D 0%, #FF5A1F 30%, #FFFFFF 70%)`,
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+            }}
+          >
+            LET'S LINK UP.
           </h2>
-          <p className="text-base sm:text-lg text-zinc-400 mt-4 leading-relaxed">
-            Have an idea, a challenge, or a digital experience you want to bring to life? Tell us about it, and let's explore what's possible.
+          <p className="font-sans text-sm sm:text-base text-[#8A8A8E] mt-4 max-w-xl mx-auto">
+            Choose your parameters below to construct an actionable growth blueprint with our engineering squad.
           </p>
         </div>
 
-        {/* Multi-Step Interactive Form Container */}
-        <div className="glass-panel rounded-3xl p-6 sm:p-12 border border-white/10 bg-[#0E1017]/90 shadow-2xl relative">
-          {submitted ? (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="py-12 text-center max-w-lg mx-auto"
-            >
-              <div className="w-16 h-16 rounded-full bg-[#FC6603]/10 border border-[#FC6603]/40 flex items-center justify-center text-[#FC6603] mx-auto mb-6 shadow-[0_0_30px_rgba(252,102,3,0.3)]">
-                <CheckCircle2 className="w-8 h-8" />
+        {/* Multi-Step Chip Selection Card */}
+        <div className="max-w-3xl mx-auto rounded-3xl bg-[#111113] border border-white/10 p-8 sm:p-14 shadow-2xl relative overflow-hidden backdrop-blur-xl">
+          {/* Progress Bar */}
+          <div className="w-full h-1.5 bg-white/10 rounded-full mb-10 overflow-hidden">
+            <div
+              className="h-full bg-gradient-to-r from-[#FF5A1F] to-[#FF8A3D] transition-all duration-300"
+              style={{ width: `${(currentStep / totalSteps) * 100}%` }}
+            />
+          </div>
+
+          {/* Success State */}
+          {isSuccess ? (
+            <div className="text-center py-12 space-y-4">
+              <div className="w-16 h-16 rounded-full bg-[#FF5A1F]/20 border border-[#FF5A1F] text-[#FF5A1F] font-bold text-2xl flex items-center justify-center mx-auto">
+                ✓
               </div>
-              <h3 className="text-2xl sm:text-3xl font-display font-bold text-white tracking-tight">
-                Project Brief Received!
+              <h3 className="font-display font-black text-3xl sm:text-4xl text-white tracking-tight">
+                NODES LINKED. BRIEF RECEIVED.
               </h3>
-              <p className="text-zinc-300 text-sm sm:text-base mt-3 leading-relaxed">
-                Thank you for trusting Alphalinkx. Our partners are evaluating your requirements and will reach out to <strong className="text-white">{formData.email}</strong> within 24 business hours.
+              <p className="font-sans text-sm text-[#8A8A8E] max-w-md mx-auto">
+                We have initiated telemetry review. Our squad will contact you at <span className="text-white font-mono">{email}</span> within 24 hours.
               </p>
-              <div className="mt-8 pt-6 border-t border-white/10 flex justify-center">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSubmitted(false);
-                    setStep(1);
-                    setFormData({
-                      service: 'Website Development',
-                      budget: '$25k – $50k',
-                      timeline: '1–2 Months',
-                      name: '',
-                      email: '',
-                      company: '',
-                      description: '',
-                      honeypot: '',
-                    });
-                  }}
-                  className="px-6 py-2.5 rounded-full text-xs font-semibold text-zinc-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-colors"
+              <div className="pt-6">
+                <a
+                  href={BRAND.whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 font-mono text-xs text-[#FF5A1F] hover:text-[#FF8A3D] uppercase tracking-wider font-bold"
                 >
-                  Submit Another Project Inquiry
-                </button>
+                  <span>Need urgent kickoff? Chat on WhatsApp</span>
+                  <span>→</span>
+                </a>
               </div>
-            </motion.div>
+            </div>
           ) : (
-            <div>
-              {/* Progress Stepper Bar */}
-              <div className="mb-8">
-                <div className="flex items-center justify-between mb-3 text-xs font-mono text-zinc-400">
-                  <span>STEP 0{step} OF 04</span>
-                  <span>
-                    {step === 1 && 'Select Capabilities'}
-                    {step === 2 && 'Estimated Budget'}
-                    {step === 3 && 'Project Timeline'}
-                    {step === 4 && 'Project Brief & Details'}
-                  </span>
-                </div>
-                <div className="w-full h-1.5 bg-zinc-900 rounded-full overflow-hidden border border-white/5">
-                  <motion.div
-                    className="h-full bg-[#FC6603]"
-                    initial={{ width: '25%' }}
-                    animate={{ width: `${(step / 4) * 100}%` }}
-                    transition={{ duration: 0.3 }}
-                  />
-                </div>
-              </div>
-
-              {/* Form Content */}
-              <form onSubmit={handleSubmit}>
-                {/* Honeypot hidden input for spam bots */}
-                <input
-                  type="text"
-                  name="honeypot"
-                  value={formData.honeypot}
-                  onChange={(e) => setFormData({ ...formData, honeypot: e.target.value })}
-                  className="hidden"
-                  tabIndex={-1}
-                  autoComplete="off"
-                />
-
-                <AnimatePresence mode="wait">
-                  {/* Step 1: Select Service */}
-                  {step === 1 && (
-                    <motion.div
-                      key="step1"
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -20 }}
-                      transition={{ duration: 0.25 }}
-                      className="space-y-4"
-                    >
-                      <h4 className="text-lg font-display font-bold text-white mb-4">
-                        What capability are you looking to activate?
-                      </h4>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        {servicesList.map((srv) => (
-                          <button
-                            key={srv}
-                            type="button"
-                            onClick={() => setFormData({ ...formData, service: srv })}
-                            className={`p-4 rounded-2xl text-left transition-all border ${
-                              formData.service === srv
-                                ? 'bg-[#FC6603]/15 border-[#FC6603] text-white shadow-[0_0_15px_rgba(252,102,3,0.25)] font-semibold'
-                                : 'bg-black/40 border-white/10 text-zinc-300 hover:border-white/25 hover:bg-white/[0.02]'
-                            }`}
-                          >
-                            <span className="text-sm">{srv}</span>
-                          </button>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-
-                  {/* Step 2: Budget Range */}
-                  {step === 2 && (
-                    <motion.div
-                      key="step2"
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -20 }}
-                      transition={{ duration: 0.25 }}
-                      className="space-y-4"
-                    >
-                      <h4 className="text-lg font-display font-bold text-white mb-4">
-                        What is your estimated investment budget?
-                      </h4>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        {budgetOptions.map((b) => (
-                          <button
-                            key={b}
-                            type="button"
-                            onClick={() => setFormData({ ...formData, budget: b })}
-                            className={`p-4 rounded-2xl text-left transition-all border ${
-                              formData.budget === b
-                                ? 'bg-[#FC6603]/15 border-[#FC6603] text-white shadow-[0_0_15px_rgba(252,102,3,0.25)] font-semibold'
-                                : 'bg-black/40 border-white/10 text-zinc-300 hover:border-white/25 hover:bg-white/[0.02]'
-                            }`}
-                          >
-                            <span className="text-base font-display">{b}</span>
-                          </button>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-
-                  {/* Step 3: Timeline */}
-                  {step === 3 && (
-                    <motion.div
-                      key="step3"
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -20 }}
-                      transition={{ duration: 0.25 }}
-                      className="space-y-4"
-                    >
-                      <h4 className="text-lg font-display font-bold text-white mb-4">
-                        When do you target to launch?
-                      </h4>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        {timelineOptions.map((t) => (
-                          <button
-                            key={t}
-                            type="button"
-                            onClick={() => setFormData({ ...formData, timeline: t })}
-                            className={`p-4 rounded-2xl text-left transition-all border ${
-                              formData.timeline === t
-                                ? 'bg-[#FC6603]/15 border-[#FC6603] text-white shadow-[0_0_15px_rgba(252,102,3,0.25)] font-semibold'
-                                : 'bg-black/40 border-white/10 text-zinc-300 hover:border-white/25 hover:bg-white/[0.02]'
-                            }`}
-                          >
-                            <span className="text-base font-display">{t}</span>
-                          </button>
-                        ))}
-                      </div>
-                    </motion.div>
-                  )}
-
-                  {/* Step 4: Contact Details & Project Description */}
-                  {step === 4 && (
-                    <motion.div
-                      key="step4"
-                      initial={{ opacity: 0, x: 20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      exit={{ opacity: 0, x: -20 }}
-                      transition={{ duration: 0.25 }}
-                      className="space-y-4"
-                    >
-                      <h4 className="text-lg font-display font-bold text-white mb-4">
-                        Tell us about your team & project.
-                      </h4>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                          <label className="block text-xs font-mono text-zinc-300 uppercase mb-2">
-                            Your Name *
-                          </label>
-                          <div className="relative">
-                            <input
-                              type="text"
-                              value={formData.name}
-                              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                              placeholder="Alex Mercer"
-                              required
-                              className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-[#FC6603] focus:ring-1 focus:ring-[#FC6603] transition-all"
-                            />
-                            <User className="w-4 h-4 text-zinc-500 absolute right-3.5 top-3.5" />
-                          </div>
-                        </div>
-
-                        <div>
-                          <label className="block text-xs font-mono text-zinc-300 uppercase mb-2">
-                            Business Email *
-                          </label>
-                          <div className="relative">
-                            <input
-                              type="email"
-                              value={formData.email}
-                              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                              placeholder="alex@company.com"
-                              required
-                              className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-[#FC6603] focus:ring-1 focus:ring-[#FC6603] transition-all"
-                            />
-                            <Mail className="w-4 h-4 text-zinc-500 absolute right-3.5 top-3.5" />
-                          </div>
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="block text-xs font-mono text-zinc-300 uppercase mb-2">
-                          Company / Brand Name
-                        </label>
-                        <div className="relative">
-                          <input
-                            type="text"
-                            value={formData.company}
-                            onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                            placeholder="Acme Innovations"
-                            className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-[#FC6603] focus:ring-1 focus:ring-[#FC6603] transition-all"
-                          />
-                          <Building2 className="w-4 h-4 text-zinc-500 absolute right-3.5 top-3.5" />
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="block text-xs font-mono text-zinc-300 uppercase mb-2">
-                          Project Description & Goals *
-                        </label>
-                        <textarea
-                          rows={4}
-                          value={formData.description}
-                          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                          placeholder="Tell us about the project scope, current pain points, and desired outcomes..."
-                          required
-                          className="w-full px-4 py-3 rounded-xl bg-black/60 border border-white/15 text-white placeholder-zinc-500 text-sm focus:outline-none focus:border-[#FC6603] focus:ring-1 focus:ring-[#FC6603] transition-all resize-none"
-                        />
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
-                {/* Error Banner */}
-                {errorMessage && (
-                  <div className="mt-4 p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 flex items-center gap-2 text-rose-400 text-xs">
-                    <AlertCircle className="w-4 h-4 shrink-0" />
-                    <span>{errorMessage}</span>
+            <form onSubmit={handleSubmit} className="space-y-8">
+              {/* STEP 1: INTERESTS */}
+              {currentStep === 1 && (
+                <div className="space-y-6 animate-in fade-in duration-200">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-display font-bold text-xl sm:text-2xl text-white">
+                      1. What nodes are you looking to activate?
+                    </h3>
+                    <span className="font-mono text-xs text-[#8A8A8E]">01 / 04</span>
                   </div>
-                )}
 
-                {/* Stepper Buttons */}
-                <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between">
-                  {step > 1 ? (
+                  <div className="flex flex-wrap gap-3 pt-2">
+                    {FORM_OPTIONS.interests.map((opt) => {
+                      const isSelected = interests.includes(opt);
+                      return (
+                        <button
+                          key={opt}
+                          type="button"
+                          onClick={() => toggleInterest(opt)}
+                          className={`px-5 py-3 rounded-full text-xs font-mono tracking-wider transition-all duration-200 ${
+                            isSelected
+                              ? 'bg-[#FF5A1F] text-black font-bold shadow-[0_0_20px_rgba(255,90,31,0.4)] scale-105'
+                              : 'bg-white/5 text-[#8A8A8E] hover:text-white border border-white/10 hover:border-white/20'
+                          }`}
+                        >
+                          {opt}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  <div className="pt-6 flex justify-end">
                     <button
                       type="button"
-                      onClick={handlePrev}
-                      className="px-5 py-2.5 rounded-full text-xs font-medium text-zinc-300 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 transition-colors flex items-center gap-2"
+                      disabled={interests.length === 0}
+                      onClick={() => setCurrentStep(2)}
+                      className="px-8 py-3.5 rounded-full bg-white text-black font-mono text-xs font-bold uppercase tracking-wider hover:bg-[#FF5A1F] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                     >
-                      <ArrowLeft className="w-3.5 h-3.5" />
-                      <span>Back</span>
+                      Next: Budget →
                     </button>
-                  ) : (
-                    <div />
+                  </div>
+                </div>
+              )}
+
+              {/* STEP 2: BUDGET */}
+              {currentStep === 2 && (
+                <div className="space-y-6 animate-in fade-in duration-200">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-display font-bold text-xl sm:text-2xl text-white">
+                      2. What is your estimated investment budget?
+                    </h3>
+                    <span className="font-mono text-xs text-[#8A8A8E]">02 / 04</span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                    {FORM_OPTIONS.budgets.map((b) => {
+                      const isSelected = budget === b;
+                      return (
+                        <button
+                          key={b}
+                          type="button"
+                          onClick={() => setBudget(b)}
+                          className={`p-4 rounded-2xl text-left font-mono text-xs tracking-wider transition-all duration-200 ${
+                            isSelected
+                              ? 'bg-[#FF5A1F] text-black font-bold shadow-[0_0_20px_rgba(255,90,31,0.4)]'
+                              : 'bg-white/5 text-[#8A8A8E] hover:text-white border border-white/10 hover:border-white/20'
+                          }`}
+                        >
+                          {b}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  <div className="pt-6 flex items-center justify-between">
+                    <button
+                      type="button"
+                      onClick={() => setCurrentStep(1)}
+                      className="font-mono text-xs text-[#8A8A8E] hover:text-white uppercase"
+                    >
+                      ← Back
+                    </button>
+                    <button
+                      type="button"
+                      disabled={!budget}
+                      onClick={() => setCurrentStep(3)}
+                      className="px-8 py-3.5 rounded-full bg-white text-black font-mono text-xs font-bold uppercase tracking-wider hover:bg-[#FF5A1F] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                    >
+                      Next: Contact Details →
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* STEP 3: CONTACT INFORMATION */}
+              {currentStep === 3 && (
+                <div className="space-y-6 animate-in fade-in duration-200">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-display font-bold text-xl sm:text-2xl text-white">
+                      3. Where should we deliver the growth plan?
+                    </h3>
+                    <span className="font-mono text-xs text-[#8A8A8E]">03 / 04</span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block font-mono text-[11px] text-[#8A8A8E] uppercase mb-1">
+                        Your Name *
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        placeholder="Marcus Vance"
+                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-sans text-sm focus:outline-none focus:border-[#FF5A1F]"
+                      />
+                    </div>
+                    <div>
+                      <label className="block font-mono text-[11px] text-[#8A8A8E] uppercase mb-1">
+                        Work Email *
+                      </label>
+                      <input
+                        type="email"
+                        required
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="marcus@company.com"
+                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-sans text-sm focus:outline-none focus:border-[#FF5A1F]"
+                      />
+                    </div>
+                    <div>
+                      <label className="block font-mono text-[11px] text-[#8A8A8E] uppercase mb-1">
+                        Phone / WhatsApp
+                      </label>
+                      <input
+                        type="tel"
+                        value={phone}
+                        onChange={(e) => setPhone(e.target.value)}
+                        placeholder="+1 (555) 000-0000"
+                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-sans text-sm focus:outline-none focus:border-[#FF5A1F]"
+                      />
+                    </div>
+                    <div>
+                      <label className="block font-mono text-[11px] text-[#8A8A8E] uppercase mb-1">
+                        Website or Domain URL
+                      </label>
+                      <input
+                        type="text"
+                        value={website}
+                        onChange={(e) => setWebsite(e.target.value)}
+                        placeholder="company.com"
+                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-sans text-sm focus:outline-none focus:border-[#FF5A1F]"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block font-mono text-[11px] text-[#8A8A8E] uppercase mb-1">
+                      Brief Description / Core Challenge
+                    </label>
+                    <textarea
+                      rows={3}
+                      value={message}
+                      onChange={(e) => setMessage(e.target.value)}
+                      placeholder="Outline your primary growth bottleneck or target goals..."
+                      className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-sans text-sm focus:outline-none focus:border-[#FF5A1F]"
+                    />
+                  </div>
+
+                  <div className="pt-4 flex items-center justify-between">
+                    <button
+                      type="button"
+                      onClick={() => setCurrentStep(2)}
+                      className="font-mono text-xs text-[#8A8A8E] hover:text-white uppercase"
+                    >
+                      ← Back
+                    </button>
+                    <button
+                      type="button"
+                      disabled={!name || !email}
+                      onClick={() => setCurrentStep(4)}
+                      className="px-8 py-3.5 rounded-full bg-white text-black font-mono text-xs font-bold uppercase tracking-wider hover:bg-[#FF5A1F] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                    >
+                      Next: Final Step →
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* STEP 4: REFERRAL SOURCE & TRANSMIT */}
+              {currentStep === 4 && (
+                <div className="space-y-6 animate-in fade-in duration-200">
+                  <div className="flex items-center justify-between">
+                    <h3 className="font-display font-bold text-xl sm:text-2xl text-white">
+                      4. How did you discover AlphaLinkx?
+                    </h3>
+                    <span className="font-mono text-xs text-[#8A8A8E]">04 / 04</span>
+                  </div>
+
+                  <div className="flex flex-wrap gap-3 pt-2">
+                    {FORM_OPTIONS.referralSources.map((source) => {
+                      const isSelected = referral === source;
+                      return (
+                        <button
+                          key={source}
+                          type="button"
+                          onClick={() => setReferral(source)}
+                          className={`px-5 py-3 rounded-full text-xs font-mono tracking-wider transition-all duration-200 ${
+                            isSelected
+                              ? 'bg-[#FF5A1F] text-black font-bold shadow-[0_0_20px_rgba(255,90,31,0.4)]'
+                              : 'bg-white/5 text-[#8A8A8E] hover:text-white border border-white/10 hover:border-white/20'
+                          }`}
+                        >
+                          {source}
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {errorMessage && (
+                    <p className="font-mono text-xs text-rose-500 bg-rose-500/10 p-3 rounded-xl border border-rose-500/20">
+                      {errorMessage}
+                    </p>
                   )}
 
-                  {step < 4 ? (
+                  <div className="pt-6 flex items-center justify-between">
                     <button
                       type="button"
-                      onClick={handleNext}
-                      className="px-6 py-2.5 rounded-full text-xs font-semibold text-white bg-[#FC6603] hover:bg-[#FF771E] transition-all flex items-center gap-2 shadow-[0_0_15px_rgba(252,102,3,0.3)]"
+                      onClick={() => setCurrentStep(3)}
+                      className="font-mono text-xs text-[#8A8A8E] hover:text-white uppercase"
                     >
-                      <span>Continue</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
+                      ← Back
                     </button>
-                  ) : (
                     <button
                       type="submit"
-                      disabled={loading}
-                      className="px-7 py-3 rounded-full text-sm font-semibold text-white bg-[#FC6603] hover:bg-[#FF771E] active:scale-[0.98] transition-all flex items-center gap-2 shadow-[0_0_20px_rgba(252,102,3,0.4)] disabled:opacity-60"
+                      disabled={isSubmitting}
+                      className="px-10 py-4 rounded-full bg-gradient-to-r from-[#FF5A1F] to-[#FF8A3D] text-black font-mono text-xs font-black uppercase tracking-widest hover:shadow-[0_0_30px_rgba(255,90,31,0.6)] transition-all hover:scale-105 active:scale-95 disabled:opacity-50"
                     >
-                      <span>{loading ? 'Transmitting Brief...' : 'Transmit Project Brief'}</span>
-                      <Send className="w-4 h-4" />
+                      {isSubmitting ? 'TRANSMITTING BRIEF…' : 'TRANSMIT BRIEF →'}
                     </button>
-                  )}
+                  </div>
                 </div>
-              </form>
-            </div>
+              )}
+            </form>
           )}
         </div>
       </div>

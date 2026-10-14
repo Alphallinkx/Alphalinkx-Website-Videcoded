@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { fetchTestimonials } from '../../lib/api';
 import { TestimonialItem } from '../../types';
-import { Star, Quote } from 'lucide-react';
+import { Star } from 'lucide-react';
 
 export const TestimonialsSection: React.FC = () => {
   const [testimonials, setTestimonials] = useState<TestimonialItem[]>([]);
@@ -11,20 +11,20 @@ export const TestimonialsSection: React.FC = () => {
   }, []);
 
   return (
-    <section className="relative py-28 bg-[#060709] overflow-hidden">
-      {/* Background Glow */}
+    <section className="relative py-28 bg-[#060709] border-t border-white/[0.08] overflow-hidden">
+      {/* Background Subtle Ambient Glow */}
       <div className="absolute left-10 bottom-10 w-80 h-80 bg-[#FC6603]/10 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-3xl mb-16">
           <span className="text-xs font-mono font-semibold tracking-widest text-[#FC6603] uppercase">
-            CLIENT ENDORSEMENTS
+            COLLABORATION FEEDBACK
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold text-white tracking-tight mt-3">
-            VERIFIED INDUSTRY LEADERS.
+            FOUNDER & LEADERSHIP PERSPECTIVES.
           </h2>
           <p className="text-base text-zinc-400 mt-4 leading-relaxed">
-            What leaders and engineering founders say about partnering with our specialized digital agency.
+            Reflections from technical founders and executives on our engineering discipline and project delivery.
           </p>
         </div>
 
@@ -36,7 +36,7 @@ export const TestimonialsSection: React.FC = () => {
               className="glass-panel rounded-3xl p-8 border border-white/10 hover:border-[#FC6603]/30 transition-all duration-300 flex flex-col justify-between bg-gradient-to-br from-[#0F121C] to-[#0A0C13] relative group"
             >
               <div>
-                {/* Rating Stars & Project Badge */}
+                {/* Rating Stars & Associated Project Badge */}
                 <div className="flex items-center justify-between mb-6">
                   <div className="flex items-center gap-1 text-[#FC6603]">
                     {[...Array(t.rating)].map((_, i) => (
@@ -56,7 +56,7 @@ export const TestimonialsSection: React.FC = () => {
                 </p>
               </div>
 
-              {/* Attribution */}
+              {/* Grounded Attribution */}
               <div className="pt-6 border-t border-white/10 flex items-center gap-4">
                 {t.avatarUrl ? (
                   <img

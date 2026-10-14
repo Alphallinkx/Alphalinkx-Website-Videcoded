@@ -1,172 +1,213 @@
-import React, { useRef, useMemo, Suspense } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Float, MeshDistortMaterial } from '@react-three/drei';
+import React, { useRef, useEffect } from 'react';
+import { Canvas, useFrame, useThree } from '@react-three/fiber';
+import { Environment, Lightformer, ContactShadows } from '@react-three/drei';
 import * as THREE from 'three';
 
-// Central Abstract Brand Sculpture
-function BrandSculpture() {
-  const meshRef = useRef<THREE.Mesh>(null);
-  const innerRef = useRef<THREE.Mesh>(null);
-  const ringRef = useRef<THREE.Group>(null);
+const ORANGE = '#ff6b00';
+const DARK_CHROME = '#141414';
 
-  useFrame((state) => {
-    const t = state.clock.getElapsedTime();
-    const mouseX = state.mouse.x * 0.4;
-    const mouseY = state.mouse.y * 0.4;
+interface LinksProps {
+  scroll: React.MutableRefObject<number>;
+}
 
-    if (meshRef.current) {
-      meshRef.current.rotation.x = THREE.MathUtils.lerp(meshRef.current.rotation.x, t * 0.2 + mouseY, 0.05);
-      meshRef.current.rotation.y = THREE.MathUtils.lerp(meshRef.current.rotation.y, t * 0.25 + mouseX, 0.05);
+/**
+ * Three interlocking links — "Linkx": connected digital systems.
+ * Interlocks at scroll = 0, unlinks smoothly on scroll down, and relinks on scroll up.
+ */
+function Links({ scroll }: LinksProps) {
+  const group = useRef<THREE.Group>(null);
+  const leftLinkRef = useRef<THREE.Mesh>(null);
+  const centerLinkRef = useRef<THREE.Mesh>(null);
+  const rightLinkRef = useRef<THREE.Mesh>(null);
+
+  // Track viewport to scale responsively on mobile
+  const { viewport } = useThree();
+
+  useFrame((state, raw) => {
+    const dt = Math.min(raw, 0.05);
+    const g = group.current;
+    if (!g) return;
+
+    const t = state.clock.elapsedTime;
+    const currentScroll = Math.max(0, scroll.current);
+
+    // Responsive scaling based on viewport width (mobile-friendly)
+    const targetScale = Math.min(1.0, Math.max(0.56, viewport.width / 6.8));
+    g.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 1 - Math.exp(-6 * dt));
+
+    // Base Group Rotation & Motion
+    // Follows mouse pointer gently and tilts with scroll
+    const targetRotX = state.pointer.y * 0.28 + currentScroll * 0.85 + 0.18;
+    const targetRotY = t * 0.14 + state.pointer.x * 0.45;
+    g.rotation.x += (targetRotX - g.rotation.x) * (1 - Math.exp(-4.5 * dt));
+    g.rotation.y += (targetRotY - g.rotation.y) * (1 - Math.exp(-4.5 * dt));
+    g.position.y = Math.sin(t * 0.6) * 0.08 - currentScroll * 1.1;
+
+    // Smooth Unlinking / Relinking Physics
+    // As currentScroll increases, left and right links pull away outward.
+    // At scroll = 0: left = -1.25, center = 0, right = +1.25 (interlocked).
+    // As scroll increases: left and right slide clear beyond the center link loops (> 2.3), fully uncoupling.
+    // When scroll returns to 0: they smoothly thread back into the center loop and lock.
+    const unlinkingFactor = 1 - Math.exp(-5.5 * dt);
+    const separation = currentScroll * 2.65;
+
+    // 1. Left Link (Orange)
+    if (leftLinkRef.current) {
+      const targetLeftX = -1.25 - separation;
+      const targetLeftY = separation * 0.32;
+      const targetLeftZ = separation * 0.18;
+      leftLinkRef.current.position.x += (targetLeftX - leftLinkRef.current.position.x) * unlinkingFactor;
+      leftLinkRef.current.position.y += (targetLeftY - leftLinkRef.current.position.y) * unlinkingFactor;
+      leftLinkRef.current.position.z += (targetLeftZ - leftLinkRef.current.position.z) * unlinkingFactor;
+
+      // Dynamic uncoupling tilt
+      const targetLeftRotZ = currentScroll * 0.45;
+      const targetLeftRotY = -currentScroll * 0.35;
+      leftLinkRef.current.rotation.z += (targetLeftRotZ - leftLinkRef.current.rotation.z) * unlinkingFactor;
+      leftLinkRef.current.rotation.y += (targetLeftRotY - leftLinkRef.current.rotation.y) * unlinkingFactor;
     }
 
-    if (innerRef.current) {
-      innerRef.current.rotation.x = -t * 0.3;
-      innerRef.current.rotation.z = t * 0.2;
+    // 2. Center Link (Dark Chrome)
+    if (centerLinkRef.current) {
+      // Once tension releases, center link slightly drops and rolls
+      const targetCenterY = -separation * 0.28;
+      const targetCenterRotX = Math.PI / 2 + currentScroll * 0.35;
+      const targetCenterRotZ = currentScroll * 0.25;
+
+      centerLinkRef.current.position.y += (targetCenterY - centerLinkRef.current.position.y) * unlinkingFactor;
+      centerLinkRef.current.rotation.x += (targetCenterRotX - centerLinkRef.current.rotation.x) * unlinkingFactor;
+      centerLinkRef.current.rotation.z += (targetCenterRotZ - centerLinkRef.current.rotation.z) * unlinkingFactor;
     }
 
-    if (ringRef.current) {
-      ringRef.current.rotation.z = t * 0.15;
-      ringRef.current.rotation.x = Math.PI / 4 + Math.sin(t * 0.5) * 0.1;
+    // 3. Right Link (Orange)
+    if (rightLinkRef.current) {
+      const targetRightX = 1.25 + separation;
+      const targetRightY = -separation * 0.32;
+      const targetRightZ = -separation * 0.18;
+      rightLinkRef.current.position.x += (targetRightX - rightLinkRef.current.position.x) * unlinkingFactor;
+      rightLinkRef.current.position.y += (targetRightY - rightLinkRef.current.position.y) * unlinkingFactor;
+      rightLinkRef.current.position.z += (targetRightZ - rightLinkRef.current.position.z) * unlinkingFactor;
+
+      // Symmetrical uncoupling tilt
+      const targetRightRotZ = -currentScroll * 0.45;
+      const targetRightRotY = currentScroll * 0.35;
+      rightLinkRef.current.rotation.z += (targetRightRotZ - rightLinkRef.current.rotation.z) * unlinkingFactor;
+      rightLinkRef.current.rotation.y += (targetRightRotY - rightLinkRef.current.rotation.y) * unlinkingFactor;
     }
   });
 
   return (
-    <group position={[0, 0, 0]}>
-      {/* Outer Torus Knot with Electric Orange Material */}
-      <mesh ref={meshRef} scale={1.2}>
-        <torusKnotGeometry args={[1.35, 0.38, 128, 32, 2, 3]} />
+    <group ref={group} rotation={[0.2, 0, 0.3]}>
+      {/* 01. Left Ring — Vibrant Glossy Orange */}
+      <mesh ref={leftLinkRef} position={[-1.25, 0, 0]} rotation={[0, 0, 0]} castShadow receiveShadow>
+        <torusGeometry args={[1, 0.28, 48, 128]} />
         <meshPhysicalMaterial
-          color="#FC6603"
-          emissive="#7C2D12"
-          emissiveIntensity={0.6}
-          roughness={0.2}
-          metalness={0.85}
+          color={ORANGE}
+          metalness={0.35}
+          roughness={0.22}
           clearcoat={1}
-          clearcoatRoughness={0.1}
+          clearcoatRoughness={0.15}
           reflectivity={0.9}
         />
       </mesh>
 
-      {/* Inner Glowing Crystal Core */}
-      <mesh ref={innerRef} scale={0.65}>
-        <icosahedronGeometry args={[1.2, 1]} />
-        <MeshDistortMaterial
-          color="#FFA055"
-          emissive="#FC6603"
-          emissiveIntensity={0.9}
-          roughness={0.1}
-          metalness={0.3}
-          distort={0.3}
-          speed={2}
-          wireframe={true}
+      {/* 02. Center Ring — Deep Glossy Obsidian Chrome, Interlocking Horizontally */}
+      <mesh ref={centerLinkRef} position={[0, 0, 0]} rotation={[Math.PI / 2, 0, 0]} castShadow receiveShadow>
+        <torusGeometry args={[1, 0.28, 48, 128]} />
+        <meshPhysicalMaterial
+          color={DARK_CHROME}
+          metalness={0.92}
+          roughness={0.24}
+          clearcoat={0.7}
+          clearcoatRoughness={0.15}
+          reflectivity={0.95}
         />
       </mesh>
 
-      {/* Orbiting Orbital Halo Ring */}
-      <group ref={ringRef}>
-        <mesh rotation={[Math.PI / 2, 0, 0]}>
-          <torusGeometry args={[2.7, 0.025, 16, 100]} />
-          <meshBasicMaterial color="#FC6603" transparent opacity={0.6} />
-        </mesh>
-        {/* Orbital Beacon Nodes */}
-        <mesh position={[2.7, 0, 0]}>
-          <sphereGeometry args={[0.09, 16, 16]} />
-          <meshBasicMaterial color="#FFFFFF" />
-        </mesh>
-        <mesh position={[-2.7, 0, 0]}>
-          <sphereGeometry args={[0.07, 16, 16]} />
-          <meshBasicMaterial color="#FC6603" />
-        </mesh>
-      </group>
+      {/* 03. Right Ring — Vibrant Glossy Orange */}
+      <mesh ref={rightLinkRef} position={[1.25, 0, 0]} rotation={[0, 0, 0]} castShadow receiveShadow>
+        <torusGeometry args={[1, 0.28, 48, 128]} />
+        <meshPhysicalMaterial
+          color={ORANGE}
+          metalness={0.35}
+          roughness={0.22}
+          clearcoat={1}
+          clearcoatRoughness={0.15}
+          reflectivity={0.9}
+        />
+      </mesh>
     </group>
   );
 }
 
-// Glowing Interactive Atmospheric Particle Field
-function ParticleField({ count = 180 }: { count?: number }) {
-  const pointsRef = useRef<THREE.Points>(null);
+// Window pointer forwarder helper so mouse tilt works across entire screen
+function MouseTracker() {
+  const { pointer } = useThree();
 
-  const [positions, colors] = useMemo(() => {
-    const pos = new Float32Array(count * 3);
-    const col = new Float32Array(count * 3);
-    const orange = new THREE.Color('#FC6603');
-    const white = new THREE.Color('#FFFFFF');
-    const amber = new THREE.Color('#FFB066');
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      // Normalize to [-1, 1]
+      const nx = (e.clientX / window.innerWidth) * 2 - 1;
+      const ny = -(e.clientY / window.innerHeight) * 2 + 1;
+      pointer.x = nx;
+      pointer.y = ny;
+    };
 
-    for (let i = 0; i < count; i++) {
-      // Spread across spherical volume
-      const r = 3.5 + Math.random() * 5.0;
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos(2 * Math.random() - 1);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, [pointer]);
 
-      pos[i * 3] = r * Math.sin(phi) * Math.cos(theta);
-      pos[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
-      pos[i * 3 + 2] = r * Math.cos(phi);
-
-      const choice = Math.random();
-      const c = choice > 0.6 ? orange : choice > 0.3 ? amber : white;
-      col[i * 3] = c.r;
-      col[i * 3 + 1] = c.g;
-      col[i * 3 + 2] = c.b;
-    }
-    return [pos, col];
-  }, [count]);
-
-  useFrame((state) => {
-    if (pointsRef.current) {
-      pointsRef.current.rotation.y = state.clock.getElapsedTime() * 0.04;
-      pointsRef.current.rotation.x = state.clock.getElapsedTime() * 0.02;
-    }
-  });
-
-  return (
-    <points ref={pointsRef}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          count={positions.length / 3}
-          array={positions}
-          itemSize={3}
-        />
-        <bufferAttribute
-          attach="attributes-color"
-          count={colors.length / 3}
-          array={colors}
-          itemSize={3}
-        />
-      </bufferGeometry>
-      <pointsMaterial
-        size={0.05}
-        vertexColors
-        transparent
-        opacity={0.8}
-        blending={THREE.AdditiveBlending}
-      />
-    </points>
-  );
+  return null;
 }
 
-export const HeroScene3D: React.FC = () => {
+export interface HeroSceneProps {
+  scroll: React.MutableRefObject<number>;
+}
+
+export const HeroScene3D: React.FC<HeroSceneProps> = ({ scroll }) => {
   return (
-    <div className="w-full h-full relative cursor-grab active:cursor-grabbing select-none">
+    <div className="absolute inset-0 w-full h-full pointer-events-none select-none z-0">
       <Canvas
-        camera={{ position: [0, 0, 6.2], fov: 45 }}
-        dpr={[1, 1.5]}
+        dpr={[1, 1.75]}
+        camera={{ position: [0, 0, 7.2], fov: 38 }}
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
       >
-        <ambientLight intensity={0.6} />
-        {/* Key Lighting with Brand Glow */}
-        <directionalLight position={[10, 10, 5]} intensity={1.5} color="#FFFFFF" />
-        <pointLight position={[-6, -4, 2]} intensity={2.2} color="#FC6603" distance={15} />
-        <pointLight position={[4, 5, -3]} intensity={1.5} color="#FF9933" distance={12} />
+        <MouseTracker />
+        <ambientLight intensity={0.4} />
+        <directionalLight position={[4, 6, 5]} intensity={2.4} castShadow />
+        <pointLight position={[-4, -2, 3]} intensity={28} color={ORANGE} />
+        <pointLight position={[4, 2, -3]} intensity={15} color="#ffffff" />
 
-        <Suspense fallback={null}>
-          <Float speed={1.8} rotationIntensity={0.6} floatIntensity={0.8}>
-            <BrandSculpture />
-          </Float>
-          <ParticleField />
-        </Suspense>
+        <Links scroll={scroll} />
+
+        <ContactShadows
+          position={[0, -2.1, 0]}
+          opacity={0.55}
+          scale={11}
+          blur={2.6}
+          far={4.5}
+        />
+
+        <Environment resolution={256}>
+          <Lightformer intensity={3.2} position={[0, 5, -2]} scale={[10, 3, 1]} />
+          <Lightformer
+            intensity={2.4}
+            color={ORANGE}
+            position={[-6, 0, 2]}
+            rotation-y={Math.PI / 2}
+            scale={[12, 2, 1]}
+          />
+          <Lightformer
+            intensity={1.8}
+            color="#ffffff"
+            position={[6, 1, 2]}
+            rotation-y={-Math.PI / 2}
+            scale={[12, 1, 1]}
+          />
+        </Environment>
       </Canvas>
     </div>
   );
 };
+
+export default HeroScene3D;

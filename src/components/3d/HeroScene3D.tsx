@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, Suspense } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Environment, Lightformer, ContactShadows } from '@react-three/drei';
 import * as THREE from 'three';
@@ -13,6 +13,7 @@ interface LinksProps {
 /**
  * Three interlocking links — "Linkx": connected digital systems.
  * Interlocks at scroll = 0, unlinks smoothly on scroll down, and relinks on scroll up.
+ * Responsively scales and positions for both mobile and desktop screens.
  */
 function Links({ scroll }: LinksProps) {
   const group = useRef<THREE.Group>(null);
@@ -20,8 +21,8 @@ function Links({ scroll }: LinksProps) {
   const centerLinkRef = useRef<THREE.Mesh>(null);
   const rightLinkRef = useRef<THREE.Mesh>(null);
 
-  // Track viewport to scale responsively on mobile
-  const { viewport } = useThree();
+  // Track viewport and canvas dimensions
+  const { viewport, size } = useThree();
 
   useFrame((state, raw) => {
     const dt = Math.min(raw, 0.05);
@@ -30,9 +31,15 @@ function Links({ scroll }: LinksProps) {
 
     const t = state.clock.elapsedTime;
     const currentScroll = Math.max(0, scroll.current);
+    const isMobile = size.width < 768 || viewport.width < 5.0;
 
-    // Responsive scaling based on viewport width (mobile-friendly)
-    const targetScale = Math.min(1.0, Math.max(0.56, viewport.width / 6.8));
+    // Responsive scaling:
+    // On mobile screens, scale down to fit portrait screen comfortably (never clip)
+    // On desktop, scale up to 1.0
+    const targetScale = isMobile
+      ? Math.min(0.48, Math.max(0.36, viewport.width / 5.2))
+      : Math.min(1.0, Math.max(0.56, viewport.width / 6.8));
+
     g.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 1 - Math.exp(-6 * dt));
 
     // Base Group Rotation & Motion
@@ -41,15 +48,16 @@ function Links({ scroll }: LinksProps) {
     const targetRotY = t * 0.14 + state.pointer.x * 0.45;
     g.rotation.x += (targetRotX - g.rotation.x) * (1 - Math.exp(-4.5 * dt));
     g.rotation.y += (targetRotY - g.rotation.y) * (1 - Math.exp(-4.5 * dt));
-    g.position.y = Math.sin(t * 0.6) * 0.08 - currentScroll * 1.1;
+
+    // Vertical positioning:
+    // On mobile, elevate chain slightly so it centers cleanly behind the headline
+    const baseYOffset = isMobile ? 0.35 : 0;
+    g.position.y = baseYOffset + Math.sin(t * 0.6) * 0.08 - currentScroll * (isMobile ? 0.85 : 1.1);
 
     // Smooth Unlinking / Relinking Physics
     // As currentScroll increases, left and right links pull away outward.
-    // At scroll = 0: left = -1.25, center = 0, right = +1.25 (interlocked).
-    // As scroll increases: left and right slide clear beyond the center link loops (> 2.3), fully uncoupling.
-    // When scroll returns to 0: they smoothly thread back into the center loop and lock.
     const unlinkingFactor = 1 - Math.exp(-5.5 * dt);
-    const separation = currentScroll * 2.65;
+    const separation = currentScroll * (isMobile ? 2.0 : 2.65);
 
     // 1. Left Link (Orange)
     if (leftLinkRef.current) {
@@ -140,6 +148,31 @@ function Links({ scroll }: LinksProps) {
   );
 }
 
+/**
+ * Dynamically adjusts camera FOV and position for mobile portrait screens
+ * to guarantee the full 3D interlocking chain is visible and centered on every device.
+ */
+function ResponsiveCamera() {
+  const { camera, size } = useThree();
+
+  useEffect(() => {
+    const isMobile = size.width < 768;
+    if (camera instanceof THREE.PerspectiveCamera) {
+      if (isMobile) {
+        // Mobile portrait: pull camera back and widen FOV so entire chain is centered and clear
+        camera.position.set(0, 0.35, 9.8);
+        camera.fov = 48;
+      } else {
+        camera.position.set(0, 0, 7.2);
+        camera.fov = 38;
+      }
+      camera.updateProjectionMatrix();
+    }
+  }, [camera, size.width, size.height]);
+
+  return null;
+}
+
 // Window pointer forwarder helper so mouse tilt works across entire screen
 function MouseTracker() {
   const { pointer } = useThree();
@@ -166,45 +199,48 @@ export interface HeroSceneProps {
 
 export const HeroScene3D: React.FC<HeroSceneProps> = ({ scroll }) => {
   return (
-    <div className="absolute inset-0 w-full h-full pointer-events-none select-none z-0">
+    <div className="absolute inset-0 w-full h-full pointer-events-none select-none z-[1]">
       <Canvas
         dpr={[1, 1.75]}
         camera={{ position: [0, 0, 7.2], fov: 38 }}
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
       >
+        <ResponsiveCamera />
         <MouseTracker />
         <ambientLight intensity={0.5} />
         <directionalLight position={[4, 6, 5]} intensity={2.0} castShadow />
         <pointLight position={[-4, -2, 3]} intensity={3.5} color="#ffffff" />
         <pointLight position={[4, 2, -3]} intensity={3.5} color="#ffffff" />
 
-        <Links scroll={scroll} />
+        <Suspense fallback={null}>
+          <Links scroll={scroll} />
 
-        <ContactShadows
-          position={[0, -2.1, 0]}
-          opacity={0.55}
-          scale={11}
-          blur={2.6}
-          far={4.5}
-        />
+          <ContactShadows
+            position={[0, -2.1, 0]}
+            opacity={0.55}
+            scale={11}
+            blur={2.6}
+            far={4.5}
+          />
 
-        <Environment resolution={256}>
-          <Lightformer intensity={2.5} position={[0, 5, -2]} scale={[10, 3, 1]} color="#ffffff" />
-          <Lightformer
-            intensity={1.5}
-            color="#ffffff"
-            position={[-6, 0, 2]}
-            rotation-y={Math.PI / 2}
-            scale={[12, 2, 1]}
-          />
-          <Lightformer
-            intensity={1.5}
-            color="#ffffff"
-            position={[6, 1, 2]}
-            rotation-y={-Math.PI / 2}
-            scale={[12, 1, 1]}
-          />
-        </Environment>
+          <Environment resolution={256}>
+            <Lightformer intensity={2.5} position={[0, 5, -2]} scale={[10, 3, 1]} color="#ffffff" />
+            <Lightformer
+              intensity={1.5}
+              color="#ffffff"
+              position={[-6, 0, 2]}
+              rotation-y={Math.PI / 2}
+              scale={[12, 2, 1]}
+            />
+            <Lightformer
+              intensity={1.5}
+              color="#ffffff"
+              position={[6, 1, 2]}
+              rotation-y={-Math.PI / 2}
+              scale={[12, 1, 1]}
+            />
+          </Environment>
+        </Suspense>
       </Canvas>
     </div>
   );

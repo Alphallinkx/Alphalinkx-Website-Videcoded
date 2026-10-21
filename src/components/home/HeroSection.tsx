@@ -70,7 +70,7 @@ export const HeroSection: React.FC = () => {
       <HeroScene3D scroll={scrollRef} />
 
       {/* 04. Bottom Cinematic Fade (Dips 3D chain smoothly into black on scroll) */}
-      <div className="absolute inset-x-0 bottom-0 h-44 sm:h-56 pointer-events-none bg-gradient-to-t from-[#08080A] via-[#08080A]/85 to-transparent z-[2]" />
+      <div className="absolute inset-x-0 bottom-0 h-20 sm:h-56 pointer-events-none bg-gradient-to-t from-[#08080A] via-[#08080A]/80 to-transparent z-[2]" />
 
       {/* 05. Vertical Social Media Icons & Links on the Left */}
       <HeroSocialBar />

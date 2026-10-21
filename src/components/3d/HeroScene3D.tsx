@@ -173,10 +173,10 @@ export const HeroScene3D: React.FC<HeroSceneProps> = ({ scroll }) => {
         gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
       >
         <MouseTracker />
-        <ambientLight intensity={0.4} />
-        <directionalLight position={[4, 6, 5]} intensity={2.4} castShadow />
-        <pointLight position={[-4, -2, 3]} intensity={28} color={ORANGE} />
-        <pointLight position={[4, 2, -3]} intensity={15} color="#ffffff" />
+        <ambientLight intensity={0.5} />
+        <directionalLight position={[4, 6, 5]} intensity={2.0} castShadow />
+        <pointLight position={[-4, -2, 3]} intensity={3.5} color="#ffffff" />
+        <pointLight position={[4, 2, -3]} intensity={3.5} color="#ffffff" />
 
         <Links scroll={scroll} />
 
@@ -189,16 +189,16 @@ export const HeroScene3D: React.FC<HeroSceneProps> = ({ scroll }) => {
         />
 
         <Environment resolution={256}>
-          <Lightformer intensity={3.2} position={[0, 5, -2]} scale={[10, 3, 1]} />
+          <Lightformer intensity={2.5} position={[0, 5, -2]} scale={[10, 3, 1]} color="#ffffff" />
           <Lightformer
-            intensity={2.4}
-            color={ORANGE}
+            intensity={1.5}
+            color="#ffffff"
             position={[-6, 0, 2]}
             rotation-y={Math.PI / 2}
             scale={[12, 2, 1]}
           />
           <Lightformer
-            intensity={1.8}
+            intensity={1.5}
             color="#ffffff"
             position={[6, 1, 2]}
             rotation-y={-Math.PI / 2}

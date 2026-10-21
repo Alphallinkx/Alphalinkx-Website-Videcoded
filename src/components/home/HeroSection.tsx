@@ -1,21 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
+import React, { useEffect, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'motion/react';
 import { HeroScene3D } from '../3d/HeroScene3D';
-import { BRAND, ROTATING_WORDS } from '../../content/siteContent';
+import { HeroParticles } from './HeroParticles';
+import { HeroSocialBar } from './HeroSocialBar';
 import { Reveal, MaskLine, MagneticButton } from '../common/MotionComponents';
 
 export const HeroSection: React.FC = () => {
-  const [wordIndex, setWordIndex] = useState(0);
   const sectionRef = useRef<HTMLElement>(null);
   const scrollRef = useRef<number>(0);
-
-  // Vertical word rotator (slide-up cycle every 2.4s)
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setWordIndex((prev) => (prev + 1) % ROTATING_WORDS.length);
-    }, 2400);
-    return () => clearInterval(interval);
-  }, []);
 
   // High-performance scroll tracking for 3D physics without React re-render overhead
   useEffect(() => {
@@ -31,6 +23,23 @@ export const HeroSection: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Smooth scroll down to explore next section and unlink the 3D chain
+  const scrollToExplore = () => {
+    const nextSection = document.getElementById('work') || document.getElementById('services') || document.querySelector('section:nth-of-type(2)');
+    const lenis = (window as any).lenis;
+    if (lenis) {
+      lenis.scrollTo(nextSection || window.innerHeight * 0.95, {
+        offset: -70,
+        duration: 1.35,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+    } else if (nextSection) {
+      nextSection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top: window.innerHeight * 0.95, behavior: 'smooth' });
+    }
+  };
+
   // Motion scroll-driven scrubbing for hero text layers (GPU accelerated)
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -38,85 +47,62 @@ export const HeroSection: React.FC = () => {
   });
 
   const headlineOpacity = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
-  const headlineY = useTransform(scrollYProgress, [0, 0.65], [0, -50]);
-  const headlineScale = useTransform(scrollYProgress, [0, 0.65], [1, 0.92]);
-
-  const metaOpacity = useTransform(scrollYProgress, [0, 0.35], [1, 0]);
-  const metaY = useTransform(scrollYProgress, [0, 0.35], [0, -25]);
+  const headlineY = useTransform(scrollYProgress, [0, 0.65], [0, -45]);
+  const headlineScale = useTransform(scrollYProgress, [0, 0.65], [1, 0.94]);
 
   const bottomOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
 
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-[100dvh] w-full flex flex-col justify-between pt-24 pb-10 px-6 md:px-12 overflow-hidden bg-[#0A0A0B]"
+      className="relative min-h-[100dvh] w-full flex flex-col justify-between pt-28 pb-10 px-6 md:px-12 overflow-hidden bg-[#08080A]"
     >
-      {/* 01. 3D WebGL Canvas Layer (3 Interlocking Links with Scroll Unlinking & Linking) */}
+      {/* 01. Clean Deep Black Studio Background (Zero Glow) */}
+      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden bg-[#08080A]">
+        {/* Bottom smooth fade to black */}
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#08080A] to-transparent pointer-events-none" />
+      </div>
+
+      {/* 02. Feather-Light Interactive Live Particles */}
+      <HeroParticles />
+
+      {/* 03. 3D WebGL Canvas Layer (Interlocking Links with Scroll Physics) */}
       <HeroScene3D scroll={scrollRef} />
 
-      {/* 02. Studio Atmosphere: Soft warm vignette & subtle bottom fade */}
-      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_75%_65%_at_50%_45%,rgba(255,107,0,0.08)_0%,rgba(10,10,11,0.25)_55%,#0A0A0B_95%)] z-0" />
-      <div className="absolute inset-x-0 bottom-0 h-32 pointer-events-none bg-gradient-to-t from-[#0A0A0B] to-transparent z-0" />
+      {/* 04. Bottom Cinematic Fade (Dips 3D chain smoothly into black on scroll) */}
+      <div className="absolute inset-x-0 bottom-0 h-44 sm:h-56 pointer-events-none bg-gradient-to-t from-[#08080A] via-[#08080A]/85 to-transparent z-[2]" />
 
-      {/* 03. Top Meta Row (Monospace Telemetry) */}
-      <motion.div
-        style={{ opacity: metaOpacity, y: metaY }}
-        className="relative z-10 w-full flex items-center justify-between font-mono text-[11px] md:text-xs text-[#8A8A8E] tracking-widest uppercase"
-      >
-        <span className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-[#FF5A1F] animate-pulse" />
-          <span>{BRAND.metaRow}</span>
-        </span>
-        <span className="hidden sm:inline-block text-[#FF5A1F]">
-          // 3D SIGNAL ENGINE ACTIVE
-        </span>
-      </motion.div>
+      {/* 05. Vertical Social Media Icons & Links on the Left */}
+      <HeroSocialBar />
 
-      {/* 04. Center Giant Hero Headline with Masked Line Animations */}
+      {/* 05. Prominent, Powerful Hero Typography & Content */}
       <motion.div
         style={{
           opacity: headlineOpacity,
           y: headlineY,
           scale: headlineScale,
         }}
-        className="relative z-10 my-auto py-8 text-center max-w-6xl mx-auto flex flex-col items-center justify-center will-change-transform"
+        className="relative z-10 my-auto py-8 text-center w-full max-w-7xl mx-auto flex flex-col items-center justify-center will-change-transform px-4"
       >
-        {/* Line 1: WE BUILD */}
-        <h1 className="font-display font-black text-5xl sm:text-7xl md:text-8xl lg:text-9xl text-white tracking-tighter uppercase leading-[0.95] drop-shadow-[0_10px_35px_rgba(0,0,0,0.9)]">
-          <MaskLine delay={0.05}>WE BUILD</MaskLine>
+        {/* Main Prominent Headline - Strictly 2 Lines, Clean White */}
+        <h1 className="font-display font-black text-[clamp(1.35rem,4.8vw,5.2rem)] text-white tracking-tighter uppercase leading-[1.08] drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)] flex flex-col items-center text-center w-full">
+          <MaskLine delay={0.05} className="whitespace-nowrap">
+            WE BUILD DIGITAL EMPIRES
+          </MaskLine>
+          <MaskLine delay={0.12} className="whitespace-nowrap mt-1 sm:mt-2.5">
+            THAT DOMINATE & SCALE.
+          </MaskLine>
         </h1>
 
-        {/* Line 2: [ROTATING WORD] THAT GROWS. */}
-        <div className="flex flex-wrap items-center justify-center gap-x-3 sm:gap-x-6 gap-y-2 mt-3 sm:mt-5 text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-display font-black tracking-tighter uppercase leading-none drop-shadow-[0_10px_35px_rgba(0,0,0,0.9)]">
-          <span className="relative inline-flex items-center justify-center h-[1.18em] min-w-[3.5ch] overflow-hidden align-middle text-[#FF5A1F]">
-            <AnimatePresence mode="popLayout" initial={false}>
-              <motion.span
-                key={ROTATING_WORDS[wordIndex]}
-                initial={{ y: '100%', opacity: 0 }}
-                animate={{ y: '0%', opacity: 1 }}
-                exit={{ y: '-100%', opacity: 0 }}
-                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                className="inline-block select-none whitespace-nowrap text-[#FF5A1F] drop-shadow-[0_0_35px_rgba(255,107,0,0.85)]"
-              >
-                {ROTATING_WORDS[wordIndex]}
-              </motion.span>
-            </AnimatePresence>
-          </span>
-
-          <span className="font-display font-black text-white tracking-tighter uppercase leading-none">
-            THAT GROWS.
-          </span>
-        </div>
-
-        {/* Value Proposition Subtext with Reveal Motion */}
-        <Reveal delay={0.25} className="mt-8 sm:mt-10 max-w-3xl mx-auto px-4">
-          <p className="text-lg sm:text-xl md:text-2xl text-[#E5E5E7] font-medium font-sans leading-relaxed drop-shadow-[0_4px_16px_rgba(0,0,0,0.95)]">
-            High-performance web architecture, generative AI search visibility (AEO/GEO), and mathematically tuned paid acquisition.
+        {/* Clear, Prominent Value Proposition Subtext */}
+        <Reveal delay={0.2} className="mt-6 sm:mt-8 max-w-2xl mx-auto px-4">
+          <p className="text-base sm:text-lg md:text-xl text-[#F2F2F5] font-medium font-sans leading-relaxed drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]">
+            High-performance web architecture, Generative AI search visibility (AEO/GEO), and algorithmic paid acquisition engineered to turn intent into exponential revenue.
           </p>
         </Reveal>
 
         {/* Two CTAs using MagneticButton */}
-        <Reveal delay={0.35} className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-4">
+        <Reveal delay={0.3} className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-4">
           <MagneticButton
             href="/contact"
             variant="primary"
@@ -135,29 +121,29 @@ export const HeroSection: React.FC = () => {
         </Reveal>
       </motion.div>
 
-      {/* 05. Bottom Bar: Monospace Scroll Indicator & Telemetry */}
+      {/* 06. Interactive Bottom Bar: Clickable "Unlink & Explore" CTA */}
       <motion.div
         style={{ opacity: bottomOpacity }}
-        className="relative z-10 w-full flex items-center justify-between font-mono text-[11px] text-[#8A8A8E] tracking-widest uppercase"
+        className="relative z-10 w-full flex items-center justify-center font-mono text-[11px] text-[#8A8A8E] tracking-widest uppercase"
       >
-        <span className="hidden md:inline-block">
-          // SCROLL TO UNLINK
-        </span>
-
-        <div className="mx-auto md:mx-0 flex items-center gap-3">
-          <span>Scroll to unlink</span>
-          <div className="w-4 h-8 rounded-full border border-white/20 flex items-start justify-center p-1">
+        <button
+          type="button"
+          onClick={scrollToExplore}
+          className="group flex items-center gap-3 cursor-pointer select-none text-[#8A8A8E] hover:text-white transition-colors duration-200"
+          data-cursor="SCROLL"
+          title="Click to explore and unlink the chain"
+        >
+          <span className="tracking-widest font-mono text-[11px] uppercase group-hover:text-[#FF5A1F] transition-colors">
+            UNLINK TO EXPLORE THE ENGINE ↓
+          </span>
+          <div className="w-4 h-8 rounded-full border border-white/20 group-hover:border-[#FF5A1F]/60 flex items-start justify-center p-1 transition-colors">
             <motion.div
               animate={{ y: [0, 12, 0] }}
               transition={{ repeat: Infinity, duration: 1.6, ease: 'easeInOut' }}
               className="w-1.5 h-1.5 rounded-full bg-[#FF5A1F]"
             />
           </div>
-        </div>
-
-        <span className="hidden md:inline-block text-right">
-          AEO • GEO • SEO • WEB • ADS
-        </span>
+        </button>
       </motion.div>
     </section>
   );

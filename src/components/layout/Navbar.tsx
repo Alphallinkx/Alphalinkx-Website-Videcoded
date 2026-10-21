@@ -77,22 +77,14 @@ export const Navbar: React.FC = () => {
           {/* Logo on Left */}
           <Link
             to="/"
-            className="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF5A1F] rounded-lg"
+            className="flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF5A1F] rounded-lg transition-transform hover:scale-105 duration-200"
             aria-label="AlphaLinkx Home"
           >
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-[#161619] to-[#0A0A0B] border border-white/15 flex items-center justify-center group-hover:border-[#FF5A1F] transition-colors duration-200">
-              <span className="font-display font-black text-lg text-[#FF5A1F] tracking-tighter">
-                AL
-              </span>
-            </div>
-            <div className="flex flex-col">
-              <span className="font-display font-bold text-base tracking-tight text-white group-hover:text-[#FF5A1F] transition-colors duration-200">
-                {BRAND.name}
-              </span>
-              <span className="font-mono text-[9px] text-[#8A8A8E] tracking-widest uppercase -mt-0.5">
-                // GROWTH AGENCY
-              </span>
-            </div>
+            <img
+              src="/assets/alphalinkx-mark.png"
+              alt="AlphaLinkx"
+              className="h-9 sm:h-10 w-auto object-contain"
+            />
           </Link>
 
           {/* Links Center (Desktop) */}

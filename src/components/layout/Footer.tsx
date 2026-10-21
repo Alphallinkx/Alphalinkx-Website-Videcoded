@@ -26,15 +26,14 @@ export const Footer: React.FC = () => {
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         {/* Navigation Columns */}
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-10 pb-20 border-b border-white/10">
-          {/* Col 1: Brand & Positioning (Col 2 on Large) */}
           <div className="col-span-2 lg:col-span-2 pr-6">
-            <Link to="/" className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-[#161619] border border-white/15 flex items-center justify-center">
-                <span className="font-display font-black text-sm text-[#FF5A1F]">
-                  AL
-                </span>
-              </div>
-              <span className="font-display font-black text-xl text-white tracking-tight">
+            <Link to="/" className="inline-flex items-center gap-3 group" aria-label="AlphaLinkx Home">
+              <img
+                src="/assets/alphalinkx-mark.png"
+                alt="AlphaLinkx Logo"
+                className="h-9 w-auto object-contain group-hover:scale-105 transition-transform duration-200"
+              />
+              <span className="font-display font-black text-xl text-white tracking-tight group-hover:text-[#FF5A1F] transition-colors">
                 {BRAND.name}
               </span>
             </Link>

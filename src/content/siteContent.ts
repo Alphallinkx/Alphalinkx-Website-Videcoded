@@ -85,12 +85,12 @@ export const BRAND = {
 };
 
 export const ROTATING_WORDS = [
-  'BRANDS',
-  'RANKINGS',
-  'TRAFFIC',
-  'LEADS',
-  'WEBSITES',
-  'REVENUE',
+  'REVENUE ENGINES',
+  'HIGH-ROI FUNNELS',
+  'DIGITAL EMPIRES',
+  'SEARCH MOATS',
+  'DOMINANT BRANDS',
+  'GROWTH PLATFORMS',
 ] as const;
 
 export const NAV_LINKS: NavLink[] = [

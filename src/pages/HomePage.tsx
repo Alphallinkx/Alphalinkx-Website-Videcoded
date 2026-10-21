@@ -13,10 +13,6 @@ import { FaqSection } from '../components/home/FaqSection';
 import { InquirySection } from '../components/home/InquirySection';
 
 export const HomePage: React.FC = () => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
     <main className="w-full bg-[#0A0A0B] text-[#F5F5F4] overflow-hidden selection:bg-[#FF5A1F] selection:text-black">
       {/* 01. HERO: "Growth, Linked." (3D Centerpiece + Rotating Word + Meta Row) */}

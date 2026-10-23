@@ -1,10 +1,9 @@
 import React, { useRef, useEffect, Suspense } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { Environment, Lightformer, ContactShadows } from '@react-three/drei';
 import * as THREE from 'three';
 
-const ORANGE = '#ff6b00';
-const DARK_CHROME = '#141414';
+const ORANGE = '#ff5a1f';
+const DARK_CHROME = '#18181b';
 
 interface LinksProps {
   scroll: React.MutableRefObject<number>;
@@ -34,10 +33,10 @@ function Links({ scroll }: LinksProps) {
     const isMobile = size.width < 768 || viewport.width < 5.0;
 
     // Responsive scaling:
-    // On mobile screens, scale down to fit portrait screen comfortably (never clip)
+    // On mobile screens, scale comfortably to fit portrait screen without clipping
     // On desktop, scale up to 1.0
     const targetScale = isMobile
-      ? Math.min(0.48, Math.max(0.36, viewport.width / 5.2))
+      ? Math.min(0.55, Math.max(0.42, viewport.width / 5.2))
       : Math.min(1.0, Math.max(0.56, viewport.width / 6.8));
 
     g.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 1 - Math.exp(-6 * dt));
@@ -50,7 +49,7 @@ function Links({ scroll }: LinksProps) {
     g.rotation.y += (targetRotY - g.rotation.y) * (1 - Math.exp(-4.5 * dt));
 
     // Vertical positioning:
-    // On mobile, elevate chain slightly so it centers cleanly behind the headline
+    // Elevated slightly on mobile to center cleanly behind the headline
     const baseYOffset = isMobile ? 0.35 : 0;
     g.position.y = baseYOffset + Math.sin(t * 0.6) * 0.08 - currentScroll * (isMobile ? 0.85 : 1.1);
 
@@ -107,40 +106,40 @@ function Links({ scroll }: LinksProps) {
   return (
     <group ref={group} rotation={[0.2, 0, 0.3]}>
       {/* 01. Left Ring — Vibrant Glossy Orange */}
-      <mesh ref={leftLinkRef} position={[-1.25, 0, 0]} rotation={[0, 0, 0]} castShadow receiveShadow>
-        <torusGeometry args={[1, 0.28, 48, 128]} />
+      <mesh ref={leftLinkRef} position={[-1.25, 0, 0]} rotation={[0, 0, 0]}>
+        <torusGeometry args={[1, 0.28, 36, 96]} />
         <meshPhysicalMaterial
           color={ORANGE}
-          metalness={0.35}
-          roughness={0.22}
+          metalness={0.45}
+          roughness={0.18}
           clearcoat={1}
-          clearcoatRoughness={0.15}
+          clearcoatRoughness={0.12}
           reflectivity={0.9}
         />
       </mesh>
 
       {/* 02. Center Ring — Deep Glossy Obsidian Chrome, Interlocking Horizontally */}
-      <mesh ref={centerLinkRef} position={[0, 0, 0]} rotation={[Math.PI / 2, 0, 0]} castShadow receiveShadow>
-        <torusGeometry args={[1, 0.28, 48, 128]} />
+      <mesh ref={centerLinkRef} position={[0, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
+        <torusGeometry args={[1, 0.28, 36, 96]} />
         <meshPhysicalMaterial
           color={DARK_CHROME}
-          metalness={0.92}
-          roughness={0.24}
-          clearcoat={0.7}
-          clearcoatRoughness={0.15}
+          metalness={0.95}
+          roughness={0.16}
+          clearcoat={0.9}
+          clearcoatRoughness={0.1}
           reflectivity={0.95}
         />
       </mesh>
 
       {/* 03. Right Ring — Vibrant Glossy Orange */}
-      <mesh ref={rightLinkRef} position={[1.25, 0, 0]} rotation={[0, 0, 0]} castShadow receiveShadow>
-        <torusGeometry args={[1, 0.28, 48, 128]} />
+      <mesh ref={rightLinkRef} position={[1.25, 0, 0]} rotation={[0, 0, 0]}>
+        <torusGeometry args={[1, 0.28, 36, 96]} />
         <meshPhysicalMaterial
           color={ORANGE}
-          metalness={0.35}
-          roughness={0.22}
+          metalness={0.45}
+          roughness={0.18}
           clearcoat={1}
-          clearcoatRoughness={0.15}
+          clearcoatRoughness={0.12}
           reflectivity={0.9}
         />
       </mesh>
@@ -198,48 +197,67 @@ export interface HeroSceneProps {
 }
 
 export const HeroScene3D: React.FC<HeroSceneProps> = ({ scroll }) => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  // WebGL context loss prevention & recovery
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const handleContextLost = (e: Event) => {
+      e.preventDefault();
+      console.warn('[HeroScene3D] WebGL context lost. Handling gracefully...');
+    };
+
+    const handleContextRestored = () => {
+      console.info('[HeroScene3D] WebGL context restored.');
+    };
+
+    canvas.addEventListener('webglcontextlost', handleContextLost, false);
+    canvas.addEventListener('webglcontextrestored', handleContextRestored, false);
+
+    return () => {
+      canvas.removeEventListener('webglcontextlost', handleContextLost);
+      canvas.removeEventListener('webglcontextrestored', handleContextRestored);
+    };
+  }, []);
+
   return (
-    <div className="absolute inset-0 w-full h-full pointer-events-none select-none z-[1]">
+    <div className="absolute inset-0 w-full h-full pointer-events-none select-none z-[1] bg-transparent">
       <Canvas
-        dpr={[1, 1.75]}
+        ref={canvasRef}
+        dpr={[1, Math.min(typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1, 1.75)]}
         camera={{ position: [0, 0, 7.2], fov: 38 }}
-        gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
+        gl={{
+          antialias: true,
+          alpha: true,
+          powerPreference: 'default',
+        }}
+        onCreated={({ gl }) => {
+          // Explicitly clear to 100% transparent black (prevents white canvas flash on mobile)
+          gl.setClearColor(0x000000, 0);
+        }}
+        className="!bg-transparent"
+        style={{ background: 'transparent' }}
       >
         <ResponsiveCamera />
         <MouseTracker />
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[4, 6, 5]} intensity={2.0} castShadow />
-        <pointLight position={[-4, -2, 3]} intensity={3.5} color="#ffffff" />
-        <pointLight position={[4, 2, -3]} intensity={3.5} color="#ffffff" />
+
+        {/* High-Performance Studio Lighting (100% Mobile GPU Safe, zero FBO overhead) */}
+        <ambientLight intensity={0.8} />
+        {/* Key directional light from top right */}
+        <directionalLight position={[5, 8, 5]} intensity={2.6} color="#ffffff" />
+        {/* Cool rim light from rear-left to highlight chrome bevels */}
+        <directionalLight position={[-6, -3, -3]} intensity={1.8} color="#94a3b8" />
+        {/* Warm orange link accent light */}
+        <pointLight position={[3, 2, 4]} intensity={2.8} color="#ff8a3d" />
+        {/* Cool obsidian chrome specular kicker */}
+        <pointLight position={[-3, 1, 4]} intensity={2.2} color="#ffffff" />
+        {/* Rear orange rim glow */}
+        <pointLight position={[0, -2, -4]} intensity={2.0} color="#ff5a1f" />
 
         <Suspense fallback={null}>
           <Links scroll={scroll} />
-
-          <ContactShadows
-            position={[0, -2.1, 0]}
-            opacity={0.55}
-            scale={11}
-            blur={2.6}
-            far={4.5}
-          />
-
-          <Environment resolution={256}>
-            <Lightformer intensity={2.5} position={[0, 5, -2]} scale={[10, 3, 1]} color="#ffffff" />
-            <Lightformer
-              intensity={1.5}
-              color="#ffffff"
-              position={[-6, 0, 2]}
-              rotation-y={Math.PI / 2}
-              scale={[12, 2, 1]}
-            />
-            <Lightformer
-              intensity={1.5}
-              color="#ffffff"
-              position={[6, 1, 2]}
-              rotation-y={-Math.PI / 2}
-              scale={[12, 1, 1]}
-            />
-          </Environment>
         </Suspense>
       </Canvas>
     </div>

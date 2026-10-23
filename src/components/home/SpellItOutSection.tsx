@@ -122,7 +122,7 @@ export const SpellItOutSection: React.FC = () => {
                   </div>
 
                   {/* Mini Interactive 3D Icon for this letter */}
-                  <LetterIcon3D type={panel.icon3DType} />
+                  <LetterIcon3D type={panel.icon3DType} isActive={isActive} />
                 </div>
 
                 {/* Panel Bottom: Service Details & Deliverable Chips */}

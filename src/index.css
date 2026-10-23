@@ -86,10 +86,11 @@
   box-shadow: 0 0 15px rgba(252, 102, 3, 0.2);
 }
 
-/* Hide canvas outlines */
+/* Hide canvas outlines and guarantee transparency */
 canvas {
   outline: none !important;
   border: none !important;
+  background-color: transparent !important;
 }
 
 @keyframes marquee {

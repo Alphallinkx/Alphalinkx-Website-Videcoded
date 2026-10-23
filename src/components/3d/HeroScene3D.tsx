@@ -24,6 +24,8 @@ function Links({ scroll }: LinksProps) {
   const { viewport, size } = useThree();
   const isMobile = size.width < 768 || viewport.width < 5.0;
 
+  const entrance = useRef(0);
+
   useFrame((state, raw) => {
     // When scrolled well past the hero, skip updates to keep the rest of the site buttery smooth
     if (scroll.current > 1.35) return;
@@ -32,20 +34,25 @@ function Links({ scroll }: LinksProps) {
     const g = group.current;
     if (!g) return;
 
+    // Smooth entrance bloom on page mount
+    entrance.current = Math.min(1, entrance.current + dt * 0.85);
+    const entranceEase = 1 - Math.pow(1 - entrance.current, 3);
+
     const t = state.clock.elapsedTime;
     const currentScroll = Math.max(0, scroll.current);
 
-    // Responsive scaling:
-    // Scale chain large and prominent on mobile so it has maximum visual presence!
+    // Responsive scaling with entrance reveal
     const targetScale = isMobile
       ? Math.min(0.88, Math.max(0.72, viewport.width / 4.2))
       : Math.min(1.0, Math.max(0.56, viewport.width / 6.8));
 
-    g.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 1 - Math.exp(-6 * dt));
+    const currentTargetScale = targetScale * (0.6 + 0.4 * entranceEase);
+    g.scale.lerp(new THREE.Vector3(currentTargetScale, currentTargetScale, currentTargetScale), 1 - Math.exp(-6 * dt));
 
     // Base Group Rotation & Motion
-    // Follows mouse pointer gently and tilts with scroll
-    const targetRotX = state.pointer.y * 0.28 + currentScroll * 0.85 + 0.18;
+    // Follows mouse pointer gently and tilts with scroll + entrance easing
+    const entranceTilt = (1 - entranceEase) * 0.4;
+    const targetRotX = state.pointer.y * 0.28 + currentScroll * 0.85 + 0.18 + entranceTilt;
     const targetRotY = t * 0.14 + state.pointer.x * 0.45;
     g.rotation.x += (targetRotX - g.rotation.x) * (1 - Math.exp(-4.5 * dt));
     g.rotation.y += (targetRotY - g.rotation.y) * (1 - Math.exp(-4.5 * dt));

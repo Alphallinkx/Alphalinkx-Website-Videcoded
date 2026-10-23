@@ -90,25 +90,49 @@ export const HeroSection: React.FC = () => {
         }}
         className="relative z-10 my-auto py-8 text-center w-full max-w-7xl mx-auto flex flex-col items-center justify-center will-change-transform px-4"
       >
-        {/* Main Prominent Headline */}
+        {/* Main Prominent Headline with Cinematic Mask Reveal */}
         <h1 className="font-display font-black text-[clamp(2.15rem,7.2vw,5.5rem)] text-white tracking-tight sm:tracking-tighter uppercase leading-[1.08] drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)] flex flex-col items-center text-center w-full">
-          <MaskLine delay={0.05} className="sm:whitespace-nowrap">
-            YOU FOCUS ON YOUR BUSINESS.
-          </MaskLine>
-          <MaskLine delay={0.12} className="sm:whitespace-nowrap mt-1.5 sm:mt-2.5">
-            WE MANAGE ITS GROWTH.
-          </MaskLine>
+          <span className="block overflow-hidden py-1">
+            <motion.span
+              initial={{ y: '115%', opacity: 0 }}
+              animate={{ y: '0%', opacity: 1 }}
+              transition={{ duration: 0.95, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="block sm:whitespace-nowrap will-change-transform"
+            >
+              YOU FOCUS ON YOUR BUSINESS.
+            </motion.span>
+          </span>
+          <span className="block overflow-hidden py-1">
+            <motion.span
+              initial={{ y: '115%', opacity: 0 }}
+              animate={{ y: '0%', opacity: 1 }}
+              transition={{ duration: 0.95, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              className="block sm:whitespace-nowrap mt-1 sm:mt-2 text-[#FF5A1F] will-change-transform"
+            >
+              WE MANAGE ITS GROWTH.
+            </motion.span>
+          </span>
         </h1>
 
-        {/* Clear, Prominent Value Proposition Subtext */}
-        <Reveal delay={0.2} className="mt-5 sm:mt-8 max-w-xl sm:max-w-2xl mx-auto px-2 sm:px-4">
+        {/* Clear, Prominent Value Proposition Subtext with Dissolve Reveal */}
+        <motion.div
+          initial={{ opacity: 0, y: 32, filter: 'blur(8px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          transition={{ duration: 0.85, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-5 sm:mt-8 max-w-xl sm:max-w-2xl mx-auto px-2 sm:px-4"
+        >
           <p className="text-[15px] sm:text-lg md:text-xl text-[#F2F2F5] font-normal sm:font-medium font-sans leading-relaxed drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]">
             Leave the growth to us. We manage everything you need to build an awesome business — one that grows faster, wins more customers, earns more revenue, and stands out as a brand people love, trust, and remember.
           </p>
-        </Reveal>
+        </motion.div>
 
-        {/* Two CTAs using MagneticButton */}
-        <Reveal delay={0.3} className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-4">
+        {/* Two CTAs with Staggered Scale-Up Reveal */}
+        <motion.div
+          initial={{ opacity: 0, y: 24, scale: 0.94 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.75, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-4"
+        >
           <MagneticButton
             href="/contact"
             variant="primary"
@@ -124,11 +148,14 @@ export const HeroSection: React.FC = () => {
           >
             See Our Work
           </MagneticButton>
-        </Reveal>
+        </motion.div>
       </motion.div>
 
-      {/* 06. Interactive Bottom Bar: Clickable "Unlink & Explore" CTA */}
+      {/* 06. Interactive Bottom Bar: Clickable "Unlink & Explore" CTA with Entrance Reveal */}
       <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.95, ease: [0.16, 1, 0.3, 1] }}
         style={{ opacity: bottomOpacity }}
         className="relative z-10 w-full flex items-center justify-center font-mono text-[11px] text-[#8A8A8E] tracking-widest uppercase"
       >

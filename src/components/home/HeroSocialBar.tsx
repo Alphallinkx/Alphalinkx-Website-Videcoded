@@ -55,7 +55,12 @@ export const HeroSocialBar: React.FC = () => {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
 
   return (
-    <div className="absolute left-4 sm:left-6 md:left-10 top-1/2 -translate-y-1/2 z-20 hidden sm:flex flex-col items-center gap-4 select-none">
+    <motion.div
+      initial={{ opacity: 0, x: -25 }}
+      animate={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      className="absolute left-4 sm:left-6 md:left-10 top-1/2 -translate-y-1/2 z-20 hidden sm:flex flex-col items-center gap-4 select-none"
+    >
       {/* Top vertical accent line */}
       <div className="w-[1px] h-12 bg-gradient-to-b from-transparent via-[#FF5A1F]/30 to-[#FF5A1F]" />
 
@@ -108,6 +113,6 @@ export const HeroSocialBar: React.FC = () => {
 
       {/* Bottom vertical accent line */}
       <div className="w-[1px] h-12 bg-gradient-to-t from-transparent via-white/15 to-[#FF5A1F]" />
-    </div>
+    </motion.div>
   );
 };

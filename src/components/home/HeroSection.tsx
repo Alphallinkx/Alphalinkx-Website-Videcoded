@@ -90,20 +90,20 @@ export const HeroSection: React.FC = () => {
         }}
         className="relative z-10 my-auto py-8 text-center w-full max-w-7xl mx-auto flex flex-col items-center justify-center will-change-transform px-4"
       >
-        {/* Main Prominent Headline - Bold, impactful, and perfectly sized for mobile & desktop */}
+        {/* Main Prominent Headline */}
         <h1 className="font-display font-black text-[clamp(2.15rem,7.2vw,5.5rem)] text-white tracking-tight sm:tracking-tighter uppercase leading-[1.08] drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)] flex flex-col items-center text-center w-full">
           <MaskLine delay={0.05} className="sm:whitespace-nowrap">
-            WE BUILD DIGITAL EMPIRES
+            YOU FOCUS ON YOUR BUSINESS.
           </MaskLine>
           <MaskLine delay={0.12} className="sm:whitespace-nowrap mt-1.5 sm:mt-2.5">
-            THAT DOMINATE & SCALE.
+            WE MANAGE ITS GROWTH.
           </MaskLine>
         </h1>
 
         {/* Clear, Prominent Value Proposition Subtext */}
         <Reveal delay={0.2} className="mt-5 sm:mt-8 max-w-xl sm:max-w-2xl mx-auto px-2 sm:px-4">
           <p className="text-[15px] sm:text-lg md:text-xl text-[#F2F2F5] font-normal sm:font-medium font-sans leading-relaxed drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]">
-            High-performance web architecture, Generative AI search visibility (AEO/GEO), and algorithmic paid acquisition engineered to turn intent into exponential revenue.
+            Leave the growth to us. We manage everything you need to build an awesome business — one that grows faster, wins more customers, earns more revenue, and stands out as a brand people love, trust, and remember.
           </p>
         </Reveal>
 

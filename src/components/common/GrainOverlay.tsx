@@ -4,7 +4,7 @@ export const GrainOverlay: React.FC = () => {
   return (
     <div
       aria-hidden="true"
-      className="fixed inset-0 pointer-events-none z-[80] overflow-hidden opacity-[0.035]"
+      className="hidden md:block fixed inset-0 pointer-events-none z-[80] overflow-hidden opacity-[0.035]"
     >
       <svg
         className="w-full h-full"

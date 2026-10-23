@@ -9,13 +9,19 @@ export const HeroSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
   const scrollRef = useRef<number>(0);
 
-  // High-performance scroll tracking for 3D physics without React re-render overhead
+  // High-performance scroll tracking without layout thrashing
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      if (!sectionRef.current) return;
-      const rect = sectionRef.current.getBoundingClientRect();
-      const progress = Math.max(0, -rect.top / window.innerHeight);
-      scrollRef.current = progress;
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const scrollY = window.scrollY || window.pageYOffset || 0;
+          const h = window.innerHeight || 800;
+          scrollRef.current = Math.max(0, scrollY / h);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -84,19 +90,19 @@ export const HeroSection: React.FC = () => {
         }}
         className="relative z-10 my-auto py-8 text-center w-full max-w-7xl mx-auto flex flex-col items-center justify-center will-change-transform px-4"
       >
-        {/* Main Prominent Headline - Strictly 2 Lines, Clean White */}
-        <h1 className="font-display font-black text-[clamp(1.35rem,4.8vw,5.2rem)] text-white tracking-tighter uppercase leading-[1.08] drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)] flex flex-col items-center text-center w-full">
-          <MaskLine delay={0.05} className="whitespace-nowrap">
+        {/* Main Prominent Headline - Bold, impactful, and perfectly sized for mobile & desktop */}
+        <h1 className="font-display font-black text-[clamp(2.15rem,7.2vw,5.5rem)] text-white tracking-tight sm:tracking-tighter uppercase leading-[1.08] drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)] flex flex-col items-center text-center w-full">
+          <MaskLine delay={0.05} className="sm:whitespace-nowrap">
             WE BUILD DIGITAL EMPIRES
           </MaskLine>
-          <MaskLine delay={0.12} className="whitespace-nowrap mt-1 sm:mt-2.5">
+          <MaskLine delay={0.12} className="sm:whitespace-nowrap mt-1.5 sm:mt-2.5">
             THAT DOMINATE & SCALE.
           </MaskLine>
         </h1>
 
         {/* Clear, Prominent Value Proposition Subtext */}
-        <Reveal delay={0.2} className="mt-6 sm:mt-8 max-w-2xl mx-auto px-4">
-          <p className="text-base sm:text-lg md:text-xl text-[#F2F2F5] font-medium font-sans leading-relaxed drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]">
+        <Reveal delay={0.2} className="mt-5 sm:mt-8 max-w-xl sm:max-w-2xl mx-auto px-2 sm:px-4">
+          <p className="text-[15px] sm:text-lg md:text-xl text-[#F2F2F5] font-normal sm:font-medium font-sans leading-relaxed drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]">
             High-performance web architecture, Generative AI search visibility (AEO/GEO), and algorithmic paid acquisition engineered to turn intent into exponential revenue.
           </p>
         </Reveal>

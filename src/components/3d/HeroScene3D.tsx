@@ -22,21 +22,23 @@ function Links({ scroll }: LinksProps) {
 
   // Track viewport and canvas dimensions
   const { viewport, size } = useThree();
+  const isMobile = size.width < 768 || viewport.width < 5.0;
 
   useFrame((state, raw) => {
+    // When scrolled well past the hero, skip updates to keep the rest of the site buttery smooth
+    if (scroll.current > 1.35) return;
+
     const dt = Math.min(raw, 0.05);
     const g = group.current;
     if (!g) return;
 
     const t = state.clock.elapsedTime;
     const currentScroll = Math.max(0, scroll.current);
-    const isMobile = size.width < 768 || viewport.width < 5.0;
 
     // Responsive scaling:
-    // On mobile screens, scale comfortably to fit portrait screen without clipping
-    // On desktop, scale up to 1.0
+    // Scale chain large and prominent on mobile so it has maximum visual presence!
     const targetScale = isMobile
-      ? Math.min(0.55, Math.max(0.42, viewport.width / 5.2))
+      ? Math.min(0.88, Math.max(0.72, viewport.width / 4.2))
       : Math.min(1.0, Math.max(0.56, viewport.width / 6.8));
 
     g.scale.lerp(new THREE.Vector3(targetScale, targetScale, targetScale), 1 - Math.exp(-6 * dt));
@@ -49,8 +51,8 @@ function Links({ scroll }: LinksProps) {
     g.rotation.y += (targetRotY - g.rotation.y) * (1 - Math.exp(-4.5 * dt));
 
     // Vertical positioning:
-    // Elevated slightly on mobile to center cleanly behind the headline
-    const baseYOffset = isMobile ? 0.35 : 0;
+    // Centered behind the hero content on mobile
+    const baseYOffset = isMobile ? 0.22 : 0;
     g.position.y = baseYOffset + Math.sin(t * 0.6) * 0.08 - currentScroll * (isMobile ? 0.85 : 1.1);
 
     // Smooth Unlinking / Relinking Physics
@@ -67,7 +69,6 @@ function Links({ scroll }: LinksProps) {
       leftLinkRef.current.position.y += (targetLeftY - leftLinkRef.current.position.y) * unlinkingFactor;
       leftLinkRef.current.position.z += (targetLeftZ - leftLinkRef.current.position.z) * unlinkingFactor;
 
-      // Dynamic uncoupling tilt
       const targetLeftRotZ = currentScroll * 0.45;
       const targetLeftRotY = -currentScroll * 0.35;
       leftLinkRef.current.rotation.z += (targetLeftRotZ - leftLinkRef.current.rotation.z) * unlinkingFactor;
@@ -76,7 +77,6 @@ function Links({ scroll }: LinksProps) {
 
     // 2. Center Link (Dark Chrome)
     if (centerLinkRef.current) {
-      // Once tension releases, center link slightly drops and rolls
       const targetCenterY = -separation * 0.28;
       const targetCenterRotX = Math.PI / 2 + currentScroll * 0.35;
       const targetCenterRotZ = currentScroll * 0.25;
@@ -95,7 +95,6 @@ function Links({ scroll }: LinksProps) {
       rightLinkRef.current.position.y += (targetRightY - rightLinkRef.current.position.y) * unlinkingFactor;
       rightLinkRef.current.position.z += (targetRightZ - rightLinkRef.current.position.z) * unlinkingFactor;
 
-      // Symmetrical uncoupling tilt
       const targetRightRotZ = -currentScroll * 0.45;
       const targetRightRotY = currentScroll * 0.35;
       rightLinkRef.current.rotation.z += (targetRightRotZ - rightLinkRef.current.rotation.z) * unlinkingFactor;
@@ -103,11 +102,14 @@ function Links({ scroll }: LinksProps) {
     }
   });
 
+  const radialSegments = isMobile ? 24 : 36;
+  const tubularSegments = isMobile ? 64 : 96;
+
   return (
     <group ref={group} rotation={[0.2, 0, 0.3]}>
       {/* 01. Left Ring — Vibrant Glossy Orange */}
       <mesh ref={leftLinkRef} position={[-1.25, 0, 0]} rotation={[0, 0, 0]}>
-        <torusGeometry args={[1, 0.28, 36, 96]} />
+        <torusGeometry args={[1, 0.28, radialSegments, tubularSegments]} />
         <meshPhysicalMaterial
           color={ORANGE}
           metalness={0.45}
@@ -120,7 +122,7 @@ function Links({ scroll }: LinksProps) {
 
       {/* 02. Center Ring — Deep Glossy Obsidian Chrome, Interlocking Horizontally */}
       <mesh ref={centerLinkRef} position={[0, 0, 0]} rotation={[Math.PI / 2, 0, 0]}>
-        <torusGeometry args={[1, 0.28, 36, 96]} />
+        <torusGeometry args={[1, 0.28, radialSegments, tubularSegments]} />
         <meshPhysicalMaterial
           color={DARK_CHROME}
           metalness={0.95}
@@ -133,7 +135,7 @@ function Links({ scroll }: LinksProps) {
 
       {/* 03. Right Ring — Vibrant Glossy Orange */}
       <mesh ref={rightLinkRef} position={[1.25, 0, 0]} rotation={[0, 0, 0]}>
-        <torusGeometry args={[1, 0.28, 36, 96]} />
+        <torusGeometry args={[1, 0.28, radialSegments, tubularSegments]} />
         <meshPhysicalMaterial
           color={ORANGE}
           metalness={0.45}
@@ -149,7 +151,7 @@ function Links({ scroll }: LinksProps) {
 
 /**
  * Dynamically adjusts camera FOV and position for mobile portrait screens
- * to guarantee the full 3D interlocking chain is visible and centered on every device.
+ * to guarantee the full 3D interlocking chain is prominent, large, and centered.
  */
 function ResponsiveCamera() {
   const { camera, size } = useThree();
@@ -158,9 +160,9 @@ function ResponsiveCamera() {
     const isMobile = size.width < 768;
     if (camera instanceof THREE.PerspectiveCamera) {
       if (isMobile) {
-        // Mobile portrait: pull camera back and widen FOV so entire chain is centered and clear
-        camera.position.set(0, 0.35, 9.8);
-        camera.fov = 48;
+        // Bring camera closer on mobile and keep FOV balanced so chain is visually large and impactful
+        camera.position.set(0, 0.22, 7.8);
+        camera.fov = 42;
       } else {
         camera.position.set(0, 0, 7.2);
         camera.fov = 38;
@@ -172,13 +174,14 @@ function ResponsiveCamera() {
   return null;
 }
 
-// Window pointer forwarder helper so mouse tilt works across entire screen
+// Window pointer forwarder helper so mouse tilt works across entire screen (desktop only)
 function MouseTracker() {
   const { pointer } = useThree();
 
   useEffect(() => {
+    if (typeof window !== 'undefined' && window.innerWidth < 768) return;
+
     const handleMouseMove = (e: MouseEvent) => {
-      // Normalize to [-1, 1]
       const nx = (e.clientX / window.innerWidth) * 2 - 1;
       const ny = -(e.clientY / window.innerHeight) * 2 + 1;
       pointer.x = nx;
@@ -198,6 +201,7 @@ export interface HeroSceneProps {
 
 export const HeroScene3D: React.FC<HeroSceneProps> = ({ scroll }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
   // WebGL context loss prevention & recovery
   useEffect(() => {
@@ -226,7 +230,8 @@ export const HeroScene3D: React.FC<HeroSceneProps> = ({ scroll }) => {
     <div className="absolute inset-0 w-full h-full pointer-events-none select-none z-[1] bg-transparent">
       <Canvas
         ref={canvasRef}
-        dpr={[1, Math.min(typeof window !== 'undefined' ? window.devicePixelRatio || 1 : 1, 1.75)]}
+        // DPR capped at 1 on mobile for butter-smooth 60-120fps scrolling with zero GPU strain
+        dpr={isMobile ? 1 : [1, 1.75]}
         camera={{ position: [0, 0, 7.2], fov: 38 }}
         gl={{
           antialias: true,
@@ -234,7 +239,7 @@ export const HeroScene3D: React.FC<HeroSceneProps> = ({ scroll }) => {
           powerPreference: 'default',
         }}
         onCreated={({ gl }) => {
-          // Explicitly clear to 100% transparent black (prevents white canvas flash on mobile)
+          // Explicitly clear to 100% transparent black
           gl.setClearColor(0x000000, 0);
         }}
         className="!bg-transparent"

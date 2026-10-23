@@ -30,7 +30,7 @@ export const HeroParticles: React.FC = () => {
     let dpr = 1;
 
     // Lightweight particle count: fast, smooth 60-120fps with zero frame drops
-    const getParticleCount = (w: number) => (w < 768 ? 20 : 42);
+    const getParticleCount = (w: number) => (w < 768 ? 12 : 36);
     const maxConnectionDistance = 120;
     const maxDistSq = maxConnectionDistance * maxConnectionDistance;
 
@@ -140,7 +140,6 @@ export const HeroParticles: React.FC = () => {
     };
 
     window.addEventListener('mousemove', handlePointerMove, { passive: true });
-    window.addEventListener('touchmove', handlePointerMove, { passive: true });
     window.addEventListener('mouseleave', handlePointerLeave);
 
     const render = () => {

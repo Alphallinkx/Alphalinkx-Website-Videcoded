@@ -59,21 +59,13 @@ export const HeroSocialBar: React.FC = () => {
       initial={{ opacity: 0, x: -25 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.8, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
-      className="absolute left-4 sm:left-6 md:left-10 top-1/2 -translate-y-1/2 z-20 hidden sm:flex flex-col items-center gap-4 select-none"
+      className="absolute left-4 sm:left-6 md:left-8 lg:left-10 top-1/2 -translate-y-1/2 z-20 hidden sm:flex flex-col items-center gap-3 select-none"
     >
-      {/* Top vertical accent line */}
-      <div className="w-[1px] h-12 bg-gradient-to-b from-transparent via-[#FF5A1F]/30 to-[#FF5A1F]" />
+      {/* Top vertical accent line (equal to bottom for true mathematical center) */}
+      <div className="w-[1px] h-10 bg-gradient-to-b from-transparent via-white/10 to-[#FF5A1F]/40" />
 
-      {/* Monospace Micro Label */}
-      <span
-        className="font-mono text-[9px] tracking-[0.28em] text-[#8A8A8E] uppercase -rotate-90 py-3 whitespace-nowrap"
-        style={{ writingMode: 'vertical-rl' }}
-      >
-        FOLLOW
-      </span>
-
-      {/* Social Icons list */}
-      <div className="flex flex-col items-center gap-2.5 py-1">
+      {/* Centered Social Icons Dock */}
+      <div className="flex flex-col items-center gap-2.5 p-1.5 rounded-full bg-[#111114]/85 border border-white/10 backdrop-blur-xl shadow-[0_8px_32px_rgba(0,0,0,0.6)]">
         {SOCIAL_ITEMS.map((item) => (
           <div key={item.id} className="relative">
             <a
@@ -84,7 +76,7 @@ export const HeroSocialBar: React.FC = () => {
               onMouseLeave={() => setHoveredId(null)}
               data-cursor="LINK"
               aria-label={item.name}
-              className="group relative flex items-center justify-center w-8 h-8 rounded-full bg-[#121215]/80 hover:bg-[#FF5A1F]/15 border border-white/10 hover:border-[#FF5A1F]/60 text-[#9E9EA4] hover:text-[#FF5A1F] transition-all duration-300 hover:scale-110 hover:shadow-[0_0_18px_rgba(255,90,31,0.45)] backdrop-blur-sm"
+              className="group relative flex items-center justify-center w-9 h-9 rounded-full bg-white/[0.03] hover:bg-[#FF5A1F]/20 border border-white/5 hover:border-[#FF5A1F]/60 text-[#9E9EA4] hover:text-[#FF5A1F] transition-all duration-300 hover:scale-110 hover:shadow-[0_0_20px_rgba(255,90,31,0.5)]"
             >
               {item.svg}
             </a>
@@ -97,9 +89,9 @@ export const HeroSocialBar: React.FC = () => {
                   animate={{ opacity: 1, x: 0, scale: 1 }}
                   exit={{ opacity: 0, x: -4, scale: 0.95 }}
                   transition={{ duration: 0.18, ease: 'easeOut' }}
-                  className="pointer-events-none absolute left-full top-1/2 -translate-y-1/2 ml-3 px-2.5 py-1 rounded bg-[#16161A]/95 border border-[#FF5A1F]/30 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.8)] whitespace-nowrap z-30"
+                  className="pointer-events-none absolute left-full top-1/2 -translate-y-1/2 ml-3.5 px-3 py-1 rounded-md bg-[#16161A]/95 border border-[#FF5A1F]/30 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.8)] whitespace-nowrap z-30"
                 >
-                  <span className="font-mono text-[10px] uppercase tracking-wider text-[#FF5A1F]">
+                  <span className="font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-[#FF5A1F]">
                     {item.name}
                   </span>
                   {/* Tooltip caret */}
@@ -111,8 +103,8 @@ export const HeroSocialBar: React.FC = () => {
         ))}
       </div>
 
-      {/* Bottom vertical accent line */}
-      <div className="w-[1px] h-12 bg-gradient-to-t from-transparent via-white/15 to-[#FF5A1F]" />
+      {/* Bottom vertical accent line (equal to top for true mathematical center) */}
+      <div className="w-[1px] h-10 bg-gradient-to-t from-transparent via-white/10 to-[#FF5A1F]/40" />
     </motion.div>
   );
 };

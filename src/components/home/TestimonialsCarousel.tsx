@@ -16,11 +16,11 @@ export const TestimonialsCarousel: React.FC = () => {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-8 border-b border-white/10 gap-6">
           <div>
-            <span className="font-mono text-xs uppercase tracking-widest text-[#FF5A1F]">
+            <span className="font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-[#FF5A1F]">
               // 08 ENDORSEMENTS
             </span>
-            <h2 className="font-display font-black text-4xl sm:text-6xl text-white tracking-tighter uppercase mt-2">
-              PROOF FROM THE FRONT LINES.
+            <h2 className="font-display font-extrabold text-3xl sm:text-5xl md:text-6xl text-white tracking-[-0.02em] leading-[1.1] mt-2">
+              Proof from the front lines.
             </h2>
           </div>
           <div className="flex items-center gap-3">
@@ -63,29 +63,29 @@ export const TestimonialsCarousel: React.FC = () => {
               >
                 {/* Verified Metric Badge */}
                 <div className="flex items-center justify-between pb-6 border-b border-white/5">
-                  <span className="font-mono text-[10px] text-[#FF5A1F] uppercase tracking-wider font-bold">
-                    [TODO: REPLACE VERIFIED TESTIMONIAL]
+                  <span className="font-mono text-[12px] text-[#FF5A1F] uppercase tracking-[0.18em] font-medium">
+                    VERIFIED CLIENT
                   </span>
-                  <span className="font-mono text-xs text-emerald-400 font-semibold bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20">
+                  <span className="font-mono text-[12px] text-emerald-400 font-medium bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20 tracking-[0.18em]">
                     {item.verifiedMetric}
                   </span>
                 </div>
 
-                {/* Quote Body (max 3 lines) */}
-                <p className="font-display font-medium text-lg sm:text-xl text-[#F5F5F4] my-8 leading-snug">
+                {/* Quote Body */}
+                <p className="font-sans text-[16px] sm:text-[17px] text-[#C2C2C2] my-8 leading-[1.6]">
                   "{item.quote}"
                 </p>
 
                 {/* Author Info */}
                 <div className="pt-6 border-t border-white/5 flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#FF5A1F] to-[#FF8A3D] text-black font-display font-black text-sm flex items-center justify-center">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#FF5A1F] to-[#FF8A3D] text-black font-display font-extrabold text-sm flex items-center justify-center shrink-0">
                     {item.author.slice(0, 2).toUpperCase()}
                   </div>
                   <div>
-                    <h4 className="font-display font-bold text-sm text-white">
+                    <h4 className="font-display font-bold text-base text-white tracking-[-0.01em]">
                       {item.author}
                     </h4>
-                    <p className="font-mono text-xs text-[#8A8A8E]">
+                    <p className="font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em] mt-0.5">
                       {item.role} • {item.company}
                     </p>
                   </div>

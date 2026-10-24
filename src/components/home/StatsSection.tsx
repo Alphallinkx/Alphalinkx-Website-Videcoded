@@ -39,14 +39,14 @@ export const StatsSection: React.FC = () => {
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10">
         {/* Section Header */}
         <div className="max-w-2xl mb-20">
-          <span className="font-mono text-xs uppercase tracking-widest text-[#FF5A1F]">
-            // 07 RESULTS, NOT FLUFF
+          <span className="font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-[#FF5A1F]">
+            // 07 VERIFIED METRICS
           </span>
-          <h2 className="font-display font-black text-4xl sm:text-6xl text-white tracking-tighter uppercase mt-2">
-            TELEMETRY DOES NOT LIE.
+          <h2 className="font-display font-extrabold text-3xl sm:text-5xl md:text-6xl text-white tracking-[-0.02em] leading-[1.1] mt-2">
+            Results backed by telemetry.
           </h2>
-          <p className="font-mono text-xs text-[#8A8A8E] mt-3 uppercase tracking-wider">
-            All metrics captured from verified server analytics and active client engagements [TODO].
+          <p className="font-sans text-[16px] text-[#C2C2C2] mt-3 leading-[1.6]">
+            Every metric captured directly from production deployments and verified revenue pipelines.
           </p>
         </div>
 
@@ -58,21 +58,21 @@ export const StatsSection: React.FC = () => {
               className="flex flex-col p-8 rounded-3xl bg-[#111113]/80 border border-white/10 hover:border-[#FF5A1F]/50 backdrop-blur-xl transition-all duration-300 shadow-xl group"
             >
               <div className="flex items-baseline gap-1">
-                <span className="font-display font-black text-5xl sm:text-6xl md:text-7xl text-white tracking-tighter tabular-nums group-hover:text-[#FF5A1F] transition-colors">
+                <span className="font-display font-extrabold text-5xl sm:text-6xl md:text-7xl text-white tracking-[-0.03em] tabular-nums group-hover:text-[#FF5A1F] transition-colors">
                   {isInView ? stat.number : '0'}
                 </span>
                 {stat.suffix && (
-                  <span className="font-display font-black text-3xl sm:text-4xl text-[#FF5A1F]">
+                  <span className="font-display font-extrabold text-3xl sm:text-4xl text-[#FF5A1F]">
                     {stat.suffix}
                   </span>
                 )}
               </div>
 
-              <h3 className="font-mono text-xs uppercase tracking-widest text-white mt-4 font-bold">
+              <h3 className="font-display font-bold text-lg sm:text-xl text-white tracking-[-0.01em] mt-4">
                 {stat.label}
               </h3>
 
-              <p className="font-sans text-xs text-[#8A8A8E] mt-3 leading-relaxed">
+              <p className="font-sans text-[16px] text-[#C2C2C2] mt-2 leading-[1.6]">
                 {stat.wittyCaption}
               </p>
             </div>

@@ -40,7 +40,7 @@ export const ShowreelSection: React.FC = () => {
       className="relative py-20 md:py-32 bg-[#0A0A0B] overflow-hidden flex flex-col items-center justify-center"
     >
       {/* Section meta tag */}
-      <div className="max-w-[1400px] w-full px-6 md:px-10 mb-8 flex items-center justify-between font-mono text-xs text-[#8A8A8E] uppercase tracking-widest">
+      <div className="max-w-[1400px] w-full px-6 md:px-10 mb-8 flex items-center justify-between font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em]">
         <span>// 02 SHOWREEL</span>
         <span className="text-[#FF5A1F]">EXPAND ON SCROLL</span>
       </div>
@@ -85,13 +85,13 @@ export const ShowreelSection: React.FC = () => {
                 <polygon points="5 3 19 12 5 21 5 3" />
               </svg>
             </div>
-            <span className="mt-4 font-mono text-xs tracking-widest uppercase text-white/90 font-semibold group-hover:text-[#FF5A1F] transition-colors">
+            <span className="mt-4 font-mono text-[12px] font-medium tracking-[0.18em] uppercase text-white/90 group-hover:text-[#FF5A1F] transition-colors">
               WATCH REEL [01:24]
             </span>
           </div>
 
           {/* Bottom Video Meta Bar */}
-          <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between font-mono text-[11px] text-[#8A8A8E] uppercase tracking-wider">
+          <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em]">
             <span>ALPHALINKX DIGITAL FILM // 2024</span>
             <span className="text-white">CLICK FOR AUDIO</span>
           </div>
@@ -109,7 +109,7 @@ export const ShowreelSection: React.FC = () => {
           >
             <button
               onClick={() => setIsPlayingModal(false)}
-              className="absolute top-8 right-8 font-mono text-xs text-white/70 hover:text-white uppercase tracking-widest px-4 py-2 rounded-full border border-white/20 hover:border-[#FF5A1F] bg-[#111113] transition-colors"
+              className="absolute top-8 right-8 font-mono text-[12px] font-medium text-white/70 hover:text-white uppercase tracking-[0.18em] px-4 py-2 rounded-full border border-white/20 hover:border-[#FF5A1F] bg-[#111113] transition-colors"
             >
               CLOSE [ESC]
             </button>

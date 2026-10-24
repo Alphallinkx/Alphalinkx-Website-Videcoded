@@ -34,13 +34,13 @@ export const ProjectsPage: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="max-w-3xl mb-12">
-          <span className="text-xs font-mono font-semibold tracking-widest text-[#FC6603] uppercase">
-            SELECTED CLIENT COMMISSIONS
+          <span className="font-mono text-[12px] font-medium tracking-[0.18em] text-[#FF5A1F] uppercase">
+            // SELECTED CLIENT COMMISSIONS
           </span>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-extrabold text-white tracking-tight mt-3 leading-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-extrabold text-white tracking-[-0.03em] uppercase mt-3 leading-[1.02]">
             ENGINEERED WITH PURPOSE.
           </h1>
-          <p className="text-lg text-zinc-400 mt-5 leading-relaxed">
+          <p className="font-sans text-[16px] sm:text-[17px] text-[#C2C2C2] mt-5 leading-[1.6]">
             Case studies of high-performance web systems, AI automations, and conversion platforms built for category-defining leaders.
           </p>
         </div>
@@ -51,9 +51,9 @@ export const ProjectsPage: React.FC = () => {
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-4 py-2 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap focus:outline-none ${
+              className={`px-4 py-2 rounded-full font-mono text-[12px] font-medium uppercase tracking-[0.18em] transition-all whitespace-nowrap focus:outline-none ${
                 selectedCategory === cat
-                  ? 'bg-[#FC6603] text-white shadow-[0_0_15px_rgba(252,102,3,0.35)] font-semibold'
+                  ? 'bg-[#FF5A1F] text-black font-bold shadow-[0_0_15px_rgba(255,90,31,0.35)]'
                   : 'bg-zinc-900/80 text-zinc-400 hover:text-white border border-white/5 hover:border-white/15'
               }`}
             >
@@ -67,7 +67,7 @@ export const ProjectsPage: React.FC = () => {
           {filteredProjects.map((project) => (
             <div
               key={project.id}
-              className="glass-panel rounded-3xl overflow-hidden border border-white/10 hover:border-[#FC6603]/40 transition-all duration-300 flex flex-col h-full bg-[#0E1017] group"
+              className="glass-panel rounded-3xl overflow-hidden border border-white/10 hover:border-[#FF5A1F]/40 transition-all duration-300 flex flex-col h-full bg-[#0E1017] group"
             >
               {/* Browser Header Bar */}
               <div className="px-5 py-3 border-b border-white/10 bg-black/60 flex items-center justify-between">
@@ -76,10 +76,10 @@ export const ProjectsPage: React.FC = () => {
                   <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80" />
                   <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80" />
                 </div>
-                <div className="px-3 py-0.5 rounded-md bg-white/5 text-[11px] font-mono text-zinc-400">
+                <div className="px-3 py-0.5 rounded-md bg-white/5 font-mono text-[12px] font-medium text-zinc-400">
                   {project.client}
                 </div>
-                <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded bg-[#FC6603]/15 text-[#FC6603]">
+                <span className="font-mono text-[12px] font-medium px-2 py-0.5 rounded bg-[#FF5A1F]/15 text-[#FF5A1F] uppercase tracking-[0.18em]">
                   {project.category}
                 </span>
               </div>
@@ -102,7 +102,7 @@ export const ProjectsPage: React.FC = () => {
                       e.stopPropagation();
                       setActiveModalProject(project);
                     }}
-                    className="px-5 py-2.5 rounded-full bg-[#FC6603] text-white text-xs font-semibold flex items-center gap-2 shadow-xl"
+                    className="px-5 py-2.5 rounded-full bg-[#FF5A1F] text-black font-mono text-[12px] font-medium uppercase tracking-[0.18em] flex items-center gap-2 shadow-xl"
                   >
                     <Eye className="w-3.5 h-3.5" />
                     <span>Quick Preview</span>
@@ -113,10 +113,10 @@ export const ProjectsPage: React.FC = () => {
               {/* Content */}
               <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between">
                 <div>
-                  <h2 className="text-xl sm:text-2xl font-display font-bold text-white group-hover:text-[#FC6603] transition-colors leading-snug">
+                  <h2 className="text-xl sm:text-2xl font-display font-bold text-white tracking-[-0.01em] group-hover:text-[#FF5A1F] transition-colors leading-snug">
                     {project.title}
                   </h2>
-                  <p className="text-sm text-zinc-400 mt-2.5 line-clamp-2 leading-relaxed">
+                  <p className="font-sans text-[16px] text-[#C2C2C2] mt-2.5 line-clamp-2 leading-[1.6]">
                     {project.summary}
                   </p>
                 </div>
@@ -124,13 +124,13 @@ export const ProjectsPage: React.FC = () => {
                 <div className="mt-6 pt-5 border-t border-white/10 flex items-center justify-between">
                   <button
                     onClick={() => setActiveModalProject(project)}
-                    className="text-xs font-semibold text-zinc-300 hover:text-white transition-colors"
+                    className="font-mono text-[12px] font-medium text-zinc-300 hover:text-white uppercase tracking-[0.18em] transition-colors"
                   >
                     Overview
                   </button>
                   <Link
                     to={`/projects/${project.slug}`}
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#FC6603] hover:text-[#FF8833] group/btn"
+                    className="inline-flex items-center gap-1.5 font-mono text-[12px] font-medium text-[#FF5A1F] hover:text-[#FF8A3D] uppercase tracking-[0.18em] group/btn"
                   >
                     <span>Full Case Study</span>
                     <ArrowUpRight className="w-3.5 h-3.5 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />

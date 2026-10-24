@@ -67,20 +67,20 @@ export const NotFoundPage: React.FC = () => {
       </div>
 
       <div className="relative z-10 max-w-xl mx-auto space-y-4">
-        <span className="font-mono text-xs text-[#FF5A1F] tracking-widest uppercase font-bold">
+        <span className="font-mono text-[12px] font-medium text-[#FF5A1F] tracking-[0.18em] uppercase">
           // ERROR 404: CONNECTION SEVERED
         </span>
-        <h1 className="font-display font-black text-5xl sm:text-7xl text-white tracking-tighter uppercase">
+        <h1 className="font-display font-extrabold text-5xl sm:text-7xl text-white tracking-[-0.03em] uppercase leading-[1.02]">
           SIGNAL UNLINKED.
         </h1>
-        <p className="font-sans text-sm sm:text-base text-[#8A8A8E] max-w-md mx-auto">
+        <p className="font-sans text-[16px] text-[#C2C2C2] max-w-md mx-auto leading-[1.6]">
           The requested coordinate does not exist or has been disconnected from the growth graph.
         </p>
 
         <div className="pt-6">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-[#FF5A1F] to-[#FF8A3D] text-black font-mono text-xs font-black uppercase tracking-widest shadow-[0_0_25px_rgba(255,90,31,0.5)] hover:scale-105 active:scale-95 transition-all"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-[#FF5A1F] to-[#FF8A3D] text-black font-mono text-[12px] font-medium uppercase tracking-[0.18em] shadow-[0_0_25px_rgba(255,90,31,0.5)] hover:scale-105 active:scale-95 transition-all"
             data-cursor="RELINK"
           >
             <span>Relink to Home Node</span>

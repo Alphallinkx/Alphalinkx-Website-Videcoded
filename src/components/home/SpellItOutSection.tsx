@@ -63,7 +63,7 @@ export const SpellItOutSection: React.FC = () => {
       {/* Pinned Viewport Container */}
       <div className="relative h-[100dvh] w-full flex flex-col justify-between overflow-hidden">
         {/* Top Header Row */}
-        <div className="max-w-[1400px] w-full mx-auto px-6 md:px-10 pt-8 flex items-center justify-between font-mono text-xs uppercase tracking-widest text-[#8A8A8E] z-10 shrink-0">
+        <div className="max-w-[1400px] w-full mx-auto px-6 md:px-10 pt-8 flex items-center justify-between font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-[#8A8A8E] z-10 shrink-0">
           <div className="flex items-center gap-3">
             <span className="text-[#FF5A1F] font-bold">// 03 THE SPELL</span>
             <span>A-L-P-H-A-L-I-N-K-X CAPABILITY MATRIX</span>
@@ -95,9 +95,9 @@ export const SpellItOutSection: React.FC = () => {
                 }`}
               >
                 {/* Panel Top: Counter and Tag */}
-                <div className="flex items-center justify-between font-mono text-xs text-[#8A8A8E] pb-6 border-b border-white/5">
+                <div className="flex items-center justify-between font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em] pb-6 border-b border-white/5">
                   <span className="text-[#FF5A1F] font-bold">{panel.index}</span>
-                  <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] tracking-wider text-white">
+                  <span className="px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[12px] font-mono font-medium tracking-[0.18em] text-white uppercase">
                     {panel.badge}
                   </span>
                 </div>
@@ -106,7 +106,7 @@ export const SpellItOutSection: React.FC = () => {
                 <div className="my-6 flex items-center justify-between gap-4">
                   <div className="relative">
                     <span
-                      className={`font-display font-black text-8xl sm:text-9xl md:text-[140px] leading-none tracking-tighter select-none transition-colors duration-500 ${
+                      className={`font-display font-extrabold text-8xl sm:text-9xl md:text-[140px] leading-none tracking-[-0.03em] select-none transition-colors duration-500 ${
                         isActive
                           ? 'text-[#FF5A1F] drop-shadow-[0_0_35px_rgba(255,90,31,0.5)]'
                           : 'text-transparent'
@@ -128,15 +128,15 @@ export const SpellItOutSection: React.FC = () => {
                 {/* Panel Bottom: Service Details & Deliverable Chips */}
                 <div className="space-y-4 pt-4 border-t border-white/5">
                   <div>
-                    <h3 className="font-display font-bold text-2xl sm:text-3xl text-white tracking-tight">
+                    <h3 className="font-display font-bold text-2xl sm:text-3xl text-white tracking-[-0.01em]">
                       {panel.service}
                     </h3>
-                    <p className="font-mono text-xs sm:text-sm text-[#FF8A3D] mt-1">
+                    <p className="font-sans text-[15px] sm:text-[16px] text-[#FF8A3D] font-medium mt-1">
                       {panel.tagline}
                     </p>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-[#8A8A8E] leading-relaxed">
+                  <p className="font-sans text-[16px] text-[#C2C2C2] leading-[1.6]">
                     {panel.description}
                   </p>
 
@@ -144,7 +144,7 @@ export const SpellItOutSection: React.FC = () => {
                     {panel.deliverables.map((item) => (
                       <span
                         key={item}
-                        className="text-[10px] font-mono uppercase tracking-wider text-[#F5F5F4]/80 bg-white/5 px-2.5 py-1 rounded border border-white/5"
+                        className="text-[12px] font-mono font-medium uppercase tracking-[0.18em] text-[#F5F5F4]/80 bg-white/5 px-2.5 py-1 rounded border border-white/5"
                       >
                         {item}
                       </span>
@@ -157,7 +157,7 @@ export const SpellItOutSection: React.FC = () => {
         </div>
 
         {/* Bottom Pinned Progress Line */}
-        <div className="w-full px-6 md:px-10 pb-8 flex items-center justify-between font-mono text-[11px] text-[#8A8A8E] uppercase tracking-widest shrink-0 z-10">
+        <div className="w-full px-6 md:px-10 pb-8 flex items-center justify-between font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em] shrink-0 z-10">
           <div className="w-full max-w-md h-1 bg-white/10 rounded-full overflow-hidden mr-4">
             <div
               ref={progressBarRef}
@@ -165,7 +165,7 @@ export const SpellItOutSection: React.FC = () => {
               style={{ transform: 'scaleX(0.1)' }}
             />
           </div>
-          <span className="shrink-0 text-white font-semibold">
+          <span className="shrink-0 text-white font-medium font-mono text-[12px] tracking-[0.18em]">
             PINNED HORIZONTAL SCROLL
           </span>
         </div>

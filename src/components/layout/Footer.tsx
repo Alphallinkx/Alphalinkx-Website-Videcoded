@@ -33,14 +33,14 @@ export const Footer: React.FC = () => {
                 alt="AlphaLinkx Logo"
                 className="h-9 w-auto object-contain group-hover:scale-105 transition-transform duration-200"
               />
-              <span className="font-display font-black text-xl text-white tracking-tight group-hover:text-[#FF5A1F] transition-colors">
+              <span className="font-display font-extrabold text-xl text-white tracking-[-0.02em] group-hover:text-[#FF5A1F] transition-colors">
                 {BRAND.name}
               </span>
             </Link>
-            <p className="font-sans text-xs sm:text-sm text-[#8A8A8E] mt-4 max-w-sm leading-relaxed">
+            <p className="font-sans text-[16px] text-[#C2C2C2] mt-4 max-w-sm leading-[1.6]">
               High-performance web development, Generative Engine Optimization (GEO), Answer Engine Optimization (AEO), and high-ROAS paid media engineering.
             </p>
-            <div className="mt-6 flex items-center gap-3 font-mono text-xs text-[#FF5A1F]">
+            <div className="mt-6 flex items-center gap-3 font-mono text-[12px] font-medium text-[#FF5A1F] tracking-[0.18em]">
               <span className="w-2 h-2 rounded-full bg-[#FF5A1F] animate-pulse" />
               <span>GLOBAL SIGNAL NODES: ACTIVE</span>
             </div>
@@ -48,10 +48,10 @@ export const Footer: React.FC = () => {
 
           {/* Col 2: Services */}
           <div className="space-y-4">
-            <span className="font-mono text-xs uppercase tracking-widest text-[#FF5A1F] block">
+            <span className="font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-[#FF5A1F] block">
               // SERVICES
             </span>
-            <ul className="space-y-2.5 font-sans text-xs sm:text-sm text-[#8A8A8E]">
+            <ul className="space-y-2.5 font-sans text-[15px] sm:text-[16px] text-[#C2C2C2]">
               {SERVICE_CATEGORIES.map((cat) => (
                 <li key={cat.id}>
                   <Link
@@ -67,10 +67,10 @@ export const Footer: React.FC = () => {
 
           {/* Col 3: Company */}
           <div className="space-y-4">
-            <span className="font-mono text-xs uppercase tracking-widest text-[#FF5A1F] block">
+            <span className="font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-[#FF5A1F] block">
               // COMPANY
             </span>
-            <ul className="space-y-2.5 font-sans text-xs sm:text-sm text-[#8A8A8E]">
+            <ul className="space-y-2.5 font-sans text-[15px] sm:text-[16px] text-[#C2C2C2]">
               <li>
                 <a href="/#about" className="hover:text-white transition-colors">
                   About Us
@@ -101,14 +101,14 @@ export const Footer: React.FC = () => {
 
           {/* Col 4: Contact & Socials */}
           <div className="space-y-4">
-            <span className="font-mono text-xs uppercase tracking-widest text-[#FF5A1F] block">
+            <span className="font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-[#FF5A1F] block">
               // DIRECT CHANNELS
             </span>
-            <ul className="space-y-2.5 font-sans text-xs sm:text-sm text-[#8A8A8E]">
+            <ul className="space-y-2.5 font-sans text-[15px] sm:text-[16px] text-[#C2C2C2]">
               <li>
                 <a
                   href={`mailto:${BRAND.email}`}
-                  className="hover:text-white transition-colors font-mono text-xs"
+                  className="hover:text-white transition-colors font-mono text-[12px] font-medium tracking-[0.18em]"
                 >
                   {BRAND.email}
                 </a>
@@ -118,12 +118,12 @@ export const Footer: React.FC = () => {
                   href={BRAND.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-[#FF5A1F] transition-colors font-mono text-xs text-white"
+                  className="hover:text-[#FF5A1F] transition-colors font-mono text-[12px] font-medium text-white tracking-[0.18em]"
                 >
                   WhatsApp Direct →
                 </a>
               </li>
-              <li className="pt-2 font-mono text-[11px] text-[#8A8A8E]">
+              <li className="pt-2 font-mono text-[12px] font-medium text-[#8A8A8E] tracking-[0.18em]">
                 {BRAND.location}
               </li>
             </ul>
@@ -137,7 +137,7 @@ export const Footer: React.FC = () => {
           className="relative py-14 sm:py-20 text-center overflow-hidden cursor-crosshair"
         >
           <h2
-            className="font-display font-black text-6xl sm:text-8xl md:text-[140px] lg:text-[180px] leading-none tracking-tighter uppercase select-none transition-all duration-75"
+            className="font-display font-extrabold text-6xl sm:text-8xl md:text-[140px] lg:text-[180px] leading-none tracking-[-0.03em] uppercase select-none transition-all duration-75"
             style={{
               backgroundImage: `radial-gradient(circle 280px at ${spotlightPos.x}% ${spotlightPos.y}%, #FF5A1F 0%, rgba(255, 90, 31, 0.4) 40%, rgba(255, 255, 255, 0.08) 80%)`,
               WebkitBackgroundClip: 'text',
@@ -149,7 +149,7 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Bar: Copyright & Back to Top */}
-        <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between font-mono text-xs text-[#8A8A8E] gap-4">
+        <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em] gap-4">
           <p>© 2024 ALPHALINKX // built to grow.</p>
 
           <div className="flex items-center gap-6">

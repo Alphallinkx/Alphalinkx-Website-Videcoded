@@ -100,14 +100,14 @@ export const NetworkProcessSection: React.FC = () => {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 pb-8 border-b border-white/10 gap-6">
           <div>
-            <span className="font-mono text-xs uppercase tracking-widest text-[#FF5A1F]">
+            <span className="font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-[#FF5A1F]">
               // 06 THE NETWORK
             </span>
-            <h2 className="font-display font-black text-4xl sm:text-6xl md:text-7xl text-white tracking-tighter uppercase mt-2">
-              4-NODE EXECUTION CYCLE.
+            <h2 className="font-display font-extrabold text-3xl sm:text-5xl md:text-6xl text-white tracking-[-0.02em] leading-[1.1] mt-2">
+              The four-node growth protocol.
             </h2>
           </div>
-          <p className="font-mono text-xs text-[#8A8A8E] max-w-sm uppercase leading-relaxed">
+          <p className="font-sans text-[16px] text-[#C2C2C2] max-w-sm leading-[1.6]">
             Light signals pulse across each stage of delivery, from initial telemetry audit to compounding global scale.
           </p>
         </div>
@@ -117,7 +117,7 @@ export const NetworkProcessSection: React.FC = () => {
           {/* Left: 3D Constellation Canvas (Col 7) */}
           <div className="lg:col-span-7 h-[360px] sm:h-[480px] rounded-3xl bg-[#111113]/90 border border-white/10 relative overflow-hidden shadow-2xl flex items-center justify-center">
             {/* Top Scene Label */}
-            <div className="absolute top-6 left-6 z-10 font-mono text-[11px] text-[#8A8A8E] uppercase tracking-wider flex items-center gap-2">
+            <div className="absolute top-6 left-6 z-10 font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em] flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-[#FF5A1F] animate-ping" />
               <span>INTERACTIVE 3D CONSTELLATION GRAPH</span>
             </div>
@@ -143,7 +143,7 @@ export const NetworkProcessSection: React.FC = () => {
                     key={step.number}
                     type="button"
                     onClick={() => setActiveStep(idx)}
-                    className={`px-3 py-1.5 rounded-full font-mono text-xs font-bold transition-all ${
+                    className={`px-3 py-1.5 rounded-full font-mono text-[12px] font-medium transition-all ${
                       idx === activeStep
                         ? 'bg-[#FF5A1F] text-black shadow-[0_0_15px_#FF5A1F]'
                         : 'bg-white/5 text-[#8A8A8E] hover:text-white border border-white/10'
@@ -179,33 +179,33 @@ export const NetworkProcessSection: React.FC = () => {
           <div className="lg:col-span-5 flex flex-col justify-between p-8 sm:p-10 rounded-3xl bg-[#111113] border border-white/10 shadow-2xl">
             <div>
               <div className="flex items-center justify-between pb-6 border-b border-white/10">
-                <span className="font-mono text-xs text-[#FF5A1F] font-bold tracking-widest uppercase">
+                <span className="font-mono text-[12px] text-[#FF5A1F] font-medium tracking-[0.18em] uppercase">
                   NODE {NETWORK_STEPS[activeStep].number} OF 04
                 </span>
-                <span className="font-mono text-xs text-[#8A8A8E]">
+                <span className="font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em]">
                   PHASE // {activeStep + 1}
                 </span>
               </div>
 
-              <h3 className="font-display font-black text-3xl sm:text-4xl text-white tracking-tight mt-6">
+              <h3 className="font-display font-bold text-2xl sm:text-3xl text-white tracking-[-0.01em] mt-6">
                 {NETWORK_STEPS[activeStep].title}
               </h3>
-              <p className="font-mono text-xs sm:text-sm text-[#FF8A3D] mt-2">
+              <p className="font-mono text-[12px] font-medium text-[#FF8A3D] uppercase tracking-[0.18em] mt-2">
                 {NETWORK_STEPS[activeStep].subtitle}
               </p>
 
-              <p className="text-sm sm:text-base text-[#8A8A8E] mt-6 leading-relaxed">
+              <p className="font-sans text-[16px] text-[#C2C2C2] mt-4 leading-[1.6]">
                 {NETWORK_STEPS[activeStep].description}
               </p>
             </div>
 
             <div className="mt-8 pt-6 border-t border-white/10">
-              <span className="font-mono text-[10px] text-[#8A8A8E] uppercase tracking-wider block mb-1">
-                KEY DELIVERABLE ARTIFACT:
+              <span className="font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em] block mb-2">
+                KEY DELIVERABLE ARTIFACT
               </span>
-              <div className="p-4 rounded-xl bg-white/[0.04] border border-white/5 font-mono text-xs text-white flex items-center justify-between">
+              <div className="p-4 rounded-xl bg-white/[0.04] border border-white/5 font-sans text-[15px] text-white flex items-center justify-between">
                 <span>{NETWORK_STEPS[activeStep].deliverable}</span>
-                <span className="text-[#FF5A1F] font-bold">READY</span>
+                <span className="font-mono text-[12px] font-medium text-[#FF5A1F] tracking-[0.18em]">READY</span>
               </div>
             </div>
           </div>

@@ -96,13 +96,13 @@ export const InquirySection: React.FC = () => {
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         {/* Massive Headline with Mouse-Follow Gradient */}
         <div className="text-center mb-16">
-          <span className="font-mono text-xs uppercase tracking-widest text-[#FF5A1F] block mb-3">
+          <span className="font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-[#FF5A1F] block mb-3">
             // 10 KICKOFF SPRINT
           </span>
           <h2
             ref={headlineRef}
             onMouseMove={handleMouseMove}
-            className="font-display font-black text-6xl sm:text-8xl md:text-9xl tracking-tighter uppercase select-none transition-colors duration-150"
+            className="font-display font-extrabold text-5xl sm:text-7xl md:text-8xl tracking-[-0.03em] uppercase select-none transition-colors duration-150 leading-[1.05]"
             style={{
               backgroundImage: `radial-gradient(circle at ${mousePos.x}% ${mousePos.y}%, #FF8A3D 0%, #FF5A1F 30%, #FFFFFF 70%)`,
               WebkitBackgroundClip: 'text',
@@ -111,8 +111,8 @@ export const InquirySection: React.FC = () => {
           >
             LET'S LINK UP.
           </h2>
-          <p className="font-sans text-sm sm:text-base text-[#8A8A8E] mt-4 max-w-xl mx-auto">
-            Choose your parameters below to construct an actionable growth blueprint with our engineering squad.
+          <p className="font-sans text-[16px] sm:text-[17px] text-[#C2C2C2] mt-4 max-w-xl mx-auto leading-[1.6]">
+            Configure your growth parameters below to receive an engineered roadmap from our specialist squad.
           </p>
         </div>
 
@@ -132,18 +132,18 @@ export const InquirySection: React.FC = () => {
               <div className="w-16 h-16 rounded-full bg-[#FF5A1F]/20 border border-[#FF5A1F] text-[#FF5A1F] font-bold text-2xl flex items-center justify-center mx-auto">
                 ✓
               </div>
-              <h3 className="font-display font-black text-3xl sm:text-4xl text-white tracking-tight">
-                NODES LINKED. BRIEF RECEIVED.
+              <h3 className="font-display font-bold text-3xl sm:text-4xl text-white tracking-[-0.01em]">
+                Nodes linked. Brief received.
               </h3>
-              <p className="font-sans text-sm text-[#8A8A8E] max-w-md mx-auto">
-                We have initiated telemetry review. Our squad will contact you at <span className="text-white font-mono">{email}</span> within 24 hours.
+              <p className="font-sans text-[16px] text-[#C2C2C2] max-w-md mx-auto leading-[1.6]">
+                Telemetry review has begun. Our team will contact you at <span className="text-white font-mono">{email}</span> within 24 hours.
               </p>
               <div className="pt-6">
                 <a
                   href={BRAND.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 font-mono text-xs text-[#FF5A1F] hover:text-[#FF8A3D] uppercase tracking-wider font-bold"
+                  className="inline-flex items-center gap-2 font-mono text-[12px] font-medium text-[#FF5A1F] hover:text-[#FF8A3D] uppercase tracking-[0.18em]"
                 >
                   <span>Need urgent kickoff? Chat on WhatsApp</span>
                   <span>→</span>
@@ -156,10 +156,10 @@ export const InquirySection: React.FC = () => {
               {currentStep === 1 && (
                 <div className="space-y-6 animate-in fade-in duration-200">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-display font-bold text-xl sm:text-2xl text-white">
+                    <h3 className="font-display font-bold text-xl sm:text-2xl text-white tracking-[-0.01em]">
                       1. What nodes are you looking to activate?
                     </h3>
-                    <span className="font-mono text-xs text-[#8A8A8E]">01 / 04</span>
+                    <span className="font-mono text-[12px] font-medium text-[#8A8A8E] tracking-[0.18em]">01 / 04</span>
                   </div>
 
                   <div className="flex flex-wrap gap-3 pt-2">
@@ -170,9 +170,9 @@ export const InquirySection: React.FC = () => {
                           key={opt}
                           type="button"
                           onClick={() => toggleInterest(opt)}
-                          className={`px-5 py-3 rounded-full text-xs font-mono tracking-wider transition-all duration-200 ${
+                          className={`px-5 py-3 rounded-full text-[12px] font-mono font-medium tracking-[0.18em] transition-all duration-200 ${
                             isSelected
-                              ? 'bg-[#FF5A1F] text-black font-bold shadow-[0_0_20px_rgba(255,90,31,0.4)] scale-105'
+                              ? 'bg-[#FF5A1F] text-black shadow-[0_0_20px_rgba(255,90,31,0.4)] scale-105'
                               : 'bg-white/5 text-[#8A8A8E] hover:text-white border border-white/10 hover:border-white/20'
                           }`}
                         >
@@ -187,7 +187,7 @@ export const InquirySection: React.FC = () => {
                       type="button"
                       disabled={interests.length === 0}
                       onClick={() => setCurrentStep(2)}
-                      className="px-8 py-3.5 rounded-full bg-white text-black font-mono text-xs font-bold uppercase tracking-wider hover:bg-[#FF5A1F] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                      className="px-8 py-3.5 rounded-full bg-white text-black font-mono text-[12px] font-medium uppercase tracking-[0.18em] hover:bg-[#FF5A1F] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                     >
                       Next: Budget →
                     </button>
@@ -199,10 +199,10 @@ export const InquirySection: React.FC = () => {
               {currentStep === 2 && (
                 <div className="space-y-6 animate-in fade-in duration-200">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-display font-bold text-xl sm:text-2xl text-white">
+                    <h3 className="font-display font-bold text-xl sm:text-2xl text-white tracking-[-0.01em]">
                       2. What is your estimated investment budget?
                     </h3>
-                    <span className="font-mono text-xs text-[#8A8A8E]">02 / 04</span>
+                    <span className="font-mono text-[12px] font-medium text-[#8A8A8E] tracking-[0.18em]">02 / 04</span>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
@@ -213,9 +213,9 @@ export const InquirySection: React.FC = () => {
                           key={b}
                           type="button"
                           onClick={() => setBudget(b)}
-                          className={`p-4 rounded-2xl text-left font-mono text-xs tracking-wider transition-all duration-200 ${
+                          className={`p-4 rounded-2xl text-left font-mono text-[12px] font-medium tracking-[0.18em] transition-all duration-200 ${
                             isSelected
-                              ? 'bg-[#FF5A1F] text-black font-bold shadow-[0_0_20px_rgba(255,90,31,0.4)]'
+                              ? 'bg-[#FF5A1F] text-black shadow-[0_0_20px_rgba(255,90,31,0.4)]'
                               : 'bg-white/5 text-[#8A8A8E] hover:text-white border border-white/10 hover:border-white/20'
                           }`}
                         >
@@ -229,7 +229,7 @@ export const InquirySection: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setCurrentStep(1)}
-                      className="font-mono text-xs text-[#8A8A8E] hover:text-white uppercase"
+                      className="font-mono text-[12px] font-medium text-[#8A8A8E] hover:text-white uppercase tracking-[0.18em]"
                     >
                       ← Back
                     </button>
@@ -237,7 +237,7 @@ export const InquirySection: React.FC = () => {
                       type="button"
                       disabled={!budget}
                       onClick={() => setCurrentStep(3)}
-                      className="px-8 py-3.5 rounded-full bg-white text-black font-mono text-xs font-bold uppercase tracking-wider hover:bg-[#FF5A1F] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                      className="px-8 py-3.5 rounded-full bg-white text-black font-mono text-[12px] font-medium uppercase tracking-[0.18em] hover:bg-[#FF5A1F] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                     >
                       Next: Contact Details →
                     </button>
@@ -249,15 +249,15 @@ export const InquirySection: React.FC = () => {
               {currentStep === 3 && (
                 <div className="space-y-6 animate-in fade-in duration-200">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-display font-bold text-xl sm:text-2xl text-white">
+                    <h3 className="font-display font-bold text-xl sm:text-2xl text-white tracking-[-0.01em]">
                       3. Where should we deliver the growth plan?
                     </h3>
-                    <span className="font-mono text-xs text-[#8A8A8E]">03 / 04</span>
+                    <span className="font-mono text-[12px] font-medium text-[#8A8A8E] tracking-[0.18em]">03 / 04</span>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block font-mono text-[11px] text-[#8A8A8E] uppercase mb-1">
+                      <label className="block font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em] mb-1.5">
                         Your Name *
                       </label>
                       <input
@@ -266,11 +266,11 @@ export const InquirySection: React.FC = () => {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="Marcus Vance"
-                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-sans text-sm focus:outline-none focus:border-[#FF5A1F]"
+                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-sans text-[15px] focus:outline-none focus:border-[#FF5A1F]"
                       />
                     </div>
                     <div>
-                      <label className="block font-mono text-[11px] text-[#8A8A8E] uppercase mb-1">
+                      <label className="block font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em] mb-1.5">
                         Work Email *
                       </label>
                       <input
@@ -279,11 +279,11 @@ export const InquirySection: React.FC = () => {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="marcus@company.com"
-                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-sans text-sm focus:outline-none focus:border-[#FF5A1F]"
+                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-sans text-[15px] focus:outline-none focus:border-[#FF5A1F]"
                       />
                     </div>
                     <div>
-                      <label className="block font-mono text-[11px] text-[#8A8A8E] uppercase mb-1">
+                      <label className="block font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em] mb-1.5">
                         Phone / WhatsApp
                       </label>
                       <input
@@ -291,11 +291,11 @@ export const InquirySection: React.FC = () => {
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
                         placeholder="+1 (555) 000-0000"
-                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-sans text-sm focus:outline-none focus:border-[#FF5A1F]"
+                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-sans text-[15px] focus:outline-none focus:border-[#FF5A1F]"
                       />
                     </div>
                     <div>
-                      <label className="block font-mono text-[11px] text-[#8A8A8E] uppercase mb-1">
+                      <label className="block font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em] mb-1.5">
                         Website or Domain URL
                       </label>
                       <input
@@ -303,13 +303,13 @@ export const InquirySection: React.FC = () => {
                         value={website}
                         onChange={(e) => setWebsite(e.target.value)}
                         placeholder="company.com"
-                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-sans text-sm focus:outline-none focus:border-[#FF5A1F]"
+                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-sans text-[15px] focus:outline-none focus:border-[#FF5A1F]"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block font-mono text-[11px] text-[#8A8A8E] uppercase mb-1">
+                    <label className="block font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em] mb-1.5">
                       Brief Description / Core Challenge
                     </label>
                     <textarea
@@ -317,7 +317,7 @@ export const InquirySection: React.FC = () => {
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
                       placeholder="Outline your primary growth bottleneck or target goals..."
-                      className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-sans text-sm focus:outline-none focus:border-[#FF5A1F]"
+                      className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-sans text-[15px] focus:outline-none focus:border-[#FF5A1F]"
                     />
                   </div>
 
@@ -325,7 +325,7 @@ export const InquirySection: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setCurrentStep(2)}
-                      className="font-mono text-xs text-[#8A8A8E] hover:text-white uppercase"
+                      className="font-mono text-[12px] font-medium text-[#8A8A8E] hover:text-white uppercase tracking-[0.18em]"
                     >
                       ← Back
                     </button>
@@ -333,7 +333,7 @@ export const InquirySection: React.FC = () => {
                       type="button"
                       disabled={!name || !email}
                       onClick={() => setCurrentStep(4)}
-                      className="px-8 py-3.5 rounded-full bg-white text-black font-mono text-xs font-bold uppercase tracking-wider hover:bg-[#FF5A1F] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                      className="px-8 py-3.5 rounded-full bg-white text-black font-mono text-[12px] font-medium uppercase tracking-[0.18em] hover:bg-[#FF5A1F] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                     >
                       Next: Final Step →
                     </button>
@@ -345,10 +345,10 @@ export const InquirySection: React.FC = () => {
               {currentStep === 4 && (
                 <div className="space-y-6 animate-in fade-in duration-200">
                   <div className="flex items-center justify-between">
-                    <h3 className="font-display font-bold text-xl sm:text-2xl text-white">
+                    <h3 className="font-display font-bold text-xl sm:text-2xl text-white tracking-[-0.01em]">
                       4. How did you discover AlphaLinkx?
                     </h3>
-                    <span className="font-mono text-xs text-[#8A8A8E]">04 / 04</span>
+                    <span className="font-mono text-[12px] font-medium text-[#8A8A8E] tracking-[0.18em]">04 / 04</span>
                   </div>
 
                   <div className="flex flex-wrap gap-3 pt-2">
@@ -359,9 +359,9 @@ export const InquirySection: React.FC = () => {
                           key={source}
                           type="button"
                           onClick={() => setReferral(source)}
-                          className={`px-5 py-3 rounded-full text-xs font-mono tracking-wider transition-all duration-200 ${
+                          className={`px-5 py-3 rounded-full text-[12px] font-mono font-medium tracking-[0.18em] transition-all duration-200 ${
                             isSelected
-                              ? 'bg-[#FF5A1F] text-black font-bold shadow-[0_0_20px_rgba(255,90,31,0.4)]'
+                              ? 'bg-[#FF5A1F] text-black shadow-[0_0_20px_rgba(255,90,31,0.4)]'
                               : 'bg-white/5 text-[#8A8A8E] hover:text-white border border-white/10 hover:border-white/20'
                           }`}
                         >
@@ -372,7 +372,7 @@ export const InquirySection: React.FC = () => {
                   </div>
 
                   {errorMessage && (
-                    <p className="font-mono text-xs text-rose-500 bg-rose-500/10 p-3 rounded-xl border border-rose-500/20">
+                    <p className="font-mono text-[12px] font-medium text-rose-500 bg-rose-500/10 p-3 rounded-xl border border-rose-500/20">
                       {errorMessage}
                     </p>
                   )}
@@ -381,14 +381,14 @@ export const InquirySection: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setCurrentStep(3)}
-                      className="font-mono text-xs text-[#8A8A8E] hover:text-white uppercase"
+                      className="font-mono text-[12px] font-medium text-[#8A8A8E] hover:text-white uppercase tracking-[0.18em]"
                     >
                       ← Back
                     </button>
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="px-10 py-4 rounded-full bg-gradient-to-r from-[#FF5A1F] to-[#FF8A3D] text-black font-mono text-xs font-black uppercase tracking-widest hover:shadow-[0_0_30px_rgba(255,90,31,0.6)] transition-all hover:scale-105 active:scale-95 disabled:opacity-50"
+                      className="px-10 py-4 rounded-full bg-gradient-to-r from-[#FF5A1F] to-[#FF8A3D] text-black font-mono text-[12px] font-medium uppercase tracking-[0.18em] hover:shadow-[0_0_30px_rgba(255,90,31,0.6)] transition-all hover:scale-105 active:scale-95 disabled:opacity-50"
                     >
                       {isSubmitting ? 'TRANSMITTING BRIEF…' : 'TRANSMIT BRIEF →'}
                     </button>

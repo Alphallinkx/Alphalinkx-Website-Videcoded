@@ -32,13 +32,13 @@ export const AboutPage: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="max-w-3xl mb-16">
-          <span className="text-xs font-mono font-semibold tracking-widest text-[#FC6603] uppercase">
-            ABOUT ALPHALINKX
+          <span className="font-mono text-[12px] font-medium tracking-[0.18em] text-[#FF5A1F] uppercase">
+            // ABOUT ALPHALINKX
           </span>
-          <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-extrabold text-white tracking-tight mt-3 leading-tight">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-display font-extrabold text-white tracking-[-0.03em] uppercase mt-3 leading-[1.02]">
             THE ARCHITECTURE OF DIGITAL GROWTH.
           </h1>
-          <p className="text-lg text-zinc-400 mt-5 leading-relaxed">
+          <p className="font-sans text-[16px] sm:text-[17px] text-[#C2C2C2] mt-5 leading-[1.6]">
             Founded to eliminate the divide between aesthetic prestige and engineering rigor, Alphalinkx is a specialized digital studio for ambitious brands.
           </p>
         </div>
@@ -46,10 +46,10 @@ export const AboutPage: React.FC = () => {
         {/* Narrative Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch mb-20">
           <div className="lg:col-span-7 glass-panel rounded-3xl p-8 sm:p-12 border border-white/10 bg-gradient-to-br from-[#0F121C] to-[#0A0C13]">
-            <h2 className="text-2xl sm:text-3xl font-display font-bold text-white mb-6">
-              Engineering What’s Next.
+            <h2 className="text-2xl sm:text-3xl font-display font-extrabold text-white tracking-[-0.02em] leading-[1.1] mb-6">
+              Engineering what’s next.
             </h2>
-            <div className="space-y-4 text-zinc-300 text-sm sm:text-base leading-relaxed">
+            <div className="space-y-4 font-sans text-[16px] text-[#C2C2C2] leading-[1.6]">
               <p>
                 In a digital landscape flooded with templated page builders and slow corporate agencies, Alphalinkx was built to offer a distinct alternative: an elite strike team capable of taking a complex vision and bringing it to life with surgical precision.
               </p>
@@ -60,16 +60,16 @@ export const AboutPage: React.FC = () => {
 
             <div className="mt-8 pt-8 border-t border-white/10 grid grid-cols-2 sm:grid-cols-3 gap-6">
               <div>
-                <span className="text-3xl font-display font-bold text-[#FC6603]">95+</span>
-                <p className="text-xs text-zinc-400 font-mono mt-1">Core Web Vitals</p>
+                <span className="text-3xl font-display font-extrabold text-[#FF5A1F] tracking-[-0.03em]">95+</span>
+                <p className="font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em] mt-1">Core Web Vitals</p>
               </div>
               <div>
-                <span className="text-3xl font-display font-bold text-white">&lt;0.8s</span>
-                <p className="text-xs text-zinc-400 font-mono mt-1">Avg Global Load</p>
+                <span className="text-3xl font-display font-extrabold text-white tracking-[-0.03em]">&lt;0.8s</span>
+                <p className="font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em] mt-1">Avg Global Load</p>
               </div>
               <div>
-                <span className="text-3xl font-display font-bold text-emerald-400">100%</span>
-                <p className="text-xs text-zinc-400 font-mono mt-1">Code Ownership</p>
+                <span className="text-3xl font-display font-extrabold text-emerald-400 tracking-[-0.03em]">100%</span>
+                <p className="font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em] mt-1">Code Ownership</p>
               </div>
             </div>
           </div>
@@ -81,7 +81,7 @@ export const AboutPage: React.FC = () => {
               className="w-full h-full object-cover filter brightness-90 group-hover:scale-105 transition-transform duration-700"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent flex items-end p-8">
-              <span className="font-mono text-xs text-[#FC6603] tracking-widest uppercase">
+              <span className="font-mono text-[12px] font-medium text-[#FF5A1F] tracking-[0.18em] uppercase">
                 ESTABLISHED FOR HIGH-GROWTH ENTERPRISES
               </span>
             </div>
@@ -91,11 +91,11 @@ export const AboutPage: React.FC = () => {
         {/* Core Values */}
         <div className="mb-20">
           <div className="max-w-2xl mb-12">
-            <span className="text-xs font-mono font-semibold tracking-widest text-[#FC6603] uppercase">
-              OUR CODE
+            <span className="font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-[#FF5A1F]">
+              // OUR CODE
             </span>
-            <h2 className="text-3xl sm:text-4xl font-display font-bold text-white mt-2">
-              Values That Drive Every Line of Code.
+            <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-white tracking-[-0.02em] leading-[1.1] mt-2">
+              Values that drive every line of code.
             </h2>
           </div>
 
@@ -103,15 +103,15 @@ export const AboutPage: React.FC = () => {
             {values.map((v, i) => (
               <div
                 key={i}
-                className="glass-panel rounded-2xl p-6 border border-white/10 hover:border-[#FC6603]/30 transition-all bg-[#0E1017]"
+                className="glass-panel rounded-2xl p-6 border border-white/10 hover:border-[#FF5A1F]/30 transition-all bg-[#0E1017]"
               >
-                <div className="w-8 h-8 rounded-lg bg-[#FC6603]/10 border border-[#FC6603]/20 flex items-center justify-center text-[#FC6603] font-mono text-xs font-bold mb-4">
+                <div className="w-8 h-8 rounded-lg bg-[#FF5A1F]/10 border border-[#FF5A1F]/20 flex items-center justify-center text-[#FF5A1F] font-mono text-[12px] font-medium mb-4">
                   0{i + 1}
                 </div>
-                <h3 className="text-base font-display font-bold text-white mb-2">
+                <h3 className="text-lg font-display font-bold text-white tracking-[-0.01em] mb-2">
                   {v.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed">
+                <p className="font-sans text-[15px] sm:text-[16px] text-[#C2C2C2] leading-[1.6]">
                   {v.desc}
                 </p>
               </div>
@@ -122,16 +122,16 @@ export const AboutPage: React.FC = () => {
         {/* Bottom CTA Banner */}
         <div className="glass-panel rounded-3xl p-8 sm:p-12 border border-white/10 bg-gradient-to-r from-[#121626] to-[#0A0C13] flex flex-col md:flex-row items-center justify-between gap-8">
           <div>
-            <h3 className="text-2xl sm:text-3xl font-display font-bold text-white">
+            <h3 className="text-2xl sm:text-3xl font-display font-extrabold text-white tracking-[-0.02em] leading-[1.1]">
               Ready to collaborate on your next release?
             </h3>
-            <p className="text-zinc-400 text-sm mt-2">
+            <p className="font-sans text-[16px] text-[#C2C2C2] mt-2 leading-[1.6]">
               Book an initial strategy consultation with our senior technical team.
             </p>
           </div>
           <Link
             to="/contact"
-            className="px-8 py-3.5 rounded-full text-sm font-semibold text-white bg-[#FC6603] hover:bg-[#FF771E] transition-all shrink-0 flex items-center gap-2 shadow-[0_0_20px_rgba(252,102,3,0.35)]"
+            className="px-8 py-3.5 rounded-full font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-black bg-[#FF5A1F] hover:bg-[#FF8A3D] transition-all shrink-0 flex items-center gap-2 shadow-[0_0_20px_rgba(255,90,31,0.35)]"
           >
             <span>Start a Project</span>
             <ArrowRight className="w-4 h-4" />

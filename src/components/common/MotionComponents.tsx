@@ -103,7 +103,7 @@ export function MagneticButton({
         x.set(0);
         y.set(0);
       }}
-      className={`group relative inline-flex items-center gap-3 rounded-full px-8 py-4 text-xs font-mono uppercase tracking-widest transition-all duration-300 ${styles} ${className}`}
+      className={`group relative inline-flex items-center gap-3 rounded-full px-8 py-4 font-mono text-[12px] font-medium uppercase tracking-[0.18em] transition-all duration-300 ${styles} ${className}`}
     >
       <span>{children}</span>
       <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />

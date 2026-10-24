@@ -90,8 +90,8 @@ export const HeroSection: React.FC = () => {
         }}
         className="relative z-10 my-auto py-8 text-center w-full max-w-7xl mx-auto flex flex-col items-center justify-center will-change-transform px-4"
       >
-        {/* Main Prominent Headline with Cinematic Mask Reveal */}
-        <h1 className="font-display font-black text-[clamp(2.15rem,7.2vw,5.5rem)] text-white tracking-tight sm:tracking-tighter uppercase leading-[1.08] drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)] flex flex-col items-center text-center w-full">
+        {/* Main Prominent Headline with Cinematic Mask Reveal (Manrope 800, tracking: -0.03em, leading: 1.02) */}
+        <h1 className="font-display font-extrabold text-[clamp(2.15rem,7.2vw,5.5rem)] text-white tracking-[-0.03em] uppercase leading-[1.02] drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)] flex flex-col items-center text-center w-full">
           <span className="block overflow-hidden py-1">
             <motion.span
               initial={{ y: '115%', opacity: 0 }}
@@ -114,14 +114,14 @@ export const HeroSection: React.FC = () => {
           </span>
         </h1>
 
-        {/* Clear, Prominent Value Proposition Subtext with Dissolve Reveal */}
+        {/* Clear, Prominent Value Proposition Subtext (Inter 400, 16px-17px, line-height: 1.6, color: #C2C2C2) */}
         <motion.div
           initial={{ opacity: 0, y: 32, filter: 'blur(8px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           transition={{ duration: 0.85, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-5 sm:mt-8 max-w-xl sm:max-w-2xl mx-auto px-2 sm:px-4"
+          className="mt-6 sm:mt-8 max-w-xl sm:max-w-2xl mx-auto px-2 sm:px-4"
         >
-          <p className="text-[15px] sm:text-lg md:text-xl text-[#F2F2F5] font-normal sm:font-medium font-sans leading-relaxed drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]">
+          <p className="text-[16px] sm:text-[17px] text-[#C2C2C2] font-normal font-sans leading-[1.6] drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]">
             Leave the growth to us. We manage everything you need to build an awesome business — one that grows faster, wins more customers, earns more revenue, and stands out as a brand people love, trust, and remember.
           </p>
         </motion.div>
@@ -151,13 +151,13 @@ export const HeroSection: React.FC = () => {
         </motion.div>
       </motion.div>
 
-      {/* 06. Interactive Bottom Bar: Clickable "Unlink & Explore" CTA with Entrance Reveal */}
+      {/* 06. Interactive Bottom Bar: Clickable "Unlink & Explore" CTA with Entrance Reveal (JetBrains Mono 500, 12px, tracking: 0.18em) */}
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.95, ease: [0.16, 1, 0.3, 1] }}
         style={{ opacity: bottomOpacity }}
-        className="relative z-10 w-full flex items-center justify-center font-mono text-[11px] text-[#8A8A8E] tracking-widest uppercase"
+        className="relative z-10 w-full flex items-center justify-center font-mono text-[12px] font-medium text-[#8A8A8E] tracking-[0.18em] uppercase"
       >
         <button
           type="button"
@@ -166,7 +166,7 @@ export const HeroSection: React.FC = () => {
           data-cursor="SCROLL"
           title="Click to explore and unlink the chain"
         >
-          <span className="tracking-widest font-mono text-[11px] uppercase group-hover:text-[#FF5A1F] transition-colors">
+          <span className="tracking-[0.18em] font-mono text-[12px] font-medium uppercase group-hover:text-[#FF5A1F] transition-colors">
             UNLINK TO EXPLORE THE ENGINE ↓
           </span>
           <div className="w-4 h-8 rounded-full border border-white/20 group-hover:border-[#FF5A1F]/60 flex items-start justify-center p-1 transition-colors">

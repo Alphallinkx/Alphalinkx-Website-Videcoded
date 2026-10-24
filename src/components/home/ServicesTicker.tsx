@@ -66,7 +66,7 @@ export const ServicesTicker: React.FC = () => {
         <div className="flex whitespace-nowrap overflow-hidden">
           <div
             ref={track1Ref}
-            className="flex shrink-0 font-display font-black text-3xl sm:text-5xl md:text-6xl text-white tracking-tight uppercase will-change-transform"
+            className="flex shrink-0 font-display font-extrabold text-3xl sm:text-5xl md:text-6xl text-white tracking-[-0.03em] uppercase will-change-transform"
           >
             <span className="text-white">{repeatedText}</span>
           </div>
@@ -76,7 +76,7 @@ export const ServicesTicker: React.FC = () => {
         <div className="flex whitespace-nowrap overflow-hidden">
           <div
             ref={track2Ref}
-            className="flex shrink-0 font-display font-black text-3xl sm:text-5xl md:text-6xl text-transparent tracking-tight uppercase will-change-transform"
+            className="flex shrink-0 font-display font-extrabold text-3xl sm:text-5xl md:text-6xl text-transparent tracking-[-0.03em] uppercase will-change-transform"
             style={{
               WebkitTextStroke: '1.5px rgba(255, 90, 31, 0.85)',
             }}

@@ -142,7 +142,7 @@ export const Navbar: React.FC = () => {
           >
             <a
               href="/#work"
-              className="px-4 py-1.5 text-xs font-mono tracking-wider uppercase text-[#8A8A8E] hover:text-white transition-colors duration-150"
+              className="px-4 py-1.5 font-mono text-[12px] font-medium tracking-[0.18em] uppercase text-[#8A8A8E] hover:text-white transition-colors duration-150"
             >
               Work
             </a>
@@ -151,7 +151,7 @@ export const Navbar: React.FC = () => {
             <button
               type="button"
               onClick={() => setIsMegaMenuOpen(!isMegaMenuOpen)}
-              className={`px-4 py-1.5 text-xs font-mono tracking-wider uppercase flex items-center gap-1.5 transition-colors duration-150 ${
+              className={`px-4 py-1.5 font-mono text-[12px] font-medium tracking-[0.18em] uppercase flex items-center gap-1.5 transition-colors duration-150 ${
                 isMegaMenuOpen ? 'text-[#FF5A1F]' : 'text-[#8A8A8E] hover:text-white'
               }`}
             >
@@ -170,21 +170,21 @@ export const Navbar: React.FC = () => {
 
             <a
               href="/#about"
-              className="px-4 py-1.5 text-xs font-mono tracking-wider uppercase text-[#8A8A8E] hover:text-white transition-colors duration-150"
+              className="px-4 py-1.5 font-mono text-[12px] font-medium tracking-[0.18em] uppercase text-[#8A8A8E] hover:text-white transition-colors duration-150"
             >
               About
             </a>
 
             <a
               href="/#process"
-              className="px-4 py-1.5 text-xs font-mono tracking-wider uppercase text-[#8A8A8E] hover:text-white transition-colors duration-150"
+              className="px-4 py-1.5 font-mono text-[12px] font-medium tracking-[0.18em] uppercase text-[#8A8A8E] hover:text-white transition-colors duration-150"
             >
               Process
             </a>
 
             <a
               href="/#faq"
-              className="px-4 py-1.5 text-xs font-mono tracking-wider uppercase text-[#8A8A8E] hover:text-white transition-colors duration-150"
+              className="px-4 py-1.5 font-mono text-[12px] font-medium tracking-[0.18em] uppercase text-[#8A8A8E] hover:text-white transition-colors duration-150"
             >
               FAQ
             </a>
@@ -194,7 +194,7 @@ export const Navbar: React.FC = () => {
           <div className="flex items-center gap-4">
             <Link
               to="/contact"
-              className="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full text-xs font-mono uppercase tracking-wider font-semibold text-white bg-gradient-to-r from-[#FF5A1F] to-[#FF8A3D] hover:shadow-[0_0_25px_rgba(255,90,31,0.45)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
+              className="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-white bg-gradient-to-r from-[#FF5A1F] to-[#FF8A3D] hover:shadow-[0_0_25px_rgba(255,90,31,0.45)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
               data-cursor="CONNECT"
             >
               <span>Let's Talk</span>
@@ -235,17 +235,17 @@ export const Navbar: React.FC = () => {
           <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-12">
             <div className="flex items-center justify-between pb-6 mb-8 border-b border-white/10">
               <div>
-                <p className="font-mono text-xs uppercase tracking-widest text-[#FF5A1F]">
+                <p className="font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-[#FF5A1F]">
                   // CORE CAPABILITIES
                 </p>
-                <h3 className="font-display text-2xl font-bold text-white mt-1">
+                <h3 className="font-display text-2xl font-bold tracking-[-0.01em] text-white mt-1">
                   Engineered for Search, AI, and Revenue Conversion
                 </h3>
               </div>
               <button
                 type="button"
                 onClick={() => setIsMegaMenuOpen(false)}
-                className="font-mono text-xs text-[#8A8A8E] hover:text-white uppercase px-3 py-1.5 rounded border border-white/10"
+                className="font-mono text-[12px] font-medium text-[#8A8A8E] hover:text-white uppercase tracking-[0.18em] px-3 py-1.5 rounded border border-white/10"
               >
                 Close ✕
               </button>
@@ -259,20 +259,20 @@ export const Navbar: React.FC = () => {
                   onClick={() => setIsMegaMenuOpen(false)}
                   className="group flex flex-col p-5 rounded-2xl bg-[#111113]/60 border border-white/[0.07] hover:border-[#FF5A1F]/50 hover:bg-[#161619] transition-all duration-200"
                 >
-                  <span className="font-mono text-xs text-[#FF5A1F] font-bold">
+                  <span className="font-mono text-[12px] font-medium text-[#FF5A1F] tracking-[0.18em]">
                     {cat.number}
                   </span>
-                  <h4 className="font-display font-bold text-base text-white mt-2 group-hover:text-[#FF5A1F] transition-colors">
+                  <h4 className="font-display font-bold text-base text-white tracking-[-0.01em] mt-2 group-hover:text-[#FF5A1F] transition-colors">
                     {cat.name}
                   </h4>
-                  <p className="text-xs text-[#8A8A8E] mt-2 line-clamp-2">
+                  <p className="font-sans text-[15px] text-[#C2C2C2] mt-2 line-clamp-2 leading-[1.6]">
                     {cat.description}
                   </p>
                   <div className="mt-4 pt-3 border-t border-white/5 flex flex-wrap gap-1.5">
                     {cat.chips.slice(0, 3).map((chip) => (
                       <span
                         key={chip}
-                        className="text-[10px] font-mono text-[#8A8A8E] bg-white/[0.04] px-2 py-0.5 rounded"
+                        className="text-[11px] font-mono font-medium uppercase tracking-[0.18em] text-[#8A8A8E] bg-white/[0.04] px-2 py-0.5 rounded"
                       >
                         {chip}
                       </span>
@@ -284,17 +284,17 @@ export const Navbar: React.FC = () => {
 
             <div className="mt-10 p-6 rounded-2xl bg-gradient-to-r from-[#FF5A1F]/10 via-transparent to-transparent border border-[#FF5A1F]/20 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div>
-                <span className="font-mono text-xs text-[#FF5A1F] uppercase tracking-wider">
+                <span className="font-mono text-[12px] font-medium text-[#FF5A1F] uppercase tracking-[0.18em]">
                   Need a full-stack growth retainer?
                 </span>
-                <p className="text-sm text-white mt-0.5">
+                <p className="font-sans text-[15px] sm:text-[16px] text-white mt-1 leading-[1.6]">
                   We unite web engineering, AI answer optimization, and paid acquisition into one compounding machine.
                 </p>
               </div>
               <Link
                 to="/contact"
                 onClick={() => setIsMegaMenuOpen(false)}
-                className="shrink-0 px-6 py-2.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider text-black bg-[#FF5A1F] hover:bg-[#FF8A3D] transition-colors"
+                className="shrink-0 px-6 py-2.5 rounded-full text-[12px] font-mono font-medium uppercase tracking-[0.18em] text-black bg-[#FF5A1F] hover:bg-[#FF8A3D] transition-colors"
               >
                 Request Growth Audit →
               </Link>
@@ -311,20 +311,20 @@ export const Navbar: React.FC = () => {
           className="fixed inset-0 z-40 bg-[#0A0A0B] flex flex-col justify-between px-8 pt-28 pb-12 overflow-y-auto animate-in fade-in duration-200"
         >
           <div className="flex flex-col gap-6">
-            <span className="font-mono text-xs text-[#FF5A1F] tracking-widest uppercase">
+            <span className="font-mono text-[12px] font-medium text-[#FF5A1F] tracking-[0.18em] uppercase">
               // ALPHALINKX MENU
             </span>
 
             <a
               href="/#work"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="font-display text-4xl font-extrabold text-white hover:text-[#FF5A1F] transition-colors"
+              className="font-display text-4xl font-extrabold text-white hover:text-[#FF5A1F] tracking-[-0.02em] transition-colors"
             >
               Work
             </a>
 
             <div className="flex flex-col gap-3 py-2 border-y border-white/10">
-              <span className="font-mono text-xs text-[#8A8A8E] tracking-wider uppercase">
+              <span className="font-mono text-[12px] font-medium text-[#8A8A8E] tracking-[0.18em] uppercase">
                 Services:
               </span>
               {SERVICE_CATEGORIES.map((cat) => (
@@ -335,7 +335,7 @@ export const Navbar: React.FC = () => {
                   className="font-display text-xl text-white/90 hover:text-[#FF5A1F] pl-3 flex items-center justify-between"
                 >
                   <span>{cat.name}</span>
-                  <span className="font-mono text-xs text-[#FF5A1F]">{cat.number}</span>
+                  <span className="font-mono text-[12px] font-medium text-[#FF5A1F] tracking-[0.18em]">{cat.number}</span>
                 </Link>
               ))}
             </div>
@@ -343,7 +343,7 @@ export const Navbar: React.FC = () => {
             <a
               href="/#about"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="font-display text-4xl font-extrabold text-white hover:text-[#FF5A1F] transition-colors"
+              className="font-display text-4xl font-extrabold text-white hover:text-[#FF5A1F] tracking-[-0.02em] transition-colors"
             >
               About
             </a>
@@ -351,7 +351,7 @@ export const Navbar: React.FC = () => {
             <a
               href="/#process"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="font-display text-4xl font-extrabold text-white hover:text-[#FF5A1F] transition-colors"
+              className="font-display text-4xl font-extrabold text-white hover:text-[#FF5A1F] tracking-[-0.02em] transition-colors"
             >
               Process
             </a>
@@ -359,7 +359,7 @@ export const Navbar: React.FC = () => {
             <a
               href="/#faq"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="font-display text-4xl font-extrabold text-white hover:text-[#FF5A1F] transition-colors"
+              className="font-display text-4xl font-extrabold text-white hover:text-[#FF5A1F] tracking-[-0.02em] transition-colors"
             >
               FAQ
             </a>
@@ -369,11 +369,11 @@ export const Navbar: React.FC = () => {
             <Link
               to="/contact"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="w-full py-4 text-center rounded-xl bg-gradient-to-r from-[#FF5A1F] to-[#FF8A3D] font-mono font-bold text-sm text-white uppercase tracking-wider"
+              className="w-full py-4 text-center rounded-xl bg-gradient-to-r from-[#FF5A1F] to-[#FF8A3D] font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-black"
             >
               Start a Project →
             </Link>
-            <div className="flex items-center justify-between font-mono text-xs text-[#8A8A8E]">
+            <div className="flex items-center justify-between font-mono text-[12px] font-medium text-[#8A8A8E] tracking-[0.18em]">
               <span>{BRAND.email}</span>
               <span>{BRAND.est}</span>
             </div>

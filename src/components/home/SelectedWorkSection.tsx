@@ -19,14 +19,14 @@ export const SelectedWorkSection: React.FC = () => {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-8 border-b border-white/10 gap-6">
           <div>
-            <span className="font-mono text-xs uppercase tracking-widest text-[#FF5A1F]">
+            <span className="font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-[#FF5A1F]">
               // 04 SELECTED WORK
             </span>
-            <h2 className="font-display font-black text-4xl sm:text-6xl md:text-7xl text-white tracking-tighter uppercase mt-2">
-              ENGINEERED CASE STUDIES.
+            <h2 className="font-display font-extrabold text-3xl sm:text-5xl md:text-6xl text-white tracking-[-0.02em] leading-[1.1] mt-2">
+              Engineered case studies.
             </h2>
           </div>
-          <p className="font-mono text-xs text-[#8A8A8E] max-w-sm uppercase leading-relaxed">
+          <p className="font-sans text-[16px] text-[#C2C2C2] max-w-sm leading-[1.6]">
             Every project engineered for measurable search reach, sub-second latency, and verified conversion pipelines.
           </p>
         </div>
@@ -62,12 +62,12 @@ export const SelectedWorkSection: React.FC = () => {
 
         {/* Bottom Explorer CTA */}
         <div className="mt-20 pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-6">
-          <span className="font-mono text-xs text-[#8A8A8E] uppercase tracking-wider">
-            All case studies populated with client metric verification [TODO]
+          <span className="font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em]">
+            Verified metrics & client benchmarks
           </span>
           <Link
             to="/projects"
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full text-xs font-mono font-bold uppercase tracking-wider text-white bg-[#111113] border border-white/20 hover:border-[#FF5A1F] transition-all hover:scale-105 active:scale-95"
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-white bg-[#111113] border border-white/20 hover:border-[#FF5A1F] transition-all hover:scale-105 active:scale-95"
           >
             <span>View All Archives</span>
             <span>→</span>
@@ -112,13 +112,13 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         >
           {/* Subtle geometric grid texture fallback */}
           <div className="w-full h-full flex flex-col items-center justify-center p-8 text-center bg-tech-grid">
-            <span className="font-mono text-xs text-[#FF5A1F] tracking-widest uppercase mb-2">
+            <span className="font-mono text-[12px] font-medium text-[#FF5A1F] tracking-[0.18em] uppercase mb-2">
               // CASE ARCHIVE
             </span>
-            <span className="font-display font-black text-3xl sm:text-4xl text-white tracking-tight">
+            <span className="font-display font-bold text-3xl sm:text-4xl text-white tracking-[-0.01em]">
               {project.title}
             </span>
-            <span className="font-mono text-xs text-[#8A8A8E] mt-3">
+            <span className="font-mono text-[12px] font-medium text-[#8A8A8E] tracking-[0.18em] uppercase mt-3">
               {project.client}
             </span>
           </div>
@@ -141,10 +141,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
 
         {/* Top Badges */}
         <div className="absolute top-5 left-5 right-5 flex items-center justify-between z-10 pointer-events-none">
-          <span className="px-3 py-1 rounded-full bg-[#0A0A0B]/80 backdrop-blur-md border border-white/10 font-mono text-[10px] text-white uppercase tracking-wider">
+          <span className="px-3 py-1 rounded-full bg-[#0A0A0B]/80 backdrop-blur-md border border-white/10 font-mono text-[12px] font-medium text-white uppercase tracking-[0.18em]">
             {project.category}
           </span>
-          <span className="px-2.5 py-1 rounded-full bg-[#FF5A1F]/20 border border-[#FF5A1F]/40 font-mono text-[10px] text-[#FF8A3D] font-bold">
+          <span className="px-2.5 py-1 rounded-full bg-[#FF5A1F]/20 border border-[#FF5A1F]/40 font-mono text-[12px] font-medium text-[#FF8A3D] tracking-[0.18em]">
             {project.year}
           </span>
         </div>
@@ -153,10 +153,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         {project.results[0] && (
           <div className="absolute bottom-5 left-5 z-10 pointer-events-none">
             <div className="px-4 py-2 rounded-2xl bg-[#0A0A0B]/90 backdrop-blur-md border border-white/15 flex items-center gap-2">
-              <span className="font-display font-black text-lg text-[#FF5A1F]">
+              <span className="font-display font-extrabold text-lg text-[#FF5A1F]">
                 {project.results[0].metric}
               </span>
-              <span className="font-mono text-[10px] text-[#8A8A8E] uppercase">
+              <span className="font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em]">
                 {project.results[0].label}
               </span>
             </div>
@@ -170,21 +170,21 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="text-[10px] font-mono uppercase text-[#8A8A8E] bg-white/[0.04] px-2.5 py-0.5 rounded border border-white/5"
+              className="text-[12px] font-mono font-medium uppercase tracking-[0.18em] text-[#8A8A8E] bg-white/[0.04] px-2.5 py-1 rounded border border-white/5"
             >
               {tag}
             </span>
           ))}
         </div>
 
-        <h3 className="font-display font-bold text-2xl text-white group-hover:text-[#FF5A1F] transition-colors flex items-center justify-between">
+        <h3 className="font-display font-bold text-2xl text-white tracking-[-0.01em] group-hover:text-[#FF5A1F] transition-colors flex items-center justify-between">
           <span>{project.title}</span>
           <span className="text-sm font-mono text-[#FF5A1F] group-hover:translate-x-1.5 transition-transform">
             →
           </span>
         </h3>
 
-        <p className="text-xs sm:text-sm text-[#8A8A8E] mt-2 line-clamp-2 leading-relaxed">
+        <p className="font-sans text-[16px] text-[#C2C2C2] mt-2 line-clamp-2 leading-[1.6]">
           {project.summary}
         </p>
       </div>

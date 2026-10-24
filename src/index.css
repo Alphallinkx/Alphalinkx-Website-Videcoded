@@ -10,6 +10,55 @@
   --bg-card: #10131C;
 }
 
+/* Global Font Consistency */
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: #C2C2C2;
+}
+
+h1, h2, h3, h4, h5, h6, .font-display {
+  font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+}
+
+/* Exact User-Specified Typography Classes */
+.font-hero {
+  font-family: 'Manrope', system-ui, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+}
+
+.font-section-heading {
+  font-family: 'Manrope', system-ui, sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  text-transform: none; /* Premium sentence case contrast */
+}
+
+.font-card-title {
+  font-family: 'Manrope', system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-transform: none; /* Sentence case */
+}
+
+.text-body-primary {
+  font-family: 'Inter', system-ui, sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #C2C2C2;
+}
+
+.label-mono {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 500;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;

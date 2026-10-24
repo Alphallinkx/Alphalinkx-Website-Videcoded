@@ -18,15 +18,15 @@ export const FaqSection: React.FC = () => {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 pb-8 border-b border-white/10 gap-6">
           <div>
-            <span className="font-mono text-xs uppercase tracking-widest text-[#FF5A1F]">
-              // 09 QUESTIONS
+            <span className="font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-[#FF5A1F]">
+              // 09 QUESTIONS & ANSWERS
             </span>
-            <h2 className="font-display font-black text-4xl sm:text-6xl text-white tracking-tighter uppercase mt-2">
-              CLARITY ON THE PROTOCOL.
+            <h2 className="font-display font-extrabold text-3xl sm:text-5xl md:text-6xl text-white tracking-[-0.02em] leading-[1.1] mt-2">
+              Frequently asked questions.
             </h2>
           </div>
-          <p className="font-mono text-xs text-[#8A8A8E] max-w-sm uppercase leading-relaxed">
-            Straight answers on AI search, Google Maps local ranking, deployment velocity, and retainer scopes.
+          <p className="font-sans text-[16px] text-[#C2C2C2] max-w-sm leading-[1.6]">
+            Clear answers on AI search, local map pack rankings, deployment timelines, and engagement terms.
           </p>
         </div>
 
@@ -43,7 +43,7 @@ export const FaqSection: React.FC = () => {
                   className="w-full py-8 text-left flex items-center justify-between gap-6 group focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#FF5A1F]"
                   aria-expanded={isOpen}
                 >
-                  <span className="font-display font-bold text-xl sm:text-2xl text-white group-hover:text-[#FF5A1F] transition-colors">
+                  <span className="font-display font-bold text-xl sm:text-2xl text-white tracking-[-0.01em] group-hover:text-[#FF5A1F] transition-colors">
                     {faq.question}
                   </span>
 
@@ -63,7 +63,7 @@ export const FaqSection: React.FC = () => {
                     isOpen ? 'max-h-96 pb-8 opacity-100' : 'max-h-0 pb-0 opacity-0'
                   }`}
                 >
-                  <p className="text-sm sm:text-base text-[#8A8A8E] leading-relaxed max-w-3xl">
+                  <p className="font-sans text-[16px] text-[#C2C2C2] leading-[1.6] max-w-3xl">
                     {faq.answer}
                   </p>
                 </div>

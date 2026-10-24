@@ -78,7 +78,7 @@ export const ServiceDetailPage: React.FC = () => {
         <div className="mb-8">
           <Link
             to="/services"
-            className="inline-flex items-center gap-2 text-xs font-mono text-zinc-400 hover:text-white transition-colors"
+            className="inline-flex items-center gap-2 font-mono text-[12px] font-medium tracking-[0.18em] uppercase text-zinc-400 hover:text-white transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Back to All Capabilities</span>
@@ -87,30 +87,30 @@ export const ServiceDetailPage: React.FC = () => {
 
         {/* Hero Banner */}
         <div className="glass-panel rounded-3xl p-8 sm:p-12 border border-white/10 bg-gradient-to-br from-[#10131E] to-[#0A0C14] mb-16 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-80 h-80 bg-[#FC6603]/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute top-0 right-0 w-80 h-80 bg-[#FF5A1F]/15 rounded-full blur-3xl pointer-events-none" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
             <div className="lg:col-span-8">
-              <div className="w-12 h-12 rounded-2xl bg-zinc-900 border border-white/10 flex items-center justify-center text-[#FC6603] mb-6">
+              <div className="w-12 h-12 rounded-2xl bg-zinc-900 border border-white/10 flex items-center justify-center text-[#FF5A1F] mb-6">
                 <IconComp className="w-6 h-6" />
               </div>
 
-              <span className="text-xs font-mono font-semibold tracking-widest text-[#FC6603] uppercase">
-                CAPABILITY SPECIFICATION
+              <span className="font-mono text-[12px] font-medium tracking-[0.18em] text-[#FF5A1F] uppercase">
+                // CAPABILITY SPECIFICATION
               </span>
 
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold text-white tracking-tight mt-2 leading-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold text-white tracking-[-0.03em] mt-2 leading-[1.05]">
                 {service.title}
               </h1>
 
-              <p className="text-base sm:text-lg text-zinc-300 mt-4 leading-relaxed max-w-2xl">
+              <p className="font-sans text-[16px] sm:text-[17px] text-[#C2C2C2] mt-4 leading-[1.6] max-w-2xl">
                 {service.fullDesc}
               </p>
 
               <div className="mt-8 flex flex-wrap gap-4">
                 <Link
                   to="/contact"
-                  className="px-7 py-3.5 rounded-full text-sm font-semibold text-white bg-[#FC6603] hover:bg-[#FF771E] active:scale-[0.98] transition-all flex items-center gap-2 shadow-[0_0_20px_rgba(252,102,3,0.35)]"
+                  className="px-7 py-3.5 rounded-full font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-black bg-[#FF5A1F] hover:bg-[#FF8A3D] active:scale-[0.98] transition-all flex items-center gap-2 shadow-[0_0_20px_rgba(255,90,31,0.35)]"
                 >
                   <span>Inquire for {service.title}</span>
                   <ArrowRight className="w-4 h-4" />
@@ -119,25 +119,25 @@ export const ServiceDetailPage: React.FC = () => {
             </div>
 
             <div className="lg:col-span-4 p-6 rounded-2xl bg-black/50 border border-white/10">
-              <h3 className="text-xs font-mono font-bold text-zinc-400 uppercase tracking-wider mb-4">
+              <h3 className="font-mono text-[12px] font-medium text-zinc-400 uppercase tracking-[0.18em] mb-4">
                 Standard Engagement SLA
               </h3>
-              <div className="space-y-3 text-xs font-mono text-zinc-300">
+              <div className="space-y-3 font-mono text-[12px] font-medium tracking-[0.18em] text-zinc-300">
                 <div className="flex justify-between py-2 border-b border-white/10">
-                  <span className="text-zinc-500">Timeline:</span>
+                  <span className="text-zinc-500 uppercase">Timeline:</span>
                   <span className="text-white">4–8 Weeks</span>
                 </div>
                 <div className="flex justify-between py-2 border-b border-white/10">
-                  <span className="text-zinc-500">Team Structure:</span>
-                  <span className="text-white">Senior Architect + Lead</span>
+                  <span className="text-zinc-500 uppercase">Team:</span>
+                  <span className="text-white">Senior Squad</span>
                 </div>
                 <div className="flex justify-between py-2 border-b border-white/10">
-                  <span className="text-zinc-500">Code Handoff:</span>
-                  <span className="text-white">Full IP & Repo Transfer</span>
+                  <span className="text-zinc-500 uppercase">Handoff:</span>
+                  <span className="text-white">Full IP Transfer</span>
                 </div>
                 <div className="flex justify-between py-2">
-                  <span className="text-zinc-500">Support:</span>
-                  <span className="text-[#FC6603]">30-Day Post-Launch SLA</span>
+                  <span className="text-zinc-500 uppercase">Support:</span>
+                  <span className="text-[#FF5A1F]">30-Day SLA</span>
                 </div>
               </div>
             </div>

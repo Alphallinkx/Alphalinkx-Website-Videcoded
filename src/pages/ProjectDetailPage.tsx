@@ -60,7 +60,7 @@ export const ProjectDetailPage: React.FC = () => {
         <div className="mb-8">
           <Link
             to="/projects"
-            className="inline-flex items-center gap-2 text-xs font-mono text-zinc-400 hover:text-white transition-colors"
+            className="inline-flex items-center gap-2 font-mono text-[12px] font-medium tracking-[0.18em] uppercase text-zinc-400 hover:text-white transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
             <span>Back to All Projects</span>
@@ -70,19 +70,19 @@ export const ProjectDetailPage: React.FC = () => {
         {/* Hero Meta Header */}
         <div className="max-w-4xl mb-12">
           <div className="flex items-center gap-3 mb-4">
-            <span className="px-3.5 py-1 rounded-full text-xs font-mono font-semibold text-[#FC6603] bg-[#FC6603]/10 uppercase">
+            <span className="px-3.5 py-1 rounded-full font-mono text-[12px] font-medium text-[#FF5A1F] bg-[#FF5A1F]/10 uppercase tracking-[0.18em]">
               {project.category}
             </span>
-            <span className="text-xs font-mono text-zinc-400">
+            <span className="font-mono text-[12px] font-medium text-zinc-400 uppercase tracking-[0.18em]">
               Client: {project.client}
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold text-white tracking-tight leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold text-white tracking-[-0.03em] leading-[1.05]">
             {project.title}
           </h1>
 
-          <p className="text-base sm:text-lg text-zinc-300 mt-4 leading-relaxed">
+          <p className="font-sans text-[16px] sm:text-[17px] text-[#C2C2C2] mt-4 leading-[1.6]">
             {project.summary}
           </p>
         </div>
@@ -102,21 +102,21 @@ export const ProjectDetailPage: React.FC = () => {
           <div className="lg:col-span-8 space-y-10">
             {project.challenge && (
               <div className="glass-panel rounded-3xl p-8 border border-white/10 bg-[#0E1017]">
-                <h2 className="text-xl font-display font-bold text-white mb-4">
+                <h2 className="text-xl font-display font-bold text-white tracking-[-0.01em] mb-4">
                   The Problem & Technical Challenge
                 </h2>
-                <p className="text-zinc-300 text-sm sm:text-base leading-relaxed">
+                <p className="font-sans text-[16px] text-[#C2C2C2] leading-[1.6]">
                   {project.challenge}
                 </p>
               </div>
             )}
 
             {project.solution && (
-              <div className="glass-panel rounded-3xl p-8 border border-[#FC6603]/20 bg-[#0E1017]">
-                <h2 className="text-xl font-display font-bold text-[#FC6603] mb-4">
+              <div className="glass-panel rounded-3xl p-8 border border-[#FF5A1F]/20 bg-[#0E1017]">
+                <h2 className="text-xl font-display font-bold text-[#FF5A1F] tracking-[-0.01em] mb-4">
                   The Alphalinkx Architectural Solution
                 </h2>
-                <p className="text-zinc-300 text-sm sm:text-base leading-relaxed">
+                <p className="font-sans text-[16px] text-[#C2C2C2] leading-[1.6]">
                   {project.solution}
                 </p>
               </div>
@@ -125,14 +125,14 @@ export const ProjectDetailPage: React.FC = () => {
             {/* Measurable Results */}
             {project.results && project.results.length > 0 && (
               <div className="glass-panel rounded-3xl p-8 border border-white/10 bg-gradient-to-br from-[#121626] to-[#0A0C14]">
-                <h3 className="text-xl font-display font-bold text-white mb-6">
+                <h3 className="text-xl font-display font-bold text-white tracking-[-0.01em] mb-6">
                   Measurable Business & Engineering Outcomes
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                   {project.results.map((res, i) => (
                     <div key={i} className="flex items-start gap-3 p-4 rounded-2xl bg-black/40 border border-white/5">
-                      <CheckCircle2 className="w-5 h-5 text-[#FC6603] shrink-0 mt-0.5" />
-                      <span className="text-sm font-medium text-white leading-snug">{res}</span>
+                      <CheckCircle2 className="w-5 h-5 text-[#FF5A1F] shrink-0 mt-0.5" />
+                      <span className="font-sans text-[15px] sm:text-[16px] font-medium text-white leading-snug">{res}</span>
                     </div>
                   ))}
                 </div>

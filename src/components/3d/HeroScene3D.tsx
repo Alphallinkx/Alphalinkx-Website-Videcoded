@@ -234,7 +234,7 @@ export const HeroScene3D: React.FC<HeroSceneProps> = ({ scroll }) => {
   }, []);
 
   return (
-    <div className="absolute inset-0 w-full h-full pointer-events-none select-none z-[1] bg-transparent">
+    <div className="absolute inset-0 w-full h-full pointer-events-none select-none z-[2] bg-transparent">
       <Canvas
         ref={canvasRef}
         // DPR capped at 1 on mobile for butter-smooth 60-120fps scrolling with zero GPU strain

@@ -76,10 +76,10 @@ export const HeroSocialBar: React.FC = () => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: -25 }}
-      animate={{ opacity: 1, x: 0 }}
+      initial={{ opacity: 0, x: -25, y: '-50%' }}
+      animate={{ opacity: 1, x: 0, y: '-50%' }}
       transition={{ duration: 0.85, delay: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      className="absolute left-4 sm:left-6 md:left-8 lg:left-10 top-[47%] -translate-y-1/2 z-20 hidden sm:flex flex-col items-center gap-2 select-none"
+      className="absolute left-4 sm:left-6 md:left-8 lg:left-10 top-[40%] z-20 hidden sm:flex flex-col items-center gap-2 select-none"
     >
       {/* 01. Top Signal Beacon & Antenna */}
       <div className="flex flex-col items-center gap-1.5">

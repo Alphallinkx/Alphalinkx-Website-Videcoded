@@ -142,7 +142,7 @@ export const Navbar: React.FC = () => {
           >
             <a
               href="/#work"
-              className="px-4 py-1.5 font-mono text-[12px] font-medium tracking-[0.18em] uppercase text-[#8A8A8E] hover:text-white transition-colors duration-150"
+              className="px-4 py-1.5 font-mono text-[12px] font-medium tracking-[0.18em] uppercase text-white hover:text-[#FF5A1F] transition-colors duration-150"
             >
               Work
             </a>
@@ -152,7 +152,7 @@ export const Navbar: React.FC = () => {
               type="button"
               onClick={() => setIsMegaMenuOpen(!isMegaMenuOpen)}
               className={`px-4 py-1.5 font-mono text-[12px] font-medium tracking-[0.18em] uppercase flex items-center gap-1.5 transition-colors duration-150 ${
-                isMegaMenuOpen ? 'text-[#FF5A1F]' : 'text-[#8A8A8E] hover:text-white'
+                isMegaMenuOpen ? 'text-[#FF5A1F]' : 'text-white hover:text-[#FF5A1F]'
               }`}
             >
               <span>Services</span>
@@ -170,21 +170,21 @@ export const Navbar: React.FC = () => {
 
             <a
               href="/#about"
-              className="px-4 py-1.5 font-mono text-[12px] font-medium tracking-[0.18em] uppercase text-[#8A8A8E] hover:text-white transition-colors duration-150"
+              className="px-4 py-1.5 font-mono text-[12px] font-medium tracking-[0.18em] uppercase text-white hover:text-[#FF5A1F] transition-colors duration-150"
             >
               About
             </a>
 
             <a
               href="/#process"
-              className="px-4 py-1.5 font-mono text-[12px] font-medium tracking-[0.18em] uppercase text-[#8A8A8E] hover:text-white transition-colors duration-150"
+              className="px-4 py-1.5 font-mono text-[12px] font-medium tracking-[0.18em] uppercase text-white hover:text-[#FF5A1F] transition-colors duration-150"
             >
               Process
             </a>
 
             <a
               href="/#faq"
-              className="px-4 py-1.5 font-mono text-[12px] font-medium tracking-[0.18em] uppercase text-[#8A8A8E] hover:text-white transition-colors duration-150"
+              className="px-4 py-1.5 font-mono text-[12px] font-medium tracking-[0.18em] uppercase text-white hover:text-[#FF5A1F] transition-colors duration-150"
             >
               FAQ
             </a>

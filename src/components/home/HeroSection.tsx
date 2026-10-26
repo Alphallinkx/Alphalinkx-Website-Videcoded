@@ -90,7 +90,7 @@ export const HeroSection: React.FC = () => {
         }}
         className="relative z-10 my-auto py-8 text-center w-full max-w-7xl mx-auto flex flex-col items-center justify-center will-change-transform px-4"
       >
-        {/* Main Prominent Headline with Cinematic Mask Reveal (Manrope 800, tracking: -0.03em, leading: 1.02) */}
+        {/* Main Prominent Headline with Cinematic Mask Reveal (Bricolage Grotesque 800, tracking: -0.03em, leading: 1.02) */}
         <h1 className="font-display font-extrabold text-[clamp(2.15rem,7.2vw,5.5rem)] text-white tracking-[-0.03em] uppercase leading-[1.02] drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)] flex flex-col items-center text-center w-full">
           <span className="block overflow-hidden py-1">
             <motion.span
@@ -99,7 +99,7 @@ export const HeroSection: React.FC = () => {
               transition={{ duration: 0.95, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
               className="block sm:whitespace-nowrap will-change-transform"
             >
-              YOU FOCUS ON YOUR BUSINESS.
+              BE THE ALPHA
             </motion.span>
           </span>
           <span className="block overflow-hidden py-1">
@@ -109,12 +109,12 @@ export const HeroSection: React.FC = () => {
               transition={{ duration: 0.95, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
               className="block sm:whitespace-nowrap mt-1 sm:mt-2 text-[#FF5A1F] will-change-transform"
             >
-              WE MANAGE ITS GROWTH.
+              IN YOUR MARKET.
             </motion.span>
           </span>
         </h1>
 
-        {/* Clear, Prominent Value Proposition Subtext (Inter 400, 16px-17px, line-height: 1.6, color: #C2C2C2) */}
+        {/* Clear, Prominent Value Proposition Subtext (Schibsted Grotesk 400, 16px-17px, line-height: 1.6, color: #C2C2C2) */}
         <motion.div
           initial={{ opacity: 0, y: 32, filter: 'blur(8px)' }}
           animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
@@ -122,7 +122,7 @@ export const HeroSection: React.FC = () => {
           className="mt-6 sm:mt-8 max-w-xl sm:max-w-2xl mx-auto px-2 sm:px-4"
         >
           <p className="text-[16px] sm:text-[17px] text-[#C2C2C2] font-normal font-sans leading-[1.6] drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)]">
-            Leave the growth to us. We manage everything you need to build an awesome business — one that grows faster, wins more customers, earns more revenue, and stands out as a brand people love, trust, and remember.
+            Your competitors are taking the customers that should be yours. We change that. We manage your growth and turn yours into an awesome business the first name in your market that people find, trust, and choose.
           </p>
         </motion.div>
 

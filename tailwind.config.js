@@ -35,8 +35,8 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        display: ['Manrope', 'system-ui', 'sans-serif'],
+        sans: ['"Schibsted Grotesk"', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        display: ['"Bricolage Grotesque"', 'Manrope', 'system-ui', 'sans-serif'],
         mono: ['JetBrains Mono', 'monospace'],
       },
       animation: {

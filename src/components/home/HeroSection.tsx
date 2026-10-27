@@ -61,7 +61,7 @@ export const HeroSection: React.FC = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-[100dvh] w-full flex flex-col justify-between pt-28 pb-10 px-6 md:px-12 overflow-hidden bg-[#0A0A0B]"
+      className="relative min-h-[100dvh] w-full flex flex-col justify-between pt-28 pb-10 px-4 sm:px-6 md:px-12 overflow-hidden bg-[#0A0A0B]"
     >
       {/* 01. Attractive Layered Orange Glow Gradient Background */}
       <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden bg-[#0A0A0B]">
@@ -128,11 +128,11 @@ export const HeroSection: React.FC = () => {
           y: headlineY,
           scale: headlineScale,
         }}
-        className="relative z-10 my-auto py-8 text-center w-full max-w-7xl mx-auto flex flex-col items-center justify-center will-change-transform px-4"
+        className="relative z-10 my-auto py-8 text-center w-full max-w-7xl mx-auto flex flex-col items-center justify-center will-change-transform px-2 sm:px-4"
       >
         {/* Main Prominent Headline with Cinematic Mask Reveal (Bricolage Grotesque 800, tracking: -0.03em, leading: 1.02) */}
-        <h1 className="font-display font-extrabold text-[clamp(2.4rem,7.8vw,6.25rem)] text-white tracking-[-0.03em] uppercase leading-[1.02] drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)] flex flex-col items-center text-center w-full">
-          <span className="block overflow-hidden py-1">
+        <h1 className="font-display font-extrabold text-[clamp(2.85rem,8.5vw,6.25rem)] text-white tracking-[-0.03em] uppercase leading-[1.05] sm:leading-[1.02] drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)] flex flex-col items-center text-center w-full">
+          <span className="block overflow-hidden py-1 sm:py-1.5">
             <motion.span
               initial={{ y: '115%', opacity: 0 }}
               animate={{ y: '0%', opacity: 1 }}
@@ -142,7 +142,7 @@ export const HeroSection: React.FC = () => {
               BE THE <span className="text-[#FC6603]">ALPHA</span>
             </motion.span>
           </span>
-          <span className="block overflow-hidden py-1">
+          <span className="block overflow-hidden py-1 sm:py-1.5">
             <motion.span
               initial={{ y: '115%', opacity: 0 }}
               animate={{ y: '0%', opacity: 1 }}

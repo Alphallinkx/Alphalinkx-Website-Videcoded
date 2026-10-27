@@ -139,7 +139,7 @@ export const HeroSection: React.FC = () => {
               transition={{ duration: 0.95, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
               className="block sm:whitespace-nowrap will-change-transform"
             >
-              BE THE ALPHA
+              BE THE <span className="text-[#FC6603]">ALPHA</span>
             </motion.span>
           </span>
           <span className="block overflow-hidden py-1">
@@ -147,7 +147,7 @@ export const HeroSection: React.FC = () => {
               initial={{ y: '115%', opacity: 0 }}
               animate={{ y: '0%', opacity: 1 }}
               transition={{ duration: 0.95, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="block sm:whitespace-nowrap mt-1 sm:mt-2 text-[#FF5A1F] will-change-transform"
+              className="block sm:whitespace-nowrap mt-1 sm:mt-2 text-white will-change-transform"
             >
               IN YOUR MARKET.
             </motion.span>

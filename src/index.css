@@ -147,6 +147,36 @@ canvas {
   100% { transform: translateX(-50%); }
 }
 
+@keyframes ticker-left {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes ticker-right {
+  0% { transform: translate3d(-50%, 0, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+.animate-ticker-left {
+  animation: ticker-left 42s linear infinite;
+}
+
+.animate-ticker-right {
+  animation: ticker-right 48s linear infinite;
+}
+
+.ticker-stroke-text {
+  color: transparent;
+  -webkit-text-stroke: 1.25px rgba(255, 255, 255, 0.42);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ticker-stroke-text:hover {
+  color: rgba(252, 102, 3, 0.15);
+  -webkit-text-stroke: 1.5px #FC6603;
+  filter: drop-shadow(0 0 16px rgba(252, 102, 3, 0.55));
+}
+
 /* Lenis Smooth Momentum Scroll Engine */
 html.lenis, html.lenis body {
   height: auto;

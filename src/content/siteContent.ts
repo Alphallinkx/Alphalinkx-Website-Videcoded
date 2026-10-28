@@ -540,3 +540,115 @@ export const FORM_OPTIONS = {
     'Other',
   ],
 };
+
+
+/**
+ * 6 DIAGNOSIS CHALLENGE CARDS
+ * Shared configuration with stable IDs for growth chain diagnosis.
+ * Purely informational cards reflecting client growth bottlenecks.
+ */
+export interface DiagnosisCardItem {
+  id: 'visibility' | 'website-conversion' | 'social-marketing' | 'ai-automation' | 'paid-ads' | 'performance-marketing';
+  category: string;
+  title: string;
+  description: string;
+}
+
+export const DIAGNOSIS_CARDS: DiagnosisCardItem[] = [
+  {
+    id: 'visibility',
+    category: 'VISIBILITY',
+    title: 'Customers can’t find my business online',
+    description: 'Help the right people discover your business through search and local maps.',
+  },
+  {
+    id: 'website-conversion',
+    category: 'WEBSITE',
+    title: 'My website isn’t turning visitors into enquiries',
+    description: 'Give visitors a faster, clearer experience that makes taking action easier.',
+  },
+  {
+    id: 'social-marketing',
+    category: 'SOCIAL MARKETING',
+    title: 'My social media isn’t bringing business',
+    description: 'Build a consistent presence that attracts the right audience and starts conversations.',
+  },
+  {
+    id: 'paid-ads',
+    category: 'META & GOOGLE ADS',
+    title: 'My ads aren’t reaching the right customers',
+    description: 'Improve targeting, messaging and creative across Facebook, Instagram and Google.',
+  },
+  {
+    id: 'performance-marketing',
+    category: 'PERFORMANCE MARKETING',
+    title: 'I’m spending on marketing without knowing what works',
+    description: 'Connect campaigns, conversion tracking and customer acquisition to understand what drives results.',
+  },
+  {
+    id: 'ai-automation',
+    category: 'AI AUTOMATION',
+    title: 'Repetitive tasks and slow replies hold us back',
+    description: 'Streamline routine work and customer follow-ups so your team can focus on growth.',
+  },
+];
+
+/**
+ * FOUR-LINK CHAIN JOURNEY
+ * Explains how the customer journey connects:
+ * BE FOUND → BE CLICKED → BE TRUSTED → BE CHOSEN
+ * Four stages of the journey, not four individual services.
+ */
+export interface ChainLinkItem {
+  id: 'be-found' | 'be-clicked' | 'be-trusted' | 'be-chosen';
+  stageNumber: string;
+  number: string;
+  title: string;
+  description: string;
+  tags: string[];
+  ghostWord: string;
+  ghostCaption: string;
+}
+
+export const CHAIN_LINKS: ChainLinkItem[] = [
+  {
+    id: 'be-found',
+    stageNumber: 'LINK 01',
+    number: '01',
+    title: 'BE FOUND',
+    description: 'Help the right people discover your business when they search, browse or explore their options.',
+    tags: ['SEO', 'LOCAL MAPS', 'META & GOOGLE ADS'],
+    ghostWord: 'FOUND',
+    ghostCaption: 'SEARCH · MAPS · REACH',
+  },
+  {
+    id: 'be-clicked',
+    stageNumber: 'LINK 02',
+    number: '02',
+    title: 'BE CLICKED',
+    description: 'Give people a reason to visit—and a fast, clear website that makes the next step easy.',
+    tags: ['WEBSITE', 'LANDING PAGES', 'AD CREATIVE'],
+    ghostWord: 'CLICKED',
+    ghostCaption: 'MESSAGE · DESIGN · EXPERIENCE',
+  },
+  {
+    id: 'be-trusted',
+    stageNumber: 'LINK 03',
+    number: '03',
+    title: 'BE TRUSTED',
+    description: 'Build confidence through useful content, consistent communication and genuine proof.',
+    tags: ['SOCIAL MARKETING', 'CONTENT', 'REAL PROOF'],
+    ghostWord: 'TRUSTED',
+    ghostCaption: 'CONSISTENCY · CONTENT · CONFIDENCE',
+  },
+  {
+    id: 'be-chosen',
+    stageNumber: 'LINK 04',
+    number: '04',
+    title: 'BE CHOSEN',
+    description: 'Make it easier for interested people to enquire, get a timely response and move forward.',
+    tags: ['PERFORMANCE MARKETING', 'AI AUTOMATION', 'ENQUIRY FLOW'],
+    ghostWord: 'CHOSEN',
+    ghostCaption: 'ACTION · RESPONSE · MEASUREMENT',
+  },
+];

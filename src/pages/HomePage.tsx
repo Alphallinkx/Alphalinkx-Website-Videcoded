@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { HeroSection } from '../components/home/HeroSection';
 import { ServicesTicker } from '../components/home/ServicesTicker';
-import { ShowreelSection } from '../components/home/ShowreelSection';
+import { DiagnosisSection } from '../components/home/DiagnosisSection';
+import { ChainSection } from '../components/home/ChainSection';
 import { ClientLogoMarquee } from '../components/home/ClientLogoMarquee';
-import { SpellItOutSection } from '../components/home/SpellItOutSection';
 import { SelectedWorkSection } from '../components/home/SelectedWorkSection';
 import { ServicesListSection } from '../components/home/ServicesListSection';
 import { NetworkProcessSection } from '../components/home/NetworkProcessSection';
@@ -21,14 +21,14 @@ export const HomePage: React.FC = () => {
       {/* 02. SERVICES TICKER: Dual infinite marquees tilted -3° with velocity skew */}
       <ServicesTicker />
 
-      {/* 03. SHOWREEL: Expanding video card (60% to full-bleed) + PLAY cursor */}
-      <ShowreelSection />
+      {/* 03. THE DIAGNOSIS: "Where is your growth chain breaking?" (6 Cards in 1 Row) */}
+      <DiagnosisSection />
 
-      {/* 04. CLIENT LOGO MARQUEE: Trusted by grayscale to orange-white hover */}
+      {/* 04. THE CHAIN: "Four links. One stronger customer journey." (Alternating Timeline + Progress Line) */}
+      <ChainSection />
+
+      {/* 05. CLIENT LOGO MARQUEE: Trusted by grayscale to orange-white hover */}
       <ClientLogoMarquee />
-
-      {/* 05. "SPELL IT OUT": Pinned Horizontal Scroll across 10 A-L-P-H-A-L-I-N-K-X panels */}
-      <SpellItOutSection />
 
       {/* 06. SELECTED WORK: Asymmetric 2-column parallax with video hover preview */}
       <SelectedWorkSection />

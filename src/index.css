@@ -199,3 +199,115 @@ html.lenis, html.lenis body {
 }
 
 
+
+/* ==========================================================================
+   Diagnosis Section Icon Animations (AlphaLinkx Cyber-Telemetry Engine)
+   ========================================================================== */
+
+@keyframes radar-sweep {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes sonar-ping {
+  0% {
+    r: 3.5px;
+    opacity: 0.9;
+    stroke-width: 1.5px;
+  }
+  70% {
+    opacity: 0.35;
+  }
+  100% {
+    r: 17px;
+    opacity: 0;
+    stroke-width: 0.5px;
+  }
+}
+
+@keyframes flow-dash {
+  0% { stroke-dashoffset: 28; }
+  100% { stroke-dashoffset: 0; }
+}
+
+@keyframes beacon-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.75;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 1;
+    filter: drop-shadow(0 0 6px #FC6603);
+  }
+}
+
+@keyframes shield-scan {
+  0%, 100% {
+    transform: translateY(0px);
+    opacity: 0.15;
+  }
+  50% {
+    transform: translateY(22px);
+    opacity: 0.65;
+  }
+}
+
+@keyframes reticle-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes pipeline-flow {
+  0% { stroke-dashoffset: 24; }
+  100% { stroke-dashoffset: 0; }
+}
+
+@keyframes sequencer-tick {
+  0%, 100% { opacity: 0.25; transform: scale(1); }
+  50% { opacity: 0.9; transform: scale(1.25); }
+}
+
+.anim-radar-sweep {
+  animation: radar-sweep 5s linear infinite;
+  transform-origin: 28px 28px;
+}
+
+.anim-sonar-ping {
+  animation: sonar-ping 2.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+.anim-sonar-ping-delayed {
+  animation: sonar-ping 2.4s cubic-bezier(0.16, 1, 0.3, 1) infinite 1.2s;
+}
+
+.anim-flow-dash {
+  stroke-dasharray: 4 4;
+  animation: flow-dash 1.8s linear infinite;
+}
+
+.anim-beacon-pulse {
+  animation: beacon-pulse 2s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.anim-shield-scan {
+  animation: shield-scan 3.2s ease-in-out infinite;
+}
+
+.anim-reticle-rotate {
+  animation: reticle-rotate 18s linear infinite;
+  transform-origin: 32px 32px;
+}
+
+.anim-pipeline-flow {
+  stroke-dasharray: 3 3;
+  animation: pipeline-flow 1.5s linear infinite;
+}
+
+.anim-step-1 { animation: sequencer-tick 2.4s ease-in-out infinite 0s; transform-origin: 21px 31px; }
+.anim-step-2 { animation: sequencer-tick 2.4s ease-in-out infinite 0.4s; transform-origin: 32px 31px; }
+.anim-step-3 { animation: sequencer-tick 2.4s ease-in-out infinite 0.8s; transform-origin: 43px 31px; }
+.anim-step-4 { animation: sequencer-tick 2.4s ease-in-out infinite 1.2s; transform-origin: 21px 40px; }
+.anim-step-5 { animation: beacon-pulse 1.8s ease-in-out infinite 1.6s; transform-origin: 32px 40px; }
+.anim-step-6 { animation: sequencer-tick 2.4s ease-in-out infinite 2.0s; transform-origin: 43px 40px; }

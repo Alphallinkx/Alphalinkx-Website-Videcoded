@@ -604,8 +604,12 @@ export interface ChainLinkItem {
   stageNumber: string;
   number: string;
   title: string;
+  painBold: string;
+  painText: string;
   description: string;
   tags: string[];
+  learnText: string;
+  learnHref: string;
   ghostWord: string;
   ghostCaption: string;
 }
@@ -613,42 +617,58 @@ export interface ChainLinkItem {
 export const CHAIN_LINKS: ChainLinkItem[] = [
   {
     id: 'be-found',
-    stageNumber: 'LINK 01',
+    stageNumber: 'Link 01',
     number: '01',
-    title: 'BE FOUND',
-    description: 'Help the right people discover your business when they search, browse or explore their options.',
-    tags: ['SEO', 'LOCAL MAPS', 'META & GOOGLE ADS'],
-    ghostWord: 'FOUND',
-    ghostCaption: 'SEARCH · MAPS · REACH',
+    title: 'Be Found',
+    painBold: 'If Google and AI search can’t find you, customers choose your competitors.',
+    painText: ' We put you where buyers are already looking — and keep you there.',
+    description: 'If Google and AI search can’t find you, customers choose your competitors. We put you where buyers are already looking — and keep you there.',
+    tags: ['SEO', 'AI Search (GEO)', 'Google Business Profile'],
+    learnText: 'Get found first',
+    learnHref: '#free-audit',
+    ghostWord: 'Found',
+    ghostCaption: 'Search · AI · Maps',
   },
   {
     id: 'be-clicked',
-    stageNumber: 'LINK 02',
+    stageNumber: 'Link 02',
     number: '02',
-    title: 'BE CLICKED',
-    description: 'Give people a reason to visit—and a fast, clear website that makes the next step easy.',
-    tags: ['WEBSITE', 'LANDING PAGES', 'AD CREATIVE'],
-    ghostWord: 'CLICKED',
-    ghostCaption: 'MESSAGE · DESIGN · EXPERIENCE',
+    title: 'Be Clicked',
+    painBold: 'A slow, confusing website makes visitors leave in seconds.',
+    painText: ' We build fast, clear pages designed around one job: turning a visit into a call.',
+    description: 'A slow, confusing website makes visitors leave in seconds. We build fast, clear pages designed around one job: turning a visit into a call.',
+    tags: ['Website Design', 'Speed', 'Layout & UX'],
+    learnText: 'Turn visits into calls',
+    learnHref: '#free-audit',
+    ghostWord: 'Clicked',
+    ghostCaption: 'Design · Speed · UX',
   },
   {
     id: 'be-trusted',
-    stageNumber: 'LINK 03',
+    stageNumber: 'Link 03',
     number: '03',
-    title: 'BE TRUSTED',
-    description: 'Build confidence through useful content, consistent communication and genuine proof.',
-    tags: ['SOCIAL MARKETING', 'CONTENT', 'REAL PROOF'],
-    ghostWord: 'TRUSTED',
-    ghostCaption: 'CONSISTENCY · CONTENT · CONFIDENCE',
+    title: 'Be Trusted',
+    painBold: 'People buy from brands they know, see, and hear good things about.',
+    painText: ' Reviews and consistent content make you the safe, obvious choice.',
+    description: 'People buy from brands they know, see, and hear good things about. Reviews and consistent content make you the safe, obvious choice.',
+    tags: ['Reviews', 'Social Media', 'Content'],
+    learnText: 'Build the trust',
+    learnHref: '#free-audit',
+    ghostWord: 'Trusted',
+    ghostCaption: 'Reviews · Social · Content',
   },
   {
     id: 'be-chosen',
-    stageNumber: 'LINK 04',
+    stageNumber: 'Link 04',
     number: '04',
-    title: 'BE CHOSEN',
-    description: 'Make it easier for interested people to enquire, get a timely response and move forward.',
-    tags: ['PERFORMANCE MARKETING', 'AI AUTOMATION', 'ENQUIRY FLOW'],
-    ghostWord: 'CHOSEN',
-    ghostCaption: 'ACTION · RESPONSE · MEASUREMENT',
+    title: 'Be Chosen',
+    painBold: 'Attention without follow-up is money leaking out of your chain.',
+    painText: ' Targeted ads and automatic follow-up turn interest into booked customers.',
+    description: 'Attention without follow-up is money leaking out of your chain. Targeted ads and automatic follow-up turn interest into booked customers.',
+    tags: ['Google & Meta Ads', 'Offers', 'Lead Follow-Up'],
+    learnText: 'Close the sale',
+    learnHref: '#free-audit',
+    ghostWord: 'Chosen',
+    ghostCaption: 'Ads · Offers · Follow-Up',
   },
 ];

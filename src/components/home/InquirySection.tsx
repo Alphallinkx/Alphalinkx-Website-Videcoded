@@ -93,6 +93,7 @@ export const InquirySection: React.FC = () => {
       aria-label="Multi-Step Project Inquiry"
       className="relative py-28 md:py-44 bg-[#0A0A0B] overflow-hidden"
     >
+      <div id="free-audit" className="absolute -top-24 left-0 pointer-events-none" aria-hidden="true" />
       <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         {/* Massive Headline with Mouse-Follow Gradient */}
         <div className="text-center mb-16">

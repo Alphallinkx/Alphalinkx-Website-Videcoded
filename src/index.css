@@ -334,21 +334,105 @@ html.lenis, html.lenis body {
   background: var(--bg2);
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
-  overflow: visible;
-  padding: 80px 0;
+  overflow: clip;
+  padding: 0; /* Zero section padding - background touches the very top border! */
   position: relative;
 }
 
-/* Sticky Header Container */
-.chain-sticky-head {
+/* ==========================================================================
+   FIXED VIEWPORT TOPOGRAPHIC BACKGROUND
+   Stays completely pinned to the viewport during the entire scroll through this section
+   ========================================================================== */
+.chain-fixed-bg {
   position: sticky;
-  top: 72px;
-  z-index: 25;
-  background: linear-gradient(180deg, rgba(11, 13, 19, 0.98) 0%, rgba(11, 13, 19, 0.92) 80%, rgba(11, 13, 19, 0) 100%);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100vh;
+  margin-bottom: -100vh;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.chain-fixed-bg-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.chain-topo-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Seamless radial vignette: leaves the top, left, and right flanks completely open, bright, and visible */
+.chain-bg-radial-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 50%, rgba(10, 10, 11, 0.25) 0%, rgba(10, 10, 11, 0.65) 60%, rgba(10, 10, 11, 0.9) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Foreground scrollable container */
+.chain-content-wrap {
+  position: relative;
+  z-index: 2;
+  padding: 72px 0 96px;
+}
+
+/* Animated traveling orange pulses (Subtle, sparse, slowly gliding along contour lines) */
+.topo-runner {
+  will-change: stroke-dashoffset;
+}
+
+/* Left Flank Runners (2 subtle pulses) */
+.topo-runner-l1 { stroke-dasharray: 24 1076; animation: topo-pulse-flow 24s linear infinite -6s; }
+.topo-runner-l2 { stroke-dasharray: 28 1072; animation: topo-pulse-flow 30s linear infinite -18s; }
+
+/* Right Flank Runners (2 subtle pulses) */
+.topo-runner-r1 { stroke-dasharray: 24 1076; animation: topo-pulse-flow 25s linear infinite -10s; }
+.topo-runner-r2 { stroke-dasharray: 28 1072; animation: topo-pulse-flow 31s linear infinite -22s; }
+
+@keyframes topo-pulse-flow {
+  0% {
+    stroke-dashoffset: 1100;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .topo-runner {
+    animation: none;
+    opacity: 0.35;
+  }
+}
+
+/* Sticky Header Container (Static flow for lightweight, unified scroll) */
+.chain-sticky-head {
+  position: relative;
+  top: auto;
+  z-index: 2;
   padding: 16px 0 20px;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
+  background: transparent;
 }
 
 .chain-sec .wrap {
@@ -357,6 +441,7 @@ html.lenis, html.lenis body {
   margin: 0 auto;
   padding: 0 24px;
   position: relative;
+  z-index: 1;
 }
 
 .chain-sec .sec-head {
@@ -443,8 +528,9 @@ html.lenis, html.lenis body {
 
 .chain-track {
   position: relative;
-  max-width: 1020px;
+  max-width: 1080px;
   margin: 0 auto;
+  z-index: 1;
 }
 
 .chain-line {
@@ -457,40 +543,44 @@ html.lenis, html.lenis body {
   background: rgba(255, 255, 255, 0.08);
   border-radius: 2px;
   pointer-events: none;
+  will-change: transform;
 }
 
+/* GPU-accelerated liquid chain fill using scaleY (zero reflow, 120 FPS) */
 .chain-fill {
   position: absolute;
   left: 0;
   top: 0;
   width: 100%;
-  height: 0;
+  height: 100%;
   background: linear-gradient(180deg, var(--orange), var(--orange2));
-  box-shadow: 0 0 18px rgba(252, 102, 3, 0.85), 0 0 32px rgba(252, 102, 3, 0.45);
+  box-shadow: 0 0 16px rgba(252, 102, 3, 0.8), 0 0 28px rgba(252, 102, 3, 0.4);
   border-radius: 2px;
-  transition: height 0.08s linear;
+  will-change: transform;
 }
 
 .chain-fill-tip {
   position: absolute;
-  bottom: -4px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
   width: 10px;
   height: 10px;
   border-radius: 50%;
   background: #ffffff;
   box-shadow: 0 0 12px var(--orange), 0 0 22px var(--orange);
+  will-change: top, opacity;
+  pointer-events: none;
 }
 
+/* Dedicated central corridor keeps cards safely clear of center nodes */
 .link-block {
   position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 56px;
+  column-gap: clamp(84px, 10vw, 130px);
   align-items: center;
-  padding: 68px 0;
-  min-height: 440px;
+  padding: 56px 0;
+  min-height: 420px;
 }
 
 /* Center Chain Link Node */
@@ -499,15 +589,16 @@ html.lenis, html.lenis body {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 58px;
-  height: 58px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
   background: var(--bg2);
   border: 2px solid var(--line2);
   display: grid;
   place-items: center;
-  z-index: 5;
-  transition: border-color 0.45s ease, box-shadow 0.45s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease;
+  z-index: 10;
+  pointer-events: none;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.35s ease;
 }
 
 .link-node svg {
@@ -531,7 +622,7 @@ html.lenis, html.lenis body {
 .link-block.lit .link-node {
   border-color: var(--orange);
   background: #0E1119;
-  box-shadow: 0 0 32px rgba(252, 102, 3, 0.75), inset 0 0 16px rgba(252, 102, 3, 0.3);
+  box-shadow: 0 0 28px rgba(252, 102, 3, 0.7), inset 0 0 14px rgba(252, 102, 3, 0.3);
   transform: translate(-50%, -50%) scale(1.08);
 }
 
@@ -586,8 +677,7 @@ html.lenis, html.lenis body {
 }
 
 /* ==========================================================================
-   IMAGE 2 INSTRUCTION:
-   "I want this section to be have fade in transition animation when the chain icon fill up"
+   LIGHTWEIGHT CARD TRANSITIONS (Zero blur penalty, GPU compositor accelerated)
    ========================================================================== */
 .link-card {
   background: var(--card);
@@ -596,14 +686,17 @@ html.lenis, html.lenis body {
   padding: 36px;
   position: relative;
   overflow: hidden;
-  opacity: 0.2;
-  transform: translateY(32px) scale(0.97);
-  filter: blur(1.5px);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.6s ease,
-              border-color 0.4s ease,
-              box-shadow 0.4s ease;
+  opacity: 0.25;
+  transform: translateY(20px);
+  max-width: 460px;
+  width: 100%;
+  justify-self: end;
+  z-index: 2;
+  will-change: transform, opacity;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.35s ease,
+              box-shadow 0.35s ease;
 }
 
 .link-card::before {
@@ -612,22 +705,21 @@ html.lenis, html.lenis body {
   inset: 0;
   background: radial-gradient(circle at top right, rgba(252, 102, 3, 0.1), transparent 70%);
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.35s ease;
   pointer-events: none;
 }
 
 .link-block.lit .link-card {
   opacity: 1;
-  transform: translateY(0) scale(1);
-  filter: blur(0);
+  transform: translateY(0);
   border-color: rgba(252, 102, 3, 0.35);
-  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.6), 0 0 30px rgba(252, 102, 3, 0.08);
+  box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.6), 0 0 24px rgba(252, 102, 3, 0.08);
 }
 
 .link-block.lit .link-card:hover {
   border-color: rgba(252, 102, 3, 0.6);
-  transform: translateY(-4px) scale(1.008);
-  box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.7), 0 0 36px rgba(252, 102, 3, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 44px -12px rgba(0, 0, 0, 0.7), 0 0 32px rgba(252, 102, 3, 0.15);
 }
 
 .link-block.lit .link-card:hover::before {
@@ -725,8 +817,13 @@ html.lenis, html.lenis body {
    ========================================================================== */
 .link-side {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  width: 100%;
+  max-width: 460px;
+  justify-self: start;
+  position: relative;
+  z-index: 1;
 }
 
 .link-badge {
@@ -736,27 +833,29 @@ html.lenis, html.lenis body {
   display: inline-flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
-/* Ambient orange glow effect in behind */
+/* Ambient orange glow effect in behind (Optimized hardware gradient) */
 .ghost-glow-orb {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%, -50%) scale(0.8);
-  width: 320px;
-  height: 180px;
-  background: radial-gradient(ellipse at center, rgba(252, 102, 3, 0.5) 0%, rgba(252, 102, 3, 0.18) 45%, transparent 75%);
-  filter: blur(34px);
+  transform: translate(-50%, -50%) scale(0.85);
+  width: 300px;
+  height: 160px;
+  background: radial-gradient(ellipse at center, rgba(252, 102, 3, 0.45) 0%, rgba(252, 102, 3, 0.15) 50%, transparent 75%);
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  contain: strict;
+  will-change: transform, opacity;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 0;
 }
 
 .link-block.lit .ghost-glow-orb {
   opacity: 1;
-  transform: translate(-50%, -50%) scale(1.15);
+  transform: translate(-50%, -50%) scale(1.1);
 }
 
 .link-badge .big {
@@ -769,13 +868,13 @@ html.lenis, html.lenis body {
   letter-spacing: -0.01em;
   position: relative;
   z-index: 1;
-  transition: color 0.6s cubic-bezier(0.16, 1, 0.3, 1), text-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: color 0.5s cubic-bezier(0.16, 1, 0.3, 1), text-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Text becomes pure white + intense orange glow in behind */
 .link-block.lit .link-badge .big {
   color: #FFFFFF !important;
-  text-shadow: 0 0 28px rgba(252, 102, 3, 0.95), 0 0 55px rgba(252, 102, 3, 0.6), 0 0 90px rgba(252, 102, 3, 0.3);
+  text-shadow: 0 0 24px rgba(252, 102, 3, 0.9), 0 0 48px rgba(252, 102, 3, 0.5), 0 0 80px rgba(252, 102, 3, 0.25);
 }
 
 .link-badge .small {
@@ -787,28 +886,34 @@ html.lenis, html.lenis body {
   margin-top: 12px;
   position: relative;
   z-index: 1;
-  transition: color 0.5s ease, text-shadow 0.5s ease;
+  transition: color 0.45s ease, text-shadow 0.45s ease;
 }
 
 .link-block.lit .link-badge .small {
   color: var(--orange);
   font-weight: 600;
-  text-shadow: 0 0 14px rgba(252, 102, 3, 0.7);
+  text-shadow: 0 0 12px rgba(252, 102, 3, 0.65);
 }
 
+/* Alternating flip layout */
 .link-block.flip .link-card {
   order: 2;
+  justify-self: start;
 }
 
 .link-block.flip .link-side {
   order: 1;
+  justify-content: flex-end;
+  justify-self: end;
 }
 
 /* Responsive adjustments */
 @media (max-width: 860px) {
+  .chain-sec {
+    padding: 50px 0;
+  }
   .chain-sticky-head {
-    top: 60px;
-    padding: 12px 0 16px;
+    padding: 0 0 16px;
   }
   .chain-track {
     padding-left: 28px;
@@ -819,8 +924,8 @@ html.lenis, html.lenis body {
   }
   .link-block {
     grid-template-columns: 1fr;
-    gap: 20px;
-    padding: 36px 0 36px 36px;
+    gap: 16px;
+    padding: 28px 0 28px 52px;
     min-height: auto;
   }
   .link-node {
@@ -833,18 +938,20 @@ html.lenis, html.lenis body {
     width: 20px;
     height: 20px;
   }
+  .link-card {
+    max-width: 100%;
+    justify-self: stretch;
+    padding: 24px;
+  }
   .link-block.flip .link-card {
     order: 1;
+    justify-self: stretch;
   }
   .link-block.flip .link-side {
-    order: 2;
     display: none;
   }
   .link-side {
     display: none;
-  }
-  .link-card {
-    padding: 24px;
   }
 }
 

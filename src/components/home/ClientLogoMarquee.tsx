@@ -288,8 +288,8 @@ export const ClientLogoMarquee: React.FC = () => {
 
   // Card-Free Floating Partner Lockup
   const renderPartnerLockup = (partner: Partner, keySuffix: string) => (
-    <div key={`${partner.id}-${keySuffix}`} className="flex items-center gap-10 sm:gap-14 md:gap-16 shrink-0">
-      <div className="group relative flex items-center gap-3 sm:gap-3.5 select-none py-3 px-2 cursor-grab active:cursor-grabbing">
+    <div key={`${partner.id}-${keySuffix}`} className="flex items-center gap-6 sm:gap-8 md:gap-9 shrink-0">
+      <div className="group relative flex items-center gap-3 sm:gap-3.5 select-none py-3 px-1 cursor-grab active:cursor-grabbing">
         {/* Subtle Ambient Radial Aura behind Logo on Hover */}
         <div
           aria-hidden="true"
@@ -319,7 +319,7 @@ export const ClientLogoMarquee: React.FC = () => {
       </div>
 
       {/* Modern Hairline Divider */}
-      <div className="h-6 w-[1px] bg-gradient-to-b from-transparent via-white/10 to-transparent shrink-0" aria-hidden="true" />
+      <div className="h-5 w-[1px] bg-gradient-to-b from-transparent via-white/10 to-transparent shrink-0" aria-hidden="true" />
     </div>
   );
 
@@ -372,17 +372,17 @@ export const ClientLogoMarquee: React.FC = () => {
           className="flex shrink-0 items-center will-change-transform py-2"
         >
           {/* Set 1 (Measured for seamless wrap) */}
-          <div ref={set1Ref} className="flex shrink-0 items-center gap-10 sm:gap-14 md:gap-16 pr-10 sm:pr-14 md:pr-16">
+          <div ref={set1Ref} className="flex shrink-0 items-center gap-6 sm:gap-8 md:gap-9 pr-6 sm:pr-8 md:pr-9">
             {PARTNER_LIST.map((partner) => renderPartnerLockup(partner, 's1'))}
           </div>
 
           {/* Set 2 (Duplicate for continuous seamless loop) */}
-          <div className="flex shrink-0 items-center gap-10 sm:gap-14 md:gap-16 pr-10 sm:pr-14 md:pr-16" aria-hidden="true">
+          <div className="flex shrink-0 items-center gap-6 sm:gap-8 md:gap-9 pr-6 sm:pr-8 md:pr-9" aria-hidden="true">
             {PARTNER_LIST.map((partner) => renderPartnerLockup(partner, 's2'))}
           </div>
 
           {/* Set 3 (Buffer for ultra-wide displays & backward dragging) */}
-          <div className="flex shrink-0 items-center gap-10 sm:gap-14 md:gap-16 pr-10 sm:pr-14 md:pr-16" aria-hidden="true">
+          <div className="flex shrink-0 items-center gap-6 sm:gap-8 md:gap-9 pr-6 sm:pr-8 md:pr-9" aria-hidden="true">
             {PARTNER_LIST.map((partner) => renderPartnerLockup(partner, 's3'))}
           </div>
         </div>

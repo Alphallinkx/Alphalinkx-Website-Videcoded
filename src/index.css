@@ -334,9 +334,21 @@ html.lenis, html.lenis body {
   background: var(--bg2);
   border-top: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
-  overflow: hidden;
+  overflow: visible;
   padding: 80px 0;
   position: relative;
+}
+
+/* Sticky Header Container */
+.chain-sticky-head {
+  position: sticky;
+  top: 72px;
+  z-index: 25;
+  background: linear-gradient(180deg, rgba(11, 13, 19, 0.98) 0%, rgba(11, 13, 19, 0.92) 80%, rgba(11, 13, 19, 0) 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 16px 0 20px;
+  margin-bottom: 24px;
 }
 
 .chain-sec .wrap {
@@ -349,7 +361,7 @@ html.lenis, html.lenis body {
 
 .chain-sec .sec-head {
   max-width: 760px;
-  margin: 0 auto 60px;
+  margin: 0 auto;
 }
 
 .chain-sec .sec-head.center {
@@ -364,7 +376,7 @@ html.lenis, html.lenis body {
   color: var(--orange);
   text-transform: uppercase;
   display: inline-block;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
 .chain-sec .sec-head h2 {
@@ -374,7 +386,7 @@ html.lenis, html.lenis body {
   color: #ffffff;
   line-height: 1.12;
   letter-spacing: -0.03em;
-  margin: 0 0 16px;
+  margin: 0 0 14px;
 }
 
 .chain-sec .sec-head h2 .o {
@@ -388,6 +400,47 @@ html.lenis, html.lenis body {
   margin: 0 auto;
 }
 
+/* Start Anchor Node (as circled in user Image 1) */
+.chain-start-anchor {
+  position: relative;
+  width: 26px;
+  height: 26px;
+  margin: 20px auto 0;
+  display: grid;
+  place-items: center;
+}
+
+.chain-start-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--orange);
+  box-shadow: 0 0 12px var(--orange), 0 0 24px rgba(252, 102, 3, 0.6);
+  z-index: 2;
+  position: relative;
+}
+
+.chain-start-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid rgba(252, 102, 3, 0.6);
+  box-shadow: 0 0 10px rgba(252, 102, 3, 0.3);
+  animation: chain-start-pulse 2.4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+@keyframes chain-start-pulse {
+  0%, 100% {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.3;
+    box-shadow: 0 0 16px rgba(252, 102, 3, 0.7);
+  }
+}
+
 .chain-track {
   position: relative;
   max-width: 1020px;
@@ -397,13 +450,12 @@ html.lenis, html.lenis body {
 .chain-line {
   position: absolute;
   left: 50%;
-  top: 8px;
-  bottom: 8px;
+  top: 0;
+  bottom: 40px;
   width: 2px;
   transform: translateX(-50%);
-  background: rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 2px;
-  overflow: hidden;
   pointer-events: none;
 }
 
@@ -414,9 +466,21 @@ html.lenis, html.lenis body {
   width: 100%;
   height: 0;
   background: linear-gradient(180deg, var(--orange), var(--orange2));
-  box-shadow: 0 0 14px rgba(255, 90, 0, 0.65);
+  box-shadow: 0 0 18px rgba(252, 102, 3, 0.85), 0 0 32px rgba(252, 102, 3, 0.45);
   border-radius: 2px;
-  transition: height 0.12s ease-out;
+  transition: height 0.08s linear;
+}
+
+.chain-fill-tip {
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 12px var(--orange), 0 0 22px var(--orange);
 }
 
 .link-block {
@@ -425,9 +489,11 @@ html.lenis, html.lenis body {
   grid-template-columns: 1fr 1fr;
   gap: 56px;
   align-items: center;
-  padding: 44px 0;
+  padding: 68px 0;
+  min-height: 440px;
 }
 
+/* Center Chain Link Node */
 .link-node {
   position: absolute;
   left: 50%;
@@ -440,8 +506,8 @@ html.lenis, html.lenis body {
   border: 2px solid var(--line2);
   display: grid;
   place-items: center;
-  z-index: 2;
-  transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 5;
+  transition: border-color 0.45s ease, box-shadow 0.45s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease;
 }
 
 .link-node svg {
@@ -450,20 +516,79 @@ html.lenis, html.lenis body {
   stroke: var(--faint);
   fill: none;
   stroke-width: 2;
-  transition: stroke 0.4s ease, transform 0.4s ease;
+  transition: stroke 0.4s ease, transform 0.4s ease, filter 0.4s ease;
+}
+
+.link-node-ping {
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1.5px solid var(--orange);
+  opacity: 0;
+  pointer-events: none;
 }
 
 .link-block.lit .link-node {
   border-color: var(--orange);
-  box-shadow: 0 0 26px rgba(255, 90, 0, 0.45), inset 0 0 12px rgba(255, 90, 0, 0.15);
-  transform: translate(-50%, -50%) scale(1.06);
+  background: #0E1119;
+  box-shadow: 0 0 32px rgba(252, 102, 3, 0.75), inset 0 0 16px rgba(252, 102, 3, 0.3);
+  transform: translate(-50%, -50%) scale(1.08);
 }
 
 .link-block.lit .link-node svg {
   stroke: var(--orange);
-  transform: rotate(6deg) scale(1.05);
+  filter: drop-shadow(0 0 8px var(--orange));
+  transform: rotate(6deg) scale(1.06);
 }
 
+.link-block.lit .link-node-ping {
+  animation: node-ping 2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+@keyframes node-ping {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+
+/* Small tech dot next to the node (as seen in Image 2) */
+.node-aux-dot {
+  position: absolute;
+  right: -18px;
+  bottom: -10px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+  opacity: 0.4;
+  transition: opacity 0.4s ease, border-color 0.4s ease;
+}
+
+.node-aux-dot::after {
+  content: '';
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--faint);
+  transition: background-color 0.4s ease;
+}
+
+.link-block.lit .node-aux-dot {
+  opacity: 1;
+  border-color: rgba(252, 102, 3, 0.5);
+}
+
+.link-block.lit .node-aux-dot::after {
+  background: var(--orange);
+  box-shadow: 0 0 6px var(--orange);
+}
+
+/* ==========================================================================
+   IMAGE 2 INSTRUCTION:
+   "I want this section to be have fade in transition animation when the chain icon fill up"
+   ========================================================================== */
 .link-card {
   background: var(--card);
   border: 1px solid var(--line);
@@ -471,26 +596,41 @@ html.lenis, html.lenis body {
   padding: 36px;
   position: relative;
   overflow: hidden;
-  transition: border-color 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+  opacity: 0.2;
+  transform: translateY(32px) scale(0.97);
+  filter: blur(1.5px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.6s ease,
+              border-color 0.4s ease,
+              box-shadow 0.4s ease;
 }
 
 .link-card::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at top right, rgba(252, 102, 3, 0.08), transparent 70%);
+  background: radial-gradient(circle at top right, rgba(252, 102, 3, 0.1), transparent 70%);
   opacity: 0;
   transition: opacity 0.4s ease;
   pointer-events: none;
 }
 
-.link-card:hover {
-  border-color: rgba(252, 102, 3, 0.45);
-  transform: translateY(-4px);
-  box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.5), 0 0 24px rgba(252, 102, 3, 0.08);
+.link-block.lit .link-card {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+  border-color: rgba(252, 102, 3, 0.35);
+  box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.6), 0 0 30px rgba(252, 102, 3, 0.08);
 }
 
-.link-card:hover::before {
+.link-block.lit .link-card:hover {
+  border-color: rgba(252, 102, 3, 0.6);
+  transform: translateY(-4px) scale(1.008);
+  box-shadow: 0 20px 48px -12px rgba(0, 0, 0, 0.7), 0 0 36px rgba(252, 102, 3, 0.15);
+}
+
+.link-block.lit .link-card:hover::before {
   opacity: 1;
 }
 
@@ -579,6 +719,10 @@ html.lenis, html.lenis body {
   transform: translateX(4px);
 }
 
+/* ==========================================================================
+   IMAGE 2 INSTRUCTION:
+   "Text should become white and have the orange glow effect in behind when chain fill up"
+   ========================================================================== */
 .link-side {
   display: flex;
   justify-content: center;
@@ -588,36 +732,68 @@ html.lenis, html.lenis body {
 .link-badge {
   text-align: center;
   user-select: none;
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Ambient orange glow effect in behind */
+.ghost-glow-orb {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  width: 320px;
+  height: 180px;
+  background: radial-gradient(ellipse at center, rgba(252, 102, 3, 0.5) 0%, rgba(252, 102, 3, 0.18) 45%, transparent 75%);
+  filter: blur(34px);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 0;
+}
+
+.link-block.lit .ghost-glow-orb {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.15);
 }
 
 .link-badge .big {
   font-family: var(--head);
   font-weight: 800;
-  font-size: clamp(40px, 5vw, 64px);
-  color: rgba(255, 255, 255, 0.1);
+  font-size: clamp(40px, 5vw, 68px);
+  color: rgba(255, 255, 255, 0.08);
   line-height: 1;
   text-transform: uppercase;
   letter-spacing: -0.01em;
-  transition: color 0.4s ease, text-shadow 0.4s ease;
+  position: relative;
+  z-index: 1;
+  transition: color 0.6s cubic-bezier(0.16, 1, 0.3, 1), text-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Text becomes pure white + intense orange glow in behind */
 .link-block.lit .link-badge .big {
-  color: rgba(255, 255, 255, 0.18);
-  text-shadow: 0 0 28px rgba(252, 102, 3, 0.18);
+  color: #FFFFFF !important;
+  text-shadow: 0 0 28px rgba(252, 102, 3, 0.95), 0 0 55px rgba(252, 102, 3, 0.6), 0 0 90px rgba(252, 102, 3, 0.3);
 }
 
 .link-badge .small {
   font-family: var(--mono);
-  font-size: 10.5px;
+  font-size: 11px;
   letter-spacing: 0.24em;
   text-transform: uppercase;
   color: var(--faint);
-  margin-top: 10px;
-  transition: color 0.4s ease;
+  margin-top: 12px;
+  position: relative;
+  z-index: 1;
+  transition: color 0.5s ease, text-shadow 0.5s ease;
 }
 
 .link-block.lit .link-badge .small {
-  color: rgba(252, 102, 3, 0.85);
+  color: var(--orange);
+  font-weight: 600;
+  text-shadow: 0 0 14px rgba(252, 102, 3, 0.7);
 }
 
 .link-block.flip .link-card {
@@ -630,6 +806,10 @@ html.lenis, html.lenis body {
 
 /* Responsive adjustments */
 @media (max-width: 860px) {
+  .chain-sticky-head {
+    top: 60px;
+    padding: 12px 0 16px;
+  }
   .chain-track {
     padding-left: 28px;
   }
@@ -640,7 +820,8 @@ html.lenis, html.lenis body {
   .link-block {
     grid-template-columns: 1fr;
     gap: 20px;
-    padding: 32px 0 32px 36px;
+    padding: 36px 0 36px 36px;
+    min-height: auto;
   }
   .link-node {
     left: 28px;

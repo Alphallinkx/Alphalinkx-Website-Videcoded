@@ -10,7 +10,7 @@ import { DIAGNOSIS_CARDS, type DiagnosisCardItem } from '../../content/siteConte
  * Marked aria-hidden="true" for accessibility.
  */
 const DiagnosisIllustration: React.FC<{ id: DiagnosisCardItem['id'] }> = ({ id }) => {
-  const commonSvgClass = "w-11 h-11 sm:w-12 sm:h-12 lg:w-13 lg:h-13 text-white/45 group-hover:text-white/80 transition-colors duration-300";
+  const commonSvgClass = "w-[54px] h-[54px] sm:w-[58px] sm:h-[58px] lg:w-[62px] lg:h-[62px] text-white/50 group-hover:text-white/90 transition-colors duration-300 shrink-0";
 
   switch (id) {
     case 'visibility':
@@ -474,7 +474,7 @@ const DiagnosisCard: React.FC<DiagnosisCardProps> = ({ item, index }) => {
       <div
         ref={cardRef}
         data-diagnosis-id={item.id}
-        className="group relative h-full rounded-2xl bg-[#111113] hover:bg-[#141417] border border-white/10 hover:border-[#FC6603]/55 p-4 sm:p-4.5 xl:p-4 2xl:p-5 flex flex-col overflow-hidden shadow-[0_8px_24px_-6px_rgba(0,0,0,0.5)] hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.85),0_0_24px_rgba(252,102,3,0.12)] transition-shadow duration-500 will-change-transform select-none cursor-default min-h-0 sm:min-h-[285px] lg:min-h-[305px] xl:min-h-[320px] 2xl:min-h-[330px]"
+        className="group relative h-full rounded-2xl bg-[#111113] hover:bg-[#141417] border border-white/10 hover:border-[#FC6603]/55 p-5 sm:p-5.5 lg:p-6 xl:p-5 2xl:p-6 flex flex-col overflow-hidden shadow-[0_8px_24px_-6px_rgba(0,0,0,0.5)] hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.85),0_0_24px_rgba(252,102,3,0.12)] transition-shadow duration-500 will-change-transform select-none cursor-default min-h-0 sm:min-h-[310px] lg:min-h-[330px] xl:min-h-[350px] 2xl:min-h-[360px]"
         style={{
           transformStyle: 'preserve-3d',
           transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)',
@@ -491,54 +491,54 @@ const DiagnosisCard: React.FC<DiagnosisCardProps> = ({ item, index }) => {
         {/* Minimal Corner Technical Tick at Bottom-Right */}
         <div
           aria-hidden="true"
-          className="absolute bottom-2.5 right-2.5 w-1.5 h-1.5 border-b border-r border-white/15 group-hover:border-[#FC6603]/60 transition-colors duration-400 pointer-events-none"
+          className="absolute bottom-3 right-3 w-2 h-2 border-b border-r border-white/20 group-hover:border-[#FC6603]/70 transition-colors duration-400 pointer-events-none"
           style={{ transform: 'translateZ(14px)' }}
         />
 
-        {/* Top Header Row: Sized compactly to short the length of the cards */}
+        {/* Top Header Row: Icon and Sequence Number */}
         <div
-          className="relative z-10 flex items-start justify-between h-12 sm:h-14 lg:h-15 mb-2.5 sm:mb-3 shrink-0"
+          className="relative z-10 flex items-start justify-between mb-4 sm:mb-5 shrink-0"
           style={{ transform: 'translateZ(26px)' }}
         >
           {/* Prominent High-Impact SVG Illustration */}
-          <div className="h-full flex items-center">
+          <div className="flex items-center">
             <DiagnosisIllustration id={item.id} />
           </div>
 
           {/* Clean Monospace Sequence Index (JetBrains Mono) */}
-          <span className="font-mono text-[11px] sm:text-[12px] font-semibold text-white/30 group-hover:text-[#FC6603] transition-colors duration-300 tracking-[0.15em] pt-0.5">
+          <span className="font-mono text-[12px] sm:text-[13px] font-semibold text-white/35 group-hover:text-[#FC6603] transition-colors duration-300 tracking-[0.18em] pt-1">
             0{index + 1}
           </span>
         </div>
 
-        {/* Content Area: Single natural flow without any artificial stretching */}
-        <div className="relative z-10 flex flex-col" style={{ transform: 'translateZ(18px)' }}>
+        {/* Content Area: Balanced natural flow with harmonious spacing */}
+        <div className="relative z-10 flex flex-col flex-1" style={{ transform: 'translateZ(18px)' }}>
           {/* Category & Title Block:
-              - Mobile (< 640px): h-auto for natural, tight flow.
-              - Tablet / Desktop: Calibrated compact height that fits titles cleanly and locks divider position.
+              - Mobile (< 640px): natural flow.
+              - Tablet / Desktop: Calibrated min-height ensuring uniform divider line alignment across all 6 cards.
           */}
-          <div className="h-auto sm:h-[84px] md:h-[90px] lg:h-[102px] xl:h-[116px] 2xl:h-[112px] flex flex-col justify-start shrink-0">
+          <div className="min-h-auto sm:min-h-[100px] md:min-h-[104px] lg:min-h-[114px] xl:min-h-[124px] 2xl:min-h-[120px] flex flex-col justify-start shrink-0">
             {/* Category Label in Clean Brand Orange Monospace (JetBrains Mono) */}
-            <span className="font-mono text-[10px] sm:text-[10.5px] font-bold text-[#FC6603] uppercase tracking-[0.2em] block mb-1 shrink-0">
+            <span className="font-mono text-[10.5px] sm:text-[11px] font-bold text-[#FC6603] uppercase tracking-[0.2em] block mb-2 sm:mb-2.5 shrink-0">
               {item.category}
             </span>
 
-            {/* Authoritative Problem Statement Title (Bricolage Grotesque) — 22px on desktop, 17-18px on mobile */}
-            <h3 className="font-display font-bold text-[17px] sm:text-[18px] lg:text-[20px] xl:text-[22px] text-white tracking-[-0.02em] leading-[1.2] group-hover:text-white transition-colors duration-300">
+            {/* Authoritative Problem Statement Title (Bricolage Grotesque) */}
+            <h3 className="font-display font-bold text-[17px] sm:text-[18px] lg:text-[19px] xl:text-[20px] 2xl:text-[21px] text-white tracking-[-0.02em] leading-[1.24] group-hover:text-white transition-colors duration-300">
               {item.title}
             </h3>
           </div>
 
-          {/* Dedicated Horizontal Divider Line: directly above the description */}
+          {/* Dedicated Horizontal Divider Line: cleanly separates title and description */}
           <div
             aria-hidden="true"
-            className="w-full h-[1px] bg-white/[0.08] mt-2.5 mb-2 sm:mt-3 sm:mb-2.5 group-hover:bg-[#FC6603]/35 transition-colors duration-300 shrink-0"
+            className="w-full h-[1px] bg-white/[0.08] my-3 sm:my-3.5 group-hover:bg-[#FC6603]/40 transition-colors duration-300 shrink-0"
             style={{ transform: 'translateZ(14px)' }}
           />
 
-          {/* Supporting Description Text (Schibsted Grotesk) — sits directly below the line with zero excess space */}
+          {/* Supporting Description Text (Schibsted Grotesk) */}
           <p
-            className="font-sans pt-[10px] text-[12.5px] sm:text-[13px] xl:text-[12px] 2xl:text-[13px] text-[#A1A1AA] leading-[1.48] font-normal"
+            className="font-sans text-[12.5px] sm:text-[13px] xl:text-[12.5px] 2xl:text-[13.5px] text-[#A1A1AA] group-hover:text-[#D4D4D8] leading-[1.55] font-normal transition-colors duration-300"
             style={{ transform: 'translateZ(12px)' }}
           >
             {item.description}

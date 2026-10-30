@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { useReducedMotion } from 'motion/react';
 
 interface Partner {
@@ -128,24 +128,185 @@ const PARTNER_LIST: Partner[] = [
 ];
 
 /**
- * ULTRA-MODERN TRUSTED PARTNERS MARQUEE
+ * TRUSTED PARTNERS CAROUSEL WITH INTERACTIVE MOMENTUM DRAG & SEAMLESS HOVER PAUSE
  * 
- * Perfect Card Layout:
- * - 100% unified height (h-[76px]) across all cards (zero height jump or layout shift)
- * - Authentic vector brand logos in glassmorphic monogram tiles
- * - Single-line bold partner names with monospace category descriptors
- * - Live status badges & telemetry signal meters
- * - Ultra-clean, enterprise-grade header matching AlphaLinkx design language
+ * Features:
+ * 1. ZERO POSITION JUMPING: Hover freezes the carousel at its exact sub-pixel coordinate.
+ * 2. INTERACTIVE DRAG & FLICK: Grab with mouse/touch and scroll back and forth smoothly.
+ * 3. MOMENTUM PHYSICS: Fluid deceleration on release flick.
+ * 4. 100% UNIFIED HEIGHT: Rock-solid h-[76px] layout for every card.
  */
 export const ClientLogoMarquee: React.FC = () => {
-  const [isPaused, setIsPaused] = useState<boolean>(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const set1Ref = useRef<HTMLDivElement>(null);
+
+  const [isManualPaused, setIsManualPaused] = useState<boolean>(false);
+  const [isDragging, setIsDragging] = useState<boolean>(false);
   const prefersReduced = useReducedMotion();
 
-  // Individual Partner Card with guaranteed identical height and proportions
+  // Animation & Physics Tracking Refs (zero React re-render overhead)
+  const currentXRef = useRef<number>(0);
+  const isHoveredRef = useRef<boolean>(false);
+  const isDraggingRef = useRef<boolean>(false);
+  const isManualPausedRef = useRef<boolean>(false);
+  const dragStartXRef = useRef<number>(0);
+  const dragStartPosRef = useRef<number>(0);
+  const lastMouseXRef = useRef<number>(0);
+  const velocityRef = useRef<number>(0);
+  const hasMovedRef = useRef<boolean>(false);
+  const setWidthRef = useRef<number>(0);
+
+  // Auto-scroll drift speed in pixels per 60fps frame
+  const baseSpeed = 0.95;
+
+  // Sync manual pause state into ref
+  useEffect(() => {
+    isManualPausedRef.current = isManualPaused;
+  }, [isManualPaused]);
+
+  // Main 120 FPS Physics & Wrap Loop
+  useEffect(() => {
+    let animId: number;
+    let lastTime = performance.now();
+
+    const measureWidth = () => {
+      if (set1Ref.current) {
+        setWidthRef.current = set1Ref.current.offsetWidth;
+      }
+    };
+
+    measureWidth();
+    if (document.fonts) {
+      document.fonts.ready.then(measureWidth);
+    }
+    window.addEventListener('resize', measureWidth);
+
+    const loop = (time: number) => {
+      const delta = Math.min((time - lastTime) / 16.666, 2.5);
+      lastTime = time;
+
+      const setWidth = setWidthRef.current;
+
+      if (!isDraggingRef.current) {
+        // If release momentum exists, smoothly decelerate
+        if (Math.abs(velocityRef.current) > 0.05) {
+          currentXRef.current += velocityRef.current * delta;
+          velocityRef.current *= Math.pow(0.92, delta);
+        } else {
+          velocityRef.current = 0;
+          // Auto-scroll drift only when not hovered, not paused, and prefers reduced motion is false
+          if (!isHoveredRef.current && !isManualPausedRef.current && !prefersReduced) {
+            currentXRef.current -= baseSpeed * delta;
+          }
+        }
+      }
+
+      // Infinite seamless loop in BOTH directions
+      if (setWidth > 0) {
+        while (currentXRef.current <= -setWidth) {
+          currentXRef.current += setWidth;
+          dragStartPosRef.current += setWidth;
+        }
+        while (currentXRef.current > 0) {
+          currentXRef.current -= setWidth;
+          dragStartPosRef.current -= setWidth;
+        }
+      }
+
+      if (trackRef.current) {
+        trackRef.current.style.transform = `translate3d(${currentXRef.current}px, 0, 0)`;
+      }
+
+      animId = requestAnimationFrame(loop);
+    };
+
+    animId = requestAnimationFrame(loop);
+
+    return () => {
+      cancelAnimationFrame(animId);
+      window.removeEventListener('resize', measureWidth);
+    };
+  }, [prefersReduced]);
+
+  // Pointer Grab & Drag Handlers
+  const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.button !== 0) return; // Primary pointer only
+
+    isDraggingRef.current = true;
+    setIsDragging(true);
+    hasMovedRef.current = false;
+    dragStartXRef.current = e.clientX;
+    dragStartPosRef.current = currentXRef.current;
+    lastMouseXRef.current = e.clientX;
+    velocityRef.current = 0;
+
+    try {
+      (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+    } catch {
+      // Fallback
+    }
+  };
+
+  const handlePointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDraggingRef.current) return;
+
+    const deltaX = e.clientX - dragStartXRef.current;
+    if (Math.abs(deltaX) > 3) {
+      hasMovedRef.current = true;
+    }
+
+    // Capture velocity for flick momentum
+    const frameDelta = e.clientX - lastMouseXRef.current;
+    velocityRef.current = frameDelta * 0.85;
+    lastMouseXRef.current = e.clientX;
+
+    currentXRef.current = dragStartPosRef.current + deltaX;
+
+    const setWidth = setWidthRef.current;
+    if (setWidth > 0) {
+      while (currentXRef.current <= -setWidth) {
+        currentXRef.current += setWidth;
+        dragStartPosRef.current += setWidth;
+      }
+      while (currentXRef.current > 0) {
+        currentXRef.current -= setWidth;
+        dragStartPosRef.current -= setWidth;
+      }
+    }
+
+    if (trackRef.current) {
+      trackRef.current.style.transform = `translate3d(${currentXRef.current}px, 0, 0)`;
+    }
+  };
+
+  const handlePointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDraggingRef.current) return;
+
+    isDraggingRef.current = false;
+    setIsDragging(false);
+
+    try {
+      (e.currentTarget as HTMLElement).releasePointerCapture(e.pointerId);
+    } catch {
+      // Fallback
+    }
+  };
+
+  // Prevent link click when dragging
+  const handleCardClick = (e: React.MouseEvent) => {
+    if (hasMovedRef.current) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  };
+
+  // Card element with fixed height and robust layout
   const renderCard = (partner: Partner, keySuffix: string) => (
     <div
       key={`${partner.id}-${keySuffix}`}
-      className="group relative flex items-center justify-between gap-3 px-4 sm:px-5 h-[76px] w-[280px] sm:w-[300px] shrink-0 rounded-2xl bg-[#111114]/75 hover:bg-[#141620]/95 border border-white/[0.08] hover:border-[#FC6603]/50 transition-all duration-300 backdrop-blur-xl cursor-pointer hover:shadow-[0_0_24px_rgba(252,102,3,0.15)] hover:-translate-y-0.5 overflow-hidden"
+      onClick={handleCardClick}
+      className="group relative flex items-center justify-between gap-3 px-4 sm:px-5 h-[76px] w-[280px] sm:w-[300px] shrink-0 rounded-2xl bg-[#111114]/75 hover:bg-[#141620]/95 border border-white/[0.08] hover:border-[#FC6603]/50 transition-colors duration-200 backdrop-blur-xl hover:shadow-[0_0_24px_rgba(252,102,3,0.15)] overflow-hidden select-none"
     >
       {/* Top Hairline Neon Accent on Hover */}
       <div
@@ -205,7 +366,7 @@ export const ClientLogoMarquee: React.FC = () => {
           <span className="text-[#A1A1AA]">TRUSTED BY & INFRASTRUCTURE PARTNERS</span>
         </div>
 
-        {/* Right Status Pill with Live Signal Pulse */}
+        {/* Right Status Pill with Live Signal Pulse & Pause Toggle */}
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl bg-white/[0.03] border border-white/[0.08] text-white/60">
             <span className="w-2 h-2 rounded-full bg-[#FC6603] animate-pulse" />
@@ -213,14 +374,14 @@ export const ClientLogoMarquee: React.FC = () => {
             <span className="sm:hidden">[ CERTIFIED ]</span>
           </div>
 
-          {/* Quick Pause / Resume Button */}
+          {/* Quick Manual Pause / Resume Button */}
           <button
             type="button"
-            onClick={() => setIsPaused((prev) => !prev)}
-            aria-label={isPaused ? 'Resume partner carousel' : 'Pause partner carousel'}
+            onClick={() => setIsManualPaused((prev) => !prev)}
+            aria-label={isManualPaused ? 'Resume partner carousel' : 'Pause partner carousel'}
             className="px-2.5 py-1.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] border border-white/[0.08] hover:border-[#FC6603]/40 text-white/60 hover:text-white transition-all flex items-center gap-1 cursor-pointer"
           >
-            {isPaused ? (
+            {isManualPaused ? (
               <svg viewBox="0 0 24 24" fill="currentColor" className="w-2.5 h-2.5 text-[#FC6603]">
                 <polygon points="5 3 19 12 5 21 5 3" />
               </svg>
@@ -230,42 +391,47 @@ export const ClientLogoMarquee: React.FC = () => {
                 <rect x="14" y="4" width="4" height="16" />
               </svg>
             )}
-            <span className="text-[10px] hidden md:inline">{isPaused ? 'RESUME' : 'PAUSE'}</span>
+            <span className="text-[10px] hidden md:inline">{isManualPaused ? 'RESUME' : 'PAUSE'}</span>
           </button>
         </div>
       </div>
 
-      {/* ================= SEAMLESS INFINITE MARQUEE TRACK ================= */}
+      {/* ================= INTERACTIVE DRAGGABLE CAROUSEL CONTAINER ================= */}
       <div
-        className="relative w-full overflow-hidden flex items-center group/marquee [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]"
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
+        ref={containerRef}
+        onMouseEnter={() => {
+          isHoveredRef.current = true;
+        }}
+        onMouseLeave={() => {
+          isHoveredRef.current = false;
+        }}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerUp}
+        className={`relative w-full overflow-hidden flex items-center [mask-image:linear-gradient(to_right,transparent,black_6%,black_94%,transparent)] touch-pan-y ${
+          isDragging ? 'cursor-grabbing' : 'cursor-grab'
+        }`}
       >
-        {/* Track 1 (Primary Flow) */}
+        {/* Hardware-accelerated GPU Track */}
         <div
-          className={`flex shrink-0 items-center gap-4 sm:gap-5 md:gap-6 py-1 will-change-transform ${
-            prefersReduced
-              ? ''
-              : isPaused
-              ? 'animate-none'
-              : 'animate-[marquee_36s_linear_infinite] group-hover/marquee:[animation-play-state:paused]'
-          }`}
+          ref={trackRef}
+          className="flex shrink-0 items-center will-change-transform py-1"
         >
-          {PARTNER_LIST.map((partner) => renderCard(partner, 't1'))}
-        </div>
+          {/* Set 1 (Measured for seamless wrap) */}
+          <div ref={set1Ref} className="flex shrink-0 items-center gap-4 sm:gap-5 md:gap-6 pr-4 sm:pr-5 md:pr-6">
+            {PARTNER_LIST.map((partner) => renderCard(partner, 's1'))}
+          </div>
 
-        {/* Track 2 (Duplicate for Continuous Seamless Loop) */}
-        <div
-          aria-hidden="true"
-          className={`flex shrink-0 items-center gap-4 sm:gap-5 md:gap-6 py-1 pl-4 sm:pl-5 md:pl-6 will-change-transform ${
-            prefersReduced
-              ? 'hidden'
-              : isPaused
-              ? 'animate-none'
-              : 'animate-[marquee_36s_linear_infinite] group-hover/marquee:[animation-play-state:paused]'
-          }`}
-        >
-          {PARTNER_LIST.map((partner) => renderCard(partner, 't2'))}
+          {/* Set 2 (Duplicate for continuous infinite loop) */}
+          <div className="flex shrink-0 items-center gap-4 sm:gap-5 md:gap-6 pr-4 sm:pr-5 md:pr-6" aria-hidden="true">
+            {PARTNER_LIST.map((partner) => renderCard(partner, 's2'))}
+          </div>
+
+          {/* Set 3 (Buffer for wide ultra-wide screens & backward dragging) */}
+          <div className="flex shrink-0 items-center gap-4 sm:gap-5 md:gap-6 pr-4 sm:pr-5 md:pr-6" aria-hidden="true">
+            {PARTNER_LIST.map((partner) => renderCard(partner, 's3'))}
+          </div>
         </div>
       </div>
     </section>

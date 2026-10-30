@@ -92,7 +92,7 @@ export const NetworkProcessSection: React.FC = () => {
   return (
     <section
       ref={containerRef}
-      id="process"
+      id="network-process"
       aria-label="The 3D Network Process"
       className="relative py-24 md:py-36 bg-[#0A0A0B] border-b border-white/[0.08] overflow-hidden"
     >

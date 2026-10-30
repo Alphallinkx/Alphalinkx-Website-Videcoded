@@ -4,6 +4,7 @@ import { ServicesTicker } from '../components/home/ServicesTicker';
 import { DiagnosisSection } from '../components/home/DiagnosisSection';
 import { ChainSection } from '../components/home/ChainSection';
 import { ClientLogoMarquee } from '../components/home/ClientLogoMarquee';
+import { HowWeWorkSection } from '../components/home/HowWeWorkSection';
 import { SelectedWorkSection } from '../components/home/SelectedWorkSection';
 import { ServicesListSection } from '../components/home/ServicesListSection';
 import { NetworkProcessSection } from '../components/home/NetworkProcessSection';
@@ -30,7 +31,10 @@ export const HomePage: React.FC = () => {
       {/* 05. CLIENT LOGO MARQUEE: Trusted by grayscale to orange-white hover */}
       <ClientLogoMarquee />
 
-      {/* 06. SELECTED WORK: Asymmetric 2-column parallax with video hover preview */}
+      {/* 06. HOW WE WORK: "FOUR LEVELS. ONE CLIMB." (3D Diagonal Staircase Climb) */}
+      <HowWeWorkSection />
+
+      {/* 07. SELECTED WORK: Asymmetric 2-column parallax with video hover preview */}
       <SelectedWorkSection />
 
       {/* 07. SERVICES: Interactive 3D category blocks with sub-service chips */}

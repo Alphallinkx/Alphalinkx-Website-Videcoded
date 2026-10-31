@@ -3,7 +3,7 @@ import { motion, useScroll, useSpring, useReducedMotion } from 'motion/react';
 import { Link } from 'react-router-dom';
 
 /* =========================================================================
-   PROCESS PHASES CONFIGURATION (Single source of truth)
+   PROCESS PHASES CONFIGURATION (Matching Mockup 1:1)
    ========================================================================= */
 interface ProcessStep {
   number: string;
@@ -11,6 +11,7 @@ interface ProcessStep {
   description: string;
   bottomLabel: string;
   staggerClass: string; // Tailwind desktop vertical offset for wave rhythm
+  isDefaultActive?: boolean; // Card 02 in mockup has the glowing orange border
   renderIcon: (isRevealed: boolean, prefersReduced: boolean | null) => React.ReactNode;
 }
 
@@ -29,39 +30,44 @@ const PROCESS_STEPS: ProcessStep[] = [
         className="w-10 h-10"
         aria-hidden="true"
       >
-        {/* Subtle background radar circle */}
-        <circle cx="22" cy="22" r="18" stroke="rgba(255,255,255,0.08)" strokeWidth="1" strokeDasharray="3 3" />
-        {/* Orbiting pulse scanner ring */}
+        {/* Outer subtle concentric radar circle */}
+        <circle cx="20" cy="20" r="16" stroke="rgba(255,255,255,0.08)" strokeWidth="1" strokeDasharray="3 3" />
+        
+        {/* Scanning orbit path with traveling orange pulse */}
         <motion.circle
-          cx="22"
-          cy="22"
-          r="14"
+          cx="20"
+          cy="20"
+          r="13"
           stroke="#FC6603"
           strokeWidth="1.25"
-          strokeDasharray="20 70"
+          strokeDasharray="22 65"
           animate={
             isRevealed && !prefersReduced
               ? { rotate: [0, 360] }
               : { rotate: 0 }
           }
-          transition={{ duration: 1.6, ease: 'easeOut' }}
-          style={{ transformOrigin: '22px 22px' }}
+          transition={{ duration: 1.8, ease: 'easeOut' }}
+          style={{ transformOrigin: '20px 20px' }}
         />
-        {/* Main Search Lens */}
-        <circle cx="20" cy="20" r="7.5" stroke="#F4F4F5" strokeWidth="2" strokeLinecap="round" />
-        <path d="M25.5 25.5L31 31" stroke="#FC6603" strokeWidth="2.2" strokeLinecap="round" />
-        {/* Glowing orbit dot */}
+
+        {/* Magnifying Lens Outer Frame */}
+        <circle cx="18" cy="18" r="7.5" stroke="#F4F4F5" strokeWidth="2" strokeLinecap="round" />
+        
+        {/* Diagonal Lens Handle */}
+        <path d="M23.5 23.5L29.5 29.5" stroke="#FC6603" strokeWidth="2.2" strokeLinecap="round" />
+        
+        {/* Orbiting Satellite Dot (Top right of lens, exact match to screenshot) */}
         <motion.circle
-          cx="22"
-          cy="8"
+          cx="26"
+          cy="12"
           r="2.5"
           fill="#FC6603"
           animate={
             isRevealed && !prefersReduced
-              ? { scale: [0, 1.3, 1], opacity: [0, 1, 1] }
+              ? { scale: [0, 1.4, 1], opacity: [0, 1, 1] }
               : { scale: 1, opacity: 1 }
           }
-          transition={{ duration: 0.6, delay: 0.2 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
         />
       </svg>
     ),
@@ -71,7 +77,8 @@ const PROCESS_STEPS: ProcessStep[] = [
     title: 'Strategize & Engineer',
     description: 'Shape the plan, structure and campaigns around your goals.',
     bottomLabel: 'STRATEGY & BLUEPRINT',
-    staggerClass: 'lg:translate-y-8', // ~32px stagger
+    staggerClass: 'lg:translate-y-8', // Staggered down ~32px following the wave
+    isDefaultActive: true, // Card 02 has the signature glowing orange border from the mockup
     renderIcon: (isRevealed, prefersReduced) => (
       <svg
         viewBox="0 0 44 44"
@@ -80,32 +87,32 @@ const PROCESS_STEPS: ProcessStep[] = [
         className="w-10 h-10"
         aria-hidden="true"
       >
-        {/* Connecting planning lines */}
+        {/* Fine connecting planning lines */}
         <motion.path
-          d="M22 22L13 14M22 22L31 14M22 22L14 30M22 22L30 30"
-          stroke="rgba(255,255,255,0.25)"
+          d="M20 20L11 11M20 20L29 11M20 20L11 29M20 20L29 29"
+          stroke="rgba(255,255,255,0.3)"
           strokeWidth="1.5"
           strokeLinecap="round"
           initial={prefersReduced ? false : { pathLength: 0 }}
           animate={isRevealed ? { pathLength: 1 } : { pathLength: prefersReduced ? 1 : 0 }}
-          transition={{ duration: 0.7, ease: 'easeOut' }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
         />
-        {/* Outer orbital planning nodes */}
-        <circle cx="13" cy="14" r="3" fill="#0E1017" stroke="#F4F4F5" strokeWidth="1.8" />
-        <circle cx="31" cy="14" r="3" fill="#0E1017" stroke="#F4F4F5" strokeWidth="1.8" />
-        <circle cx="14" cy="30" r="3" fill="#0E1017" stroke="#F4F4F5" strokeWidth="1.8" />
-        <circle cx="30" cy="30" r="3" fill="#0E1017" stroke="#F4F4F5" strokeWidth="1.8" />
-        {/* Center Orange Hub Node */}
+        {/* 4 Satellite Planning Nodes */}
+        <circle cx="11" cy="11" r="3" fill="#0C0D12" stroke="#F4F4F5" strokeWidth="1.75" />
+        <circle cx="29" cy="11" r="3" fill="#0C0D12" stroke="#F4F4F5" strokeWidth="1.75" />
+        <circle cx="11" cy="29" r="3" fill="#0C0D12" stroke="#F4F4F5" strokeWidth="1.75" />
+        <circle cx="29" cy="29" r="3" fill="#0C0D12" stroke="#F4F4F5" strokeWidth="1.75" />
+        {/* Central Hub Node in Brand Orange */}
         <motion.circle
-          cx="22"
-          cy="22"
+          cx="20"
+          cy="20"
           r="4.5"
           fill="#FC6603"
           stroke="#FFFFFF"
           strokeWidth="1.5"
           animate={
             isRevealed && !prefersReduced
-              ? { scale: [0.6, 1.25, 1] }
+              ? { scale: [0.5, 1.3, 1] }
               : { scale: 1 }
           }
           transition={{ duration: 0.5, delay: 0.3 }}
@@ -118,7 +125,7 @@ const PROCESS_STEPS: ProcessStep[] = [
     title: 'Build & Launch',
     description: 'Bring your website, content and campaigns to life.',
     bottomLabel: 'BUILD & DEPLOY',
-    staggerClass: 'lg:translate-y-2', // ~8px stagger
+    staggerClass: 'lg:translate-y-2', // Staggered ~8px
     renderIcon: (isRevealed, prefersReduced) => (
       <svg
         viewBox="0 0 44 44"
@@ -127,29 +134,31 @@ const PROCESS_STEPS: ProcessStep[] = [
         className="w-10 h-10"
         aria-hidden="true"
       >
-        {/* Left code bracket */}
-        <path d="M12 15L6 22L12 29" stroke="#F4F4F5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        {/* Right code bracket */}
-        <path d="M32 15L38 22L32 29" stroke="#F4F4F5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        {/* Launch paper rocket / upward arrow in brand orange */}
+        {/* Left code bracket < */}
+        <path d="M11 14L5 20L11 26" stroke="#F4F4F5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        
+        {/* Right code bracket > */}
+        <path d="M29 14L35 20L29 26" stroke="#F4F4F5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        
+        {/* Center Paper Rocket / Launch Arrow in Brand Orange */}
         <motion.g
           animate={
             isRevealed && !prefersReduced
-              ? { x: [-4, 0], y: [4, 0], opacity: [0, 1] }
+              ? { x: [-3, 0], y: [3, 0], opacity: [0, 1] }
               : { x: 0, y: 0, opacity: 1 }
           }
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         >
           <path
-            d="M29 14L15 21L21 24.5L29 14Z"
+            d="M26 12L14 18.5L19.5 21.5L26 12Z"
             fill="#FC6603"
           />
           <path
-            d="M29 14L23.5 28L21 24.5L29 14Z"
+            d="M26 12L21.5 25L19.5 21.5L26 12Z"
             fill="#E05500"
           />
           <path
-            d="M21 24.5L23.5 28L24.5 23L21 24.5Z"
+            d="M19.5 21.5L21.5 25L22.5 20.5L19.5 21.5Z"
             fill="#FFA34D"
           />
         </motion.g>
@@ -161,7 +170,7 @@ const PROCESS_STEPS: ProcessStep[] = [
     title: 'Scale & Compound',
     description: 'Measure what works. Refine, improve and grow.',
     bottomLabel: 'MEASURE & IMPROVE',
-    staggerClass: 'lg:translate-y-9', // ~36px stagger
+    staggerClass: 'lg:translate-y-9', // Staggered down ~36px
     renderIcon: (isRevealed, prefersReduced) => (
       <svg
         viewBox="0 0 44 44"
@@ -170,78 +179,76 @@ const PROCESS_STEPS: ProcessStep[] = [
         className="w-10 h-10"
         aria-hidden="true"
       >
-        {/* Base line */}
-        <line x1="8" y1="34" x2="36" y2="34" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" strokeLinecap="round" />
-        {/* Rising chart bars */}
+        {/* 4 Rising Chart Bars */}
         <motion.rect
-          x="10"
-          y="25"
+          x="8"
+          y="23"
           width="4"
           height="9"
           rx="1"
           fill="#F4F4F5"
           initial={prefersReduced ? false : { scaleY: 0 }}
           animate={isRevealed ? { scaleY: 1 } : { scaleY: prefersReduced ? 1 : 0 }}
-          transition={{ duration: 0.4, delay: 0.1 }}
+          transition={{ duration: 0.35, delay: 0.1 }}
           style={{ transformOrigin: 'bottom' }}
         />
         <motion.rect
-          x="17"
-          y="20"
+          x="15"
+          y="18"
           width="4"
           height="14"
           rx="1"
           fill="#F4F4F5"
           initial={prefersReduced ? false : { scaleY: 0 }}
           animate={isRevealed ? { scaleY: 1 } : { scaleY: prefersReduced ? 1 : 0 }}
-          transition={{ duration: 0.4, delay: 0.2 }}
+          transition={{ duration: 0.35, delay: 0.2 }}
           style={{ transformOrigin: 'bottom' }}
         />
         <motion.rect
-          x="24"
-          y="15"
+          x="22"
+          y="13"
           width="4"
           height="19"
           rx="1"
           fill="#F4F4F5"
           initial={prefersReduced ? false : { scaleY: 0 }}
           animate={isRevealed ? { scaleY: 1 } : { scaleY: prefersReduced ? 1 : 0 }}
-          transition={{ duration: 0.4, delay: 0.3 }}
+          transition={{ duration: 0.35, delay: 0.3 }}
           style={{ transformOrigin: 'bottom' }}
         />
         <motion.rect
-          x="31"
-          y="10"
+          x="29"
+          y="8"
           width="4"
           height="24"
           rx="1"
           fill="#FC6603"
           initial={prefersReduced ? false : { scaleY: 0 }}
           animate={isRevealed ? { scaleY: 1 } : { scaleY: prefersReduced ? 1 : 0 }}
-          transition={{ duration: 0.4, delay: 0.4 }}
+          transition={{ duration: 0.35, delay: 0.4 }}
           style={{ transformOrigin: 'bottom' }}
         />
         {/* Growth Arrow line across top */}
         <motion.path
-          d="M10 24L17 19L24 14L33 9"
+          d="M8 22L15 17L22 12L31 7"
           stroke="#FC6603"
           strokeWidth="1.75"
           strokeLinecap="round"
           strokeLinejoin="round"
           initial={prefersReduced ? false : { pathLength: 0 }}
           animate={isRevealed ? { pathLength: 1 } : { pathLength: prefersReduced ? 1 : 0 }}
-          transition={{ duration: 0.6, delay: 0.35 }}
+          transition={{ duration: 0.55, delay: 0.35 }}
         />
         {/* Arrowhead */}
         <motion.path
-          d="M29 9H33V13"
+          d="M27 7H31V11"
           stroke="#FC6603"
           strokeWidth="1.75"
           strokeLinecap="round"
           strokeLinejoin="round"
           initial={prefersReduced ? false : { opacity: 0 }}
           animate={isRevealed ? { opacity: 1 } : { opacity: prefersReduced ? 1 : 0 }}
-          transition={{ duration: 0.3, delay: 0.65 }}
+          transition={{ duration: 0.3, delay: 0.6 }}
         />
       </svg>
     ),
@@ -249,16 +256,15 @@ const PROCESS_STEPS: ProcessStep[] = [
 ];
 
 /**
- * HOW WE WORK — HORIZONTAL 4-CARD WAVE PROCESS
+ * HOW WE WORK — EXACT MOCKUP WAVE PROCESS SECTION
  *
- * Implements the exact design mockup:
- * - Centered section header: "Four steps. One clear direction."
- * - 4 staggered cards in one horizontal desktop row
- * - Flowing orange wave curve with circular connection nodes behind the cards
- * - Natural scroll reveal: cards only pop up while scrolling down, and stay visible permanently
- * - Responsive 2x2 on tablet and vertical connected timeline on mobile
- * - Icon micro-animations upon reveal
- * - Bottom CTA: "Ready to take your next step? [LET'S TALK ↗]"
+ * Implements the exact layout and animation from the reference image:
+ * - Centered header: "// HOW WE WORK", "Four steps. One clear direction.", intro text, "SCROLL TO UNFOLD ↓"
+ * - 4 staggered cards in a single desktop row with the exact wave connector
+ * - Wave-like pop-up emergence: cards pop up sequentially along the wave trajectory while scrolling down
+ * - Permanent visibility: once a card is revealed on scroll down, it stays revealed
+ * - Animated SVG icons for each step
+ * - Centered bottom CTA: "Ready to take your next step? [LET'S TALK ↗]"
  */
 export const HowWeWorkSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -267,8 +273,7 @@ export const HowWeWorkSection: React.FC = () => {
   const filterId = useId();
 
   // Track which cards have been revealed.
-  // CRITICAL REQUIREMENT: Once a card is revealed while scrolling DOWN, it stays revealed!
-  // It NEVER hides when scrolling up.
+  // Once a card pops up while scrolling DOWN, it stays revealed permanently.
   const [revealedCards, setRevealedCards] = useState<boolean[]>([
     !!prefersReduced,
     !!prefersReduced,
@@ -282,7 +287,7 @@ export const HowWeWorkSection: React.FC = () => {
   // Natural scroll mapping for the decorative wave curve
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ['start 75%', 'end 55%'],
+    offset: ['start 75%', 'end 50%'],
   });
 
   const smoothProgress = useSpring(scrollYProgress, {
@@ -299,7 +304,7 @@ export const HowWeWorkSection: React.FC = () => {
     }
 
     const unsubscribe = smoothProgress.on('change', (latest) => {
-      // Thresholds for steps 01, 02, 03, 04
+      // Staggered wave thresholds for steps 01, 02, 03, 04
       const t1 = latest >= 0.08;
       const t2 = latest >= 0.28;
       const t3 = latest >= 0.48;
@@ -326,7 +331,7 @@ export const HowWeWorkSection: React.FC = () => {
     return () => unsubscribe();
   }, [smoothProgress, prefersReduced]);
 
-  // Fast scroll fallback / IntersectionObserver safeguard
+  // Fast scroll fallback safeguard
   useEffect(() => {
     if (!sectionRef.current || prefersReduced) return;
 
@@ -352,27 +357,27 @@ export const HowWeWorkSection: React.FC = () => {
       aria-labelledby="how-we-work-heading"
       className="relative w-full bg-[#060709] py-20 sm:py-24 lg:py-28 overflow-x-clip selection:bg-[#FC6603] selection:text-black border-b border-white/[0.08]"
     >
-      {/* Background radial atmosphere glow (subtle, non-distracting) */}
+      {/* Background ambient radial glow matching mockup */}
       <div
         aria-hidden="true"
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[450px] bg-[radial-gradient(ellipse_at_center,rgba(252,102,3,0.06)_0%,transparent_70%)] pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[500px] bg-[radial-gradient(ellipse_at_center,rgba(252,102,3,0.06)_0%,transparent_70%)] pointer-events-none"
       />
 
       <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 xl:px-10 w-full">
         {/* =========================================================================
-            SECTION HEADER (Centered)
+            SECTION HEADER (Centered - Exact Mockup)
            ========================================================================= */}
         <div className="flex flex-col items-center text-center max-w-2xl mx-auto mb-14 sm:mb-16 lg:mb-20">
-          {/* Eyebrow */}
+          {/* Eyebrow: // HOW WE WORK */}
           <div className="font-mono text-[11px] sm:text-[12px] font-semibold text-[#FC6603] uppercase tracking-[0.2em] mb-3 flex items-center justify-center gap-2">
             <span className="font-bold">//</span>
             <span className="text-white/80">HOW WE WORK</span>
           </div>
 
-          {/* Centered Heading */}
+          {/* Heading: Four steps. One clear direction. */}
           <h2
             id="how-we-work-heading"
-            className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[56px] tracking-[-0.03em] leading-[1.08] text-white"
+            className="font-display font-extrabold text-4xl sm:text-5xl lg:text-[58px] tracking-[-0.03em] leading-[1.08] text-white"
           >
             <span>Four steps.</span>
             <br />
@@ -384,7 +389,7 @@ export const HowWeWorkSection: React.FC = () => {
             From understanding your business to building what comes next.
           </p>
 
-          {/* Scroll Cue (Hidden on small mobile where screen is compact) */}
+          {/* Scroll Cue */}
           <div
             aria-hidden="true"
             className="hidden sm:flex flex-col items-center gap-1.5 mt-7 text-[#A1A1AA]/60 font-mono text-[10.5px] tracking-[0.2em] uppercase select-none"
@@ -405,8 +410,8 @@ export const HowWeWorkSection: React.FC = () => {
            ========================================================================= */}
         <div className="relative w-full">
           {/*
-            DESKTOP SVG WAVE CONNECTOR (Behind the cards)
-            Coordinates calculated based on card horizontal positions & vertical wave rhythm.
+            DESKTOP CONTINUOUS SVG WAVE (Behind cards)
+            Matching the sinusoidal wave from the screenshot with edge connecting nodes.
           */}
           <svg
             aria-hidden="true"
@@ -423,7 +428,7 @@ export const HowWeWorkSection: React.FC = () => {
                 <stop offset="100%" stopColor="#FC6603" stopOpacity="0.9" />
               </linearGradient>
               <filter id={`${filterId}-neon`} x="-10%" y="-30%" width="120%" height="160%">
-                <feGaussianBlur stdDeviation="3.5" result="blur" />
+                <feGaussianBlur stdDeviation="3" result="blur" />
                 <feMerge>
                   <feMergeNode in="blur" />
                   <feMergeNode in="SourceGraphic" />
@@ -481,7 +486,7 @@ export const HowWeWorkSection: React.FC = () => {
               }}
             />
 
-            {/* Circular Connection Nodes at Card Edges */}
+            {/* Circular Connection Nodes at Card Edges (Matching Mockup with Orange Core & Ring) */}
             {[
               { cx: 15, cy: 175, active: revealedCards[0] },
               { cx: 285, cy: 175, active: revealedCards[0] },
@@ -493,6 +498,19 @@ export const HowWeWorkSection: React.FC = () => {
               { cx: 1200, cy: 209, active: revealedCards[3] },
             ].map((node, i) => (
               <g key={i}>
+                {/* Outer Glow Halo on Active */}
+                {node.active && (
+                  <circle
+                    cx={node.cx}
+                    cy={node.cy}
+                    r="9"
+                    fill="none"
+                    stroke="#FC6603"
+                    strokeWidth="1"
+                    strokeOpacity="0.4"
+                    className="animate-pulse"
+                  />
+                )}
                 {/* Outer Ring */}
                 <circle
                   cx={node.cx}
@@ -516,7 +534,7 @@ export const HowWeWorkSection: React.FC = () => {
           </svg>
 
           {/*
-            TABLET SVG CONNECTOR (md to lg, 2x2 grid)
+            TABLET SVG CONNECTOR (md: 2x2 grid)
           */}
           <svg
             aria-hidden="true"
@@ -526,7 +544,6 @@ export const HowWeWorkSection: React.FC = () => {
             className="hidden md:block lg:hidden absolute inset-0 w-full h-full pointer-events-none z-0 overflow-visible"
             preserveAspectRatio="none"
           >
-            {/* Base line connecting 01 -> 02 -> 03 -> 04 */}
             <path
               d="
                 M 10,160
@@ -544,7 +561,6 @@ export const HowWeWorkSection: React.FC = () => {
               fill="none"
               strokeLinecap="round"
             />
-            {/* Progress line */}
             <motion.path
               d="
                 M 10,160
@@ -572,7 +588,7 @@ export const HowWeWorkSection: React.FC = () => {
           */}
           <div
             aria-hidden="true"
-            className="md:hidden absolute left-4 top-8 bottom-8 w-[2px] bg-white/[0.08] pointer-events-none z-0"
+            className="md:hidden absolute left-3 top-8 bottom-8 w-[2px] bg-white/[0.08] pointer-events-none z-0"
           >
             <motion.div
               className="w-full bg-[#FC6603] origin-top shadow-[0_0_8px_#FC6603]"
@@ -591,11 +607,13 @@ export const HowWeWorkSection: React.FC = () => {
           */}
           <ol
             ref={cardsContainerRef}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 xl:gap-6 relative z-10 list-none p-0 m-0 pl-7 sm:pl-8 md:pl-0"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 xl:gap-6 relative z-10 list-none p-0 m-0 pl-6 sm:pl-8 md:pl-0"
           >
             {PROCESS_STEPS.map((step, idx) => {
               const isRevealed = revealedCards[idx];
               const isHovered = hoveredCard === idx;
+              // Card 02 in the mockup has the prominent glowing orange border
+              const hasOrangeBorder = isHovered || (step.isDefaultActive && hoveredCard === null);
 
               return (
                 <li
@@ -603,30 +621,34 @@ export const HowWeWorkSection: React.FC = () => {
                   onMouseEnter={() => setHoveredCard(idx)}
                   onMouseLeave={() => setHoveredCard(null)}
                   className={`flex flex-col ${step.staggerClass}`}
+                  style={{
+                    zIndex: 10 + idx, // Stacking allows cards to emerge fluidly in wave order
+                  }}
                 >
                   <motion.div
-                    // Pop up only while scrolling down, and stays revealed permanently
+                    // Wave-like pop-up emergence: pops up sequentially along wave while scrolling down
                     initial={
                       prefersReduced
                         ? { opacity: 1, y: 0, scale: 1 }
-                        : { opacity: 0, y: 32, scale: 0.97 }
+                        : { opacity: 0, y: 36, scale: 0.95 }
                     }
                     animate={
                       isRevealed || prefersReduced
                         ? { opacity: 1, y: 0, scale: 1 }
-                        : { opacity: 0, y: 32, scale: 0.97 }
+                        : { opacity: 0, y: 36, scale: 0.95 }
                     }
                     transition={{
-                      duration: 0.55,
-                      ease: [0.16, 1, 0.3, 1], // Smooth premium ease-out without bounce
+                      duration: 0.6,
+                      delay: prefersReduced ? 0 : idx * 0.08, // Subtle wave ripple delay
+                      ease: [0.16, 1, 0.3, 1], // Smooth premium ease-out
                     }}
-                    className={`relative flex flex-col justify-between h-full min-h-[300px] sm:min-h-[315px] p-6 sm:p-7 rounded-2xl bg-[#0E1017]/95 border backdrop-blur-md transition-all duration-300 cursor-default select-none ${
-                      isHovered
-                        ? '-translate-y-1 border-[#FC6603]/60 shadow-[0_10px_30px_rgba(252,102,3,0.15)]'
-                        : 'border-white/[0.08] shadow-[0_4px_20px_rgba(0,0,0,0.5)]'
+                    className={`relative flex flex-col justify-between h-full min-h-[305px] sm:min-h-[320px] p-6 sm:p-7 rounded-2xl bg-[#0C0D12]/95 border backdrop-blur-md transition-all duration-300 cursor-default select-none ${
+                      hasOrangeBorder
+                        ? 'border-[#FC6603] shadow-[0_0_28px_rgba(252,102,3,0.22)] -translate-y-1'
+                        : 'border-white/[0.12] shadow-[0_4px_20px_rgba(0,0,0,0.5)] hover:-translate-y-1 hover:border-[#FC6603]/60'
                     }`}
                   >
-                    {/* Top spec rim highlight */}
+                    {/* Top specular rim reflection */}
                     <div
                       aria-hidden="true"
                       className="absolute top-0 inset-x-6 h-[1px] bg-gradient-to-r from-transparent via-white/15 to-transparent pointer-events-none"
@@ -636,12 +658,12 @@ export const HowWeWorkSection: React.FC = () => {
                     <div>
                       <div className="flex items-center justify-between mb-5">
                         {/* Upper-Left Icon with micro-animation */}
-                        <div className="p-1 rounded-xl bg-white/[0.02]">
+                        <div className="p-0.5">
                           {step.renderIcon(isRevealed, prefersReduced)}
                         </div>
 
-                        {/* Upper-Right Small Step Number */}
-                        <span className="font-mono text-xs sm:text-[13px] font-bold tracking-[0.16em] text-[#FC6603]">
+                        {/* Upper-Right Small Step Number in Mono */}
+                        <span className="font-mono text-xs sm:text-[13px] font-bold tracking-[0.16em] text-[#8E929E]">
                           {step.number}
                         </span>
                       </div>
@@ -661,7 +683,7 @@ export const HowWeWorkSection: React.FC = () => {
 
                     {/* ================= CARD FOOTER: Subtle Divider & Bottom Label ================= */}
                     <div className="pt-4 mt-6 border-t border-white/[0.08]">
-                      <span className="font-mono text-[10px] sm:text-[10.5px] font-semibold text-white/50 tracking-[0.18em] uppercase">
+                      <span className="font-mono text-[10px] sm:text-[10.5px] font-semibold text-[#8E929E] tracking-[0.18em] uppercase">
                         {step.bottomLabel}
                       </span>
                     </div>
@@ -673,18 +695,18 @@ export const HowWeWorkSection: React.FC = () => {
         </div>
 
         {/* =========================================================================
-            BOTTOM CALL-TO-ACTION (Centered below cards)
+            BOTTOM CALL-TO-ACTION (Centered below cards - Exact Mockup)
            ========================================================================= */}
         <div className="mt-16 sm:mt-20 lg:mt-24 pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 text-center">
-          {/* Prompt text */}
+          {/* Prompt text: Ready to take your next step? */}
           <span className="font-sans text-[15px] sm:text-[16px] text-white/80 font-normal">
             Ready to take your next step?
           </span>
 
-          {/* Primary CTA Button (matches brand styling & navigates to /contact) */}
+          {/* Primary CTA Button (matches screenshot & site scheme) */}
           <Link
             to="/contact"
-            className="group relative inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full bg-[#FC6603] text-black font-mono text-[11.5px] sm:text-[12px] font-bold uppercase tracking-[0.16em] shadow-[0_0_24px_rgba(252,102,3,0.35)] hover:bg-white hover:text-black hover:shadow-[0_0_32px_rgba(255,255,255,0.4)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FC6603] focus-visible:ring-offset-2 focus-visible:ring-offset-[#060709]"
+            className="group relative inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl bg-[#FC6603] text-black font-mono text-[11.5px] sm:text-[12px] font-bold uppercase tracking-[0.16em] shadow-[0_0_24px_rgba(252,102,3,0.35)] hover:bg-white hover:text-black hover:shadow-[0_0_32px_rgba(255,255,255,0.4)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FC6603] focus-visible:ring-offset-2 focus-visible:ring-offset-[#060709]"
             data-cursor="CONNECT"
           >
             <span>LET’S TALK</span>

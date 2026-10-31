@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef, useId } from 'react';
+import React, { useState, useRef, useId } from 'react';
 import { motion, useInView, useReducedMotion } from 'motion/react';
 import { Link } from 'react-router-dom';
 
 /* =========================================================================
-   PROCESS PHASES CONFIGURATION (Exact Mockup Match)
+   PROCESS PHASES CONFIGURATION (Matching Mockup 1:1)
    ========================================================================= */
 interface ProcessStep {
   number: string;
@@ -33,41 +33,21 @@ const PROCESS_STEPS: ProcessStep[] = [
         {/* Outer subtle concentric radar circle */}
         <circle cx="20" cy="20" r="16" stroke="rgba(255,255,255,0.08)" strokeWidth="1" strokeDasharray="3 3" />
 
-        {/* Scanning orbit path with traveling orange pulse */}
-        <motion.circle
-          cx="20"
-          cy="20"
-          r="13"
-          stroke="#FC6603"
-          strokeWidth="1.25"
-          strokeDasharray="22 65"
-          animate={
-            isRevealed && !prefersReduced
-              ? { rotate: [0, 360] }
-              : { rotate: 0 }
-          }
-          transition={{ duration: 1.8, ease: 'easeOut', repeat: Infinity, repeatDelay: 3 }}
-          style={{ transformOrigin: '20px 20px' }}
-        />
-
         {/* Magnifying Lens Outer Frame */}
-        <circle cx="18" cy="18" r="7.5" stroke="#F4F4F5" strokeWidth="2" strokeLinecap="round" />
+        <circle cx="18" cy="18" r="8" stroke="#F4F4F5" strokeWidth="2" strokeLinecap="round" />
 
         {/* Diagonal Lens Handle */}
-        <path d="M23.5 23.5L29.5 29.5" stroke="#FC6603" strokeWidth="2.2" strokeLinecap="round" />
+        <path d="M23.5 23.5L30 30" stroke="#FC6603" strokeWidth="2.2" strokeLinecap="round" />
 
-        {/* Orbiting Satellite Dot (Top right of lens, exact match to screenshot) */}
+        {/* Satellite Dot (Top right of lens, exact match to screenshot) */}
         <motion.circle
           cx="26"
           cy="12"
           r="2.5"
           fill="#FC6603"
-          animate={
-            isRevealed && !prefersReduced
-              ? { scale: [0, 1.4, 1], opacity: [0, 1, 1] }
-              : { scale: 1, opacity: 1 }
-          }
-          transition={{ duration: 0.5, delay: 0.2 }}
+          initial={prefersReduced ? false : { scale: 0, opacity: 0 }}
+          animate={isRevealed ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
         />
       </svg>
     ),
@@ -87,15 +67,15 @@ const PROCESS_STEPS: ProcessStep[] = [
         className="w-10 h-10"
         aria-hidden="true"
       >
-        {/* Fine connecting planning lines */}
+        {/* Connecting planning lines */}
         <motion.path
           d="M20 20L11 11M20 20L29 11M20 20L11 29M20 20L29 29"
           stroke="rgba(255,255,255,0.3)"
           strokeWidth="1.5"
           strokeLinecap="round"
           initial={prefersReduced ? false : { pathLength: 0 }}
-          animate={isRevealed ? { pathLength: 1 } : { pathLength: prefersReduced ? 1 : 0 }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
+          animate={isRevealed ? { pathLength: 1 } : { pathLength: 0 }}
+          transition={{ duration: 0.5, delay: 0.15, ease: 'easeOut' }}
         />
         {/* 4 Satellite Planning Nodes */}
         <circle cx="11" cy="11" r="3" fill="#0C0D12" stroke="#F4F4F5" strokeWidth="1.75" />
@@ -110,12 +90,9 @@ const PROCESS_STEPS: ProcessStep[] = [
           fill="#FC6603"
           stroke="#FFFFFF"
           strokeWidth="1.5"
-          animate={
-            isRevealed && !prefersReduced
-              ? { scale: [0.5, 1.3, 1] }
-              : { scale: 1 }
-          }
-          transition={{ duration: 0.5, delay: 0.3 }}
+          initial={prefersReduced ? false : { scale: 0.6 }}
+          animate={isRevealed ? { scale: 1 } : { scale: 0.6 }}
+          transition={{ duration: 0.4, delay: 0.25 }}
         />
       </svg>
     ),
@@ -142,12 +119,9 @@ const PROCESS_STEPS: ProcessStep[] = [
 
         {/* Center Paper Rocket / Launch Arrow in Brand Orange */}
         <motion.g
-          animate={
-            isRevealed && !prefersReduced
-              ? { x: [-3, 0], y: [3, 0], opacity: [0, 1] }
-              : { x: 0, y: 0, opacity: 1 }
-          }
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          initial={prefersReduced ? false : { x: -3, y: 3, opacity: 0 }}
+          animate={isRevealed ? { x: 0, y: 0, opacity: 1 } : { x: -3, y: 3, opacity: 0 }}
+          transition={{ duration: 0.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
         >
           <path
             d="M26 12L14 18.5L19.5 21.5L26 12Z"
@@ -188,8 +162,8 @@ const PROCESS_STEPS: ProcessStep[] = [
           rx="1"
           fill="#F4F4F5"
           initial={prefersReduced ? false : { scaleY: 0 }}
-          animate={isRevealed ? { scaleY: 1 } : { scaleY: prefersReduced ? 1 : 0 }}
-          transition={{ duration: 0.35, delay: 0.1 }}
+          animate={isRevealed ? { scaleY: 1 } : { scaleY: 0 }}
+          transition={{ duration: 0.3, delay: 0.1 }}
           style={{ transformOrigin: 'bottom' }}
         />
         <motion.rect
@@ -200,8 +174,8 @@ const PROCESS_STEPS: ProcessStep[] = [
           rx="1"
           fill="#F4F4F5"
           initial={prefersReduced ? false : { scaleY: 0 }}
-          animate={isRevealed ? { scaleY: 1 } : { scaleY: prefersReduced ? 1 : 0 }}
-          transition={{ duration: 0.35, delay: 0.2 }}
+          animate={isRevealed ? { scaleY: 1 } : { scaleY: 0 }}
+          transition={{ duration: 0.3, delay: 0.18 }}
           style={{ transformOrigin: 'bottom' }}
         />
         <motion.rect
@@ -212,8 +186,8 @@ const PROCESS_STEPS: ProcessStep[] = [
           rx="1"
           fill="#F4F4F5"
           initial={prefersReduced ? false : { scaleY: 0 }}
-          animate={isRevealed ? { scaleY: 1 } : { scaleY: prefersReduced ? 1 : 0 }}
-          transition={{ duration: 0.35, delay: 0.3 }}
+          animate={isRevealed ? { scaleY: 1 } : { scaleY: 0 }}
+          transition={{ duration: 0.3, delay: 0.26 }}
           style={{ transformOrigin: 'bottom' }}
         />
         <motion.rect
@@ -224,8 +198,8 @@ const PROCESS_STEPS: ProcessStep[] = [
           rx="1"
           fill="#FC6603"
           initial={prefersReduced ? false : { scaleY: 0 }}
-          animate={isRevealed ? { scaleY: 1 } : { scaleY: prefersReduced ? 1 : 0 }}
-          transition={{ duration: 0.35, delay: 0.4 }}
+          animate={isRevealed ? { scaleY: 1 } : { scaleY: 0 }}
+          transition={{ duration: 0.3, delay: 0.34 }}
           style={{ transformOrigin: 'bottom' }}
         />
         {/* Growth Arrow line across top */}
@@ -236,8 +210,8 @@ const PROCESS_STEPS: ProcessStep[] = [
           strokeLinecap="round"
           strokeLinejoin="round"
           initial={prefersReduced ? false : { pathLength: 0 }}
-          animate={isRevealed ? { pathLength: 1 } : { pathLength: prefersReduced ? 1 : 0 }}
-          transition={{ duration: 0.55, delay: 0.35 }}
+          animate={isRevealed ? { pathLength: 1 } : { pathLength: 0 }}
+          transition={{ duration: 0.45, delay: 0.3 }}
         />
         {/* Arrowhead */}
         <motion.path
@@ -247,8 +221,8 @@ const PROCESS_STEPS: ProcessStep[] = [
           strokeLinecap="round"
           strokeLinejoin="round"
           initial={prefersReduced ? false : { opacity: 0 }}
-          animate={isRevealed ? { opacity: 1 } : { opacity: prefersReduced ? 1 : 0 }}
-          transition={{ duration: 0.3, delay: 0.6 }}
+          animate={isRevealed ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ duration: 0.25, delay: 0.5 }}
         />
       </svg>
     ),
@@ -256,34 +230,35 @@ const PROCESS_STEPS: ProcessStep[] = [
 ];
 
 /**
- * HOW WE WORK — STREAMLINED ENTRANCE-ANIMATED WAVE PROCESS
+ * HOW WE WORK — COMPACT WAVE PROCESS SECTION
  *
- * Updates:
- * - Removed extra padding and excessive height (compact, natural section padding py-14 sm:py-16 lg:py-20).
- * - Replaced slow scroll-position binding with a smooth, cohesive viewport entrance wave animation.
- * - Cards pop up sequentially along the wave line (01 -> 02 -> 03 -> 04) with smooth spring-physics.
- * - Exact site CTA button styling matching previous sections: rounded-full, brand orange, hover white glow.
- * - Cleaned up all extra spacing and removed scroll-to-unfold cue.
+ * Key fixes:
+ * 1. Removed extra padding & height: Clean, compact spacing that fits naturally in page flow.
+ * 2. Animation triggers ONLY WHEN REACHING THE CARDS: Targeted directly to cardsContainerRef with
+ *    a threshold ensuring the user is actually looking at the cards when the wave draws and the cards pop up!
+ * 3. Smoother wave pop-up: Cards emerge sequentially along the linking wave (01 -> 02 -> 03 -> 04).
+ * 4. Removed distracting rotating animations: Clean, crisp, one-time micro-animations.
+ * 5. Exact site CTA button styling: pill rounded-full, brand orange, hover white glow, matching DiagnosisSection.
  */
 export const HowWeWorkSection: React.FC = () => {
-  const sectionRef = useRef<HTMLElement>(null);
+  const cardsContainerRef = useRef<HTMLDivElement>(null);
   const prefersReduced = useReducedMotion();
   const filterId = useId();
 
-  // Smooth entrance trigger when section comes into view (once: true prevents re-hiding)
-  const isInView = useInView(sectionRef, {
+  // Trigger animation ONLY when the user reaches the cards area
+  const areCardsInView = useInView(cardsContainerRef, {
     once: true,
-    amount: 0.2,
+    amount: 0.25,
+    margin: '0px 0px -40px 0px',
   });
 
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
   // Stagger delays for wave sequence (01 -> 02 -> 03 -> 04)
-  const cardDelays = [0.15, 0.32, 0.49, 0.66];
+  const cardDelays = [0.12, 0.28, 0.44, 0.6];
 
   return (
     <section
-      ref={sectionRef}
       id="process"
       aria-labelledby="how-we-work-heading"
       className="relative w-full bg-[#060709] py-14 sm:py-16 lg:py-20 overflow-x-clip selection:bg-[#FC6603] selection:text-black border-b border-white/[0.08]"
@@ -291,19 +266,14 @@ export const HowWeWorkSection: React.FC = () => {
       {/* Background ambient radial glow matching mockup */}
       <div
         aria-hidden="true"
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[480px] bg-[radial-gradient(ellipse_at_center,rgba(252,102,3,0.06)_0%,transparent_70%)] pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[450px] bg-[radial-gradient(ellipse_at_center,rgba(252,102,3,0.06)_0%,transparent_70%)] pointer-events-none"
       />
 
       <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 xl:px-10 w-full">
         {/* =========================================================================
-            SECTION HEADER (Centered - Exact Mockup, Clean & Compact)
+            SECTION HEADER (Centered - Clean & Compact)
            ========================================================================= */}
-        <motion.div
-          initial={prefersReduced ? false : { opacity: 0, y: 18 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="flex flex-col items-center text-center max-w-2xl mx-auto mb-10 sm:mb-12 lg:mb-14"
-        >
+        <div className="flex flex-col items-center text-center max-w-2xl mx-auto mb-10 sm:mb-12 lg:mb-14">
           {/* Eyebrow: // HOW WE WORK */}
           <div className="font-mono text-[11px] sm:text-[12px] font-semibold text-[#FC6603] uppercase tracking-[0.2em] mb-2 sm:mb-2.5 flex items-center justify-center gap-2">
             <span className="font-bold">//</span>
@@ -324,15 +294,16 @@ export const HowWeWorkSection: React.FC = () => {
           <p className="font-sans text-[14px] sm:text-[15.5px] text-[#A1A1AA] leading-relaxed mt-3 max-w-lg">
             From understanding your business to building what comes next.
           </p>
-        </motion.div>
+        </div>
 
         {/* =========================================================================
             CARDS STAGE WITH FLOWING WAVE CONNECTOR
+            Animation activates ONLY when cardsContainerRef enters view!
            ========================================================================= */}
-        <div className="relative w-full my-auto">
+        <div ref={cardsContainerRef} className="relative w-full my-auto">
           {/*
             DESKTOP CONTINUOUS SVG WAVE (Behind cards)
-            Draws smoothly across from left to right as the section enters view.
+            Draws smoothly across from left to right as the cards enter view.
           */}
           <svg
             aria-hidden="true"
@@ -403,20 +374,20 @@ export const HowWeWorkSection: React.FC = () => {
               strokeLinecap="round"
               filter={`url(#${filterId}-neon)`}
               initial={prefersReduced ? false : { pathLength: 0 }}
-              animate={isInView ? { pathLength: 1 } : { pathLength: 0 }}
-              transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+              animate={areCardsInView ? { pathLength: 1 } : { pathLength: 0 }}
+              transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
             />
 
             {/* Circular Connection Nodes at Card Edges with Sequential Glow */}
             {[
-              { cx: 15, cy: 175, delay: 0.15 },
-              { cx: 285, cy: 175, delay: 0.22 },
-              { cx: 320, cy: 207, delay: 0.32 },
-              { cx: 590, cy: 207, delay: 0.42 },
-              { cx: 625, cy: 183, delay: 0.49 },
-              { cx: 895, cy: 183, delay: 0.58 },
-              { cx: 930, cy: 209, delay: 0.66 },
-              { cx: 1200, cy: 209, delay: 0.78 },
+              { cx: 15, cy: 175, delay: 0.12 },
+              { cx: 285, cy: 175, delay: 0.2 },
+              { cx: 320, cy: 207, delay: 0.28 },
+              { cx: 590, cy: 207, delay: 0.36 },
+              { cx: 625, cy: 183, delay: 0.44 },
+              { cx: 895, cy: 183, delay: 0.52 },
+              { cx: 930, cy: 209, delay: 0.6 },
+              { cx: 1200, cy: 209, delay: 0.72 },
             ].map((node, i) => (
               <g key={i}>
                 {/* Outer Ring */}
@@ -436,7 +407,7 @@ export const HowWeWorkSection: React.FC = () => {
                   r="3"
                   fill="#FC6603"
                   initial={prefersReduced ? false : { scale: 0 }}
-                  animate={isInView ? { scale: 1 } : { scale: 0 }}
+                  animate={areCardsInView ? { scale: 1 } : { scale: 0 }}
                   transition={{ duration: 0.3, delay: node.delay }}
                 />
               </g>
@@ -488,8 +459,8 @@ export const HowWeWorkSection: React.FC = () => {
               fill="none"
               strokeLinecap="round"
               initial={prefersReduced ? false : { pathLength: 0 }}
-              animate={isInView ? { pathLength: 1 } : { pathLength: 0 }}
-              transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+              animate={areCardsInView ? { pathLength: 1 } : { pathLength: 0 }}
+              transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
             />
           </svg>
 
@@ -503,17 +474,15 @@ export const HowWeWorkSection: React.FC = () => {
             <motion.div
               className="w-full bg-[#FC6603] origin-top shadow-[0_0_8px_#FC6603]"
               initial={prefersReduced ? false : { scaleY: 0 }}
-              animate={isInView ? { scaleY: 1 } : { scaleY: 0 }}
-              transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+              animate={areCardsInView ? { scaleY: 1 } : { scaleY: 0 }}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
               style={{ height: '100%' }}
             />
           </div>
 
           {/*
             RESPONSIVE 4-CARD CONTAINER
-            - Desktop: 4 equal-width cards in 1 horizontal row with stagger rhythm
-            - Tablet: 2x2 grid
-            - Mobile: 1 column stack
+            Cards emerge smoothly when user reaches here!
           */}
           <ol className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 xl:gap-5 relative z-10 list-none p-0 m-0 pl-6 sm:pl-8 md:pl-0">
             {PROCESS_STEPS.map((step, idx) => {
@@ -531,21 +500,21 @@ export const HowWeWorkSection: React.FC = () => {
                   }}
                 >
                   <motion.div
-                    // Smooth, wave-like entrance animation as section enters view
+                    // Smooth, wave-like pop-up animation running ONLY when user reaches this section
                     initial={
                       prefersReduced
                         ? false
-                        : { opacity: 0, y: 32, scale: 0.96 }
+                        : { opacity: 0, y: 40, scale: 0.95 }
                     }
                     animate={
-                      isInView || prefersReduced
+                      areCardsInView || prefersReduced
                         ? { opacity: 1, y: 0, scale: 1 }
-                        : { opacity: 0, y: 32, scale: 0.96 }
+                        : { opacity: 0, y: 40, scale: 0.95 }
                     }
                     transition={{
-                      duration: 0.6,
+                      duration: 0.65,
                       delay: prefersReduced ? 0 : cardDelays[idx],
-                      ease: [0.16, 1, 0.3, 1], // Buttery smooth ease-out
+                      ease: [0.16, 1, 0.3, 1], // Buttery smooth ease-out curve
                     }}
                     className={`relative flex flex-col justify-between h-full min-h-[290px] sm:min-h-[305px] p-5 sm:p-6 rounded-2xl bg-[#0C0D12]/95 border backdrop-blur-md transition-all duration-300 cursor-default select-none ${
                       hasOrangeBorder
@@ -564,7 +533,7 @@ export const HowWeWorkSection: React.FC = () => {
                       <div className="flex items-center justify-between mb-4">
                         {/* Upper-Left Icon with micro-animation */}
                         <div className="p-0.5">
-                          {step.renderIcon(isInView, prefersReduced)}
+                          {step.renderIcon(areCardsInView, prefersReduced)}
                         </div>
 
                         {/* Upper-Right Small Step Number in Mono */}
@@ -602,12 +571,7 @@ export const HowWeWorkSection: React.FC = () => {
         {/* =========================================================================
             BOTTOM CALL-TO-ACTION (Exact Match to Diagnosis / Previous Sections)
            ========================================================================= */}
-        <motion.div
-          initial={prefersReduced ? false : { opacity: 0, y: 16 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
-          transition={{ duration: 0.5, delay: prefersReduced ? 0 : 0.8, ease: [0.22, 1, 0.36, 1] }}
-          className="mt-10 sm:mt-12 lg:mt-14 pt-6 sm:pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 text-center"
-        >
+        <div className="mt-10 sm:mt-12 lg:mt-14 pt-6 sm:pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 text-center">
           {/* Prompt text */}
           <span className="font-sans text-[15px] sm:text-[16px] text-white/80 font-normal">
             Ready to take your next step?
@@ -624,7 +588,7 @@ export const HowWeWorkSection: React.FC = () => {
               ↗
             </span>
           </Link>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

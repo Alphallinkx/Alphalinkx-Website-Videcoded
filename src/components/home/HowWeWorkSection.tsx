@@ -1,18 +1,16 @@
-import React, { useState, useRef, useId } from 'react';
-import { motion, useInView, useReducedMotion } from 'motion/react';
+import React, { useState, useEffect, useRef, useId } from 'react';
 import { Link } from 'react-router-dom';
 
 /* =========================================================================
-   PROCESS PHASES CONFIGURATION (Matching Mockup 1:1)
+   PROCESS PHASES CONFIGURATION
    ========================================================================= */
 interface ProcessStep {
   number: string;
   title: string;
   description: string;
   bottomLabel: string;
-  staggerClass: string; // Tailwind desktop vertical offset for wave rhythm
   isDefaultActive?: boolean; // Card 02 in mockup has the signature glowing orange border
-  renderIcon: (isRevealed: boolean, prefersReduced: boolean | null) => React.ReactNode;
+  renderIcon: () => React.ReactNode;
 }
 
 const PROCESS_STEPS: ProcessStep[] = [
@@ -21,8 +19,7 @@ const PROCESS_STEPS: ProcessStep[] = [
     title: 'Discover & Map',
     description: 'Understand your business, audience and opportunities.',
     bottomLabel: 'CLARITY & DIRECTION',
-    staggerClass: 'lg:translate-y-0',
-    renderIcon: (isRevealed, prefersReduced) => (
+    renderIcon: () => (
       <svg
         viewBox="0 0 44 44"
         fill="none"
@@ -30,25 +27,10 @@ const PROCESS_STEPS: ProcessStep[] = [
         className="w-10 h-10"
         aria-hidden="true"
       >
-        {/* Outer subtle concentric radar circle */}
         <circle cx="20" cy="20" r="16" stroke="rgba(255,255,255,0.08)" strokeWidth="1" strokeDasharray="3 3" />
-
-        {/* Magnifying Lens Outer Frame */}
         <circle cx="18" cy="18" r="8" stroke="#F4F4F5" strokeWidth="2" strokeLinecap="round" />
-
-        {/* Diagonal Lens Handle */}
         <path d="M23.5 23.5L30 30" stroke="#FC6603" strokeWidth="2.2" strokeLinecap="round" />
-
-        {/* Satellite Dot (Top right of lens, exact match to screenshot) */}
-        <motion.circle
-          cx="26"
-          cy="12"
-          r="2.5"
-          fill="#FC6603"
-          initial={prefersReduced ? false : { scale: 0, opacity: 0 }}
-          animate={isRevealed ? { scale: 1, opacity: 1 } : { scale: 0, opacity: 0 }}
-          transition={{ duration: 0.4, delay: 0.2 }}
-        />
+        <circle cx="26" cy="12" r="2.5" fill="#FC6603" />
       </svg>
     ),
   },
@@ -57,9 +39,8 @@ const PROCESS_STEPS: ProcessStep[] = [
     title: 'Strategize & Engineer',
     description: 'Shape the plan, structure and campaigns around your goals.',
     bottomLabel: 'STRATEGY & BLUEPRINT',
-    staggerClass: 'lg:translate-y-8', // Staggered down ~32px following the wave
-    isDefaultActive: true, // Card 02 has the signature glowing orange border from the mockup
-    renderIcon: (isRevealed, prefersReduced) => (
+    isDefaultActive: true, // Card 02 has the signature glowing orange border from mockup
+    renderIcon: () => (
       <svg
         viewBox="0 0 44 44"
         fill="none"
@@ -67,33 +48,17 @@ const PROCESS_STEPS: ProcessStep[] = [
         className="w-10 h-10"
         aria-hidden="true"
       >
-        {/* Connecting planning lines */}
-        <motion.path
+        <path
           d="M20 20L11 11M20 20L29 11M20 20L11 29M20 20L29 29"
           stroke="rgba(255,255,255,0.3)"
           strokeWidth="1.5"
           strokeLinecap="round"
-          initial={prefersReduced ? false : { pathLength: 0 }}
-          animate={isRevealed ? { pathLength: 1 } : { pathLength: 0 }}
-          transition={{ duration: 0.5, delay: 0.15, ease: 'easeOut' }}
         />
-        {/* 4 Satellite Planning Nodes */}
         <circle cx="11" cy="11" r="3" fill="#0C0D12" stroke="#F4F4F5" strokeWidth="1.75" />
         <circle cx="29" cy="11" r="3" fill="#0C0D12" stroke="#F4F4F5" strokeWidth="1.75" />
         <circle cx="11" cy="29" r="3" fill="#0C0D12" stroke="#F4F4F5" strokeWidth="1.75" />
         <circle cx="29" cy="29" r="3" fill="#0C0D12" stroke="#F4F4F5" strokeWidth="1.75" />
-        {/* Central Hub Node in Brand Orange */}
-        <motion.circle
-          cx="20"
-          cy="20"
-          r="4.5"
-          fill="#FC6603"
-          stroke="#FFFFFF"
-          strokeWidth="1.5"
-          initial={prefersReduced ? false : { scale: 0.6 }}
-          animate={isRevealed ? { scale: 1 } : { scale: 0.6 }}
-          transition={{ duration: 0.4, delay: 0.25 }}
-        />
+        <circle cx="20" cy="20" r="4.5" fill="#FC6603" stroke="#FFFFFF" strokeWidth="1.5" />
       </svg>
     ),
   },
@@ -102,8 +67,7 @@ const PROCESS_STEPS: ProcessStep[] = [
     title: 'Build & Launch',
     description: 'Bring your website, content and campaigns to life.',
     bottomLabel: 'BUILD & DEPLOY',
-    staggerClass: 'lg:translate-y-2', // Staggered ~8px
-    renderIcon: (isRevealed, prefersReduced) => (
+    renderIcon: () => (
       <svg
         viewBox="0 0 44 44"
         fill="none"
@@ -111,31 +75,13 @@ const PROCESS_STEPS: ProcessStep[] = [
         className="w-10 h-10"
         aria-hidden="true"
       >
-        {/* Left code bracket < */}
         <path d="M11 14L5 20L11 26" stroke="#F4F4F5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-
-        {/* Right code bracket > */}
         <path d="M29 14L35 20L29 26" stroke="#F4F4F5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-
-        {/* Center Paper Rocket / Launch Arrow in Brand Orange */}
-        <motion.g
-          initial={prefersReduced ? false : { x: -3, y: 3, opacity: 0 }}
-          animate={isRevealed ? { x: 0, y: 0, opacity: 1 } : { x: -3, y: 3, opacity: 0 }}
-          transition={{ duration: 0.5, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <path
-            d="M26 12L14 18.5L19.5 21.5L26 12Z"
-            fill="#FC6603"
-          />
-          <path
-            d="M26 12L21.5 25L19.5 21.5L26 12Z"
-            fill="#E05500"
-          />
-          <path
-            d="M19.5 21.5L21.5 25L22.5 20.5L19.5 21.5Z"
-            fill="#FFA34D"
-          />
-        </motion.g>
+        <g>
+          <path d="M26 12L14 18.5L19.5 21.5L26 12Z" fill="#FC6603" />
+          <path d="M26 12L21.5 25L19.5 21.5L26 12Z" fill="#E05500" />
+          <path d="M19.5 21.5L21.5 25L22.5 20.5L19.5 21.5Z" fill="#FFA34D" />
+        </g>
       </svg>
     ),
   },
@@ -144,8 +90,7 @@ const PROCESS_STEPS: ProcessStep[] = [
     title: 'Scale & Compound',
     description: 'Measure what works. Refine, improve and grow.',
     bottomLabel: 'MEASURE & IMPROVE',
-    staggerClass: 'lg:translate-y-9', // Staggered down ~36px
-    renderIcon: (isRevealed, prefersReduced) => (
+    renderIcon: () => (
       <svg
         viewBox="0 0 44 44"
         fill="none"
@@ -153,115 +98,160 @@ const PROCESS_STEPS: ProcessStep[] = [
         className="w-10 h-10"
         aria-hidden="true"
       >
-        {/* 4 Rising Chart Bars */}
-        <motion.rect
-          x="8"
-          y="23"
-          width="4"
-          height="9"
-          rx="1"
-          fill="#F4F4F5"
-          initial={prefersReduced ? false : { scaleY: 0 }}
-          animate={isRevealed ? { scaleY: 1 } : { scaleY: 0 }}
-          transition={{ duration: 0.3, delay: 0.1 }}
-          style={{ transformOrigin: 'bottom' }}
-        />
-        <motion.rect
-          x="15"
-          y="18"
-          width="4"
-          height="14"
-          rx="1"
-          fill="#F4F4F5"
-          initial={prefersReduced ? false : { scaleY: 0 }}
-          animate={isRevealed ? { scaleY: 1 } : { scaleY: 0 }}
-          transition={{ duration: 0.3, delay: 0.18 }}
-          style={{ transformOrigin: 'bottom' }}
-        />
-        <motion.rect
-          x="22"
-          y="13"
-          width="4"
-          height="19"
-          rx="1"
-          fill="#F4F4F5"
-          initial={prefersReduced ? false : { scaleY: 0 }}
-          animate={isRevealed ? { scaleY: 1 } : { scaleY: 0 }}
-          transition={{ duration: 0.3, delay: 0.26 }}
-          style={{ transformOrigin: 'bottom' }}
-        />
-        <motion.rect
-          x="29"
-          y="8"
-          width="4"
-          height="24"
-          rx="1"
-          fill="#FC6603"
-          initial={prefersReduced ? false : { scaleY: 0 }}
-          animate={isRevealed ? { scaleY: 1 } : { scaleY: 0 }}
-          transition={{ duration: 0.3, delay: 0.34 }}
-          style={{ transformOrigin: 'bottom' }}
-        />
-        {/* Growth Arrow line across top */}
-        <motion.path
-          d="M8 22L15 17L22 12L31 7"
-          stroke="#FC6603"
-          strokeWidth="1.75"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          initial={prefersReduced ? false : { pathLength: 0 }}
-          animate={isRevealed ? { pathLength: 1 } : { pathLength: 0 }}
-          transition={{ duration: 0.45, delay: 0.3 }}
-        />
-        {/* Arrowhead */}
-        <motion.path
-          d="M27 7H31V11"
-          stroke="#FC6603"
-          strokeWidth="1.75"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          initial={prefersReduced ? false : { opacity: 0 }}
-          animate={isRevealed ? { opacity: 1 } : { opacity: 0 }}
-          transition={{ duration: 0.25, delay: 0.5 }}
-        />
+        <rect x="8" y="23" width="4" height="9" rx="1" fill="#F4F4F5" />
+        <rect x="15" y="18" width="4" height="14" rx="1" fill="#F4F4F5" />
+        <rect x="22" y="13" width="4" height="19" rx="1" fill="#F4F4F5" />
+        <rect x="29" y="8" width="4" height="24" rx="1" fill="#FC6603" />
+        <path d="M8 22L15 17L22 12L31 7" stroke="#FC6603" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M27 7H31V11" stroke="#FC6603" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     ),
   },
 ];
 
 /**
- * HOW WE WORK — COMPACT WAVE PROCESS SECTION
+ * HOW WE WORK — SMOOTH WAVE ENTRANCE ANIMATION SYSTEM
  *
- * Key fixes:
- * 1. Removed extra padding & height: Clean, compact spacing that fits naturally in page flow.
- * 2. Animation triggers ONLY WHEN REACHING THE CARDS: Targeted directly to cardsContainerRef with
- *    a threshold ensuring the user is actually looking at the cards when the wave draws and the cards pop up!
- * 3. Smoother wave pop-up: Cards emerge sequentially along the linking wave (01 -> 02 -> 03 -> 04).
- * 4. Removed distracting rotating animations: Clean, crisp, one-time micro-animations.
- * 5. Exact site CTA button styling: pill rounded-full, brand orange, hover white glow, matching DiagnosisSection.
+ * Requirements fulfilled:
+ * 1. TRIGGER: IntersectionObserver, threshold 0.25, rootMargin: '0px 0px -8% 0px'. Plays ONCE only.
+ * 2. TIMELINE (~1.9s total):
+ *    - 0ms: Eyebrow // HOW WE WORK fades in, letter-spacing settles.
+ *    - 0-600ms: Heading lines reveal upward from clip mask (line 1 first, line 2 delayed 120ms).
+ *    - 200ms: Subtext fades up 16px.
+ *    - 300ms: Orange wavy line draws in left-to-right (1300ms, cubic-bezier(0.16, 1, 0.3, 1)).
+ *    - 400ms: Card 01 wave entrance (rotates -1deg, crests, dips, settles at 0px).
+ *    - 550ms: Card 02 wave entrance (rotates 1deg, crests, dips, settles at 32px).
+ *    - 700ms: Card 03 wave entrance (rotates -1deg, crests, dips, settles at 8px).
+ *    - 850ms: Card 04 wave entrance (rotates 1deg, crests, dips, settles at 36px).
+ *    - 1450ms: Bottom divider + Prompt + LET'S TALK CTA fade up last.
+ * 3. Exact wave keyframes with calc(var(--final-y) - 12px) crest, calc(var(--final-y) + 3px) dip.
+ * 4. Inner content stagger starting 200ms after each card starts.
+ * 5. Brief orange border glow as each card lands, fading over 800ms. Card 02 retains its default active glow.
+ * 6. Smoothness rules: translate3d(), will-change removed after animationend, backface-visibility: hidden.
+ * 7. Fallbacks: .hww-anim-ready ensures cards are visible if JS fails; 2.5s safety timeout.
  */
 export const HowWeWorkSection: React.FC = () => {
-  const cardsContainerRef = useRef<HTMLDivElement>(null);
-  const prefersReduced = useReducedMotion();
+  const sectionRef = useRef<HTMLElement>(null);
   const filterId = useId();
 
-  // Trigger animation ONLY when the user reaches the cards area
-  const areCardsInView = useInView(cardsContainerRef, {
-    once: true,
-    amount: 0.25,
-    margin: '0px 0px -40px 0px',
-  });
-
+  const [isAnimReady, setIsAnimReady] = useState(false);
+  const [isInView, setIsInView] = useState(false);
+  const [isSettled, setIsSettled] = useState(false);
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
 
-  // Stagger delays for wave sequence (01 -> 02 -> 03 -> 04)
-  const cardDelays = [0.12, 0.28, 0.44, 0.6];
+  useEffect(() => {
+    // 1. Mark ready for JS-driven hidden starting state
+    setIsAnimReady(true);
+
+    const section = sectionRef.current;
+    if (!section) return;
+
+    // Check reduced motion
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setIsInView(true);
+      setIsSettled(true);
+      return;
+    }
+
+    let hasTriggered = false;
+    const triggerEntrance = () => {
+      if (hasTriggered) return;
+      hasTriggered = true;
+      setIsInView(true);
+
+      // Clean up observer and listeners once triggered (plays ONCE only)
+      if (observer) {
+        observer.disconnect();
+      }
+      window.removeEventListener('scroll', handleScrollCheck);
+      window.removeEventListener('resize', handleScrollCheck);
+      if (onScreenSafetyTimeout) {
+        clearTimeout(onScreenSafetyTimeout);
+      }
+    };
+
+    // 2. IntersectionObserver: threshold 0.25, rootMargin "0px 0px -8% 0px"
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry && (entry.isIntersecting || entry.intersectionRatio >= 0.25)) {
+          triggerEntrance();
+        }
+      },
+      {
+        threshold: [0, 0.15, 0.25],
+        rootMargin: '0px 0px -8% 0px',
+      }
+    );
+
+    observer.observe(section);
+
+    // 3. Robust scroll / Lenis check for smooth scroll arrival or pre-scrolled page refresh
+    const handleScrollCheck = () => {
+      if (hasTriggered || !sectionRef.current) return;
+      const rect = sectionRef.current.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      // Triggers when ~25% of section is inside viewport accounting for rootMargin
+      if (rect.top <= vh * 0.75 && rect.bottom >= 0) {
+        triggerEntrance();
+      }
+    };
+
+    window.addEventListener('scroll', handleScrollCheck, { passive: true });
+    window.addEventListener('resize', handleScrollCheck, { passive: true });
+
+    // Initial check in case user refreshed directly at #process
+    handleScrollCheck();
+
+    // 4. Fallback: if observer hasn't fired after 2.5s WHILE the section is on screen, force in-view
+    let onScreenSafetyTimeout: ReturnType<typeof setTimeout> | null = null;
+    const checkSafetyLoop = setInterval(() => {
+      if (hasTriggered || !sectionRef.current) {
+        clearInterval(checkSafetyLoop);
+        return;
+      }
+      const rect = sectionRef.current.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      const isOnScreen = rect.top < vh && rect.bottom > 0;
+
+      if (isOnScreen && !onScreenSafetyTimeout) {
+        onScreenSafetyTimeout = setTimeout(() => {
+          if (!hasTriggered) {
+            triggerEntrance();
+          }
+        }, 2500);
+      }
+    }, 400);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', handleScrollCheck);
+      window.removeEventListener('resize', handleScrollCheck);
+      clearInterval(checkSafetyLoop);
+      if (onScreenSafetyTimeout) {
+        clearTimeout(onScreenSafetyTimeout);
+      }
+    };
+  }, []);
+
+  // Settle animation and release will-change ~2200ms after in-view
+  useEffect(() => {
+    if (isInView && !isSettled) {
+      const settleTimer = setTimeout(() => {
+        setIsSettled(true);
+      }, 2200);
+      return () => clearTimeout(settleTimer);
+    }
+  }, [isInView, isSettled]);
 
   return (
     <section
+      ref={sectionRef}
       id="process"
       aria-labelledby="how-we-work-heading"
-      className="relative w-full bg-[#060709] py-14 sm:py-16 lg:py-20 overflow-x-clip selection:bg-[#FC6603] selection:text-black border-b border-white/[0.08]"
+      className={`hww-section relative w-full bg-[#060709] py-14 sm:py-16 lg:py-20 overflow-x-clip selection:bg-[#FC6603] selection:text-black border-b border-white/[0.08] ${
+        isAnimReady ? 'hww-anim-ready' : ''
+      } ${isInView ? 'hww-in-view' : ''} ${isSettled ? 'hww-settled' : ''}`}
     >
       {/* Background ambient radial glow matching mockup */}
       <div
@@ -271,39 +261,43 @@ export const HowWeWorkSection: React.FC = () => {
 
       <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 xl:px-10 w-full">
         {/* =========================================================================
-            SECTION HEADER (Centered - Clean & Compact)
+            SECTION HEADER
            ========================================================================= */}
         <div className="flex flex-col items-center text-center max-w-2xl mx-auto mb-10 sm:mb-12 lg:mb-14">
-          {/* Eyebrow: // HOW WE WORK */}
-          <div className="font-mono text-[11px] sm:text-[12px] font-semibold text-[#FC6603] uppercase tracking-[0.2em] mb-2 sm:mb-2.5 flex items-center justify-center gap-2">
+          {/* Eyebrow: // HOW WE WORK (0ms: Fades in, letter-spacing settles) */}
+          <div className="hww-eyebrow font-mono text-[11px] sm:text-[12px] font-semibold text-[#FC6603] uppercase tracking-[0.2em] mb-2 sm:mb-2.5 flex items-center justify-center gap-2">
             <span className="font-bold">//</span>
             <span className="text-white/80">HOW WE WORK</span>
           </div>
 
-          {/* Heading: Four steps. One clear direction. */}
+          {/* Heading: Four steps. One clear direction. (0-600ms: Reveals upward from mask/clip) */}
           <h2
             id="how-we-work-heading"
             className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[52px] tracking-[-0.03em] leading-[1.08] text-white"
           >
-            <span>Four steps.</span>
-            <br />
-            <span className="text-[#FC6603]">One clear direction.</span>
+            <span className="block overflow-hidden pb-1">
+              <span className="hww-heading-line hww-line-1">Four steps.</span>
+            </span>
+            <span className="block overflow-hidden pb-1">
+              <span className="hww-heading-line hww-line-2 text-[#FC6603]">
+                One clear direction.
+              </span>
+            </span>
           </h2>
 
-          {/* Supporting Text */}
-          <p className="font-sans text-[14px] sm:text-[15.5px] text-[#A1A1AA] leading-relaxed mt-3 max-w-lg">
+          {/* Supporting Text (200ms: Fades up 16px) */}
+          <p className="hww-subtext font-sans text-[14px] sm:text-[15.5px] text-[#A1A1AA] leading-relaxed mt-3 max-w-lg">
             From understanding your business to building what comes next.
           </p>
         </div>
 
         {/* =========================================================================
             CARDS STAGE WITH FLOWING WAVE CONNECTOR
-            Animation activates ONLY when cardsContainerRef enters view!
            ========================================================================= */}
-        <div ref={cardsContainerRef} className="relative w-full my-auto">
+        <div className="relative w-full my-auto">
           {/*
             DESKTOP CONTINUOUS SVG WAVE (Behind cards)
-            Draws smoothly across from left to right as the cards enter view.
+            Draws smoothly across from left to right (300ms, duration 1300ms)
           */}
           <svg
             aria-hidden="true"
@@ -352,7 +346,8 @@ export const HowWeWorkSection: React.FC = () => {
             />
 
             {/* Glowing Orange Wave Line with Smooth Entrance Draw */}
-            <motion.path
+            <path
+              pathLength={1000}
               d="
                 M -30,225
                 C 0,220 5,178 15,175
@@ -373,24 +368,21 @@ export const HowWeWorkSection: React.FC = () => {
               fill="none"
               strokeLinecap="round"
               filter={`url(#${filterId}-neon)`}
-              initial={prefersReduced ? false : { pathLength: 0 }}
-              animate={areCardsInView ? { pathLength: 1 } : { pathLength: 0 }}
-              transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
+              className="hww-wave-path"
             />
 
-            {/* Circular Connection Nodes at Card Edges with Sequential Glow */}
+            {/* Circular Connection Nodes at Card Edges */}
             {[
-              { cx: 15, cy: 175, delay: 0.12 },
-              { cx: 285, cy: 175, delay: 0.2 },
-              { cx: 320, cy: 207, delay: 0.28 },
-              { cx: 590, cy: 207, delay: 0.36 },
-              { cx: 625, cy: 183, delay: 0.44 },
-              { cx: 895, cy: 183, delay: 0.52 },
-              { cx: 930, cy: 209, delay: 0.6 },
-              { cx: 1200, cy: 209, delay: 0.72 },
+              { cx: 15, cy: 175 },
+              { cx: 285, cy: 175 },
+              { cx: 320, cy: 207 },
+              { cx: 590, cy: 207 },
+              { cx: 625, cy: 183 },
+              { cx: 895, cy: 183 },
+              { cx: 930, cy: 209 },
+              { cx: 1200, cy: 209 },
             ].map((node, i) => (
               <g key={i}>
-                {/* Outer Ring */}
                 <circle
                   cx={node.cx}
                   cy={node.cy}
@@ -398,17 +390,13 @@ export const HowWeWorkSection: React.FC = () => {
                   stroke="#FC6603"
                   strokeWidth="1.5"
                   fill="#060709"
-                  className="transition-colors duration-500"
                 />
-                {/* Center Core Dot */}
-                <motion.circle
+                <circle
                   cx={node.cx}
                   cy={node.cy}
                   r="3"
                   fill="#FC6603"
-                  initial={prefersReduced ? false : { scale: 0 }}
-                  animate={areCardsInView ? { scale: 1 } : { scale: 0 }}
-                  transition={{ duration: 0.3, delay: node.delay }}
+                  className={`hww-node-dot hww-node-dot-${i}`}
                 />
               </g>
             ))}
@@ -442,7 +430,8 @@ export const HowWeWorkSection: React.FC = () => {
               fill="none"
               strokeLinecap="round"
             />
-            <motion.path
+            <path
+              pathLength={1000}
               d="
                 M 10,160
                 L 280,160
@@ -458,9 +447,7 @@ export const HowWeWorkSection: React.FC = () => {
               strokeWidth="2.5"
               fill="none"
               strokeLinecap="round"
-              initial={prefersReduced ? false : { pathLength: 0 }}
-              animate={areCardsInView ? { pathLength: 1 } : { pathLength: 0 }}
-              transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
+              className="hww-wave-path"
             />
           </svg>
 
@@ -469,20 +456,14 @@ export const HowWeWorkSection: React.FC = () => {
           */}
           <div
             aria-hidden="true"
-            className="md:hidden absolute left-3 top-8 bottom-8 w-[2px] bg-white/[0.08] pointer-events-none z-0"
+            className="md:hidden absolute left-3 top-8 bottom-8 w-[2px] bg-white/[0.08] pointer-events-none z-0 overflow-hidden"
           >
-            <motion.div
-              className="w-full bg-[#FC6603] origin-top shadow-[0_0_8px_#FC6603]"
-              initial={prefersReduced ? false : { scaleY: 0 }}
-              animate={areCardsInView ? { scaleY: 1 } : { scaleY: 0 }}
-              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-              style={{ height: '100%' }}
-            />
+            <div className="hww-wave-path-mobile w-full h-full bg-[#FC6603] origin-top shadow-[0_0_8px_#FC6603]" />
           </div>
 
           {/*
             RESPONSIVE 4-CARD CONTAINER
-            Cards emerge smoothly when user reaches here!
+            Rides the wave in left-to-right (400ms, 550ms, 700ms, 850ms)
           */}
           <ol className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 xl:gap-5 relative z-10 list-none p-0 m-0 pl-6 sm:pl-8 md:pl-0">
             {PROCESS_STEPS.map((step, idx) => {
@@ -492,76 +473,66 @@ export const HowWeWorkSection: React.FC = () => {
               return (
                 <li
                   key={step.number}
-                  onMouseEnter={() => setHoveredCard(idx)}
-                  onMouseLeave={() => setHoveredCard(null)}
-                  className={`flex flex-col ${step.staggerClass}`}
+                  className={`hww-card-slot hww-card-slot-${idx} flex flex-col`}
                   style={{
-                    zIndex: 10 + idx, // Stacking allows cards to emerge fluidly in wave order
+                    zIndex: 10 + idx,
                   }}
                 >
-                  <motion.div
-                    // Smooth, wave-like pop-up animation running ONLY when user reaches this section
-                    initial={
-                      prefersReduced
-                        ? false
-                        : { opacity: 0, y: 40, scale: 0.95 }
-                    }
-                    animate={
-                      areCardsInView || prefersReduced
-                        ? { opacity: 1, y: 0, scale: 1 }
-                        : { opacity: 0, y: 40, scale: 0.95 }
-                    }
-                    transition={{
-                      duration: 0.65,
-                      delay: prefersReduced ? 0 : cardDelays[idx],
-                      ease: [0.16, 1, 0.3, 1], // Buttery smooth ease-out curve
-                    }}
-                    className={`relative flex flex-col justify-between h-full min-h-[290px] sm:min-h-[305px] p-5 sm:p-6 rounded-2xl bg-[#0C0D12]/95 border backdrop-blur-md transition-all duration-300 cursor-default select-none ${
+                  <div
+                    onMouseEnter={() => setHoveredCard(idx)}
+                    onMouseLeave={() => setHoveredCard(null)}
+                    className={`hww-card-inner relative flex flex-col justify-between h-full min-h-[290px] sm:min-h-[305px] p-5 sm:p-6 rounded-2xl bg-[#0C0D12]/95 border backdrop-blur-md cursor-default select-none transition-all duration-300 ${
                       hasOrangeBorder
-                        ? 'border-[#FC6603] shadow-[0_0_28px_rgba(252,102,3,0.22)] -translate-y-1'
-                        : 'border-white/[0.12] shadow-[0_4px_20px_rgba(0,0,0,0.5)] hover:-translate-y-1 hover:border-[#FC6603]/60'
+                        ? 'border-[#FC6603] shadow-[0_0_28px_rgba(252,102,3,0.22)]'
+                        : 'border-white/[0.12] shadow-[0_4px_20px_rgba(0,0,0,0.5)]'
                     }`}
                   >
+                    {/* Brief orange glow pulse overlay as card lands */}
+                    <div
+                      aria-hidden="true"
+                      className="hww-card-glow-overlay pointer-events-none absolute inset-0 rounded-2xl"
+                    />
+
                     {/* Top specular rim reflection */}
                     <div
                       aria-hidden="true"
                       className="absolute top-0 inset-x-6 h-[1px] bg-gradient-to-r from-transparent via-white/15 to-transparent pointer-events-none"
                     />
 
-                    {/* ================= CARD HEADER: Icon (Left) & Step Number (Right) ================= */}
+                    {/* ================= CARD HEADER ================= */}
                     <div>
                       <div className="flex items-center justify-between mb-4">
-                        {/* Upper-Left Icon with micro-animation */}
-                        <div className="p-0.5">
-                          {step.renderIcon(areCardsInView, prefersReduced)}
+                        {/* Upper-Left Icon with soft pop (200ms after card starts) */}
+                        <div className="hww-inner-icon p-0.5">
+                          {step.renderIcon()}
                         </div>
 
-                        {/* Upper-Right Small Step Number in Mono */}
-                        <span className="font-mono text-xs sm:text-[13px] font-bold tracking-[0.16em] text-[#8E929E]">
+                        {/* Upper-Right Small Step Number */}
+                        <span className="hww-inner-header font-mono text-xs sm:text-[13px] font-bold tracking-[0.16em] text-[#8E929E]">
                           {step.number}
                         </span>
                       </div>
 
-                      {/* Title (Bricolage Grotesque) with reserved height for natural 2-line wrapping */}
-                      <div className="min-h-[50px] sm:min-h-[54px] flex items-center">
+                      {/* Title with reserved height for natural 2-line wrapping */}
+                      <div className="hww-inner-header min-h-[50px] sm:min-h-[54px] flex items-center">
                         <h3 className="font-display font-bold text-lg sm:text-[20px] xl:text-[21px] text-[#F4F4F5] tracking-[-0.01em] leading-snug">
                           {step.title}
                         </h3>
                       </div>
 
-                      {/* Description (Schibsted Grotesk) */}
-                      <p className="font-sans text-[13px] sm:text-[13.5px] text-[#A1A1AA] leading-relaxed mt-2">
+                      {/* Description (+80ms delayed) */}
+                      <p className="hww-inner-desc font-sans text-[13px] sm:text-[13.5px] text-[#A1A1AA] leading-relaxed mt-2">
                         {step.description}
                       </p>
                     </div>
 
-                    {/* ================= CARD FOOTER: Subtle Divider & Bottom Label ================= */}
-                    <div className="pt-3.5 mt-5 border-t border-white/[0.08]">
-                      <span className="font-mono text-[9.5px] sm:text-[10px] font-semibold text-[#8E929E] tracking-[0.18em] uppercase">
+                    {/* ================= CARD FOOTER ================= */}
+                    <div className="hww-inner-divider pt-3.5 mt-5 border-t border-white/[0.08]">
+                      <span className="hww-inner-label font-mono text-[9.5px] sm:text-[10px] font-semibold text-[#8E929E] tracking-[0.18em] uppercase">
                         {step.bottomLabel}
                       </span>
                     </div>
-                  </motion.div>
+                  </div>
                 </li>
               );
             })}
@@ -569,15 +540,13 @@ export const HowWeWorkSection: React.FC = () => {
         </div>
 
         {/* =========================================================================
-            BOTTOM CALL-TO-ACTION (Exact Match to Diagnosis / Previous Sections)
+            BOTTOM CALL-TO-ACTION (1450ms: Fades up last)
            ========================================================================= */}
-        <div className="mt-10 sm:mt-12 lg:mt-14 pt-6 sm:pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 text-center">
-          {/* Prompt text */}
+        <div className="hww-cta-row mt-10 sm:mt-12 lg:mt-14 pt-6 sm:pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 text-center">
           <span className="font-sans text-[15px] sm:text-[16px] text-white/80 font-normal">
             Ready to take your next step?
           </span>
 
-          {/* Primary CTA Button (Exact site styling: rounded-full pill, brand orange, hover glow) */}
           <Link
             to="/contact"
             className="group relative inline-flex items-center gap-2.5 px-6 sm:px-7 py-3 sm:py-3.5 rounded-full bg-[#FC6603] text-black font-mono text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.16em] shadow-[0_0_24px_rgba(252,102,3,0.35)] hover:bg-white hover:text-black hover:shadow-[0_0_32px_rgba(255,255,255,0.4)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FC6603] focus-visible:ring-offset-2 focus-visible:ring-offset-[#060709]"

@@ -955,3 +955,521 @@ html.lenis, html.lenis body {
   }
 }
 
+/* =========================================================================
+   HOW WE WORK — WAVE ENTRANCE ANIMATION SYSTEM
+   ========================================================================= */
+
+/* =========================================================================
+   HOW WE WORK — SMOOTH WAVE ENTRANCE ANIMATION SYSTEM
+   ========================================================================= */
+
+/* Desktop vertical offset per card */
+@media (min-width: 1024px) {
+  .hww-card-slot-0 { --final-y: 0px; }
+  .hww-card-slot-1 { --final-y: 32px; }
+  .hww-card-slot-2 { --final-y: 8px; }
+  .hww-card-slot-3 { --final-y: 36px; }
+}
+
+@media (max-width: 1023px) {
+  .hww-card-slot { --final-y: 0px; }
+}
+
+/* Base card slot resting transform */
+.hww-card-slot {
+  transform: translate3d(0, var(--final-y, 0px), 0);
+  transform-origin: center;
+}
+
+/* Base state when JS initializes animation readiness (applied only BEFORE entering view) */
+.hww-anim-ready:not(.hww-in-view) .hww-eyebrow {
+  opacity: 0;
+  letter-spacing: 0.32em;
+}
+
+.hww-anim-ready:not(.hww-in-view) .hww-heading-line {
+  display: block;
+  transform: translate3d(0, 105%, 0);
+  will-change: transform;
+}
+
+.hww-anim-ready:not(.hww-in-view) .hww-subtext {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+  will-change: transform, opacity;
+}
+
+.hww-anim-ready:not(.hww-in-view) .hww-wave-path {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  will-change: stroke-dashoffset;
+}
+
+.hww-anim-ready:not(.hww-in-view) .hww-wave-path-mobile {
+  transform: scaleY(0);
+  transform-origin: top;
+  will-change: transform;
+}
+
+.hww-anim-ready:not(.hww-in-view) .hww-node-dot {
+  transform: scale(0);
+  opacity: 0;
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+.hww-anim-ready:not(.hww-in-view) .hww-card-slot {
+  opacity: 0;
+  transform: translate3d(0, 80px, 0) scale(0.95);
+  filter: blur(6px);
+  will-change: transform, opacity, filter;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.hww-anim-ready:not(.hww-in-view) .hww-inner-icon {
+  opacity: 0;
+  transform: scale(0.6);
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+.hww-anim-ready:not(.hww-in-view) .hww-inner-header {
+  opacity: 0;
+  transform: translate3d(0, 14px, 0);
+  will-change: transform, opacity;
+}
+
+.hww-anim-ready:not(.hww-in-view) .hww-inner-desc {
+  opacity: 0;
+  transform: translate3d(0, 10px, 0);
+  will-change: transform, opacity;
+}
+
+.hww-anim-ready:not(.hww-in-view) .hww-inner-divider {
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  will-change: transform, opacity;
+}
+
+.hww-anim-ready:not(.hww-in-view) .hww-inner-label {
+  opacity: 0;
+  transform: translate3d(0, 6px, 0);
+  will-change: transform, opacity;
+}
+
+.hww-anim-ready:not(.hww-in-view) .hww-cta-row {
+  opacity: 0;
+  transform: translate3d(0, 16px, 0);
+  will-change: transform, opacity;
+}
+
+/* =========================================================================
+   TRIGGERED ENTRANCE TIMELINE (when .hww-in-view is applied)
+   Total duration ~1.9s with exact requested staggered orchestration
+   ========================================================================= */
+
+/* 1. 0ms: Eyebrow // HOW WE WORK */
+.hww-in-view .hww-eyebrow {
+  animation: hww-eyebrow-reveal 600ms cubic-bezier(0.16, 1, 0.3, 1) 0ms both;
+}
+
+@keyframes hww-eyebrow-reveal {
+  0% {
+    opacity: 0;
+    letter-spacing: 0.32em;
+  }
+  100% {
+    opacity: 1;
+    letter-spacing: 0.2em;
+  }
+}
+
+/* 2. 0-600ms: Heading lines reveal upward from clip mask */
+.hww-in-view .hww-line-1 {
+  animation: hww-line-reveal 600ms cubic-bezier(0.16, 1, 0.3, 1) 0ms both;
+}
+
+.hww-in-view .hww-line-2 {
+  animation: hww-line-reveal 600ms cubic-bezier(0.16, 1, 0.3, 1) 120ms both;
+}
+
+@keyframes hww-line-reveal {
+  0% {
+    transform: translate3d(0, 105%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* 3. 200ms: Subtext fades up 16px */
+.hww-in-view .hww-subtext {
+  animation: hww-subtext-reveal 650ms cubic-bezier(0.16, 1, 0.3, 1) 200ms both;
+}
+
+@keyframes hww-subtext-reveal {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* 4. 300ms: Orange wavy line draws in left-to-right (1300ms duration) */
+.hww-in-view .hww-wave-path {
+  stroke-dasharray: 1000;
+  animation: hww-draw-wave 1300ms cubic-bezier(0.16, 1, 0.3, 1) 300ms both;
+}
+
+@keyframes hww-draw-wave {
+  0% {
+    stroke-dashoffset: 1000;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Mobile vertical connector draw */
+.hww-in-view .hww-wave-path-mobile {
+  animation: hww-draw-wave-mobile 1000ms cubic-bezier(0.16, 1, 0.3, 1) 300ms both;
+}
+
+@keyframes hww-draw-wave-mobile {
+  0% {
+    transform: scaleY(0);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+/* Sequential node dots popping as line reaches them */
+.hww-in-view .hww-node-dot-0 { animation: hww-node-pop 400ms cubic-bezier(0.16, 1, 0.3, 1) 380ms both; }
+.hww-in-view .hww-node-dot-1 { animation: hww-node-pop 400ms cubic-bezier(0.16, 1, 0.3, 1) 480ms both; }
+.hww-in-view .hww-node-dot-2 { animation: hww-node-pop 400ms cubic-bezier(0.16, 1, 0.3, 1) 560ms both; }
+.hww-in-view .hww-node-dot-3 { animation: hww-node-pop 400ms cubic-bezier(0.16, 1, 0.3, 1) 680ms both; }
+.hww-in-view .hww-node-dot-4 { animation: hww-node-pop 400ms cubic-bezier(0.16, 1, 0.3, 1) 740ms both; }
+.hww-in-view .hww-node-dot-5 { animation: hww-node-pop 400ms cubic-bezier(0.16, 1, 0.3, 1) 840ms both; }
+.hww-in-view .hww-node-dot-6 { animation: hww-node-pop 400ms cubic-bezier(0.16, 1, 0.3, 1) 900ms both; }
+.hww-in-view .hww-node-dot-7 { animation: hww-node-pop 400ms cubic-bezier(0.16, 1, 0.3, 1) 1050ms both; }
+
+@keyframes hww-node-pop {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* 5. Card Wave Motion: Keyframes exactly as specified */
+@keyframes hww-card-wave-odd {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 80px, 0) scale(0.95) rotate(-1deg);
+    filter: blur(6px);
+  }
+  55% {
+    opacity: 1;
+    filter: blur(0px);
+  }
+  65% {
+    transform: translate3d(0, calc(var(--final-y, 0px) - 12px), 0) scale(1.01) rotate(0.5deg);
+  }
+  82% {
+    transform: translate3d(0, calc(var(--final-y, 0px) + 3px), 0) scale(1) rotate(0deg);
+  }
+  100% {
+    transform: translate3d(0, var(--final-y, 0px), 0) scale(1) rotate(0deg);
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
+
+@keyframes hww-card-wave-even {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 80px, 0) scale(0.95) rotate(1deg);
+    filter: blur(6px);
+  }
+  55% {
+    opacity: 1;
+    filter: blur(0px);
+  }
+  65% {
+    transform: translate3d(0, calc(var(--final-y, 0px) - 12px), 0) scale(1.01) rotate(-0.5deg);
+  }
+  82% {
+    transform: translate3d(0, calc(var(--final-y, 0px) + 3px), 0) scale(1) rotate(0deg);
+  }
+  100% {
+    transform: translate3d(0, var(--final-y, 0px), 0) scale(1) rotate(0deg);
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
+
+/* Mobile Wave Motion (<768px): travel 40px, duration 850ms, stagger 100ms */
+@keyframes hww-card-wave-mobile {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 40px, 0) scale(0.96);
+    filter: blur(4px);
+  }
+  55% {
+    opacity: 1;
+    filter: blur(0px);
+  }
+  65% {
+    transform: translate3d(0, -6px, 0) scale(1.005);
+  }
+  82% {
+    transform: translate3d(0, 2px, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
+
+/* Card Slot Stagger Delays on Desktop (>=768px): 400ms, 550ms, 700ms, 850ms */
+@media (min-width: 768px) {
+  .hww-in-view .hww-card-slot-0 {
+    animation: hww-card-wave-odd 1100ms cubic-bezier(0.16, 1, 0.3, 1) 400ms both;
+  }
+  .hww-in-view .hww-card-slot-1 {
+    animation: hww-card-wave-even 1100ms cubic-bezier(0.16, 1, 0.3, 1) 550ms both;
+  }
+  .hww-in-view .hww-card-slot-2 {
+    animation: hww-card-wave-odd 1100ms cubic-bezier(0.16, 1, 0.3, 1) 700ms both;
+  }
+  .hww-in-view .hww-card-slot-3 {
+    animation: hww-card-wave-even 1100ms cubic-bezier(0.16, 1, 0.3, 1) 850ms both;
+  }
+}
+
+/* Card Slot Stagger Delays on Mobile (<768px): 400ms, 500ms, 600ms, 700ms */
+@media (max-width: 767px) {
+  .hww-in-view .hww-card-slot-0 {
+    animation: hww-card-wave-mobile 850ms cubic-bezier(0.16, 1, 0.3, 1) 400ms both;
+  }
+  .hww-in-view .hww-card-slot-1 {
+    animation: hww-card-wave-mobile 850ms cubic-bezier(0.16, 1, 0.3, 1) 500ms both;
+  }
+  .hww-in-view .hww-card-slot-2 {
+    animation: hww-card-wave-mobile 850ms cubic-bezier(0.16, 1, 0.3, 1) 600ms both;
+  }
+  .hww-in-view .hww-card-slot-3 {
+    animation: hww-card-wave-mobile 850ms cubic-bezier(0.16, 1, 0.3, 1) 700ms both;
+  }
+}
+
+/* Card Landing Brief Orange Border Glow (isolated overlay, fades over 800ms) */
+.hww-card-glow-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1.5px solid #FC6603;
+  box-shadow: 0 0 28px rgba(252, 102, 3, 0.45);
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes hww-glow-pulse {
+  0% {
+    opacity: 0;
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (min-width: 768px) {
+  .hww-in-view .hww-card-slot-0 .hww-card-glow-overlay {
+    animation: hww-glow-pulse 800ms cubic-bezier(0.16, 1, 0.3, 1) 1300ms both;
+  }
+  .hww-in-view .hww-card-slot-1 .hww-card-glow-overlay {
+    animation: hww-glow-pulse 800ms cubic-bezier(0.16, 1, 0.3, 1) 1450ms both;
+  }
+  .hww-in-view .hww-card-slot-2 .hww-card-glow-overlay {
+    animation: hww-glow-pulse 800ms cubic-bezier(0.16, 1, 0.3, 1) 1600ms both;
+  }
+  .hww-in-view .hww-card-slot-3 .hww-card-glow-overlay {
+    animation: hww-glow-pulse 800ms cubic-bezier(0.16, 1, 0.3, 1) 1750ms both;
+  }
+}
+
+@media (max-width: 767px) {
+  .hww-in-view .hww-card-slot-0 .hww-card-glow-overlay {
+    animation: hww-glow-pulse 800ms cubic-bezier(0.16, 1, 0.3, 1) 1000ms both;
+  }
+  .hww-in-view .hww-card-slot-1 .hww-card-glow-overlay {
+    animation: hww-glow-pulse 800ms cubic-bezier(0.16, 1, 0.3, 1) 1100ms both;
+  }
+  .hww-in-view .hww-card-slot-2 .hww-card-glow-overlay {
+    animation: hww-glow-pulse 800ms cubic-bezier(0.16, 1, 0.3, 1) 1200ms both;
+  }
+  .hww-in-view .hww-card-slot-3 .hww-card-glow-overlay {
+    animation: hww-glow-pulse 800ms cubic-bezier(0.16, 1, 0.3, 1) 1300ms both;
+  }
+}
+
+/* 6. Inner Content Stagger (starts 200ms after each card starts) */
+@keyframes hww-icon-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  65% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes hww-header-reveal {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes hww-desc-reveal {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes hww-divider-reveal {
+  0% {
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes hww-label-reveal {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 6px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Card 01 Inner Stagger (Desktop: Card starts 400ms -> inner starts 600ms) */
+.hww-in-view .hww-card-slot-0 .hww-inner-icon    { animation: hww-icon-pop 500ms cubic-bezier(0.16, 1, 0.3, 1) 600ms both; }
+.hww-in-view .hww-card-slot-0 .hww-inner-header  { animation: hww-header-reveal 500ms cubic-bezier(0.16, 1, 0.3, 1) 600ms both; }
+.hww-in-view .hww-card-slot-0 .hww-inner-desc    { animation: hww-desc-reveal 500ms cubic-bezier(0.16, 1, 0.3, 1) 680ms both; }
+.hww-in-view .hww-card-slot-0 .hww-inner-divider { animation: hww-divider-reveal 600ms cubic-bezier(0.16, 1, 0.3, 1) 680ms both; }
+.hww-in-view .hww-card-slot-0 .hww-inner-label   { animation: hww-label-reveal 500ms cubic-bezier(0.16, 1, 0.3, 1) 800ms both; }
+
+/* Card 02 Inner Stagger (Desktop: Card starts 550ms -> inner starts 750ms) */
+.hww-in-view .hww-card-slot-1 .hww-inner-icon    { animation: hww-icon-pop 500ms cubic-bezier(0.16, 1, 0.3, 1) 750ms both; }
+.hww-in-view .hww-card-slot-1 .hww-inner-header  { animation: hww-header-reveal 500ms cubic-bezier(0.16, 1, 0.3, 1) 750ms both; }
+.hww-in-view .hww-card-slot-1 .hww-inner-desc    { animation: hww-desc-reveal 500ms cubic-bezier(0.16, 1, 0.3, 1) 830ms both; }
+.hww-in-view .hww-card-slot-1 .hww-inner-divider { animation: hww-divider-reveal 600ms cubic-bezier(0.16, 1, 0.3, 1) 830ms both; }
+.hww-in-view .hww-card-slot-1 .hww-inner-label   { animation: hww-label-reveal 500ms cubic-bezier(0.16, 1, 0.3, 1) 950ms both; }
+
+/* Card 03 Inner Stagger (Desktop: Card starts 700ms -> inner starts 900ms) */
+.hww-in-view .hww-card-slot-2 .hww-inner-icon    { animation: hww-icon-pop 500ms cubic-bezier(0.16, 1, 0.3, 1) 900ms both; }
+.hww-in-view .hww-card-slot-2 .hww-inner-header  { animation: hww-header-reveal 500ms cubic-bezier(0.16, 1, 0.3, 1) 900ms both; }
+.hww-in-view .hww-card-slot-2 .hww-inner-desc    { animation: hww-desc-reveal 500ms cubic-bezier(0.16, 1, 0.3, 1) 980ms both; }
+.hww-in-view .hww-card-slot-2 .hww-inner-divider { animation: hww-divider-reveal 600ms cubic-bezier(0.16, 1, 0.3, 1) 980ms both; }
+.hww-in-view .hww-card-slot-2 .hww-inner-label   { animation: hww-label-reveal 500ms cubic-bezier(0.16, 1, 0.3, 1) 1100ms both; }
+
+/* Card 04 Inner Stagger (Desktop: Card starts 850ms -> inner starts 1050ms) */
+.hww-in-view .hww-card-slot-3 .hww-inner-icon    { animation: hww-icon-pop 500ms cubic-bezier(0.16, 1, 0.3, 1) 1050ms both; }
+.hww-in-view .hww-card-slot-3 .hww-inner-header  { animation: hww-header-reveal 500ms cubic-bezier(0.16, 1, 0.3, 1) 1050ms both; }
+.hww-in-view .hww-card-slot-3 .hww-inner-desc    { animation: hww-desc-reveal 500ms cubic-bezier(0.16, 1, 0.3, 1) 1130ms both; }
+.hww-in-view .hww-card-slot-3 .hww-inner-divider { animation: hww-divider-reveal 600ms cubic-bezier(0.16, 1, 0.3, 1) 1130ms both; }
+.hww-in-view .hww-card-slot-3 .hww-inner-label   { animation: hww-label-reveal 500ms cubic-bezier(0.16, 1, 0.3, 1) 1250ms both; }
+
+/* 7. 1450ms: Bottom CTA Row */
+.hww-in-view .hww-cta-row {
+  animation: hww-cta-reveal 600ms cubic-bezier(0.16, 1, 0.3, 1) 1450ms both;
+}
+
+@keyframes hww-cta-reveal {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 16px, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Hover separation: inner card hover must not affect slot transform */
+.hww-card-inner {
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.28s ease,
+              box-shadow 0.28s ease;
+}
+
+/* Release will-change after wave entrance animation settles */
+.hww-settled .hww-card-slot,
+.hww-settled .hww-heading-line,
+.hww-settled .hww-subtext,
+.hww-settled .hww-wave-path,
+.hww-settled .hww-wave-path-mobile,
+.hww-settled .hww-node-dot,
+.hww-settled .hww-inner-icon,
+.hww-settled .hww-inner-header,
+.hww-settled .hww-inner-desc,
+.hww-settled .hww-inner-divider,
+.hww-settled .hww-inner-label,
+.hww-settled .hww-cta-row {
+  will-change: auto !important;
+}
+
+/* Reduced Motion Fallback */
+@media (prefers-reduced-motion: reduce) {
+  .hww-anim-ready .hww-eyebrow,
+  .hww-anim-ready .hww-heading-line,
+  .hww-anim-ready .hww-subtext,
+  .hww-anim-ready .hww-wave-path,
+  .hww-anim-ready .hww-wave-path-mobile,
+  .hww-anim-ready .hww-node-dot,
+  .hww-anim-ready .hww-card-slot,
+  .hww-anim-ready .hww-inner-icon,
+  .hww-anim-ready .hww-inner-header,
+  .hww-anim-ready .hww-inner-desc,
+  .hww-anim-ready .hww-inner-divider,
+  .hww-anim-ready .hww-inner-label,
+  .hww-anim-ready .hww-cta-row {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: translate3d(0, var(--final-y, 0px), 0) scale(1) rotate(0deg) !important;
+    filter: none !important;
+    stroke-dashoffset: 0 !important;
+    will-change: auto !important;
+  }
+}
+
+

@@ -37,11 +37,9 @@ export const HomePage: React.FC = () => {
       {/* 07. SELECTED WORK: Asymmetric 2-column parallax with video hover preview */}
       <SelectedWorkSection />
 
-      {/* 07. SERVICES: Interactive 3D category blocks with sub-service chips */}
-      <ServicesListSection />
 
       {/* 08. THE NETWORK: 3D Constellation Process Section (4 Glowing Nodes) */}
-      <NetworkProcessSection />
+      {/*<NetworkProcessSection />*/}
 
       {/* 09. STATS: Results, not fluff (Count-up numbers + witty one-liners) */}
       <StatsSection />

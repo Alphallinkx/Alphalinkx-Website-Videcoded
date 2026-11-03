@@ -30,7 +30,7 @@ const SHOWCASE_PROJECTS: ShowcaseProject[] = [
     id: 'explore-outdoor-travel',
     slug: 'explore-outdoor-travel',
     badge: 'CONCEPT STUDY',
-    category: 'Development',
+    category: 'Website Design & Development',
     filterCategory: 'Websites',
     title: 'A better way to explore',
     client: 'Wanderlust Alpine Escapes',
@@ -55,7 +55,7 @@ const SHOWCASE_PROJECTS: ShowcaseProject[] = [
     id: 'radiance-skincare',
     slug: 'radiance-skincare-d2c',
     badge: 'CONCEPT STUDY',
-    category: 'Branding',
+    category: 'Social Marketing · Paid Ads',
     filterCategory: 'Social Marketing',
     title: 'Designed to start conversations',
     client: 'Aura Botanical Skincare',
@@ -130,7 +130,7 @@ const SHOWCASE_PROJECTS: ShowcaseProject[] = [
     id: 'lumina-luxury-ads',
     slug: 'lumina-haute-horlogerie',
     badge: 'CASE STUDY',
-    category: 'Performance Ads',
+    category: 'Meta & Google Ads',
     filterCategory: 'Meta & Google Ads',
     title: 'High-intent paid performance',
     client: 'Lumina Horology Group',
@@ -155,7 +155,7 @@ const SHOWCASE_PROJECTS: ShowcaseProject[] = [
     id: 'volt-fintech',
     slug: 'volt-cross-border-pay',
     badge: 'CASE STUDY',
-    category: 'Scaling',
+    category: 'Performance Marketing',
     filterCategory: 'Performance Marketing',
     title: 'Compounding multi-channel growth',
     client: 'Volt Financial Network',
@@ -180,7 +180,7 @@ const SHOWCASE_PROJECTS: ShowcaseProject[] = [
     id: 'vanguard-quant',
     slug: 'vanguard-quant-platform',
     badge: 'CASE STUDY',
-    category: 'Development',
+    category: 'Websites & Platforms',
     filterCategory: 'Websites',
     title: 'Real-time financial telemetry portal',
     client: 'Vanguard Alpha Capital',
@@ -205,7 +205,7 @@ const SHOWCASE_PROJECTS: ShowcaseProject[] = [
     id: 'omniflow-ai',
     slug: 'omniflow-enterprise-ai',
     badge: 'CASE STUDY',
-    category: 'AI & Data',
+    category: 'AI & Autonomous Agents',
     filterCategory: 'AI Automation',
     title: 'Full-stack intelligence engines',
     client: 'Omniflow Dynamics',
@@ -230,7 +230,7 @@ const SHOWCASE_PROJECTS: ShowcaseProject[] = [
     id: 'aura-creative',
     slug: 'aura-creative-studio',
     badge: 'CASE STUDY',
-    category: 'Branding',
+    category: 'Social Marketing & Creative',
     filterCategory: 'Social Marketing',
     title: 'Organic viral reach engineered',
     client: 'Aura Media Global',
@@ -352,15 +352,26 @@ export const SelectedWorkSection: React.FC = () => {
             </h2>
           </div>
 
-          {/* Standard Site Brand CTA Button: VIEW ALL WORK ↗ */}
+          {/* Standard Site Brand CTA Button: VIEW ALL WORK ( ↗ ) */}
           <Link
             to="/projects"
-            className="group relative inline-flex items-center gap-2.5 px-6 sm:px-7 py-3 sm:py-3.5 rounded-full bg-[#FC6603] text-black font-mono text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.16em] shadow-[0_0_24px_rgba(252,102,3,0.35)] hover:bg-white hover:text-black hover:shadow-[0_0_32px_rgba(255,255,255,0.4)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FC6603] focus-visible:ring-offset-2 focus-visible:ring-offset-[#060709] shrink-0 self-start sm:self-auto"
+            className="group relative inline-flex items-center gap-3 pl-6 pr-2 sm:pl-7 sm:pr-2.5 py-2 sm:py-2.5 rounded-full bg-[#FC6603] text-white font-mono text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.16em] shadow-[0_0_24px_rgba(252,102,3,0.35)] hover:bg-[#ff5500] hover:shadow-[0_0_32px_rgba(252,102,3,0.55)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FC6603] focus-visible:ring-offset-2 focus-visible:ring-offset-[#060709] shrink-0 self-start sm:self-auto"
             data-cursor="VIEW ALL"
           >
             <span>VIEW ALL WORK</span>
-            <span className="text-[12px] sm:text-[13px] font-bold transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-              ↗
+            <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white flex items-center justify-center text-black shrink-0 transition-transform duration-300 group-hover:rotate-45 shadow-sm">
+              <svg
+                className="w-3.5 h-3.5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="7" y1="17" x2="17" y2="7"></line>
+                <polyline points="7 7 17 7 17 17"></polyline>
+              </svg>
             </span>
           </Link>
         </div>
@@ -392,10 +403,13 @@ export const SelectedWorkSection: React.FC = () => {
       <div className="w-full px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-14 relative z-10 mb-8 sm:mb-10">
         <div className="cv-proj-v1">
           <div className="tm-sc-projects tm-sc-projects-grid border-radius-around-box">
-            <div className="isotope-layout">
+            <div className="isotope-layout grid-3 gutter-10 clearfix">
               <div className="isotope-layout-inner">
                 {visibleProjects.map((project) => (
-                  <div key={project.id} className="isotope-item projct-order">
+                  <div
+                    key={project.id}
+                    className={`isotope-item projct-order ${project.filterCategory.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
+                  >
                     <div className="project-item projects-current-theme1">
                       <div
                         onClick={() => handleProjectClick(project)}
@@ -407,15 +421,19 @@ export const SelectedWorkSection: React.FC = () => {
                           <img
                             loading="lazy"
                             decoding="async"
+                            width={550}
+                            height={550}
                             src={project.image}
                             alt={project.title}
+                            className="img-fullwidth wp-post-image"
                           />
                         </div>
 
                         {/* Center Hover Action Arrow Icon */}
-                        <button
-                          type="button"
+                        <a
+                          href={`#${project.slug}`}
                           onClick={(e) => {
+                            e.preventDefault();
                             e.stopPropagation();
                             handleProjectClick(project);
                           }}
@@ -433,7 +451,7 @@ export const SelectedWorkSection: React.FC = () => {
                             <line x1="5" y1="12" x2="19" y2="12"></line>
                             <polyline points="12 5 19 12 12 19"></polyline>
                           </svg>
-                        </button>
+                        </a>
 
                         {/* Bottom Content Area with Category & Title Underline */}
                         <div className="content">

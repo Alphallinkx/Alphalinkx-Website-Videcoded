@@ -472,11 +472,11 @@ export const HowWeWorkSection: React.FC = () => {
 
       <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 xl:px-10 w-full">
         {/* =========================================================================
-            SECTION HEADER: HEADINGS ON LEFT, CTA ON RIGHT
+            SECTION HEADER: HEADINGS ON LEFT, CTA ON RIGHT (MIDDLE ALIGNED)
            ========================================================================= */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6 sm:gap-8 mb-10 sm:mb-12 lg:mb-14">
-          {/* LEFT SIDE: Section Eyebrow, Heading, and Subtext */}
-          <div className="flex flex-col items-start text-left max-w-xl">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 sm:gap-8 mb-10 sm:mb-12 lg:mb-14">
+          {/* LEFT SIDE: Section Eyebrow, Heading, and Single-Line Subtext */}
+          <div className="flex flex-col items-start text-left max-w-2xl">
             {/* Eyebrow: // HOW WE WORK */}
             <div className="hww-eyebrow font-mono text-[11px] sm:text-[12px] font-semibold text-[#FC6603] uppercase tracking-[0.2em] mb-2 sm:mb-2.5 flex items-center gap-2">
               <span className="font-bold">//</span>
@@ -498,14 +498,14 @@ export const HowWeWorkSection: React.FC = () => {
               </span>
             </h2>
 
-            {/* Supporting Text */}
-            <p className="hww-subtext font-sans text-[15px] sm:text-[16px] text-[#A1A1AA] leading-relaxed mt-2.5 max-w-md">
+            {/* Supporting Text (Strictly Single Line on Desktop) */}
+            <p className="hww-subtext font-sans text-[15px] sm:text-[16px] text-[#A1A1AA] leading-relaxed mt-2.5 whitespace-normal sm:whitespace-nowrap">
               From understanding your business to building what comes next.
             </p>
           </div>
 
-          {/* RIGHT SIDE: Brand CTA Button */}
-          <div className="hww-cta-row flex items-center gap-3 shrink-0 self-start sm:self-end pb-1">
+          {/* RIGHT SIDE: Brand CTA Button (Middle Aligned to Title) */}
+          <div className="hww-cta-row flex items-center gap-3 shrink-0 self-start sm:self-center">
             <Link
               to="/contact"
               className="group relative inline-flex items-center gap-3 pl-6 pr-2 sm:pl-7 sm:pr-2.5 py-2.5 sm:py-3 rounded-full bg-[#FC6603] text-white font-mono text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.16em] shadow-[0_0_24px_rgba(252,102,3,0.35)] hover:bg-[#ff5500] hover:shadow-[0_0_32px_rgba(252,102,3,0.55)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FC6603] focus-visible:ring-offset-2 focus-visible:ring-offset-[#060709]"

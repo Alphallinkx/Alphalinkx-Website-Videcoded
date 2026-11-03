@@ -524,7 +524,7 @@ const DiagnosisCard: React.FC<DiagnosisCardProps> = ({ item, index }) => {
             </span>
 
             {/* Authoritative Problem Statement Title (Bricolage Grotesque) */}
-            <h3 className="font-display font-bold text-[17px] sm:text-[18px] lg:text-[19px] xl:text-[20px] 2xl:text-[21px] text-white tracking-[-0.02em] leading-[1.24] group-hover:text-white transition-colors duration-300">
+            <h3 className="font-display font-bold text-[22px] text-white tracking-[-0.02em] leading-[1.2] group-hover:text-white transition-colors duration-300">
               {item.title}
             </h3>
           </div>
@@ -538,7 +538,7 @@ const DiagnosisCard: React.FC<DiagnosisCardProps> = ({ item, index }) => {
 
           {/* Supporting Description Text (Schibsted Grotesk) */}
           <p
-            className="font-sans text-[12.5px] sm:text-[13px] xl:text-[12.5px] 2xl:text-[13.5px] text-[#A1A1AA] group-hover:text-[#D4D4D8] leading-[1.55] font-normal transition-colors duration-300"
+            className="font-sans text-[15px] text-[#A1A1AA] group-hover:text-[#D4D4D8] leading-[1.55] font-normal transition-colors duration-300"
             style={{ transform: 'translateZ(12px)' }}
           >
             {item.description}
@@ -593,14 +593,14 @@ export const DiagnosisSection: React.FC = () => {
             {/* Heading (Bricolage Grotesque) with "chain" moved to line 2 before "breaking?" */}
             <h2
               id="diagnosis-heading"
-              className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[52px] text-white tracking-[-0.03em] leading-[1.08]"
+              className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] text-white tracking-[-0.03em] leading-[1.08]"
             >
               Where is your growth <br className="hidden sm:inline" />
               chain <span className="text-[#FC6603]">breaking?</span>
             </h2>
 
             {/* Supporting Text (Schibsted Grotesk) in a single continuous line on desktop with link */}
-            <p className="font-sans text-[14px] sm:text-[15px] md:text-[16px] text-[#A1A1AA] leading-[1.6] mt-3 sm:mt-4 font-normal whitespace-normal xl:whitespace-nowrap">
+            <p className="font-sans text-[16px] text-[#A1A1AA] leading-[1.6] mt-3 sm:mt-4 font-normal whitespace-normal xl:whitespace-nowrap">
               Recognise any of these challenges? Here’s where growth can get held back.{' '}
               <Link
                 to="/services"

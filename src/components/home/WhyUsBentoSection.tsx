@@ -9,10 +9,10 @@ export const WhyUsBentoSection: React.FC = () => {
           <span className="text-xs font-mono font-semibold tracking-widest text-[#FC6603] uppercase">
             WHY PARTNER WITH US
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold text-white tracking-tight mt-3">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-display font-extrabold text-white tracking-tight mt-3">
             BUILT FOR IMPACT. BACKED BY RIGOR.
           </h2>
-          <p className="text-base text-zinc-400 mt-4 leading-relaxed">
+          <p className="text-[16px] text-zinc-400 mt-4 leading-relaxed">
             We reject the slow agency bureaucracy. Here is how our engineering-first model drives tangible competitive advantages.
           </p>
         </div>

@@ -194,11 +194,13 @@ export const Navbar: React.FC = () => {
           <div className="flex items-center gap-4">
             <Link
               to="/contact"
-              className="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-white bg-gradient-to-r from-[#FF5A1F] to-[#FF8A3D] hover:shadow-[0_0_25px_rgba(255,90,31,0.45)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
+              className="group relative hidden sm:inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#FC6603] text-black font-mono text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.16em] shadow-[0_0_24px_rgba(252,102,3,0.35)] hover:bg-white hover:text-black hover:shadow-[0_0_32px_rgba(255,255,255,0.4)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FC6603]"
               data-cursor="CONNECT"
             >
               <span>Let's Talk</span>
-              <span className="ml-2">→</span>
+              <span className="text-[12px] sm:text-[13px] font-bold transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                ↗
+              </span>
             </Link>
 
             {/* Mobile hamburger */}
@@ -369,9 +371,13 @@ export const Navbar: React.FC = () => {
             <Link
               to="/contact"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="w-full py-4 text-center rounded-xl bg-gradient-to-r from-[#FF5A1F] to-[#FF8A3D] font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-black"
+              className="group relative w-full py-3.5 flex items-center justify-center gap-2 rounded-full bg-[#FC6603] text-black font-mono text-[12px] font-bold uppercase tracking-[0.16em] shadow-[0_0_24px_rgba(252,102,3,0.35)] hover:bg-white hover:text-black hover:shadow-[0_0_32px_rgba(255,255,255,0.4)] transition-all duration-300 active:scale-[0.98]"
+              data-cursor="CONNECT"
             >
-              Start a Project →
+              <span>Let's Talk</span>
+              <span className="text-[13px] font-bold transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+                ↗
+              </span>
             </Link>
             <div className="flex items-center justify-between font-mono text-[12px] font-medium text-[#8A8A8E] tracking-[0.18em]">
               <span>{BRAND.email}</span>

@@ -64,10 +64,10 @@ export const ProcessTimelineSection: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-3xl mb-16">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold text-white tracking-tight leading-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-display font-extrabold text-white tracking-tight leading-tight">
             A PROVEN 4-STAGE METHODOLOGY.
           </h2>
-          <p className="text-base text-zinc-400 mt-4 leading-relaxed">
+          <p className="text-[16px] text-zinc-400 mt-4 leading-relaxed">
             From initial discovery to mission-critical deployment, our phased delivery ensures zero surprises, rapid velocity, and measurable excellence.
           </p>
         </div>

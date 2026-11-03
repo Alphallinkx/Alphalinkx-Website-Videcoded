@@ -22,7 +22,7 @@ export const SelectedWorkSection: React.FC = () => {
             <span className="font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-[#FF5A1F]">
               // 04 SELECTED WORK
             </span>
-            <h2 className="font-display font-extrabold text-3xl sm:text-5xl md:text-6xl text-white tracking-[-0.02em] leading-[1.1] mt-2">
+            <h2 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] text-white tracking-[-0.02em] leading-[1.1] mt-2">
               Engineered case studies.
             </h2>
           </div>

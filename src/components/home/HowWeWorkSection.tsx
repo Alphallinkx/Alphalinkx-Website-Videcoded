@@ -24,13 +24,30 @@ const PROCESS_STEPS: ProcessStep[] = [
         viewBox="0 0 44 44"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="w-10 h-10"
+        className="w-10 h-10 text-white/50 group-hover:text-white/90 transition-colors duration-300 shrink-0"
         aria-hidden="true"
       >
-        <circle cx="20" cy="20" r="16" stroke="rgba(255,255,255,0.08)" strokeWidth="1" strokeDasharray="3 3" />
+        {/* Radar coordinate ring */}
+        <circle cx="20" cy="20" r="16" stroke="rgba(255,255,255,0.12)" strokeWidth="1" strokeDasharray="3 3" />
+        <circle cx="18" cy="18" r="12" stroke="rgba(255,255,255,0.08)" strokeWidth="0.75" />
+
+        {/* Continuous 360° Rotating Radar Sweep Line */}
+        <g className="anim-radar-sweep origin-[18px_18px]">
+          <line x1="18" y1="18" x2="31" y2="18" stroke="#FC6603" strokeWidth="1.5" />
+          <polygon points="18,18 31,13 31,18" fill="rgba(252,102,3,0.22)" />
+        </g>
+
+        {/* Pulsing Sonar Ping Rings */}
+        <circle cx="18" cy="18" r="3" className="stroke-[#FC6603] fill-none anim-sonar-ping" />
+
+        {/* Magnifying Lens Outer Frame */}
         <circle cx="18" cy="18" r="8" stroke="#F4F4F5" strokeWidth="2" strokeLinecap="round" />
+
+        {/* Precision Lens Handle */}
         <path d="M23.5 23.5L30 30" stroke="#FC6603" strokeWidth="2.2" strokeLinecap="round" />
-        <circle cx="26" cy="12" r="2.5" fill="#FC6603" />
+
+        {/* Satellite Discovery Beacon (pulsing brand orange) */}
+        <circle cx="26" cy="12" r="2.5" className="fill-[#FC6603] anim-beacon-pulse origin-[26px_12px]" />
       </svg>
     ),
   },
@@ -39,26 +56,61 @@ const PROCESS_STEPS: ProcessStep[] = [
     title: 'Strategize & Engineer',
     description: 'Shape the plan, structure and campaigns around your goals.',
     bottomLabel: 'STRATEGY & BLUEPRINT',
-    isDefaultActive: true, // Card 02 has the signature glowing orange border from mockup
     renderIcon: () => (
       <svg
         viewBox="0 0 44 44"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="w-10 h-10"
+        className="w-10 h-10 text-white/50 group-hover:text-white/90 transition-colors duration-300 shrink-0"
         aria-hidden="true"
       >
+        {/* Rotating subtle orbital coordinate ring */}
+        <circle
+          cx="20"
+          cy="20"
+          r="14"
+          stroke="rgba(252,102,3,0.2)"
+          strokeWidth="1"
+          strokeDasharray="3 4"
+          className="anim-reticle-rotate origin-[20px_20px]"
+        />
+
+        {/* Connecting energy pipelines with continuous flowing dashes */}
         <path
           d="M20 20L11 11M20 20L29 11M20 20L11 29M20 20L29 29"
-          stroke="rgba(255,255,255,0.3)"
+          stroke="#FC6603"
           strokeWidth="1.5"
           strokeLinecap="round"
+          className="anim-flow-dash"
         />
+
+        {/* Neutral background structural lines */}
+        <path
+          d="M20 20L11 11M20 20L29 11M20 20L11 29M20 20L29 29"
+          stroke="rgba(255,255,255,0.25)"
+          strokeWidth="1.2"
+          strokeLinecap="round"
+        />
+
+        {/* 4 Satellite Planning Nodes */}
         <circle cx="11" cy="11" r="3" fill="#0C0D12" stroke="#F4F4F5" strokeWidth="1.75" />
         <circle cx="29" cy="11" r="3" fill="#0C0D12" stroke="#F4F4F5" strokeWidth="1.75" />
         <circle cx="11" cy="29" r="3" fill="#0C0D12" stroke="#F4F4F5" strokeWidth="1.75" />
         <circle cx="29" cy="29" r="3" fill="#0C0D12" stroke="#F4F4F5" strokeWidth="1.75" />
-        <circle cx="20" cy="20" r="4.5" fill="#FC6603" stroke="#FFFFFF" strokeWidth="1.5" />
+
+        {/* Central pulsing sonar wave */}
+        <circle cx="20" cy="20" r="3.5" className="stroke-[#FC6603] fill-none anim-sonar-ping" />
+
+        {/* Central Engineering Nexus Core in Brand Orange */}
+        <circle
+          cx="20"
+          cy="20"
+          r="4.5"
+          fill="#FC6603"
+          stroke="#FFFFFF"
+          strokeWidth="1.5"
+          className="anim-beacon-pulse origin-[20px_20px]"
+        />
       </svg>
     ),
   },
@@ -72,15 +124,33 @@ const PROCESS_STEPS: ProcessStep[] = [
         viewBox="0 0 44 44"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="w-10 h-10"
+        className="w-10 h-10 text-white/50 group-hover:text-white/90 transition-colors duration-300 shrink-0"
         aria-hidden="true"
       >
+        {/* Code Brackets < and > */}
         <path d="M11 14L5 20L11 26" stroke="#F4F4F5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         <path d="M29 14L35 20L29 26" stroke="#F4F4F5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        <g>
-          <path d="M26 12L14 18.5L19.5 21.5L26 12Z" fill="#FC6603" />
-          <path d="M26 12L21.5 25L19.5 21.5L26 12Z" fill="#E05500" />
-          <path d="M19.5 21.5L21.5 25L22.5 20.5L19.5 21.5Z" fill="#FFA34D" />
+
+        {/* Continuous Flowing Exhaust Propulsion Trail */}
+        <line
+          x1="13"
+          y1="29"
+          x2="19"
+          y2="23"
+          stroke="#FC6603"
+          strokeWidth="1.75"
+          strokeLinecap="round"
+          className="anim-flow-dash"
+        />
+
+        {/* Pulsing thruster glow */}
+        <circle cx="16" cy="25" r="2.5" className="fill-[#FC6603] anim-beacon-pulse origin-[16px_25px]" />
+
+        {/* Floating Launch Rocket in Brand Orange */}
+        <g className="anim-rocket-float">
+          <path d="M27 11L14 18.5L20 22L27 11Z" fill="#FC6603" />
+          <path d="M27 11L22 25.5L20 22L27 11Z" fill="#E05500" />
+          <path d="M20 22L22 25.5L23 21L20 22Z" fill="#FFA34D" />
         </g>
       </svg>
     ),
@@ -90,20 +160,50 @@ const PROCESS_STEPS: ProcessStep[] = [
     title: 'Scale & Compound',
     description: 'Measure what works. Refine, improve and grow.',
     bottomLabel: 'MEASURE & IMPROVE',
+    isDefaultActive: true, // Glow animation stays on the last card 04
     renderIcon: () => (
       <svg
         viewBox="0 0 44 44"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="w-10 h-10"
+        className="w-10 h-10 text-white/50 group-hover:text-white/90 transition-colors duration-300 shrink-0"
         aria-hidden="true"
       >
-        <rect x="8" y="23" width="4" height="9" rx="1" fill="#F4F4F5" />
-        <rect x="15" y="18" width="4" height="14" rx="1" fill="#F4F4F5" />
+        {/* Baseline Floor */}
+        <line x1="6" y1="33" x2="38" y2="33" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
+
+        {/* Analytics Growth Bars */}
+        <rect x="8" y="23" width="4" height="9" rx="1" fill="#F4F4F5" opacity="0.8" />
+        <rect x="15" y="18" width="4" height="14" rx="1" fill="#F4F4F5" opacity="0.9" />
         <rect x="22" y="13" width="4" height="19" rx="1" fill="#F4F4F5" />
-        <rect x="29" y="8" width="4" height="24" rx="1" fill="#FC6603" />
-        <path d="M8 22L15 17L22 12L31 7" stroke="#FC6603" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M27 7H31V11" stroke="#FC6603" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+
+        {/* Dominant Scaled Compound Bar in Brand Orange */}
+        <rect
+          x="29"
+          y="8"
+          width="4"
+          height="24"
+          rx="1"
+          fill="#FC6603"
+          className="anim-beacon-pulse origin-[31px_20px]"
+        />
+
+        {/* Continuous Rising Compound Growth Curve with Flowing Telemetry Dash */}
+        <path
+          d="M8 22L15 17L22 12L31 7"
+          stroke="#FC6603"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="anim-flow-dash"
+        />
+
+        {/* Arrowhead at Apex */}
+        <path d="M26 7H31V12" stroke="#FC6603" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+
+        {/* Peak Apex Milestone Glow Beacon */}
+        <circle cx="31" cy="7" r="2.5" className="fill-[#FC6603] anim-beacon-pulse origin-[31px_7px]" />
+        <circle cx="31" cy="7" r="2.5" className="stroke-[#FC6603] fill-none anim-sonar-ping" />
       </svg>
     ),
   },
@@ -234,12 +334,12 @@ export const HowWeWorkSection: React.FC = () => {
     };
   }, []);
 
-  // Settle animation and release will-change ~2200ms after in-view
+  // Settle animation and release will-change ~2600ms after in-view (synced with Card 04 wave landing)
   useEffect(() => {
     if (isInView && !isSettled) {
       const settleTimer = setTimeout(() => {
         setIsSettled(true);
-      }, 2200);
+      }, 2600);
       return () => clearTimeout(settleTimer);
     }
   }, [isInView, isSettled]);
@@ -273,7 +373,7 @@ export const HowWeWorkSection: React.FC = () => {
           {/* Heading: Four steps. One clear direction. (0-600ms: Reveals upward from mask/clip) */}
           <h2
             id="how-we-work-heading"
-            className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[52px] tracking-[-0.03em] leading-[1.08] text-white"
+            className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-[-0.03em] leading-[1.08] text-white"
           >
             <span className="block overflow-hidden pb-1">
               <span className="hww-heading-line hww-line-1">Four steps.</span>
@@ -286,7 +386,7 @@ export const HowWeWorkSection: React.FC = () => {
           </h2>
 
           {/* Supporting Text (200ms: Fades up 16px) */}
-          <p className="hww-subtext font-sans text-[14px] sm:text-[15.5px] text-[#A1A1AA] leading-relaxed mt-3 max-w-lg">
+          <p className="hww-subtext font-sans text-[16px] text-[#A1A1AA] leading-relaxed mt-3 max-w-lg">
             From understanding your business to building what comes next.
           </p>
         </div>
@@ -468,7 +568,8 @@ export const HowWeWorkSection: React.FC = () => {
           <ol className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 xl:gap-5 relative z-10 list-none p-0 m-0 pl-6 sm:pl-8 md:pl-0">
             {PROCESS_STEPS.map((step, idx) => {
               const isHovered = hoveredCard === idx;
-              const hasOrangeBorder = isHovered || (step.isDefaultActive && hoveredCard === null);
+              // Card 04 only receives permanent active orange border once wave entrance animation settles
+              const hasOrangeBorder = isHovered || (step.isDefaultActive && isSettled && hoveredCard === null);
 
               return (
                 <li
@@ -487,7 +588,7 @@ export const HowWeWorkSection: React.FC = () => {
                         : 'border-white/[0.12] shadow-[0_4px_20px_rgba(0,0,0,0.5)]'
                     }`}
                   >
-                    {/* Brief orange glow pulse overlay as card lands */}
+                    {/* Orange wave glow overlay (pulses across cards and stays on card 04) */}
                     <div
                       aria-hidden="true"
                       className="hww-card-glow-overlay pointer-events-none absolute inset-0 rounded-2xl"
@@ -514,14 +615,14 @@ export const HowWeWorkSection: React.FC = () => {
                       </div>
 
                       {/* Title with reserved height for natural 2-line wrapping */}
-                      <div className="hww-inner-header min-h-[50px] sm:min-h-[54px] flex items-center">
-                        <h3 className="font-display font-bold text-lg sm:text-[20px] xl:text-[21px] text-[#F4F4F5] tracking-[-0.01em] leading-snug">
+                      <div className="hww-inner-header min-h-[58px] sm:min-h-[64px] flex items-center">
+                        <h3 className="font-display font-bold text-[25px] text-[#F4F4F5] tracking-[-0.02em] leading-[1.2]">
                           {step.title}
                         </h3>
                       </div>
 
                       {/* Description (+80ms delayed) */}
-                      <p className="hww-inner-desc font-sans text-[13px] sm:text-[13.5px] text-[#A1A1AA] leading-relaxed mt-2">
+                      <p className="hww-inner-desc font-sans text-[16px] text-[#A1A1AA] leading-relaxed mt-2.5">
                         {step.description}
                       </p>
                     </div>
@@ -542,7 +643,7 @@ export const HowWeWorkSection: React.FC = () => {
         {/* =========================================================================
             BOTTOM CALL-TO-ACTION (1450ms: Fades up last)
            ========================================================================= */}
-        <div className="hww-cta-row mt-10 sm:mt-12 lg:mt-14 pt-6 sm:pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 text-center">
+        <div className="hww-cta-row mt-10 sm:mt-12 lg:mt-14 pt-4 sm:pt-6 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 text-center">
           <span className="font-sans text-[15px] sm:text-[16px] text-white/80 font-normal">
             Ready to take your next step?
           </span>

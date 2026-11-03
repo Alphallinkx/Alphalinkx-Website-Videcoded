@@ -53,10 +53,10 @@ export const ServicesSection: React.FC = () => {
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6 pb-6 border-b border-white/10">
           <div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold text-white tracking-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-display font-extrabold text-white tracking-tight">
               CAPABILITIES & DOMAINS.
             </h2>
-            <p className="text-base text-zinc-400 mt-3 max-w-2xl leading-relaxed">
+            <p className="text-[16px] text-zinc-400 mt-3 max-w-2xl leading-relaxed">
               We engineer specialized digital solutions designed to expand market authority, captivate audiences, and accelerate technical velocity.
             </p>
           </div>

@@ -30,10 +30,10 @@ export const AboutSection: React.FC = () => {
           <span className="text-xs font-mono font-semibold tracking-widest text-[#FC6603] uppercase">
             THE ALPHALINKX FORMULA
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold text-white tracking-tight mt-3 leading-[1.12]">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-display font-extrabold text-white tracking-tight mt-3 leading-[1.12]">
             CONNECTING STRATEGY, CODE AND MEASURABLE GROWTH.
           </h2>
-          <p className="text-base sm:text-lg text-zinc-400 mt-4 leading-relaxed">
+          <p className="text-[16px] text-zinc-400 mt-4 leading-relaxed">
             Most agencies treat design, software engineering, and performance marketing as isolated handoffs. We build them as one synchronized production engine: interfaces that captivate, codebases optimized for sub-second response times, and funnels engineered to convert.
           </p>
         </div>

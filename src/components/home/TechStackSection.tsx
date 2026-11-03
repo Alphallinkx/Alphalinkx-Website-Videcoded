@@ -32,10 +32,10 @@ export const TechStackSection: React.FC = () => {
           <span className="text-xs font-mono font-semibold tracking-widest text-[#FC6603] uppercase">
             TECHNOLOGY & INNOVATION
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-extrabold text-white tracking-tight mt-3">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] font-display font-extrabold text-white tracking-tight mt-3">
             ARCHITECTED FOR SCALE.
           </h2>
-          <p className="text-base text-zinc-400 mt-4 leading-relaxed">
+          <p className="text-[16px] text-zinc-400 mt-4 leading-relaxed">
             We partner with battle-tested open standards and modern frameworks to guarantee security, sub-second speed, and zero platform lock-in.
           </p>
         </div>

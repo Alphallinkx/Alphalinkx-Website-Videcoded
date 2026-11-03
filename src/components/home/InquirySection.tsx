@@ -112,7 +112,7 @@ export const InquirySection: React.FC = () => {
           >
             LET'S LINK UP.
           </h2>
-          <p className="font-sans text-[16px] sm:text-[17px] text-[#C2C2C2] mt-4 max-w-xl mx-auto leading-[1.6]">
+          <p className="font-sans text-[16px] text-[#C2C2C2] mt-4 max-w-xl mx-auto leading-[1.6]">
             Configure your growth parameters below to receive an engineered roadmap from our specialist squad.
           </p>
         </div>

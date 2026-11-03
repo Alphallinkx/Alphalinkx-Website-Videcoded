@@ -326,6 +326,19 @@ html.lenis, html.lenis body {
 .anim-step-5 { animation: beacon-pulse 1.8s ease-in-out infinite 1.6s; transform-origin: 32px 40px; }
 .anim-step-6 { animation: sequencer-tick 2.4s ease-in-out infinite 2.0s; transform-origin: 43px 40px; }
 
+@keyframes rocket-float {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(1.5px, -2.5px);
+  }
+}
+
+.anim-rocket-float {
+  animation: rocket-float 2.2s ease-in-out infinite;
+}
+
 /* ==========================================================================
    THE CHAIN SECTION
    Four links. One strong chain.
@@ -480,7 +493,7 @@ html.lenis, html.lenis body {
 
 .chain-sec .sec-head p {
   color: var(--muted);
-  font-size: clamp(15px, 1.3vw, 18px);
+  font-size: 16px;
   line-height: 1.6;
   margin: 0 auto;
 }
@@ -739,17 +752,17 @@ html.lenis, html.lenis body {
 .link-card h3 {
   font-family: var(--head);
   font-weight: 800;
-  font-size: clamp(30px, 3.4vw, 42px);
+  font-size: 25px;
   text-transform: uppercase;
   margin: 12px 0 14px;
   color: #ffffff;
   letter-spacing: -0.02em;
-  line-height: 1.1;
+  line-height: 1.15;
 }
 
 .link-card .pain {
   color: var(--muted);
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1.6;
 }
 
@@ -1291,6 +1304,18 @@ html.lenis, html.lenis body {
   }
 }
 
+@keyframes hww-glow-stay {
+  0% {
+    opacity: 0;
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 @media (min-width: 768px) {
   .hww-in-view .hww-card-slot-0 .hww-card-glow-overlay {
     animation: hww-glow-pulse 800ms cubic-bezier(0.16, 1, 0.3, 1) 1300ms both;
@@ -1302,7 +1327,7 @@ html.lenis, html.lenis body {
     animation: hww-glow-pulse 800ms cubic-bezier(0.16, 1, 0.3, 1) 1600ms both;
   }
   .hww-in-view .hww-card-slot-3 .hww-card-glow-overlay {
-    animation: hww-glow-pulse 800ms cubic-bezier(0.16, 1, 0.3, 1) 1750ms both;
+    animation: hww-glow-stay 800ms cubic-bezier(0.16, 1, 0.3, 1) 1750ms both;
   }
 }
 
@@ -1317,8 +1342,20 @@ html.lenis, html.lenis body {
     animation: hww-glow-pulse 800ms cubic-bezier(0.16, 1, 0.3, 1) 1200ms both;
   }
   .hww-in-view .hww-card-slot-3 .hww-card-glow-overlay {
-    animation: hww-glow-pulse 800ms cubic-bezier(0.16, 1, 0.3, 1) 1300ms both;
+    animation: hww-glow-stay 800ms cubic-bezier(0.16, 1, 0.3, 1) 1300ms both;
   }
+}
+
+/* Card 04: Ensure strictly no glow or orange border before the wave arrives and lands on it */
+.hww-anim-ready:not(.hww-settled) .hww-card-slot-3 .hww-card-inner:not(:hover) {
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Once settled, pass permanent glow control cleanly to the card and fade out overlay */
+.hww-settled .hww-card-glow-overlay {
+  opacity: 0 !important;
+  transition: opacity 0.5s ease;
 }
 
 /* 6. Inner Content Stagger (starts 200ms after each card starts) */

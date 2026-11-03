@@ -94,7 +94,7 @@ export const AboutPage: React.FC = () => {
             <span className="font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-[#FF5A1F]">
               // OUR CODE
             </span>
-            <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-white tracking-[-0.02em] leading-[1.1] mt-2">
+            <h2 className="text-3xl sm:text-4xl lg:text-[54px] font-display font-extrabold text-white tracking-[-0.02em] leading-[1.1] mt-2">
               Values that drive every line of code.
             </h2>
           </div>

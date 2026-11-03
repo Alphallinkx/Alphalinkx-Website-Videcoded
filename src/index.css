@@ -1485,8 +1485,134 @@ html.lenis, html.lenis body {
   will-change: auto !important;
 }
 
+/* ==========================================================================
+   HOW WE WORK — BESPOKE ANIMATED CARD ICONS
+   ========================================================================== */
+
+/* 1. Radar Sweep for Step 01 Discovery Lens */
+@keyframes hww-icon-sweep-anim {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.hww-icon-sweep {
+  animation: hww-icon-sweep-anim 4.5s linear infinite;
+  transform-origin: 20px 20px;
+}
+
+/* 2. Sonar Ping Ripple */
+@keyframes hww-icon-ping-anim {
+  0% {
+    r: 2px;
+    opacity: 0.95;
+    stroke-width: 1.5px;
+  }
+  60% {
+    opacity: 0.5;
+  }
+  100% {
+    r: 9px;
+    opacity: 0;
+    stroke-width: 0.5px;
+  }
+}
+.hww-icon-ping {
+  animation: hww-icon-ping-anim 2.2s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+/* 3. Circuit Data Flow for Step 02 Node Graph */
+@keyframes hww-circuit-dash-anim {
+  0% { stroke-dashoffset: 24; }
+  100% { stroke-dashoffset: 0; }
+}
+.hww-circuit-flow {
+  stroke-dasharray: 4 4;
+  animation: hww-circuit-dash-anim 1.5s linear infinite;
+}
+
+/* 4. Core Hub Breathing for Step 02 */
+@keyframes hww-core-pulse-anim {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 2px rgba(252, 102, 3, 0.4));
+  }
+  50% {
+    transform: scale(1.12);
+    filter: drop-shadow(0 0 8px rgba(252, 102, 3, 0.85));
+  }
+}
+.hww-core-pulsing {
+  animation: hww-core-pulse-anim 2.2s ease-in-out infinite;
+  transform-origin: 24px 24px;
+}
+
+/* 5. Supersonic Flight Bob for Step 03 Rocket */
+@keyframes hww-rocket-glide-anim {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(1.5px, -2.5px, 0);
+  }
+}
+.hww-rocket-anim {
+  animation: hww-rocket-glide-anim 2.4s ease-in-out infinite;
+}
+
+/* 6. Plasma Thrust Flow for Step 03 Rocket Exhaust */
+@keyframes hww-thrust-flow-anim {
+  0% { stroke-dashoffset: 16; opacity: 0.7; }
+  50% { opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 0.7; }
+}
+.hww-thrust-flow {
+  stroke-dasharray: 3 3;
+  animation: hww-thrust-flow-anim 1.1s linear infinite;
+}
+
+/* 7. Apex Flare for Step 04 Scale Milestone */
+@keyframes hww-apex-flare-anim {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.85;
+    filter: drop-shadow(0 0 3px #FC6603);
+  }
+  50% {
+    transform: scale(1.22);
+    opacity: 1;
+    filter: drop-shadow(0 0 10px #FC6603);
+  }
+}
+.hww-apex-node {
+  animation: hww-apex-flare-anim 2s ease-in-out infinite;
+  transform-origin: 38px 8px;
+}
+
+/* 8. Curve Telemetry Flow for Step 04 */
+@keyframes hww-curve-flow-anim {
+  0% { stroke-dashoffset: 28; }
+  100% { stroke-dashoffset: 0; }
+}
+.hww-curve-flow {
+  stroke-dasharray: 4 3;
+  animation: hww-curve-flow-anim 1.8s linear infinite;
+}
+
+/* Beacon Pulse Helper */
+.hww-beacon-pulse {
+  animation: beacon-pulse 2s ease-in-out infinite;
+}
+
 /* Reduced Motion Fallback */
 @media (prefers-reduced-motion: reduce) {
+  .hww-icon-sweep,
+  .hww-icon-ping,
+  .hww-circuit-flow,
+  .hww-core-pulsing,
+  .hww-rocket-anim,
+  .hww-thrust-flow,
+  .hww-apex-node,
+  .hww-curve-flow,
+  .hww-beacon-pulse,
   .hww-anim-ready .hww-eyebrow,
   .hww-anim-ready .hww-heading-line,
   .hww-anim-ready .hww-subtext,

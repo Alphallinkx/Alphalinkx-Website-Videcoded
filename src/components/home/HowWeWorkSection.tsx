@@ -21,33 +21,56 @@ const PROCESS_STEPS: ProcessStep[] = [
     bottomLabel: 'CLARITY & DIRECTION',
     renderIcon: () => (
       <svg
-        viewBox="0 0 44 44"
+        viewBox="0 0 48 48"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="w-10 h-10 text-white/50 group-hover:text-white/90 transition-colors duration-300 shrink-0"
+        className="w-full h-full shrink-0"
         aria-hidden="true"
       >
-        {/* Radar coordinate ring */}
-        <circle cx="20" cy="20" r="16" stroke="rgba(255,255,255,0.12)" strokeWidth="1" strokeDasharray="3 3" />
-        <circle cx="18" cy="18" r="12" stroke="rgba(255,255,255,0.08)" strokeWidth="0.75" />
+        <defs>
+          <radialGradient id="hww-lens-bg" cx="45%" cy="45%" r="60%">
+            <stop offset="0%" stopColor="#FC6603" stopOpacity="0.14" />
+            <stop offset="100%" stopColor="#FC6603" stopOpacity="0" />
+          </radialGradient>
+          <linearGradient id="hww-sweep-cone" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#FC6603" stopOpacity="0.45" />
+            <stop offset="100%" stopColor="#FC6603" stopOpacity="0" />
+          </linearGradient>
+        </defs>
 
-        {/* Continuous 360° Rotating Radar Sweep Line */}
-        <g className="anim-radar-sweep origin-[18px_18px]">
-          <line x1="18" y1="18" x2="31" y2="18" stroke="#FC6603" strokeWidth="1.5" />
-          <polygon points="18,18 31,13 31,18" fill="rgba(252,102,3,0.22)" />
+        {/* Background Soft Optical Glow */}
+        <circle cx="20" cy="20" r="14" fill="url(#hww-lens-bg)" />
+
+        {/* Outer Coordinate Target Grid / Orbit */}
+        <circle cx="20" cy="20" r="17" stroke="rgba(255, 255, 255, 0.12)" strokeWidth="1" strokeDasharray="3 3" />
+        <circle cx="20" cy="20" r="13" stroke="rgba(255, 255, 255, 0.18)" strokeWidth="1" />
+
+        {/* Micro Optics Reticle Crosshairs */}
+        <line x1="20" y1="9" x2="20" y2="12" stroke="rgba(255, 255, 255, 0.55)" strokeWidth="1.2" strokeLinecap="round" />
+        <line x1="20" y1="28" x2="20" y2="31" stroke="rgba(255, 255, 255, 0.55)" strokeWidth="1.2" strokeLinecap="round" />
+        <line x1="9" y1="20" x2="12" y2="20" stroke="rgba(255, 255, 255, 0.55)" strokeWidth="1.2" strokeLinecap="round" />
+        <line x1="28" y1="20" x2="31" y2="20" stroke="rgba(255, 255, 255, 0.55)" strokeWidth="1.2" strokeLinecap="round" />
+        <circle cx="20" cy="20" r="1.5" fill="#FFFFFF" opacity="0.75" />
+
+        {/* Live 360° Rotating Radar Sweep Line */}
+        <g className="hww-icon-sweep">
+          <line x1="20" y1="20" x2="33" y2="20" stroke="#FC6603" strokeWidth="2" strokeLinecap="round" />
+          <polygon points="20,20 33,14 33,20" fill="url(#hww-sweep-cone)" />
         </g>
 
-        {/* Pulsing Sonar Ping Rings */}
-        <circle cx="18" cy="18" r="3" className="stroke-[#FC6603] fill-none anim-sonar-ping" />
+        {/* Expanding Sonar Ping Waves from Discovery Target */}
+        <circle cx="27" cy="14" r="3" className="stroke-[#FC6603] fill-none hww-icon-ping" />
 
-        {/* Magnifying Lens Outer Frame */}
-        <circle cx="18" cy="18" r="8" stroke="#F4F4F5" strokeWidth="2" strokeLinecap="round" />
+        {/* Detected Opportunity Beacon */}
+        <circle cx="27" cy="14" r="2.5" fill="#FC6603" className="hww-beacon-pulse" />
 
-        {/* Precision Lens Handle */}
-        <path d="M23.5 23.5L30 30" stroke="#FC6603" strokeWidth="2.2" strokeLinecap="round" />
+        {/* Main Magnifier Lens Frame (Bold High-Contrast Off-White) */}
+        <circle cx="20" cy="20" r="12" stroke="#FFFFFF" strokeWidth="2.4" strokeLinecap="round" />
 
-        {/* Satellite Discovery Beacon (pulsing brand orange) */}
-        <circle cx="26" cy="12" r="2.5" className="fill-[#FC6603] anim-beacon-pulse origin-[26px_12px]" />
+        {/* Heavy Precision Tactical Handle in Brand Orange */}
+        <path d="M28.5 28.5L38.5 38.5" stroke="#FC6603" strokeWidth="3.2" strokeLinecap="round" />
+        {/* Specular grip highlight */}
+        <path d="M33 33L37.5 37.5" stroke="#FFFFFF" strokeWidth="1.4" strokeLinecap="round" />
       </svg>
     ),
   },
@@ -58,59 +81,59 @@ const PROCESS_STEPS: ProcessStep[] = [
     bottomLabel: 'STRATEGY & BLUEPRINT',
     renderIcon: () => (
       <svg
-        viewBox="0 0 44 44"
+        viewBox="0 0 48 48"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="w-10 h-10 text-white/50 group-hover:text-white/90 transition-colors duration-300 shrink-0"
+        className="w-full h-full shrink-0"
         aria-hidden="true"
       >
-        {/* Rotating subtle orbital coordinate ring */}
-        <circle
-          cx="20"
-          cy="20"
-          r="14"
-          stroke="rgba(252,102,3,0.2)"
-          strokeWidth="1"
-          strokeDasharray="3 4"
-          className="anim-reticle-rotate origin-[20px_20px]"
-        />
+        <defs>
+          <radialGradient id="hww-core-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#FC6603" stopOpacity="0.4" />
+            <stop offset="100%" stopColor="#FC6603" stopOpacity="0" />
+          </radialGradient>
+        </defs>
 
-        {/* Connecting energy pipelines with continuous flowing dashes */}
-        <path
-          d="M20 20L11 11M20 20L29 11M20 20L11 29M20 20L29 29"
-          stroke="#FC6603"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          className="anim-flow-dash"
-        />
+        {/* Subtle Architectural Orbit / Alignment Boundary */}
+        <circle cx="24" cy="24" r="17" stroke="rgba(255, 255, 255, 0.12)" strokeWidth="1" strokeDasharray="3 3" />
 
-        {/* Neutral background structural lines */}
-        <path
-          d="M20 20L11 11M20 20L29 11M20 20L11 29M20 20L29 29"
-          stroke="rgba(255,255,255,0.25)"
-          strokeWidth="1.2"
-          strokeLinecap="round"
-        />
+        {/* Neutral Circuit Bus Lines */}
+        <line x1="24" y1="24" x2="24" y2="9" stroke="rgba(255, 255, 255, 0.25)" strokeWidth="2" strokeLinecap="round" />
+        <line x1="24" y1="24" x2="39" y2="24" stroke="rgba(255, 255, 255, 0.25)" strokeWidth="2" strokeLinecap="round" />
+        <line x1="24" y1="24" x2="24" y2="39" stroke="rgba(255, 255, 255, 0.25)" strokeWidth="2" strokeLinecap="round" />
+        <line x1="24" y1="24" x2="9" y2="24" stroke="rgba(255, 255, 255, 0.25)" strokeWidth="2" strokeLinecap="round" />
 
-        {/* 4 Satellite Planning Nodes */}
-        <circle cx="11" cy="11" r="3" fill="#0C0D12" stroke="#F4F4F5" strokeWidth="1.75" />
-        <circle cx="29" cy="11" r="3" fill="#0C0D12" stroke="#F4F4F5" strokeWidth="1.75" />
-        <circle cx="11" cy="29" r="3" fill="#0C0D12" stroke="#F4F4F5" strokeWidth="1.75" />
-        <circle cx="29" cy="29" r="3" fill="#0C0D12" stroke="#F4F4F5" strokeWidth="1.75" />
+        {/* 45-degree diagonal interconnection traces */}
+        <path d="M13 13L24 24L35 13M13 35L24 24L35 35" stroke="rgba(252, 102, 3, 0.2)" strokeWidth="1" />
 
-        {/* Central pulsing sonar wave */}
-        <circle cx="20" cy="20" r="3.5" className="stroke-[#FC6603] fill-none anim-sonar-ping" />
+        {/* Flowing Animated Data Packets (Orange energy pulses moving along buses) */}
+        <line x1="24" y1="24" x2="24" y2="9" stroke="#FC6603" strokeWidth="2.2" strokeLinecap="round" className="hww-circuit-flow" />
+        <line x1="24" y1="24" x2="39" y2="24" stroke="#FC6603" strokeWidth="2.2" strokeLinecap="round" className="hww-circuit-flow" />
+        <line x1="24" y1="24" x2="24" y2="39" stroke="#FC6603" strokeWidth="2.2" strokeLinecap="round" className="hww-circuit-flow" />
+        <line x1="24" y1="24" x2="9" y2="24" stroke="#FC6603" strokeWidth="2.2" strokeLinecap="round" className="hww-circuit-flow" />
+
+        {/* 4 Satellite Strategy Nodes (High contrast off-white rings with dark centers) */}
+        <circle cx="24" cy="9" r="3.5" fill="#0C0D12" stroke="#FFFFFF" strokeWidth="2.2" />
+        <circle cx="24" cy="9" r="1.5" fill="#FC6603" />
+
+        <circle cx="39" cy="24" r="3.5" fill="#0C0D12" stroke="#FFFFFF" strokeWidth="2.2" />
+        <circle cx="39" cy="24" r="1.5" fill="#FC6603" />
+
+        <circle cx="24" cy="39" r="3.5" fill="#0C0D12" stroke="#FFFFFF" strokeWidth="2.2" />
+        <circle cx="24" cy="39" r="1.5" fill="#FC6603" />
+
+        <circle cx="9" cy="24" r="3.5" fill="#0C0D12" stroke="#FFFFFF" strokeWidth="2.2" />
+        <circle cx="9" cy="24" r="1.5" fill="#FC6603" />
+
+        {/* Central Pulsing Sonar Ring */}
+        <circle cx="24" cy="24" r="5" className="stroke-[#FC6603] fill-none hww-icon-ping" />
+
+        {/* Ambient Core Radial Glow */}
+        <circle cx="24" cy="24" r="10" fill="url(#hww-core-glow)" />
 
         {/* Central Engineering Nexus Core in Brand Orange */}
-        <circle
-          cx="20"
-          cy="20"
-          r="4.5"
-          fill="#FC6603"
-          stroke="#FFFFFF"
-          strokeWidth="1.5"
-          className="anim-beacon-pulse origin-[20px_20px]"
-        />
+        <circle cx="24" cy="24" r="5.5" fill="#FC6603" stroke="#FFFFFF" strokeWidth="2" className="hww-core-pulsing" />
+        <circle cx="24" cy="24" r="2" fill="#FFFFFF" />
       </svg>
     ),
   },
@@ -121,36 +144,86 @@ const PROCESS_STEPS: ProcessStep[] = [
     bottomLabel: 'BUILD & DEPLOY',
     renderIcon: () => (
       <svg
-        viewBox="0 0 44 44"
+        viewBox="0 0 48 48"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="w-10 h-10 text-white/50 group-hover:text-white/90 transition-colors duration-300 shrink-0"
+        className="w-full h-full shrink-0"
         aria-hidden="true"
       >
-        {/* Code Brackets < and > */}
-        <path d="M11 14L5 20L11 26" stroke="#F4F4F5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        <path d="M29 14L35 20L29 26" stroke="#F4F4F5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        <defs>
+          <linearGradient id="hww-shuttle-wing" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#FFA34D" />
+            <stop offset="100%" stopColor="#FC6603" />
+          </linearGradient>
+          <linearGradient id="hww-shuttle-dark" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#FC6603" />
+            <stop offset="100%" stopColor="#D84F00" />
+          </linearGradient>
+        </defs>
 
-        {/* Continuous Flowing Exhaust Propulsion Trail */}
-        <line
-          x1="13"
-          y1="29"
-          x2="19"
-          y2="23"
-          stroke="#FC6603"
-          strokeWidth="1.75"
+        {/* Code Brackets < and > (Bold, High-Contrast White) */}
+        <path
+          d="M12 15L5 24L12 33"
+          stroke="#FFFFFF"
+          strokeWidth="2.6"
           strokeLinecap="round"
-          className="anim-flow-dash"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M36 15L43 24L36 33"
+          stroke="#FFFFFF"
+          strokeWidth="2.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
 
-        {/* Pulsing thruster glow */}
-        <circle cx="16" cy="25" r="2.5" className="fill-[#FC6603] anim-beacon-pulse origin-[16px_25px]" />
+        {/* Supersonic Launch Shuttle & Propulsion Exhaust */}
+        <g className="hww-rocket-anim">
+          {/* Animated Plasma Thruster Trails (Firing at 225°) */}
+          <line
+            x1="20"
+            y1="28"
+            x2="12"
+            y2="36"
+            stroke="#FC6603"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            className="hww-thrust-flow"
+          />
+          <line
+            x1="23"
+            y1="31"
+            x2="17"
+            y2="37"
+            stroke="#FFA34D"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+            className="hww-thrust-flow"
+          />
 
-        {/* Floating Launch Rocket in Brand Orange */}
-        <g className="anim-rocket-float">
-          <path d="M27 11L14 18.5L20 22L27 11Z" fill="#FC6603" />
-          <path d="M27 11L22 25.5L20 22L27 11Z" fill="#E05500" />
-          <path d="M20 22L22 25.5L23 21L20 22Z" fill="#FFA34D" />
+          {/* Thruster Engine Glow Core */}
+          <circle cx="21" cy="28.5" r="2.5" fill="#FC6603" className="hww-beacon-pulse" />
+          <circle cx="21" cy="28.5" r="1.2" fill="#FFFFFF" />
+
+          {/* Aerodynamic Launch Craft / Shuttle Body Facets (Facing 45° Northeast) */}
+          {/* Main Port Wing */}
+          <path
+            d="M34 14L15 22.5L22 26.5L34 14Z"
+            fill="url(#hww-shuttle-wing)"
+          />
+          {/* Starboard Underwing Facet */}
+          <path
+            d="M34 14L27 32L22 26.5L34 14Z"
+            fill="url(#hww-shuttle-dark)"
+          />
+          {/* Center Dorsal Spine / Cockpit Keel */}
+          <path
+            d="M34 14L23.5 25.5L22 26.5L34 14Z"
+            fill="#FFFFFF"
+            opacity="0.85"
+          />
+          {/* Nosecone Apex Specular Point */}
+          <circle cx="34" cy="14" r="1" fill="#FFFFFF" />
         </g>
       </svg>
     ),
@@ -163,47 +236,85 @@ const PROCESS_STEPS: ProcessStep[] = [
     isDefaultActive: true, // Glow animation stays on the last card 04
     renderIcon: () => (
       <svg
-        viewBox="0 0 44 44"
+        viewBox="0 0 48 48"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="w-10 h-10 text-white/50 group-hover:text-white/90 transition-colors duration-300 shrink-0"
+        className="w-full h-full shrink-0"
         aria-hidden="true"
       >
-        {/* Baseline Floor */}
-        <line x1="6" y1="33" x2="38" y2="33" stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
+        <defs>
+          <linearGradient id="hww-bar-active" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#FFA34D" />
+            <stop offset="60%" stopColor="#FC6603" />
+            <stop offset="100%" stopColor="#D84F00" />
+          </linearGradient>
+          <radialGradient id="hww-apex-flare" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#FC6603" stopOpacity="0.5" />
+            <stop offset="100%" stopColor="#FC6603" stopOpacity="0" />
+          </radialGradient>
+        </defs>
 
-        {/* Analytics Growth Bars */}
-        <rect x="8" y="23" width="4" height="9" rx="1" fill="#F4F4F5" opacity="0.8" />
-        <rect x="15" y="18" width="4" height="14" rx="1" fill="#F4F4F5" opacity="0.9" />
-        <rect x="22" y="13" width="4" height="19" rx="1" fill="#F4F4F5" />
-
-        {/* Dominant Scaled Compound Bar in Brand Orange */}
-        <rect
-          x="29"
-          y="8"
-          width="4"
-          height="24"
-          rx="1"
-          fill="#FC6603"
-          className="anim-beacon-pulse origin-[31px_20px]"
+        {/* Baseline Floor Foundation */}
+        <line
+          x1="6"
+          y1="41"
+          x2="42"
+          y2="41"
+          stroke="rgba(255, 255, 255, 0.22)"
+          strokeWidth="1.5"
+          strokeLinecap="round"
         />
 
-        {/* Continuous Rising Compound Growth Curve with Flowing Telemetry Dash */}
-        <path
-          d="M8 22L15 17L22 12L31 7"
+        {/* 4 Ascending Metric Columns (Clean, bold, solid off-white and glowing orange) */}
+        {/* Bar 1 (Initial Baseline) */}
+        <rect x="7.5" y="29" width="6" height="12" rx="1.5" fill="#E4E4E7" opacity="0.85" />
+
+        {/* Bar 2 (Validated Traction) */}
+        <rect x="15.5" y="22" width="6" height="19" rx="1.5" fill="#F4F4F5" opacity="0.95" />
+
+        {/* Bar 3 (System Scaling) */}
+        <rect x="23.5" y="15" width="6" height="26" rx="1.5" fill="#FFFFFF" />
+
+        {/* Bar 4 (Apex Compound Velocity - Brand Orange with specular top) */}
+        <rect
+          x="31.5"
+          y="8"
+          width="6.5"
+          height="33"
+          rx="1.5"
+          fill="url(#hww-bar-active)"
           stroke="#FC6603"
-          strokeWidth="2"
+          strokeWidth="1"
+        />
+        {/* Bar 4 Specular Top Cap */}
+        <rect x="32" y="8.5" width="5.5" height="1.5" rx="0.75" fill="#FFFFFF" opacity="0.8" />
+
+        {/* Exponential Compounding Growth Vector (Smooth upward sweeping curve) */}
+        <path
+          d="M8 28 C 15 26, 23 18, 38 8"
+          stroke="#FC6603"
+          strokeWidth="2.6"
+          strokeLinecap="round"
+          className="hww-curve-flow"
+        />
+
+        {/* Dynamic Velocity Arrowhead at Apex */}
+        <path
+          d="M30 8H38V16"
+          stroke="#FC6603"
+          strokeWidth="2.6"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="anim-flow-dash"
         />
 
-        {/* Arrowhead at Apex */}
-        <path d="M26 7H31V12" stroke="#FC6603" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+        {/* Ambient Glow Aura at Apex */}
+        <circle cx="38" cy="8" r="9" fill="url(#hww-apex-flare)" pointerEvents="none" />
 
-        {/* Peak Apex Milestone Glow Beacon */}
-        <circle cx="31" cy="7" r="2.5" className="fill-[#FC6603] anim-beacon-pulse origin-[31px_7px]" />
-        <circle cx="31" cy="7" r="2.5" className="stroke-[#FC6603] fill-none anim-sonar-ping" />
+        {/* Pulsing Sonar Ping Ripple from Milestone Peak */}
+        <circle cx="38" cy="8" r="3.5" className="stroke-[#FC6603] fill-none hww-icon-ping" />
+
+        {/* Apex Milestone Beacon Flare */}
+        <circle cx="38" cy="8" r="2.8" fill="#FFFFFF" stroke="#FC6603" strokeWidth="1.5" className="hww-apex-node" />
       </svg>
     ),
   },
@@ -582,7 +693,7 @@ export const HowWeWorkSection: React.FC = () => {
                   <div
                     onMouseEnter={() => setHoveredCard(idx)}
                     onMouseLeave={() => setHoveredCard(null)}
-                    className={`hww-card-inner relative flex flex-col justify-between h-full min-h-[290px] sm:min-h-[305px] p-5 sm:p-6 rounded-2xl bg-[#0C0D12]/95 border backdrop-blur-md cursor-default select-none transition-all duration-300 ${
+                    className={`group hww-card-inner relative flex flex-col justify-between h-full min-h-[290px] sm:min-h-[305px] p-5 sm:p-6 rounded-2xl bg-[#0C0D12]/95 border backdrop-blur-md cursor-default select-none transition-all duration-300 ${
                       hasOrangeBorder
                         ? 'border-[#FC6603] shadow-[0_0_28px_rgba(252,102,3,0.22)]'
                         : 'border-white/[0.12] shadow-[0_4px_20px_rgba(0,0,0,0.5)]'
@@ -604,8 +715,21 @@ export const HowWeWorkSection: React.FC = () => {
                     <div>
                       <div className="flex items-center justify-between mb-4">
                         {/* Upper-Left Icon with soft pop (200ms after card starts) */}
-                        <div className="hww-inner-icon p-0.5">
-                          {step.renderIcon()}
+                        <div className="hww-inner-icon shrink-0">
+                          <div
+                            className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl p-2 sm:p-2.5 flex items-center justify-center relative overflow-hidden transition-all duration-300 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)] ${
+                              hasOrangeBorder
+                                ? 'bg-[#FC6603]/[0.08] border border-[#FC6603]/50 shadow-[0_0_20px_rgba(252,102,3,0.25)]'
+                                : 'bg-white/[0.04] border border-white/[0.12] group-hover:border-[#FC6603]/40 group-hover:bg-[#FC6603]/[0.06] group-hover:shadow-[0_0_20px_rgba(252,102,3,0.2)]'
+                            }`}
+                          >
+                            {/* Specular top rim reflection */}
+                            <div
+                              aria-hidden="true"
+                              className="absolute top-0 inset-x-2 h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none"
+                            />
+                            {step.renderIcon()}
+                          </div>
                         </div>
 
                         {/* Upper-Right Small Step Number */}

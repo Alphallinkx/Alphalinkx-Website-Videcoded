@@ -11,6 +11,7 @@ export interface ShowcaseProject {
   id: string;
   slug: string;
   badge: string;
+  hasEmbeddedBadge?: boolean; // Set true for images that already contain the badge in pixel art
   category: string;
   filterCategory: string;
   title: string;
@@ -30,6 +31,7 @@ const SHOWCASE_PROJECTS: ShowcaseProject[] = [
     id: 'explore-outdoor-travel',
     slug: 'explore-outdoor-travel',
     badge: 'CONCEPT STUDY',
+    hasEmbeddedBadge: true,
     category: 'WEBSITE DESIGN & DEVELOPMENT',
     filterCategory: 'Websites',
     title: 'A better way to explore',
@@ -55,6 +57,7 @@ const SHOWCASE_PROJECTS: ShowcaseProject[] = [
     id: 'radiance-skincare',
     slug: 'radiance-skincare-d2c',
     badge: 'CONCEPT STUDY',
+    hasEmbeddedBadge: true,
     category: 'SOCIAL MARKETING · PAID ADS',
     filterCategory: 'Social Marketing',
     title: 'Designed to start conversations',
@@ -80,6 +83,7 @@ const SHOWCASE_PROJECTS: ShowcaseProject[] = [
     id: 'automation-momentum',
     slug: 'automation-workflow-orchestration',
     badge: 'CONCEPT STUDY',
+    hasEmbeddedBadge: true,
     category: 'AI AUTOMATION',
     filterCategory: 'AI Automation',
     title: 'Less busywork. More momentum.',
@@ -105,6 +109,7 @@ const SHOWCASE_PROJECTS: ShowcaseProject[] = [
     id: 'nexus-freight-seo',
     slug: 'nexus-freight-platform',
     badge: 'CASE STUDY',
+    hasEmbeddedBadge: false,
     category: 'SEO & VISIBILITY',
     filterCategory: 'SEO & Visibility',
     title: 'Search authority engineered to scale',
@@ -130,6 +135,7 @@ const SHOWCASE_PROJECTS: ShowcaseProject[] = [
     id: 'lumina-luxury-ads',
     slug: 'lumina-haute-horlogerie',
     badge: 'CASE STUDY',
+    hasEmbeddedBadge: false,
     category: 'META & GOOGLE ADS',
     filterCategory: 'Meta & Google Ads',
     title: 'High-intent paid performance',
@@ -155,6 +161,7 @@ const SHOWCASE_PROJECTS: ShowcaseProject[] = [
     id: 'volt-fintech',
     slug: 'volt-cross-border-pay',
     badge: 'CASE STUDY',
+    hasEmbeddedBadge: false,
     category: 'PERFORMANCE MARKETING',
     filterCategory: 'Performance Marketing',
     title: 'Compounding multi-channel growth',
@@ -180,6 +187,7 @@ const SHOWCASE_PROJECTS: ShowcaseProject[] = [
     id: 'vanguard-quant',
     slug: 'vanguard-quant-platform',
     badge: 'CASE STUDY',
+    hasEmbeddedBadge: false,
     category: 'WEBSITE DESIGN & DEVELOPMENT',
     filterCategory: 'Websites',
     title: 'Real-time financial telemetry portal',
@@ -205,6 +213,7 @@ const SHOWCASE_PROJECTS: ShowcaseProject[] = [
     id: 'omniflow-ai',
     slug: 'omniflow-enterprise-ai',
     badge: 'CASE STUDY',
+    hasEmbeddedBadge: false,
     category: 'AI AUTOMATION',
     filterCategory: 'AI Automation',
     title: 'Full-stack intelligence engines',
@@ -230,6 +239,7 @@ const SHOWCASE_PROJECTS: ShowcaseProject[] = [
     id: 'aura-creative',
     slug: 'aura-creative-studio',
     badge: 'CASE STUDY',
+    hasEmbeddedBadge: false,
     category: 'SOCIAL MARKETING · PAID ADS',
     filterCategory: 'Social Marketing',
     title: 'Organic viral reach engineered',
@@ -332,11 +342,12 @@ export const SelectedWorkSection: React.FC = () => {
         className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[500px] bg-[radial-gradient(ellipse_at_center,rgba(252,102,3,0.05)_0%,transparent_70%)] pointer-events-none"
       />
 
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 xl:px-10 relative z-10">
-        {/* =========================================================================
-            1. SECTION HEADER
-           ========================================================================= */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 sm:mb-10">
+      {/* =========================================================================
+          STANDARD WIDTH CONTAINER: HEADER & CATEGORY FILTER TABS
+         ========================================================================= */}
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 xl:px-10 relative z-10 mb-8 sm:mb-10">
+        {/* 1. Header Row */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 mb-8 sm:mb-10">
           <div>
             {/* Eyebrow: // SELECTED WORK */}
             <div className="font-mono text-[11px] sm:text-[12px] font-semibold uppercase tracking-[0.2em] text-[#8E929E] mb-2 sm:mb-2.5 flex items-center gap-2">
@@ -351,23 +362,21 @@ export const SelectedWorkSection: React.FC = () => {
             </h2>
           </div>
 
-          {/* Top-Right CTA Button: VIEW ALL WORK ↗ */}
+          {/* Standard Site CTA Button: VIEW ALL WORK ↗ */}
           <Link
             to="/projects"
-            className="group relative inline-flex items-center gap-3 pl-6 sm:pl-7 pr-2 sm:pr-2.5 py-2 sm:py-2.5 rounded-full bg-[#FC6603] hover:bg-[#FF771E] text-white font-mono text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.14em] shadow-[0_0_24px_rgba(252,102,3,0.35)] hover:shadow-[0_0_32px_rgba(252,102,3,0.5)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] shrink-0 self-start md:self-auto"
+            className="group relative inline-flex items-center gap-2.5 px-6 sm:px-7 py-3 sm:py-3.5 rounded-full bg-[#FC6603] text-black font-mono text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.16em] shadow-[0_0_24px_rgba(252,102,3,0.35)] hover:bg-white hover:text-black hover:shadow-[0_0_32px_rgba(255,255,255,0.4)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FC6603] focus-visible:ring-offset-2 focus-visible:ring-offset-[#060709] shrink-0 self-start sm:self-auto"
             data-cursor="VIEW ALL"
           >
             <span>VIEW ALL WORK</span>
-            <span className="w-8 h-8 rounded-full bg-white text-black flex items-center justify-center font-bold text-[13px] shadow-sm transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
+            <span className="text-[12px] sm:text-[13px] font-bold transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
               ↗
             </span>
           </Link>
         </div>
 
-        {/* =========================================================================
-            2. CATEGORY FILTER TABS
-           ========================================================================= */}
-        <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar pb-3 mb-8 sm:mb-10 -mx-4 px-4 sm:mx-0 sm:px-0">
+        {/* 2. Category Filter Tabs */}
+        <div className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar pb-2 -mx-4 px-4 sm:mx-0 sm:px-0">
           {CATEGORY_TABS.map((tab) => {
             const isActive = activeTab === tab;
             return (
@@ -385,11 +394,13 @@ export const SelectedWorkSection: React.FC = () => {
             );
           })}
         </div>
+      </div>
 
-        {/* =========================================================================
-            3. 3-CARDS HORIZONTAL ROW
-           ========================================================================= */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 xl:gap-6">
+      {/* =========================================================================
+          FULL-WIDTH RESPONSIVE CARDS CONTAINER (Spans across section with edge padding)
+         ========================================================================= */}
+      <div className="w-full px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-14 relative z-10 mb-8 sm:mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 xl:gap-6 2xl:gap-8">
           {visibleProjects.map((project) => (
             <div
               key={project.id}
@@ -397,28 +408,30 @@ export const SelectedWorkSection: React.FC = () => {
               className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#0C0D12] border border-white/[0.1] hover:border-[#FC6603]/50 transition-all duration-300 shadow-[0_12px_36px_rgba(0,0,0,0.5)] cursor-pointer flex flex-col justify-between"
               data-cursor="VIEW"
             >
-              {/* Media Container with Image & Concept Study Badge */}
-              <div className="relative aspect-[16/13] w-full overflow-hidden bg-[#16171E]">
+              {/* Media Container with Image */}
+              <div className="relative aspect-[16/11] sm:aspect-[16/11] lg:aspect-[16/11] w-full overflow-hidden bg-[#16171E]">
                 <img
                   src={project.image}
                   alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                   loading="lazy"
                 />
 
-                {/* Concept Study Tag Badge (Top Left) */}
-                <div className="absolute top-4 left-4 z-10 pointer-events-none">
-                  <span className="px-3 py-1 rounded-md bg-black/60 backdrop-blur-md border border-white/10 font-mono text-[10px] sm:text-[11px] font-semibold text-white/90 tracking-[0.16em] uppercase">
-                    {project.badge}
-                  </span>
-                </div>
+                {/* Concept Study Tag Badge (Only rendered if image does NOT already have it baked in) */}
+                {!project.hasEmbeddedBadge && (
+                  <div className="absolute top-4 left-4 z-10 pointer-events-none">
+                    <span className="px-3 py-1 rounded-md bg-black/60 backdrop-blur-md border border-white/10 font-mono text-[10px] sm:text-[11px] font-semibold text-white/90 tracking-[0.16em] uppercase">
+                      {project.badge}
+                    </span>
+                  </div>
+                )}
 
                 {/* Subtle bottom vignette */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0C0D12] via-transparent to-transparent opacity-60 pointer-events-none" />
               </div>
 
               {/* Bottom Content Bar */}
-              <div className="p-5 sm:p-6 bg-[#0E0F14] border-t border-white/[0.06] flex flex-col justify-between flex-grow">
+              <div className="p-5 sm:p-6 lg:p-7 bg-[#0E0F14] border-t border-white/[0.06] flex flex-col justify-between flex-grow">
                 {/* Category Label in JetBrains Mono */}
                 <span className="font-mono text-[10.5px] sm:text-[11.5px] font-semibold text-[#8E929E] tracking-[0.16em] uppercase block mb-1.5">
                   {project.category}
@@ -426,7 +439,7 @@ export const SelectedWorkSection: React.FC = () => {
 
                 {/* Project Title + Northeast Arrow in Bricolage Grotesque */}
                 <div className="flex items-center justify-between gap-3">
-                  <h3 className="font-display font-bold text-lg sm:text-[21px] text-[#F4F4F5] tracking-[-0.01em] group-hover:text-white transition-colors leading-[1.25]">
+                  <h3 className="font-display font-bold text-lg sm:text-[21px] lg:text-[22px] text-[#F4F4F5] tracking-[-0.01em] group-hover:text-white transition-colors leading-[1.25]">
                     {project.title}
                   </h3>
                   <span className="font-mono text-base sm:text-lg text-white/50 group-hover:text-[#FC6603] transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0">
@@ -437,11 +450,13 @@ export const SelectedWorkSection: React.FC = () => {
             </div>
           ))}
         </div>
+      </div>
 
-        {/* =========================================================================
-            4. BOTTOM PROGRESS BAR & CAROUSEL NAVIGATION
-           ========================================================================= */}
-        <div className="mt-10 sm:mt-12 pt-4 flex items-center justify-between gap-6 sm:gap-8">
+      {/* =========================================================================
+          STANDARD WIDTH CONTAINER: BOTTOM PROGRESS BAR & CAROUSEL NAVIGATION
+         ========================================================================= */}
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 xl:px-10 relative z-10">
+        <div className="pt-2 flex items-center justify-between gap-6 sm:gap-8">
           {/* Progress Bar Track on Left */}
           <div className="flex-1 max-w-[65%] h-[3px] bg-white/15 rounded-full overflow-hidden">
             <div

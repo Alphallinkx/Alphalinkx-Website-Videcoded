@@ -149,6 +149,11 @@ export const SelectedWorkSection: React.FC = () => {
           <span className="block text-[#F4F4F5]">Our work.</span>
           <span className="block text-[#FC6603]">Your next possibility.</span>
         </h2>
+
+        {/* Supporting text */}
+        <p className="font-sans text-[15px] sm:text-[16px] text-[#A1A1AA] leading-relaxed mt-4 max-w-xl mx-auto">
+          See how bold ideas become work that moves businesses forward.
+        </p>
       </div>
 
       {/* =========================================================================
@@ -212,8 +217,9 @@ export const SelectedWorkSection: React.FC = () => {
                           </svg>
                         </a>
 
-                        {/* Bottom Content Area with Title */}
+                        {/* Bottom Content Area with Title & Orange Slide Bar */}
                         <div className="content">
+                          <div className="orange-slide-bar" aria-hidden="true" />
                           <div className="title-area">
                             <h4 className="title">
                               <a

@@ -193,23 +193,33 @@ h1, h2, h3, h4, h5, h6, .font-display {
 }
 .cv-proj-v1 .projects-current-theme1 .inner-box .top-cat {
   position: absolute;
-  top: 22px;
-  left: 26px;
+  top: 20px;
+  left: 22px;
   z-index: 2;
   color: #ffffff;
   font-weight: 500;
-  font-size: 14px;
-  line-height: 1.4;
+  font-size: 13px;
+  line-height: 1;
   opacity: 0.95;
   font-family: var(--font-sans, 'Schibsted Grotesk', sans-serif);
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 7px 15px;
+  border-radius: 9999px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
   pointer-events: none;
+  display: inline-flex;
+  align-items: center;
+  letter-spacing: 0.02em;
 }
 @media (max-width: 575.98px) {
   .cv-proj-v1 .projects-current-theme1 .inner-box .top-cat {
-    top: 18px;
-    left: 20px;
-    font-size: 13px;
+    top: 16px;
+    left: 16px;
+    padding: 6px 12px;
+    font-size: 12px;
   }
 }
 .cv-proj-v1 .projects-current-theme1 .inner-box .content {
@@ -217,12 +227,27 @@ h1, h2, h3, h4, h5, h6, .font-display {
   bottom: 0;
   left: 0;
   width: 100%;
-  padding: 20px 28px 24px;
+  padding: 22px 28px 24px;
+  z-index: 3;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: 0 0 16px 16px;
+}
+.cv-proj-v1 .projects-current-theme1 .inner-box .content .orange-slide-bar {
+  position: absolute;
+  inset: 0;
+  background-color: var(--theme-color1);
   z-index: 1;
-  background: transparent;
+  transform: translateY(105%);
+  transition: transform 0.42s cubic-bezier(0.16, 1, 0.3, 1);
   pointer-events: none;
 }
+.cv-proj-v1 .projects-current-theme1 .inner-box:hover .content .orange-slide-bar {
+  transform: translateY(0);
+}
 .cv-proj-v1 .projects-current-theme1 .inner-box .content .title-area {
+  position: relative;
+  z-index: 2;
   pointer-events: auto;
 }
 .cv-proj-v1 .projects-current-theme1 .inner-box .content .title {
@@ -241,17 +266,12 @@ h1, h2, h3, h4, h5, h6, .font-display {
 .cv-proj-v1 .projects-current-theme1 .inner-box .content .title a {
   color: #fff;
   text-decoration: none;
-  background-position: 0 95%;
-  background-repeat: no-repeat;
-  background-size: 0% 2px;
-  display: inline;
-  transition: background-size 0.25s ease-in-out;
+  display: inline-block;
+  transition: color 0.25s ease, text-shadow 0.25s ease;
 }
-.cv-proj-v1 .projects-current-theme1 .inner-box .content .title a:hover,
 .cv-proj-v1 .projects-current-theme1 .inner-box:hover .content .title a {
-  color: #fff;
-  background-size: 100% 2px;
-  background-image: linear-gradient(180deg, var(--theme-color1) 0%, var(--theme-color1) 100%);
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 .cv-proj-v1 .projects-current-theme1 .inner-box .content .cat-list li {
   color: #ffffff;

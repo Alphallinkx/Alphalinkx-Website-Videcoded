@@ -472,34 +472,62 @@ export const HowWeWorkSection: React.FC = () => {
 
       <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 xl:px-10 w-full">
         {/* =========================================================================
-            SECTION HEADER
+            SECTION HEADER: CTA ON TOP LEFT, HEADINGS ON RIGHT
            ========================================================================= */}
-        <div className="flex flex-col items-center text-center max-w-2xl mx-auto mb-10 sm:mb-12 lg:mb-14">
-          {/* Eyebrow: // HOW WE WORK (0ms: Fades in, letter-spacing settles) */}
-          <div className="hww-eyebrow font-mono text-[11px] sm:text-[12px] font-semibold text-[#FC6603] uppercase tracking-[0.2em] mb-2 sm:mb-2.5 flex items-center justify-center gap-2">
-            <span className="font-bold">//</span>
-            <span className="text-white/80">HOW WE WORK</span>
+        <div className="flex flex-col-reverse md:flex-row items-start md:items-end justify-between gap-6 sm:gap-8 mb-10 sm:mb-12 lg:mb-14">
+          {/* TOP LEFT: Brand CTA Button */}
+          <div className="hww-cta-row flex items-center gap-3 shrink-0 self-start md:self-end pb-1">
+            <Link
+              to="/contact"
+              className="group relative inline-flex items-center gap-3 pl-6 pr-2 sm:pl-7 sm:pr-2.5 py-2.5 sm:py-3 rounded-full bg-[#FC6603] text-white font-mono text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.16em] shadow-[0_0_24px_rgba(252,102,3,0.35)] hover:bg-[#ff5500] hover:shadow-[0_0_32px_rgba(252,102,3,0.55)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FC6603] focus-visible:ring-offset-2 focus-visible:ring-offset-[#060709]"
+              data-cursor="CONNECT"
+            >
+              <span>LET'S TALK</span>
+              <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white flex items-center justify-center text-black shrink-0 transition-transform duration-300 group-hover:rotate-45 shadow-sm">
+                <svg
+                  className="w-3.5 h-3.5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <line x1="7" y1="17" x2="17" y2="7"></line>
+                  <polyline points="7 7 17 7 17 17"></polyline>
+                </svg>
+              </span>
+            </Link>
           </div>
 
-          {/* Heading: Four steps. One clear direction. (0-600ms: Reveals upward from mask/clip) */}
-          <h2
-            id="how-we-work-heading"
-            className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-[-0.03em] leading-[1.08] text-white"
-          >
-            <span className="block overflow-hidden pb-1">
-              <span className="hww-heading-line hww-line-1">Four steps.</span>
-            </span>
-            <span className="block overflow-hidden pb-1">
-              <span className="hww-heading-line hww-line-2 text-[#FC6603]">
-                One clear direction.
-              </span>
-            </span>
-          </h2>
+          {/* RIGHT SIDE: Section Eyebrow, Heading, and Subtext */}
+          <div className="flex flex-col items-start md:items-end text-left md:text-right max-w-xl">
+            {/* Eyebrow: // HOW WE WORK */}
+            <div className="hww-eyebrow font-mono text-[11px] sm:text-[12px] font-semibold text-[#FC6603] uppercase tracking-[0.2em] mb-2 sm:mb-2.5 flex items-center gap-2">
+              <span className="font-bold">//</span>
+              <span className="text-white/80">HOW WE WORK</span>
+            </div>
 
-          {/* Supporting Text (200ms: Fades up 16px) */}
-          <p className="hww-subtext font-sans text-[16px] text-[#A1A1AA] leading-relaxed mt-3 max-w-lg">
-            From understanding your business to building what comes next.
-          </p>
+            {/* Heading: Four steps. One clear direction. */}
+            <h2
+              id="how-we-work-heading"
+              className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-[-0.03em] leading-[1.08] text-white"
+            >
+              <span className="block overflow-hidden pb-1">
+                <span className="hww-heading-line hww-line-1">Four steps.</span>
+              </span>
+              <span className="block overflow-hidden pb-1">
+                <span className="hww-heading-line hww-line-2 text-[#FC6603]">
+                  One clear direction.
+                </span>
+              </span>
+            </h2>
+
+            {/* Supporting Text */}
+            <p className="hww-subtext font-sans text-[15px] sm:text-[16px] text-[#A1A1AA] leading-relaxed mt-2.5 max-w-md">
+              From understanding your business to building what comes next.
+            </p>
+          </div>
         </div>
 
         {/* =========================================================================
@@ -762,26 +790,6 @@ export const HowWeWorkSection: React.FC = () => {
               );
             })}
           </ol>
-        </div>
-
-        {/* =========================================================================
-            BOTTOM CALL-TO-ACTION (1450ms: Fades up last)
-           ========================================================================= */}
-        <div className="hww-cta-row mt-10 sm:mt-12 lg:mt-14 pt-4 sm:pt-6 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 text-center">
-          <span className="font-sans text-[15px] sm:text-[16px] text-white/80 font-normal">
-            Ready to take your next step?
-          </span>
-
-          <Link
-            to="/contact"
-            className="group relative inline-flex items-center gap-2.5 px-6 sm:px-7 py-3 sm:py-3.5 rounded-full bg-[#FC6603] text-black font-mono text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.16em] shadow-[0_0_24px_rgba(252,102,3,0.35)] hover:bg-white hover:text-black hover:shadow-[0_0_32px_rgba(255,255,255,0.4)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FC6603] focus-visible:ring-offset-2 focus-visible:ring-offset-[#060709]"
-            data-cursor="CONNECT"
-          >
-            <span>Let's Talk</span>
-            <span className="text-[12px] sm:text-[13px] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-              ↗
-            </span>
-          </Link>
         </div>
       </div>
     </section>

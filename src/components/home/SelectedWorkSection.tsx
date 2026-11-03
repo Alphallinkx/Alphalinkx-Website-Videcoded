@@ -135,39 +135,20 @@ export const SelectedWorkSection: React.FC = () => {
       />
 
       {/* =========================================================================
-          STANDARD WIDTH CONTAINER: SECTION HEADER
+          STANDARD WIDTH CONTAINER: SECTION HEADER (CENTERED)
          ========================================================================= */}
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 xl:px-10 relative z-10 mb-8 sm:mb-10">
-        <div className="flex items-center justify-between gap-6">
-          {/* Headline: Our Recent Projects */}
-          <h2 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[52px] tracking-[-0.03em] leading-[1.08] text-white">
-            <span className="text-white">Our Recent </span>
-            <span className="text-[#FC6603]">Projects</span>
-          </h2>
-
-          {/* Site Brand CTA Button: View All Project ( ↗ ) */}
-          <Link
-            to="/projects"
-            className="group relative inline-flex items-center gap-3 pl-6 pr-2 sm:pl-7 sm:pr-2.5 py-2 sm:py-2.5 rounded-full bg-[#FC6603] text-white font-mono text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.16em] shadow-[0_0_24px_rgba(252,102,3,0.35)] hover:bg-[#ff5500] hover:shadow-[0_0_32px_rgba(252,102,3,0.55)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FC6603] focus-visible:ring-offset-2 focus-visible:ring-offset-[#060709] shrink-0"
-            data-cursor="VIEW ALL"
-          >
-            <span>View All Project</span>
-            <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white flex items-center justify-center text-black shrink-0 transition-transform duration-300 group-hover:rotate-45 shadow-sm">
-              <svg
-                className="w-3.5 h-3.5"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <line x1="7" y1="17" x2="17" y2="7"></line>
-                <polyline points="7 7 17 7 17 17"></polyline>
-              </svg>
-            </span>
-          </Link>
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 xl:px-10 relative z-10 mb-10 sm:mb-12 lg:mb-14 text-center flex flex-col items-center">
+        {/* Eyebrow: // SELECTED WORK */}
+        <div className="font-mono text-[11px] sm:text-[12px] font-semibold uppercase tracking-[0.2em] text-[#8E929E] mb-2 sm:mb-2.5 flex items-center justify-center gap-2">
+          <span className="text-[#FC6603] font-bold">//</span>
+          <span>SELECTED WORK</span>
         </div>
+
+        {/* Headline: Our work. Your next possibility. */}
+        <h2 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-[-0.03em] leading-[1.08] text-white">
+          <span className="block text-[#F4F4F5]">Our work.</span>
+          <span className="block text-[#FC6603]">Your next possibility.</span>
+        </h2>
       </div>
 
       {/* =========================================================================
@@ -189,6 +170,11 @@ export const SelectedWorkSection: React.FC = () => {
                         className="inner-box cursor-pointer"
                         data-cursor="VIEW"
                       >
+                        {/* Top Left Category Label */}
+                        <div className="top-cat">
+                          <span>{project.category}</span>
+                        </div>
+
                         {/* 1:1 Aspect Ratio Image Container */}
                         <div className="image">
                           <img
@@ -226,15 +212,9 @@ export const SelectedWorkSection: React.FC = () => {
                           </svg>
                         </a>
 
-                        {/* Bottom Content Area with Category & Title Underline */}
+                        {/* Bottom Content Area with Title */}
                         <div className="content">
                           <div className="title-area">
-                            <ul className="cat-list">
-                              <li>
-                                {project.category}
-                                <span> /</span>
-                              </li>
-                            </ul>
                             <h4 className="title">
                               <a
                                 href={`#${project.slug}`}
@@ -256,6 +236,33 @@ export const SelectedWorkSection: React.FC = () => {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* =========================================================================
+          BOTTOM CENTER CALL-TO-ACTION BUTTON
+         ========================================================================= */}
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 xl:px-10 relative z-10 mt-10 sm:mt-12 lg:mt-14 flex justify-center">
+        <Link
+          to="/projects"
+          className="group relative inline-flex items-center gap-3 pl-7 pr-2.5 py-3 sm:py-3.5 rounded-full bg-[#FC6603] text-white font-mono text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.16em] shadow-[0_0_24px_rgba(252,102,3,0.35)] hover:bg-[#ff5500] hover:shadow-[0_0_32px_rgba(252,102,3,0.55)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FC6603] focus-visible:ring-offset-2 focus-visible:ring-offset-[#060709]"
+          data-cursor="VIEW ALL"
+        >
+          <span>View All Projects</span>
+          <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white flex items-center justify-center text-black shrink-0 transition-transform duration-300 group-hover:rotate-45 shadow-sm">
+            <svg
+              className="w-3.5 h-3.5"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </span>
+        </Link>
       </div>
 
       {/* Interactive Case Study Modal */}

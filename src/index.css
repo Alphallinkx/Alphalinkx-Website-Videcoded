@@ -191,6 +191,27 @@ h1, h2, h3, h4, h5, h6, .font-display {
   color: var(--theme-color1);
   background-color: #ffffff;
 }
+.cv-proj-v1 .projects-current-theme1 .inner-box .top-cat {
+  position: absolute;
+  top: 22px;
+  left: 26px;
+  z-index: 2;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.4;
+  opacity: 0.95;
+  font-family: var(--font-sans, 'Schibsted Grotesk', sans-serif);
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+  pointer-events: none;
+}
+@media (max-width: 575.98px) {
+  .cv-proj-v1 .projects-current-theme1 .inner-box .top-cat {
+    top: 18px;
+    left: 20px;
+    font-size: 13px;
+  }
+}
 .cv-proj-v1 .projects-current-theme1 .inner-box .content {
   position: absolute;
   bottom: 0;
@@ -1665,9 +1686,9 @@ html.lenis, html.lenis body {
 .hww-in-view .hww-card-slot-3 .hww-inner-divider { animation: hww-divider-reveal 600ms cubic-bezier(0.16, 1, 0.3, 1) 1130ms both; }
 .hww-in-view .hww-card-slot-3 .hww-inner-label   { animation: hww-label-reveal 500ms cubic-bezier(0.16, 1, 0.3, 1) 1250ms both; }
 
-/* 7. 1450ms: Bottom CTA Row */
+/* 7. Top-Left CTA Button */
 .hww-in-view .hww-cta-row {
-  animation: hww-cta-reveal 600ms cubic-bezier(0.16, 1, 0.3, 1) 1450ms both;
+  animation: hww-cta-reveal 600ms cubic-bezier(0.16, 1, 0.3, 1) 200ms both;
 }
 
 @keyframes hww-cta-reveal {

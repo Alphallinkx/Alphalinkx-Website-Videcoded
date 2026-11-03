@@ -217,9 +217,8 @@ export const SelectedWorkSection: React.FC = () => {
                           </svg>
                         </a>
 
-                        {/* Bottom Content Area with Title & Orange Slide Bar */}
+                        {/* Bottom Content Area with Title & Summary */}
                         <div className="content">
-                          <div className="orange-slide-bar" aria-hidden="true" />
                           <div className="title-area">
                             <h4 className="title">
                               <a
@@ -232,6 +231,9 @@ export const SelectedWorkSection: React.FC = () => {
                                 {project.title}
                               </a>
                             </h4>
+                            <p className="summary">
+                              {project.summary}
+                            </p>
                           </div>
                         </div>
                       </div>

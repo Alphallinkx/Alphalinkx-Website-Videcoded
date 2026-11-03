@@ -121,33 +121,34 @@ export const StatsSection: React.FC = () => {
             return (
               <div
                 key={idx}
-                className="flex flex-col justify-between p-7 sm:p-8 rounded-[26px] bg-[#121214] border border-white/5 shadow-[0_20px_45px_rgba(0,0,0,0.35)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_28px_55px_rgba(0,0,0,0.45)] group min-h-[260px] sm:min-h-[280px]"
+                className="flex flex-col justify-between p-6 sm:p-7 rounded-[24px] bg-[#121214] border border-white/5 shadow-[0_16px_36px_rgba(0,0,0,0.32)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_22px_45px_rgba(0,0,0,0.45)] group h-full"
               >
                 <div>
-                  {/* Top Row: Animated Icon in Front of Metric Value */}
-                  <div className="flex items-center gap-3.5 sm:gap-4 mb-4 sm:mb-5">
-                    <div className="text-white/95 shrink-0 group-hover:scale-110 group-hover:text-white transition-all duration-300">
-                      <Icon className={`w-8 h-8 sm:w-9 sm:h-9 xl:w-10 xl:h-10 stroke-[2] ${meta.animClass}`} />
-                    </div>
+                  {/* Top Row: Metric Value on left + Animated Icon on right */}
+                  <div className="flex items-center justify-between gap-3 mb-3.5 sm:mb-4">
                     <div className="flex items-baseline gap-0.5">
-                      <span className="font-display font-black text-5xl sm:text-6xl lg:text-[50px] xl:text-[58px] text-white tracking-[-0.03em] leading-none tabular-nums">
+                      <span className="font-display font-black text-4xl sm:text-[42px] lg:text-[40px] xl:text-[46px] text-white tracking-[-0.03em] leading-none tabular-nums">
                         <CountUpNumber value={stat.number} start={isInView} />
                       </span>
                       {stat.suffix && (
-                        <span className="font-display font-black text-3xl sm:text-4xl lg:text-[34px] xl:text-[40px] text-[#FC6603] leading-none ml-0.5">
+                        <span className="font-display font-black text-2xl sm:text-[28px] lg:text-[26px] xl:text-[32px] text-[#FC6603] leading-none ml-0.5">
                           {stat.suffix}
                         </span>
                       )}
                     </div>
+
+                    <div className="text-white/95 shrink-0 group-hover:scale-110 group-hover:text-white transition-all duration-300">
+                      <Icon className={`w-7 h-7 sm:w-8 sm:h-8 stroke-[2] ${meta.animClass}`} />
+                    </div>
                   </div>
 
                   {/* Metric Label */}
-                  <h3 className="font-display font-bold text-[17px] sm:text-[18px] text-white tracking-tight leading-snug mb-2">
+                  <h3 className="font-display font-bold text-[16px] sm:text-[17px] text-white tracking-tight leading-snug mb-2">
                     {stat.label}
                   </h3>
 
                   {/* Metric Description */}
-                  <p className="font-sans text-[13.5px] sm:text-[14px] text-[#A1A1AA] leading-[1.5]">
+                  <p className="font-sans text-[13px] sm:text-[13.5px] text-[#A1A1AA] leading-[1.5]">
                     {stat.wittyCaption}
                   </p>
                 </div>

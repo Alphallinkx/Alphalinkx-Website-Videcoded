@@ -50,6 +50,215 @@ h1, h2, h3, h4, h5, h6, .font-display {
   text-transform: none; /* Premium sentence case contrast */
 }
 
+/* ==========================================================================
+   SELECTED WORK — CREOVIBE PROJECT BLOCK SKIN v1 (project-block-ONE-FILE)
+   ========================================================================== */
+.cv-proj-v1 {
+  --theme-color1: #FC6603;
+  background: transparent;
+  width: 100%;
+}
+.cv-proj-v1 * {
+  box-sizing: border-box;
+}
+.cv-proj-v1 .isotope-layout-inner {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+@media (max-width: 1024px) {
+  .cv-proj-v1 .isotope-layout-inner {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+}
+@media (max-width: 767px) {
+  .cv-proj-v1 .isotope-layout-inner {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+.cv-proj-v1 .cat-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.cv-proj-v1 .cat-list li {
+  display: inline;
+  color: #aaa;
+  margin-right: 7px;
+  font-size: 13px;
+}
+.cv-proj-v1 .cat-list li a {
+  color: #aaa;
+  text-transform: capitalize;
+  transition: all 0.3s ease-in-out;
+}
+.cv-proj-v1 .cat-list li:last-child span {
+  display: none;
+}
+.cv-proj-v1 .projects-current-theme1 .inner-box {
+  position: relative;
+  z-index: 9;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.cv-proj-v1 .projects-current-theme1 .inner-box:hover {
+  border-color: rgba(252, 102, 3, 0.45);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.6), 0 0 24px rgba(252, 102, 3, 0.15);
+}
+.cv-proj-v1 .projects-current-theme1 .inner-box:hover .image img {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+.cv-proj-v1 .projects-current-theme1 .inner-box:hover .arrow-icon {
+  transform: translate(-50%, -50%);
+  opacity: 1;
+}
+.cv-proj-v1 .projects-current-theme1 .inner-box:hover .arrow-icon:hover svg {
+  -webkit-transform: rotate(0deg);
+  transform: rotate(0deg);
+}
+.cv-proj-v1 .projects-current-theme1 .inner-box:hover .arrow-icon svg {
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+.cv-proj-v1 .projects-current-theme1 .inner-box .image {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 16px;
+  aspect-ratio: 1 / 1;
+  position: relative;
+  background-color: #12131A;
+}
+.cv-proj-v1 .projects-current-theme1 .inner-box .image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+  display: block;
+  -webkit-transition: all 400ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.cv-proj-v1 .projects-current-theme1 .inner-box .arrow-icon {
+  font-size: 20px;
+  color: var(--theme-color1);
+  width: 60px;
+  height: 60px;
+  line-height: 60px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  opacity: 0;
+  transform: translate(-50%, -100%);
+  z-index: 2;
+  transition: all 300ms ease;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+.cv-proj-v1 .projects-current-theme1 .inner-box .arrow-icon svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+  transition: all 300ms ease;
+}
+@media (max-width: 575.98px) {
+  .cv-proj-v1 .projects-current-theme1 .inner-box .arrow-icon {
+    width: 44px;
+    height: 44px;
+    line-height: 44px;
+  }
+  .cv-proj-v1 .projects-current-theme1 .inner-box .arrow-icon svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+.cv-proj-v1 .projects-current-theme1 .inner-box .arrow-icon:hover {
+  color: var(--theme-color1);
+  background-color: #ffffff;
+}
+.cv-proj-v1 .projects-current-theme1 .inner-box .content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 24px 28px 28px;
+  z-index: 1;
+  background: linear-gradient(to top, rgba(6, 7, 9, 0.95) 0%, rgba(6, 7, 9, 0.75) 50%, rgba(6, 7, 9, 0.25) 80%, transparent 100%);
+  pointer-events: none;
+}
+.cv-proj-v1 .projects-current-theme1 .inner-box .content .title-area {
+  pointer-events: auto;
+}
+.cv-proj-v1 .projects-current-theme1 .inner-box .content .title {
+  margin: 0;
+  transition: all 0.2s ease-in-out;
+  font-size: 22px;
+  line-height: 1.28;
+  font-weight: 700;
+  font-family: var(--head, 'Bricolage Grotesque', sans-serif);
+}
+@media (min-width: 640px) {
+  .cv-proj-v1 .projects-current-theme1 .inner-box .content .title {
+    font-size: 24px;
+  }
+}
+.cv-proj-v1 .projects-current-theme1 .inner-box .content .title a {
+  color: #fff;
+  text-decoration: none;
+  background-position: 0 95%;
+  background-repeat: no-repeat;
+  background-size: 0% 2px;
+  display: inline;
+  transition: background-size 0.25s ease-in-out;
+}
+.cv-proj-v1 .projects-current-theme1 .inner-box .content .title a:hover,
+.cv-proj-v1 .projects-current-theme1 .inner-box:hover .content .title a {
+  color: #fff;
+  background-size: 100% 2px;
+  background-image: linear-gradient(180deg, var(--theme-color1) 0%, var(--theme-color1) 100%);
+}
+.cv-proj-v1 .projects-current-theme1 .inner-box .content .cat-list li {
+  color: #FC6603;
+  font-weight: 600;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-family: 'JetBrains Mono', monospace;
+  display: none;
+  margin-bottom: 6px;
+}
+.cv-proj-v1 .projects-current-theme1 .inner-box .content .cat-list li:first-child {
+  display: inline-block;
+}
+.cv-proj-v1 .projects-current-theme1 .inner-box .content .cat-list li span {
+  display: none;
+}
+/* Mobile: no hover — show the arrow so cards are tappable/clear */
+@media (hover: none) {
+  .cv-proj-v1 .projects-current-theme1 .inner-box .arrow-icon {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  .cv-proj-v1 .projects-current-theme1 .inner-box .arrow-icon svg {
+    transform: rotate(-45deg);
+  }
+}
+
 /* Hide scrollbar for Chrome, Safari and Opera */
 .no-scrollbar::-webkit-scrollbar {
   display: none;

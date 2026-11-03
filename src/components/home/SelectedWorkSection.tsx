@@ -5,13 +5,12 @@ import { ProjectItem } from '../../types';
 
 /* =========================================================================
    SELECTED WORK PORTFOLIO DATA
-   Exact 1:1 match with reference mockup + category filter support
+   Styled with Creovibe Project Skin (project-block-ONE-FILE-v1)
    ========================================================================= */
 export interface ShowcaseProject {
   id: string;
   slug: string;
   badge: string;
-  hasEmbeddedBadge?: boolean; // Set true for images that already contain the badge in pixel art
   category: string;
   filterCategory: string;
   title: string;
@@ -31,8 +30,7 @@ const SHOWCASE_PROJECTS: ShowcaseProject[] = [
     id: 'explore-outdoor-travel',
     slug: 'explore-outdoor-travel',
     badge: 'CONCEPT STUDY',
-    hasEmbeddedBadge: true,
-    category: 'WEBSITE DESIGN & DEVELOPMENT',
+    category: 'Development',
     filterCategory: 'Websites',
     title: 'A better way to explore',
     client: 'Wanderlust Alpine Escapes',
@@ -57,8 +55,7 @@ const SHOWCASE_PROJECTS: ShowcaseProject[] = [
     id: 'radiance-skincare',
     slug: 'radiance-skincare-d2c',
     badge: 'CONCEPT STUDY',
-    hasEmbeddedBadge: true,
-    category: 'SOCIAL MARKETING · PAID ADS',
+    category: 'Branding',
     filterCategory: 'Social Marketing',
     title: 'Designed to start conversations',
     client: 'Aura Botanical Skincare',
@@ -83,8 +80,7 @@ const SHOWCASE_PROJECTS: ShowcaseProject[] = [
     id: 'automation-momentum',
     slug: 'automation-workflow-orchestration',
     badge: 'CONCEPT STUDY',
-    hasEmbeddedBadge: true,
-    category: 'AI AUTOMATION',
+    category: 'AI Automation',
     filterCategory: 'AI Automation',
     title: 'Less busywork. More momentum.',
     client: 'Apex Enterprise Intelligence',
@@ -109,8 +105,7 @@ const SHOWCASE_PROJECTS: ShowcaseProject[] = [
     id: 'nexus-freight-seo',
     slug: 'nexus-freight-platform',
     badge: 'CASE STUDY',
-    hasEmbeddedBadge: false,
-    category: 'SEO & VISIBILITY',
+    category: 'SEO & Visibility',
     filterCategory: 'SEO & Visibility',
     title: 'Search authority engineered to scale',
     client: 'Nexus Supply Chain Inc.',
@@ -135,8 +130,7 @@ const SHOWCASE_PROJECTS: ShowcaseProject[] = [
     id: 'lumina-luxury-ads',
     slug: 'lumina-haute-horlogerie',
     badge: 'CASE STUDY',
-    hasEmbeddedBadge: false,
-    category: 'META & GOOGLE ADS',
+    category: 'Performance Ads',
     filterCategory: 'Meta & Google Ads',
     title: 'High-intent paid performance',
     client: 'Lumina Horology Group',
@@ -161,8 +155,7 @@ const SHOWCASE_PROJECTS: ShowcaseProject[] = [
     id: 'volt-fintech',
     slug: 'volt-cross-border-pay',
     badge: 'CASE STUDY',
-    hasEmbeddedBadge: false,
-    category: 'PERFORMANCE MARKETING',
+    category: 'Scaling',
     filterCategory: 'Performance Marketing',
     title: 'Compounding multi-channel growth',
     client: 'Volt Financial Network',
@@ -187,8 +180,7 @@ const SHOWCASE_PROJECTS: ShowcaseProject[] = [
     id: 'vanguard-quant',
     slug: 'vanguard-quant-platform',
     badge: 'CASE STUDY',
-    hasEmbeddedBadge: false,
-    category: 'WEBSITE DESIGN & DEVELOPMENT',
+    category: 'Development',
     filterCategory: 'Websites',
     title: 'Real-time financial telemetry portal',
     client: 'Vanguard Alpha Capital',
@@ -213,8 +205,7 @@ const SHOWCASE_PROJECTS: ShowcaseProject[] = [
     id: 'omniflow-ai',
     slug: 'omniflow-enterprise-ai',
     badge: 'CASE STUDY',
-    hasEmbeddedBadge: false,
-    category: 'AI AUTOMATION',
+    category: 'AI & Data',
     filterCategory: 'AI Automation',
     title: 'Full-stack intelligence engines',
     client: 'Omniflow Dynamics',
@@ -239,8 +230,7 @@ const SHOWCASE_PROJECTS: ShowcaseProject[] = [
     id: 'aura-creative',
     slug: 'aura-creative-studio',
     badge: 'CASE STUDY',
-    hasEmbeddedBadge: false,
-    category: 'SOCIAL MARKETING · PAID ADS',
+    category: 'Branding',
     filterCategory: 'Social Marketing',
     title: 'Organic viral reach engineered',
     client: 'Aura Media Global',
@@ -362,7 +352,7 @@ export const SelectedWorkSection: React.FC = () => {
             </h2>
           </div>
 
-          {/* Standard Site CTA Button: VIEW ALL WORK ↗ */}
+          {/* Standard Site Brand CTA Button: VIEW ALL WORK ↗ */}
           <Link
             to="/projects"
             className="group relative inline-flex items-center gap-2.5 px-6 sm:px-7 py-3 sm:py-3.5 rounded-full bg-[#FC6603] text-black font-mono text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.16em] shadow-[0_0_24px_rgba(252,102,3,0.35)] hover:bg-white hover:text-black hover:shadow-[0_0_32px_rgba(255,255,255,0.4)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FC6603] focus-visible:ring-offset-2 focus-visible:ring-offset-[#060709] shrink-0 self-start sm:self-auto"
@@ -397,58 +387,83 @@ export const SelectedWorkSection: React.FC = () => {
       </div>
 
       {/* =========================================================================
-          FULL-WIDTH RESPONSIVE CARDS CONTAINER (Spans across section with edge padding)
+          FULL-WIDTH RESPONSIVE CARDS CONTAINER (Creovibe Project Block v1 Skin)
          ========================================================================= */}
       <div className="w-full px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-14 relative z-10 mb-8 sm:mb-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 xl:gap-6 2xl:gap-8">
-          {visibleProjects.map((project) => (
-            <div
-              key={project.id}
-              onClick={() => handleProjectClick(project)}
-              className="group relative rounded-2xl sm:rounded-3xl overflow-hidden bg-[#0C0D12] border border-white/[0.1] hover:border-[#FC6603]/50 transition-all duration-300 shadow-[0_12px_36px_rgba(0,0,0,0.5)] cursor-pointer flex flex-col justify-between"
-              data-cursor="VIEW"
-            >
-              {/* Media Container with Image */}
-              <div className="relative aspect-[16/11] sm:aspect-[16/11] lg:aspect-[16/11] w-full overflow-hidden bg-[#16171E]">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-                  loading="lazy"
-                />
+        <div className="cv-proj-v1">
+          <div className="tm-sc-projects tm-sc-projects-grid border-radius-around-box">
+            <div className="isotope-layout">
+              <div className="isotope-layout-inner">
+                {visibleProjects.map((project) => (
+                  <div key={project.id} className="isotope-item projct-order">
+                    <div className="project-item projects-current-theme1">
+                      <div
+                        onClick={() => handleProjectClick(project)}
+                        className="inner-box cursor-pointer"
+                        data-cursor="VIEW"
+                      >
+                        {/* 1:1 Aspect Ratio Image Container */}
+                        <div className="image">
+                          <img
+                            loading="lazy"
+                            decoding="async"
+                            src={project.image}
+                            alt={project.title}
+                          />
+                        </div>
 
-                {/* Concept Study Tag Badge (Only rendered if image does NOT already have it baked in) */}
-                {!project.hasEmbeddedBadge && (
-                  <div className="absolute top-4 left-4 z-10 pointer-events-none">
-                    <span className="px-3 py-1 rounded-md bg-black/60 backdrop-blur-md border border-white/10 font-mono text-[10px] sm:text-[11px] font-semibold text-white/90 tracking-[0.16em] uppercase">
-                      {project.badge}
-                    </span>
+                        {/* Center Hover Action Arrow Icon */}
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleProjectClick(project);
+                          }}
+                          className="arrow-icon"
+                          aria-label={project.title}
+                        >
+                          <svg
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12 5 19 12 12 19"></polyline>
+                          </svg>
+                        </button>
+
+                        {/* Bottom Content Area with Category & Title Underline */}
+                        <div className="content">
+                          <div className="title-area">
+                            <ul className="cat-list">
+                              <li>
+                                {project.category}
+                                <span> /</span>
+                              </li>
+                            </ul>
+                            <h4 className="title">
+                              <a
+                                href={`#${project.slug}`}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  handleProjectClick(project);
+                                }}
+                              >
+                                {project.title}
+                              </a>
+                            </h4>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                )}
-
-                {/* Subtle bottom vignette */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0C0D12] via-transparent to-transparent opacity-60 pointer-events-none" />
-              </div>
-
-              {/* Bottom Content Bar */}
-              <div className="p-5 sm:p-6 lg:p-7 bg-[#0E0F14] border-t border-white/[0.06] flex flex-col justify-between flex-grow">
-                {/* Category Label in JetBrains Mono */}
-                <span className="font-mono text-[10.5px] sm:text-[11.5px] font-semibold text-[#8E929E] tracking-[0.16em] uppercase block mb-1.5">
-                  {project.category}
-                </span>
-
-                {/* Project Title + Northeast Arrow in Bricolage Grotesque */}
-                <div className="flex items-center justify-between gap-3">
-                  <h3 className="font-display font-bold text-lg sm:text-[21px] lg:text-[22px] text-[#F4F4F5] tracking-[-0.01em] group-hover:text-white transition-colors leading-[1.25]">
-                    {project.title}
-                  </h3>
-                  <span className="font-mono text-base sm:text-lg text-white/50 group-hover:text-[#FC6603] transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 shrink-0">
-                    ↗
-                  </span>
-                </div>
+                ))}
               </div>
             </div>
-          ))}
+          </div>
         </div>
       </div>
 

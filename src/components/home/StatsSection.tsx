@@ -3,11 +3,57 @@ import { TrendingUp, Gauge, BarChart3, RotateCw } from 'lucide-react';
 import { STATS } from '../../content/siteContent';
 
 const STAT_META = [
-  { index: '01', icon: TrendingUp, animClass: 'anim-metric-trend' },
-  { index: '02', icon: Gauge, animClass: 'anim-metric-gauge' },
-  { index: '03', icon: BarChart3, animClass: 'anim-metric-bars' },
-  { index: '04', icon: RotateCw, animClass: 'anim-metric-rotate' },
+  { icon: TrendingUp, animClass: 'anim-metric-trend' },
+  { icon: Gauge, animClass: 'anim-metric-gauge' },
+  { icon: BarChart3, animClass: 'anim-metric-bars' },
+  { icon: RotateCw, animClass: 'anim-metric-rotate' },
 ];
+
+/**
+ * Smooth Count-Up Animation from 0 to target value on scroll into view
+ */
+const CountUpNumber: React.FC<{ value: string; start: boolean; duration?: number }> = ({
+  value,
+  start,
+  duration = 2000,
+}) => {
+  const [displayValue, setDisplayValue] = useState<string>('0');
+  const targetNum = parseFloat(value);
+  const isDecimal = value.includes('.');
+  const decimalPlaces = isDecimal ? value.split('.')[1].length : 0;
+
+  useEffect(() => {
+    if (!start || isNaN(targetNum)) return;
+
+    let startTime: number | null = null;
+    let animId: number;
+
+    const easeOutExpo = (t: number): number => {
+      return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+    };
+
+    const step = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easedProgress = easeOutExpo(progress);
+
+      const current = easedProgress * targetNum;
+
+      if (progress < 1) {
+        setDisplayValue(isDecimal ? current.toFixed(decimalPlaces) : Math.floor(current).toString());
+        animId = requestAnimationFrame(step);
+      } else {
+        setDisplayValue(value);
+      }
+    };
+
+    animId = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(animId);
+  }, [start, value, targetNum, isDecimal, decimalPlaces, duration]);
+
+  return <>{displayValue}</>;
+};
 
 export const StatsSection: React.FC = () => {
   const [isInView, setIsInView] = useState(false);
@@ -63,11 +109,10 @@ export const StatsSection: React.FC = () => {
           </p>
         </div>
 
-        {/* 4 Cards Grid Matching Exact Mockup */}
+        {/* 4 Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-5 xl:gap-6">
           {STATS.map((stat, idx) => {
             const meta = STAT_META[idx] || {
-              index: `0${idx + 1}`,
               icon: TrendingUp,
               animClass: 'anim-metric-trend',
             };
@@ -76,29 +121,24 @@ export const StatsSection: React.FC = () => {
             return (
               <div
                 key={idx}
-                className="flex flex-col justify-between p-7 sm:p-8 rounded-[26px] bg-[#121214] border border-white/5 shadow-[0_20px_45px_rgba(0,0,0,0.35)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_28px_55px_rgba(0,0,0,0.45)] group min-h-[300px]"
+                className="flex flex-col justify-between p-7 sm:p-8 rounded-[26px] bg-[#121214] border border-white/5 shadow-[0_20px_45px_rgba(0,0,0,0.35)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_28px_55px_rgba(0,0,0,0.45)] group min-h-[260px] sm:min-h-[280px]"
               >
                 <div>
-                  {/* Top Row: Index + Line Icon */}
-                  <div className="flex items-center justify-between mb-7 sm:mb-8">
-                    <span className="font-sans font-bold text-white text-[16px] sm:text-[17px] tracking-wide">
-                      {meta.index}
-                    </span>
-                    <div className="text-white/90 group-hover:text-white group-hover:scale-110 transition-all duration-300">
-                      <Icon className={`w-7 h-7 sm:w-8 sm:h-8 stroke-[1.9] ${meta.animClass}`} />
+                  {/* Top Row: Animated Icon in Front of Metric Value */}
+                  <div className="flex items-center gap-3.5 sm:gap-4 mb-4 sm:mb-5">
+                    <div className="text-white/95 shrink-0 group-hover:scale-110 group-hover:text-white transition-all duration-300">
+                      <Icon className={`w-8 h-8 sm:w-9 sm:h-9 xl:w-10 xl:h-10 stroke-[2] ${meta.animClass}`} />
                     </div>
-                  </div>
-
-                  {/* Huge Number & Orange Suffix */}
-                  <div className="flex items-baseline gap-0.5 mb-4 sm:mb-5">
-                    <span className="font-display font-black text-5xl sm:text-6xl lg:text-[54px] xl:text-[62px] text-white tracking-[-0.03em] leading-none tabular-nums">
-                      {isInView ? stat.number : '0'}
-                    </span>
-                    {stat.suffix && (
-                      <span className="font-display font-black text-3xl sm:text-4xl lg:text-[36px] xl:text-[42px] text-[#FC6603] leading-none ml-0.5">
-                        {stat.suffix}
+                    <div className="flex items-baseline gap-0.5">
+                      <span className="font-display font-black text-5xl sm:text-6xl lg:text-[50px] xl:text-[58px] text-white tracking-[-0.03em] leading-none tabular-nums">
+                        <CountUpNumber value={stat.number} start={isInView} />
                       </span>
-                    )}
+                      {stat.suffix && (
+                        <span className="font-display font-black text-3xl sm:text-4xl lg:text-[34px] xl:text-[40px] text-[#FC6603] leading-none ml-0.5">
+                          {stat.suffix}
+                        </span>
+                      )}
+                    </div>
                   </div>
 
                   {/* Metric Label */}

@@ -628,16 +628,20 @@ html.lenis, html.lenis body {
 }
 
 .anim-metric-gauge {
-  transform-origin: 12px 14px;
+  transform-box: fill-box;
+  transform-origin: center bottom;
   animation: metric-gauge 2.2s ease-in-out infinite;
 }
 
 .anim-metric-bars {
+  transform-box: fill-box;
   transform-origin: bottom center;
   animation: metric-bars 1.8s ease-in-out infinite;
 }
 
 .anim-metric-rotate {
+  transform-box: fill-box;
+  transform-origin: center;
   animation: metric-rotate 6s linear infinite;
 }
 

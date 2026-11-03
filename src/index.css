@@ -586,6 +586,61 @@ html.lenis, html.lenis body {
   transform-origin: center;
 }
 
+/* --- Metrics Section Icon Animations --- */
+@keyframes metric-trend {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(3px, -3px);
+  }
+}
+
+@keyframes metric-gauge {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(18deg);
+  }
+}
+
+@keyframes metric-bars {
+  0%, 100% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(1.22);
+  }
+}
+
+@keyframes metric-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.anim-metric-trend {
+  animation: metric-trend 2s ease-in-out infinite;
+}
+
+.anim-metric-gauge {
+  transform-origin: 12px 14px;
+  animation: metric-gauge 2.2s ease-in-out infinite;
+}
+
+.anim-metric-bars {
+  transform-origin: bottom center;
+  animation: metric-bars 1.8s ease-in-out infinite;
+}
+
+.anim-metric-rotate {
+  animation: metric-rotate 6s linear infinite;
+}
+
 .anim-shield-scan {
   animation: shield-scan 3.2s ease-in-out infinite;
 }

@@ -289,67 +289,46 @@ export const ClientLogoMarquee: React.FC = () => {
   // Card-Free Floating Partner Lockup
   const renderPartnerLockup = (partner: Partner, keySuffix: string) => (
     <div key={`${partner.id}-${keySuffix}`} className="flex items-center gap-6 sm:gap-8 md:gap-9 shrink-0">
-      <div className="group relative flex items-center gap-3 sm:gap-3.5 select-none py-3 px-1 cursor-grab active:cursor-grabbing">
+      <div className="group relative flex items-center gap-3 sm:gap-3.5 select-none py-1.5 px-1 cursor-grab active:cursor-grabbing">
         {/* Subtle Ambient Radial Aura behind Logo on Hover */}
         <div
           aria-hidden="true"
-          className="absolute -inset-2 rounded-2xl bg-[radial-gradient(ellipse_at_center,rgba(252,102,3,0.18)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+          className="absolute -inset-2 rounded-2xl bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.12)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
         />
 
         {/* Authentic SVG Logo */}
-        <div className="relative w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_2px_10px_rgba(0,0,0,0.5)]">
+        <div className="relative w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_2px_8px_rgba(0,0,0,0.25)]">
           {partner.renderLogo()}
         </div>
 
         {/* Identity & Technical Category */}
         <div className="flex flex-col min-w-0">
           <div className="flex items-center gap-2">
-            <span className="font-display font-extrabold text-[15px] sm:text-[17px] text-white/90 group-hover:text-white transition-colors tracking-tight whitespace-nowrap leading-none">
+            <span className="font-display font-extrabold text-[14.5px] sm:text-[16px] text-white tracking-tight whitespace-nowrap leading-none transition-colors group-hover:text-[#0A0A0B] drop-shadow-[0_1px_2px_rgba(0,0,0,0.25)]">
               {partner.name}
             </span>
-            <span className="font-mono text-[8.5px] font-bold text-white/40 group-hover:text-white/80 tracking-[0.14em] uppercase px-1.5 py-0.5 rounded border border-white/[0.08] bg-white/[0.02] transition-colors leading-none">
+            <span className="font-mono text-[8px] sm:text-[8.5px] font-bold text-[#0A0A0B]/85 group-hover:text-[#0A0A0B] tracking-[0.14em] uppercase px-1.5 py-0.5 rounded border border-black/15 bg-black/10 group-hover:bg-black/20 transition-colors leading-none">
               {partner.tier}
             </span>
           </div>
 
-          <span className="font-mono text-[9.5px] sm:text-[10px] font-semibold text-[#FC6603]/90 group-hover:text-[#FC6603] tracking-[0.16em] uppercase whitespace-nowrap mt-1 leading-none transition-colors">
+          <span className="font-mono text-[9px] sm:text-[9.5px] font-bold text-[#0A0A0B] tracking-[0.16em] uppercase whitespace-nowrap mt-1 leading-none transition-colors">
             {partner.category}
           </span>
         </div>
       </div>
 
       {/* Modern Hairline Divider */}
-      <div className="h-5 w-[1px] bg-gradient-to-b from-transparent via-white/10 to-transparent shrink-0" aria-hidden="true" />
+      <div className="h-5 w-[1px] bg-gradient-to-b from-transparent via-black/20 to-transparent shrink-0" aria-hidden="true" />
     </div>
   );
 
   return (
     <section
       aria-label="Trusted by and infrastructure partners"
-      className="relative py-12 sm:py-16 bg-[#0A0A0B] border-b border-white/[0.06] overflow-hidden select-none"
+      className="relative py-3 sm:py-4 bg-[#FC6603] border-y border-black/10 overflow-hidden select-none"
     >
-      {/* Top Hairline Ambient Accent */}
-      <div
-        aria-hidden="true"
-        className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-[#FC6603]/20 to-transparent pointer-events-none"
-      />
-
-      {/* ================= CLEAN ENTERPRISE HEADER (NO PAUSE BUTTON) ================= */}
-      <div className="max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 md:px-8 xl:px-10 mb-8 sm:mb-10 flex items-center justify-between font-mono text-[11px] sm:text-[12px] font-medium tracking-[0.2em] uppercase">
-        <div className="flex items-center gap-2 text-white/70">
-          <span className="text-[#FC6603] font-bold">//</span>
-          <span className="text-white/80">TRUSTED BY & INFRASTRUCTURE PARTNERS</span>
-        </div>
-
-        {/* Status Pill with Pulsing Live Beacon */}
-        <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.02] border border-white/[0.06] text-white/50 text-[10px] sm:text-[11px] tracking-[0.16em]">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#FC6603] animate-pulse" />
-          <span className="hidden sm:inline">[ CERTIFIED & INTEGRATED ]</span>
-          <span className="sm:hidden">[ CERTIFIED ]</span>
-        </div>
-      </div>
-
-      {/* ================= CARDLESS FLOATING PARTNERS STRIP ================= */}
+      {/* ================= SHORT STRIP FLOATING PARTNERS MARQUEE ================= */}
       <div
         ref={containerRef}
         onMouseEnter={() => {
@@ -369,7 +348,7 @@ export const ClientLogoMarquee: React.FC = () => {
         {/* Hardware-accelerated GPU Stream */}
         <div
           ref={trackRef}
-          className="flex shrink-0 items-center will-change-transform py-2"
+          className="flex shrink-0 items-center will-change-transform py-1"
         >
           {/* Set 1 (Measured for seamless wrap) */}
           <div ref={set1Ref} className="flex shrink-0 items-center gap-6 sm:gap-8 md:gap-9 pr-6 sm:pr-8 md:pr-9">

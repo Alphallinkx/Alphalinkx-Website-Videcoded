@@ -73,23 +73,23 @@ export const TestimonialsCarousel: React.FC = () => {
     if (isShufflingRef.current) return;
     setIsShuffling(true);
 
-    // 650ms matches the swipe-right-then-back transition duration
+    // 650ms smooth transition duration
     setTimeout(() => {
       setActiveIndex((prev) => (prev + 1) % TESTIMONIALS_DATA.length);
       setIsShuffling(false);
     }, 650);
   };
 
-  // Auto-shuffle cards every 4.8 seconds (pauses on hover)
+  // Auto-shuffle cards every 3 seconds (pauses on hover)
   useEffect(() => {
     if (isPaused) return;
     const interval = setInterval(() => {
       handleShuffle();
-    }, 4800);
+    }, 3000);
     return () => clearInterval(interval);
   }, [isPaused]);
 
-  // Responsive swipe distance: ~240px on desktop, ~170px on mobile
+  // Responsive swipe distance: ~250px on desktop, ~170px on mobile
   const swipeDistance = typeof window !== 'undefined' && window.innerWidth < 640 ? 170 : 250;
 
   // Derive the 3 cards currently visible in the stack
@@ -167,14 +167,50 @@ export const TestimonialsCarousel: React.FC = () => {
 
       <div className="relative z-10 w-full max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8 flex">
         {/* =========================================================================
-            FAR LEFT: Bigger, Clean Two-Word "TESTIMONIALS / TESTIMONIALS" Text
+            FAR LEFT: Much Bigger Vertical "TESTIMONIALS /" Moving in Infinite Loop
            ========================================================================= */}
-        <div className="relative hidden md:flex w-20 lg:w-24 shrink-0 items-center justify-center border-r border-white/[0.08] mr-8 lg:mr-14 select-none">
-          <div className="[writing-mode:vertical-rl] flex items-center justify-center gap-8 py-8 tracking-[0.24em] uppercase font-mono font-black text-2xl lg:text-3xl text-white/20 select-none">
-            <span>TESTIMONIALS</span>
-            <span className="text-[#FC6603] font-black text-3xl">/</span>
-            <span>TESTIMONIALS</span>
-          </div>
+        <div className="relative hidden md:flex w-20 lg:w-28 shrink-0 overflow-hidden items-center justify-center border-r border-white/[0.08] mr-8 lg:mr-14 select-none">
+          <motion.div
+            animate={{ y: ['0%', '-50%'] }}
+            transition={{
+              duration: 18,
+              repeat: Infinity,
+              ease: 'linear',
+            }}
+            className="flex flex-col gap-10 [writing-mode:vertical-rl] py-6"
+          >
+            {/* Block 1 */}
+            <div className="flex items-center gap-8">
+              <span className="font-mono font-black text-3xl lg:text-4xl tracking-[0.24em] uppercase text-white/20 hover:text-white/35 transition-colors">
+                TESTIMONIALS
+              </span>
+              <span className="text-[#FC6603] font-black text-3xl lg:text-4xl">/</span>
+              <span className="font-mono font-black text-3xl lg:text-4xl tracking-[0.24em] uppercase text-white/20 hover:text-white/35 transition-colors">
+                TESTIMONIALS
+              </span>
+              <span className="text-[#FC6603] font-black text-3xl lg:text-4xl">/</span>
+              <span className="font-mono font-black text-3xl lg:text-4xl tracking-[0.24em] uppercase text-white/20 hover:text-white/35 transition-colors">
+                TESTIMONIALS
+              </span>
+              <span className="text-[#FC6603] font-black text-3xl lg:text-4xl">/</span>
+            </div>
+
+            {/* Block 2 (Exact duplicate for seamless infinite loop) */}
+            <div className="flex items-center gap-8" aria-hidden="true">
+              <span className="font-mono font-black text-3xl lg:text-4xl tracking-[0.24em] uppercase text-white/20 hover:text-white/35 transition-colors">
+                TESTIMONIALS
+              </span>
+              <span className="text-[#FC6603] font-black text-3xl lg:text-4xl">/</span>
+              <span className="font-mono font-black text-3xl lg:text-4xl tracking-[0.24em] uppercase text-white/20 hover:text-white/35 transition-colors">
+                TESTIMONIALS
+              </span>
+              <span className="text-[#FC6603] font-black text-3xl lg:text-4xl">/</span>
+              <span className="font-mono font-black text-3xl lg:text-4xl tracking-[0.24em] uppercase text-white/20 hover:text-white/35 transition-colors">
+                TESTIMONIALS
+              </span>
+              <span className="text-[#FC6603] font-black text-3xl lg:text-4xl">/</span>
+            </div>
+          </motion.div>
         </div>
 
         {/* =========================================================================
@@ -216,7 +252,7 @@ export const TestimonialsCarousel: React.FC = () => {
             </div>
           </div>
 
-          {/* RIGHT COLUMN: Auto-Shuffling Stacked Cards with Swipe-Right Animation */}
+          {/* RIGHT COLUMN: Auto-Shuffling Stacked Cards with Smooth Swipe-Right Animation */}
           <div
             className="lg:col-span-7 relative flex items-center justify-center py-6 sm:py-8"
             onMouseEnter={() => setIsPaused(true)}
@@ -227,43 +263,43 @@ export const TestimonialsCarousel: React.FC = () => {
             {/* Card Stack Container */}
             <div className="relative w-full max-w-[620px] min-h-[390px] sm:min-h-[420px] flex items-center justify-center cursor-pointer select-none">
               {/* -----------------------------------------------------------------
-                  CARD 3: Furthest Back Card (Tilted right -> moves to Middle)
+                  CARD 3: Furthest Back Card (Pewter slate bg-[#45474E] -> moves to Middle)
                  ----------------------------------------------------------------- */}
               <motion.div
                 key={`back-${backCard.id}`}
-                className="absolute inset-0 rounded-[28px] sm:rounded-[34px] bg-[#2A2B31] border border-white/10 shadow-2xl overflow-hidden p-8 sm:p-10 md:p-12"
+                className="absolute inset-0 rounded-[28px] sm:rounded-[34px] bg-[#42444A] border border-white/10 shadow-2xl overflow-hidden p-8 sm:p-10 md:p-12"
                 initial={false}
                 animate={
                   isShuffling
                     ? {
-                        x: -28,
+                        x: -36,
                         y: -12,
-                        rotate: -3.5,
+                        rotate: -5,
                         scale: 0.95,
                         zIndex: 15,
-                        opacity: 0.95,
+                        opacity: 0.96,
                       }
                     : {
-                        x: 28,
+                        x: 36,
                         y: 8,
-                        rotate: 6,
+                        rotate: 6.5,
                         scale: 0.91,
                         zIndex: 10,
-                        opacity: 0.85,
+                        opacity: 0.92,
                       }
                 }
-                transition={{ duration: 0.65, ease: [0.25, 1, 0.5, 1] }}
+                transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
               >
-                {/* Dark charcoal veil */}
-                <div className="absolute inset-0 bg-[#2A2B31] opacity-95 pointer-events-none" />
+                {/* Pewter slate surface matching screenshot */}
+                <div className="absolute inset-0 bg-[#42444A] pointer-events-none" />
               </motion.div>
 
               {/* -----------------------------------------------------------------
-                  CARD 2: Middle Card (Tilted left -> steps forward to Front)
+                  CARD 2: Middle Card (Dark charcoal bg-[#18191D] -> steps to Front)
                  ----------------------------------------------------------------- */}
               <motion.div
                 key={`upcoming-${upcomingCard.id}`}
-                className="absolute inset-0 rounded-[28px] sm:rounded-[34px] bg-[#F4EFEA] text-[#121316] border border-white/10 shadow-2xl overflow-hidden p-8 sm:p-10 md:p-12"
+                className="absolute inset-0 rounded-[28px] sm:rounded-[34px] bg-[#F5EFE6] text-[#121316] border border-white/10 shadow-2xl overflow-hidden p-8 sm:p-10 md:p-12"
                 initial={false}
                 animate={
                   isShuffling
@@ -275,39 +311,39 @@ export const TestimonialsCarousel: React.FC = () => {
                         zIndex: 25,
                       }
                     : {
-                        x: -28,
+                        x: -36,
                         y: -12,
-                        rotate: -3.5,
+                        rotate: -5,
                         scale: 0.95,
                         zIndex: 20,
                       }
                 }
-                transition={{ duration: 0.65, ease: [0.25, 1, 0.5, 1] }}
+                transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
               >
                 {renderCardContent(upcomingCard, ((activeIndex + 1) % total) + 1)}
 
-                {/* Dark veil that smoothly fades out as this card steps forward */}
+                {/* Dark charcoal veil that smoothly fades out as this card steps forward */}
                 <motion.div
                   className="absolute inset-0 bg-[#18191D] pointer-events-none"
                   initial={false}
-                  animate={{ opacity: isShuffling ? 0 : 0.92 }}
+                  animate={{ opacity: isShuffling ? 0 : 0.94 }}
                   transition={{ duration: 0.5, ease: 'easeInOut' }}
                 />
               </motion.div>
 
               {/* -----------------------------------------------------------------
-                  CARD 1: Front Active Card (Swipes Right then tucks to Back)
+                  CARD 1: Front Active Card (Cream bg-[#F5EFE6] -> Swipes Right then tucks to Back)
                  ----------------------------------------------------------------- */}
               <motion.div
                 key={`front-${frontCard.id}`}
-                className="relative w-full rounded-[28px] sm:rounded-[34px] bg-[#F4EFEA] text-[#121316] p-8 sm:p-10 md:p-12 shadow-[0_30px_70px_rgba(0,0,0,0.6)] overflow-hidden"
+                className="relative w-full rounded-[28px] sm:rounded-[34px] bg-[#F5EFE6] text-[#121316] p-8 sm:p-10 md:p-12 shadow-[0_30px_70px_rgba(0,0,0,0.65)] overflow-hidden"
                 initial={false}
                 animate={
                   isShuffling
                     ? {
-                        x: [0, swipeDistance, 28],
+                        x: [0, swipeDistance, 36],
                         y: [0, -6, 8],
-                        rotate: [0, 9, 6],
+                        rotate: [0, 8.5, 6.5],
                         scale: [1.0, 0.98, 0.91],
                         zIndex: [30, 30, 10],
                       }
@@ -324,19 +360,19 @@ export const TestimonialsCarousel: React.FC = () => {
                     ? {
                         duration: 0.65,
                         times: [0, 0.42, 1],
-                        ease: [0.25, 1, 0.5, 1],
+                        ease: [0.22, 1, 0.36, 1],
                       }
                     : { duration: 0.2 }
                 }
               >
                 {renderCardContent(frontCard, activeIndex + 1)}
 
-                {/* Dark veil that fades in as this card tucks behind to the back */}
+                {/* Pewter veil that smoothly fades in as this card tucks into the back slot */}
                 {isShuffling && (
                   <motion.div
-                    className="absolute inset-0 bg-[#2A2B31] pointer-events-none"
+                    className="absolute inset-0 bg-[#42444A] pointer-events-none"
                     initial={{ opacity: 0 }}
-                    animate={{ opacity: [0, 0.4, 0.92] }}
+                    animate={{ opacity: [0, 0.35, 0.94] }}
                     transition={{ duration: 0.65, times: [0, 0.4, 1] }}
                   />
                 )}

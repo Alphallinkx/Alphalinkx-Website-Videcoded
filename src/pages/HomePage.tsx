@@ -9,6 +9,7 @@ import { SelectedWorkSection } from '../components/home/SelectedWorkSection';
 import { ServicesListSection } from '../components/home/ServicesListSection';
 import { NetworkProcessSection } from '../components/home/NetworkProcessSection';
 import { StatsSection } from '../components/home/StatsSection';
+import { WhyChooseAlphaLinkxSection } from '../components/home/WhyChooseAlphaLinkxSection';
 import { TestimonialsCarousel } from '../components/home/TestimonialsCarousel';
 import { FaqSection } from '../components/home/FaqSection';
 import { InquirySection } from '../components/home/InquirySection';
@@ -43,6 +44,9 @@ export const HomePage: React.FC = () => {
 
       {/* 09. STATS: Results, not fluff (Count-up numbers + witty one-liners) */}
       <StatsSection />
+
+      {/* 09b. WHY CHOOSE ALPHALINKX: "Built to turn visibility into measurable momentum." */}
+      <WhyChooseAlphaLinkxSection />
 
       {/* 10. TESTIMONIALS: 3D tilt cards with DRAG cursor */}
       <TestimonialsCarousel />

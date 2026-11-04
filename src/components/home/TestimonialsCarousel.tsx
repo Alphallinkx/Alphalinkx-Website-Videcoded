@@ -210,7 +210,7 @@ export const TestimonialsCarousel: React.FC = () => {
         aria-hidden="true"
         className="pointer-events-none select-none z-0
           max-md:absolute max-md:left-0 max-md:right-0 max-md:top-2 max-md:w-full max-md:h-[70px]
-          md:absolute md:left-[2.5vw] lg:left-[3vw] md:top-0 md:bottom-0 md:w-[8vw] md:min-w-[80px] md:max-w-[125px]
+          md:absolute md:left-2 lg:left-4 xl:left-6 md:top-0 md:bottom-0 md:w-[65px] lg:w-[75px]
           overflow-hidden"
         style={{
           maskImage:
@@ -233,21 +233,21 @@ export const TestimonialsCarousel: React.FC = () => {
             <span
               className="font-display font-extrabold text-[#646464] tracking-[0.2em] sm:tracking-[0.25em] leading-none select-none
                 max-md:text-[56px] max-md:[writing-mode:horizontal-tb]
-                md:text-[clamp(54px,4.8vw,86px)] md:[writing-mode:vertical-rl]"
+                md:text-[clamp(52px,4.5vw,80px)] md:[writing-mode:vertical-rl]"
             >
               TESTIMONIALS
             </span>
-            <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[58px] my-1 md:my-2">
+            <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[56px] my-1 md:my-2">
               /
             </b>
             <span
               className="font-display font-extrabold text-[#646464] tracking-[0.2em] sm:tracking-[0.25em] leading-none select-none
                 max-md:text-[56px] max-md:[writing-mode:horizontal-tb]
-                md:text-[clamp(54px,4.8vw,86px)] md:[writing-mode:vertical-rl]"
+                md:text-[clamp(52px,4.5vw,80px)] md:[writing-mode:vertical-rl]"
             >
               TESTIMONIALS
             </span>
-            <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[58px] my-1 md:my-2">
+            <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[56px] my-1 md:my-2">
               /
             </b>
           </div>
@@ -260,21 +260,21 @@ export const TestimonialsCarousel: React.FC = () => {
             <span
               className="font-display font-extrabold text-[#646464] tracking-[0.2em] sm:tracking-[0.25em] leading-none select-none
                 max-md:text-[56px] max-md:[writing-mode:horizontal-tb]
-                md:text-[clamp(54px,4.8vw,86px)] md:[writing-mode:vertical-rl]"
+                md:text-[clamp(52px,4.5vw,80px)] md:[writing-mode:vertical-rl]"
             >
               TESTIMONIALS
             </span>
-            <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[58px] my-1 md:my-2">
+            <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[56px] my-1 md:my-2">
               /
             </b>
             <span
               className="font-display font-extrabold text-[#646464] tracking-[0.2em] sm:tracking-[0.25em] leading-none select-none
                 max-md:text-[56px] max-md:[writing-mode:horizontal-tb]
-                md:text-[clamp(54px,4.8vw,86px)] md:[writing-mode:vertical-rl]"
+                md:text-[clamp(52px,4.5vw,80px)] md:[writing-mode:vertical-rl]"
             >
               TESTIMONIALS
             </span>
-            <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[58px] my-1 md:my-2">
+            <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[56px] my-1 md:my-2">
               /
             </b>
           </div>
@@ -282,14 +282,14 @@ export const TestimonialsCarousel: React.FC = () => {
       </div>
 
       {/* =========================================================================
-          MAIN CONTAINER: 2-COLUMN GRID WITH GENEROUS SPACIOUS GAP
+          MAIN CONTAINER: ALIGNED WITH SITE GRID (REMOVED EXTRA LEFT PADDING)
          ========================================================================= */}
-      <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-8 md:pl-[10vw] lg:pl-[11vw] md:pr-[4vw] lg:pr-[5vw]">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-14 lg:gap-20 xl:gap-28 items-center">
+      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:pl-20 lg:pl-24 xl:px-10 md:pr-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 xl:gap-16 items-center">
           {/* =========================================================================
               ZONE 2: MIDDLE LEFT SECTION INTRODUCTION & WRITE A REVIEW BUTTON
              ========================================================================= */}
-          <header className="lg:col-span-5 flex flex-col items-start pt-14 md:pt-0 pb-4 lg:pb-16 max-w-[430px]">
+          <header className="lg:col-span-5 flex flex-col items-start pt-14 md:pt-0 pb-4 lg:pb-16 max-w-[440px]">
             {/* Eyebrow */}
             <p className="font-mono text-[12px] font-medium tracking-[0.16em] text-[#FC6603] uppercase mb-4 sm:mb-5">
               // CLIENT STORIES

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Calendar, Plus, ArrowUpRight } from 'lucide-react';
+import { Calendar, Plus, ArrowUpRight, Phone } from 'lucide-react';
 
 interface FaqItem {
   number: string;
@@ -136,66 +136,63 @@ export const FaqSection: React.FC = () => {
           </div>
 
           {/* =========================================================================
-              RIGHT COLUMN: Booking Card Placed at Top Right of the Section
+              RIGHT COLUMN: Big Discovery Booking Card in Front of Headings
              ========================================================================= */}
           <div className="lg:col-span-5 lg:sticky lg:top-24">
-            <div className="relative rounded-[28px] sm:rounded-[32px] p-7 sm:p-8 bg-[#131417] border border-white/[0.08] shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden">
-              {/* Subtle top ambient glow */}
-              <div className="absolute top-0 right-0 w-44 h-44 bg-[#FC6603]/[0.08] rounded-full blur-3xl pointer-events-none" />
+            <div className="relative rounded-[28px] sm:rounded-[34px] p-8 sm:p-9 md:p-10 bg-[#121316] border border-white/[0.08] shadow-[0_25px_60px_rgba(0,0,0,0.6)] overflow-hidden">
+              {/* Top ambient orange blur */}
+              <div className="absolute top-0 right-0 w-56 h-56 bg-[#FC6603]/[0.09] rounded-full blur-3xl pointer-events-none" />
 
-              {/* Card Top Row: Avatar & Brand Mark */}
-              <div className="flex items-center justify-between relative z-10">
-                {/* Avatar */}
-                <div className="w-12 h-12 rounded-xl overflow-hidden border border-white/10 shadow-md bg-stone-900 shrink-0">
-                  <img
-                    src="/assets/faq-avatar.png"
-                    alt="Growth Consultant"
-                    className="w-full h-full object-cover"
-                  />
+              {/* Card Top Row: Glowing Calendar Badge & AlphaLinkx Mark */}
+              <div className="flex items-start justify-between relative z-10">
+                {/* Glowing Calendar Badge */}
+                <div className="w-14 h-14 sm:w-15 sm:h-15 rounded-2xl bg-[#1C1410] border border-[#FC6603]/35 flex items-center justify-center text-[#FC6603] shadow-[0_0_22px_rgba(252,102,3,0.22)] shrink-0">
+                  <Calendar className="w-7 h-7 stroke-[1.8]" />
                 </div>
 
-                {/* Brand Mark */}
+                {/* AlphaLinkx Mark */}
                 <img
                   src="/assets/al-mark-orange.png"
                   alt="AlphaLinkx"
-                  className="w-9 h-9 object-contain opacity-75"
+                  className="w-16 h-16 sm:w-20 sm:h-20 object-contain opacity-95 shrink-0 -mt-1 -mr-1"
                 />
               </div>
 
-              {/* Heading */}
-              <div className="relative z-10 mt-6">
-                <h3 className="font-display font-extrabold text-[22px] sm:text-[25px] text-white leading-tight tracking-tight">
-                  Still not sure?<br />
-                  Book a free discovery call.
+              {/* Headings */}
+              <div className="relative z-10 mt-7 sm:mt-8">
+                <h3 className="font-display font-extrabold text-[23px] sm:text-[26px] md:text-[28px] text-white leading-[1.18] tracking-tight">
+                  Still have questions?<br />
+                  Let’s talk about your goals.
                 </h3>
 
                 {/* Subtitle */}
-                <p className="font-sans text-[13px] sm:text-[14px] text-[#A1A1AA] leading-relaxed mt-3">
-                  Learn more about how we work and how we can help you & your business take the next step.
+                <p className="font-sans text-[13.5px] sm:text-[14.5px] text-[#A1A1AA] leading-relaxed mt-3 max-w-[380px]">
+                  Tell us about your business. We&apos;ll help you find the right next step.
                 </p>
               </div>
 
               {/* Action Buttons Row */}
-              <div className="relative z-10 mt-7 flex items-center gap-3.5 flex-wrap">
-                {/* Schedule Now Button with Calendar Badge */}
+              <div className="relative z-10 mt-8 flex items-center gap-4 sm:gap-6 flex-wrap">
+                {/* Glowing Orange Pill Button: BOOK A CALL ↗ */}
                 <Link
                   to="/contact"
-                  className="group inline-flex items-center gap-3 pl-2 pr-5 py-2 rounded-full bg-white text-black font-sans font-bold text-[13px] sm:text-[14px] hover:bg-[#FC6603] hover:text-white transition-all duration-300 shadow-md hover:shadow-[0_0_20px_rgba(252,102,3,0.35)]"
+                  className="group inline-flex items-center gap-3 pl-6 pr-2.5 py-2.5 rounded-full bg-[#FC6603] text-white font-mono font-bold text-[12px] sm:text-[13px] tracking-[0.12em] uppercase shadow-[0_0_24px_rgba(252,102,3,0.4)] hover:bg-[#ff5500] hover:shadow-[0_0_32px_rgba(252,102,3,0.6)] transition-all duration-300 hover:scale-[1.02]"
                 >
-                  <span className="w-8 h-8 rounded-full bg-[#FC6603] text-white flex items-center justify-center shrink-0 group-hover:bg-white group-hover:text-[#FC6603] transition-colors shadow-sm">
-                    <Calendar className="w-4 h-4 stroke-[2.2]" />
+                  <span>BOOK A CALL</span>
+                  <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white flex items-center justify-center text-black shrink-0 transition-transform duration-300 group-hover:rotate-45 shadow-sm">
+                    <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
                   </span>
-                  <span>Schedule Now</span>
                 </Link>
 
-                {/* Call Now Link */}
-                <Link
-                  to="/contact"
-                  className="inline-flex items-center gap-1 font-sans font-semibold text-[13px] sm:text-[14px] text-white/90 hover:text-[#FC6603] transition-colors px-3 py-2"
+                {/* Call Now with Phone Icon */}
+                <a
+                  href="tel:+18005555465"
+                  aria-label="Call AlphaLinkx"
+                  className="inline-flex items-center gap-2.5 font-sans font-semibold text-[14px] sm:text-[15px] text-white hover:text-[#FC6603] transition-colors py-2 group"
                 >
+                  <Phone className="w-4 h-4 text-white group-hover:text-[#FC6603] transition-colors stroke-[2.2]" />
                   <span>Call Now</span>
-                  <ArrowUpRight className="w-4 h-4 opacity-70" />
-                </Link>
+                </a>
               </div>
             </div>
           </div>

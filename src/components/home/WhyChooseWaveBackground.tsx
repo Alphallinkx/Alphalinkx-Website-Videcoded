@@ -127,9 +127,9 @@ export const WhyChooseWaveBackground: React.FC = () => {
           vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
           gl_Position = projectionMatrix * mvPosition;
 
-          // Size attenuation with perspective
-          float size = aIsOrange > 0.8 ? 58.0 : (aIsOrange > 0.2 ? 46.0 : 34.0);
-          gl_PointSize = (size * uPixelRatio) * (80.0 / -mvPosition.z);
+          // Size attenuation with perspective (refined, crisper point sizes)
+          float size = aIsOrange > 0.8 ? 42.0 : (aIsOrange > 0.2 ? 32.0 : 24.0);
+          gl_PointSize = (size * uPixelRatio) * (70.0 / -mvPosition.z);
 
           // Perspective depth fade (particles fade softly into background darkness)
           float depthFade = smoothstep(180.0, 45.0, -mvPosition.z);
@@ -137,18 +137,18 @@ export const WhyChooseWaveBackground: React.FC = () => {
           float heightFactor = smoothstep(-22.0, 24.0, pos.y);
 
           if (aIsOrange > 0.8) {
-            // Intense Neon Brand Orange (#FC6603)
-            vColor = vec3(1.0, 0.40, 0.02);
-            vAlpha = 1.0 * depthFade;
+            // Refined, focused Neon Brand Orange
+            vColor = vec3(0.99, 0.40, 0.02);
+            vAlpha = 0.85 * depthFade;
           } else if (aIsOrange > 0.2) {
             // Soft warm orange transition
-            vColor = vec3(0.95, 0.48, 0.15);
-            vAlpha = 0.75 * depthFade;
+            vColor = vec3(0.95, 0.46, 0.12);
+            vAlpha = 0.55 * depthFade;
           } else {
-            // Crisp Silver-White particles
-            float brightness = mix(0.35, 1.0, heightFactor);
+            // Crisp Silver-White particles with subdued glow
+            float brightness = mix(0.30, 0.88, heightFactor);
             vColor = vec3(brightness);
-            vAlpha = mix(0.18, 0.88, heightFactor) * depthFade;
+            vAlpha = mix(0.12, 0.65, heightFactor) * depthFade;
           }
         }
       `,
@@ -158,23 +158,17 @@ export const WhyChooseWaveBackground: React.FC = () => {
         varying vec3 vColor;
 
         void main() {
-          // Circular particle with soft radiant edge
+          // Circular particle with crisp core and subtle, restrained halo
           vec2 coord = gl_PointCoord - vec2(0.5);
           float dist = length(coord);
           if (dist > 0.5) discard;
 
-          // Smooth radial falloff with bright intense center
-          float core = 1.0 - smoothstep(0.0, 0.2, dist);
-          float halo = 1.0 - smoothstep(0.0, 0.5, dist);
-          float alpha = (core * 0.5 + halo * 0.5) * vAlpha;
+          // Crisp defined particle with restrained radial falloff
+          float core = 1.0 - smoothstep(0.0, 0.25, dist);
+          float halo = 1.0 - smoothstep(0.15, 0.48, dist);
+          float alpha = (core * 0.70 + halo * 0.30) * vAlpha;
 
-          // Orange particles get extra radiant core
-          vec3 finalColor = vColor;
-          if (vIsOrange > 0.8) {
-            finalColor += vec3(0.25, 0.15, 0.0) * core;
-          }
-
-          gl_FragColor = vec4(finalColor, alpha);
+          gl_FragColor = vec4(vColor, alpha);
         }
       `,
       transparent: true,
@@ -263,3 +257,4 @@ export const WhyChooseWaveBackground: React.FC = () => {
 };
 
 export default WhyChooseWaveBackground;
+

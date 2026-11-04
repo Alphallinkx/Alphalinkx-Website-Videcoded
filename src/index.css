@@ -442,6 +442,16 @@ canvas {
   100% { transform: translateX(-50%); }
 }
 
+@keyframes marquee-y {
+  0% { transform: translateY(0%); }
+  100% { transform: translateY(-50%); }
+}
+
+@keyframes marquee-x {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
 @keyframes ticker-left {
   0% { transform: translate3d(0, 0, 0); }
   100% { transform: translate3d(-50%, 0, 0); }

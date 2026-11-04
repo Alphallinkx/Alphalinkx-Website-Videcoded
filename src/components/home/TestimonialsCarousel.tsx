@@ -1,383 +1,668 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight } from 'lucide-react';
-import { motion } from 'framer-motion';
 
-interface TestimonialItem {
-  id: string;
-  tag: string;
+interface Review {
+  category: string;
   quote: string;
-  author: string;
+  name: string;
   role: string;
   initials: string;
-  label: string;
 }
 
-const TESTIMONIALS_DATA: TestimonialItem[] = [
+const REVIEWS: Review[] = [
   {
-    id: 'test-1',
-    tag: 'WEB DESIGN',
+    category: 'WEB DESIGN',
     quote: 'They listened to what we needed and made every step feel clear.',
-    author: 'Alex Carter',
+    name: 'Alex Carter',
     role: 'Business owner',
     initials: 'AC',
-    label: 'ILLUSTRATIVE REVIEW',
   },
   {
-    id: 'test-2',
-    tag: 'AEO & GEO DOMINANCE',
-    quote: 'Our organic pipeline quadrupled within four months. Cited #1 on Perplexity for core commercial terms.',
-    author: 'Marcus Vance',
-    role: 'Chief Revenue Officer',
-    initials: 'MV',
-    label: 'VERIFIED CLIENT',
+    category: 'BRAND STRATEGY',
+    quote: 'Our brand finally feels like us. Thoughtful, clear and built with purpose.',
+    name: 'Jordan Lee',
+    role: 'Founder',
+    initials: 'JL',
   },
   {
-    id: 'test-3',
-    tag: 'PAID ACQUISITION',
-    quote: 'AlphaLinkx engineered our Google Ads to a 5.2x ROAS in the first 60 days. Unmatched technical caliber.',
-    author: 'Elena Rostova',
-    role: 'Managing Director',
-    initials: 'ER',
-    label: 'VERIFIED CLIENT',
+    category: 'DEVELOPMENT',
+    quote: 'The details made the difference. Everything feels simpler to use.',
+    name: 'Sam Taylor',
+    role: 'Product lead',
+    initials: 'ST',
   },
   {
-    id: 'test-4',
-    tag: 'LOCAL DOMINANCE',
-    quote: 'Went from invisible on Google Maps to dominating the 3-pack across 18 regional zip codes.',
-    author: 'Dr. Julian Thorne',
-    role: 'Managing Partner',
-    initials: 'JT',
-    label: 'VERIFIED CLIENT',
+    category: 'COLLABORATION',
+    quote: 'We always knew what was happening, and what was coming next.',
+    name: 'Morgan Ellis',
+    role: 'Marketing lead',
+    initials: 'ME',
   },
   {
-    id: 'test-5',
-    tag: 'FULL-STACK SYSTEMS',
-    quote: 'Zero account manager telephone games. Collaborated directly with senior architects and shipped on schedule.',
-    author: 'Sarah Lin',
-    role: 'VP of Product',
-    initials: 'SL',
-    label: 'VERIFIED CLIENT',
+    category: 'DIGITAL EXPERIENCE',
+    quote: 'From the first conversation to launch, it felt like one connected team.',
+    name: 'Casey Brooks',
+    role: 'Business owner',
+    initials: 'CB',
   },
 ];
 
+const INTERVAL = 6000;
+const POSES = [
+  'translate(0, 0) rotate(0deg)',
+  'translate(7%, -0.5%) rotate(-5deg) scale(0.98)',
+  'translate(-9%, -6%) rotate(-7deg) scale(1)',
+];
+
+const pad = (n: number) => String(n).padStart(2, '0');
+
 export const TestimonialsCarousel: React.FC = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isShuffling, setIsShuffling] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
-  const isShufflingRef = useRef(false);
-  isShufflingRef.current = isShuffling;
+  const [index, setIndex] = useState(0);
+  const [manualPause, setManualPause] = useState(false);
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const [isTabHidden, setIsTabHidden] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
+  const [elapsed, setElapsed] = useState(0);
+  const [isBusy, setIsBusy] = useState(false);
+  const [announcement, setAnnouncement] = useState('');
 
-  // Trigger shuffle animation: Front card swipes right and tucks behind upcoming card
-  const handleShuffle = () => {
-    if (isShufflingRef.current) return;
-    setIsShuffling(true);
+  const sectionRef = useRef<HTMLElement>(null);
+  const reviewAreaRef = useRef<HTMLDivElement>(null);
+  const deckRef = useRef<HTMLDivElement>(null);
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null);
+  const rafRef = useRef<number | null>(null);
+  const lastTimeRef = useRef<number>(performance.now());
+  const elapsedRef = useRef(0);
+  const indexRef = useRef(index);
+  indexRef.current = index;
+  const isBusyRef = useRef(isBusy);
+  isBusyRef.current = isBusy;
 
-    // 650ms smooth transition duration
-    setTimeout(() => {
-      setActiveIndex((prev) => (prev + 1) % TESTIMONIALS_DATA.length);
-      setIsShuffling(false);
-    }, 650);
+  // Track reduced motion preference
+  useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setReducedMotion(mq.matches);
+    if (mq.matches) setManualPause(true);
+
+    const handler = (e: MediaQueryListEvent) => {
+      setReducedMotion(e.matches);
+      if (e.matches) setManualPause(true);
+    };
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+
+  // Track tab visibility
+  useEffect(() => {
+    const handler = () => setIsTabHidden(document.hidden);
+    document.addEventListener('visibilitychange', handler);
+    return () => document.removeEventListener('visibilitychange', handler);
+  }, []);
+
+  // Track viewport intersection
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setVisible(entry.isIntersecting);
+      },
+      { threshold: 0.12 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  const isPaused =
+    manualPause || hovered || focused || !visible || isTabHidden || reducedMotion;
+  const isPausedRef = useRef(isPaused);
+  isPausedRef.current = isPaused;
+
+  // Smooth slide change function with Web Animations API
+  const changeReview = useCallback(
+    async (target: number, isManual = false) => {
+      if (isBusyRef.current || target === indexRef.current) return;
+      setIsBusy(true);
+      elapsedRef.current = 0;
+      setElapsed(0);
+
+      const deck = deckRef.current;
+      const cards = deck ? (Array.from(deck.children) as HTMLElement[]) : [];
+      const direction =
+        target === (indexRef.current + REVIEWS.length - 1) % REVIEWS.length ? -1 : 1;
+
+      if (!reducedMotion && cards.length >= 3) {
+        try {
+          const exitAnim = cards[0].animate(
+            [
+              { transform: POSES[0], opacity: 1, offset: 0 },
+              {
+                transform: `translate(${direction * 24}%, -12%) rotate(${direction * 9}deg) scale(0.99)`,
+                opacity: 1,
+                offset: 0.48,
+              },
+              {
+                transform: `translate(${direction * 9}%, -7%) rotate(${-direction * 7}deg) scale(0.94)`,
+                opacity: 0,
+                offset: 1,
+              },
+            ],
+            {
+              duration: 820,
+              easing: 'cubic-bezier(0.22, 0.68, 0.2, 1)',
+              fill: 'forwards',
+            }
+          );
+
+          const liftAnims = cards.slice(1).map((card, i) =>
+            card.animate(
+              [{ transform: POSES[i + 1] }, { transform: POSES[i] }],
+              {
+                duration: 820,
+                easing: 'cubic-bezier(0.22, 0.68, 0.2, 1)',
+                fill: 'forwards',
+              }
+            )
+          );
+
+          await Promise.all([exitAnim.finished, ...liftAnims.map((a) => a.finished)]);
+        } catch {
+          // Fallback if animation interrupted
+        }
+      }
+
+      setIndex(target);
+      setIsBusy(false);
+      lastTimeRef.current = performance.now();
+
+      if (isManual) {
+        setAnnouncement(
+          `Review ${target + 1} of ${REVIEWS.length}. ${REVIEWS[target].quote} Illustrative review.`
+        );
+      }
+    },
+    [reducedMotion]
+  );
+
+  // RAF Autoplay timer
+  useEffect(() => {
+    let active = true;
+
+    const frame = (now: number) => {
+      if (!active) return;
+      const delta = Math.min(now - lastTimeRef.current, 100);
+      lastTimeRef.current = now;
+
+      if (!isPausedRef.current && !isBusyRef.current) {
+        elapsedRef.current += delta;
+        setElapsed(elapsedRef.current);
+
+        if (elapsedRef.current >= INTERVAL) {
+          changeReview((indexRef.current + 1) % REVIEWS.length);
+        }
+      }
+
+      rafRef.current = requestAnimationFrame(frame);
+    };
+
+    lastTimeRef.current = performance.now();
+    rafRef.current = requestAnimationFrame(frame);
+
+    return () => {
+      active = false;
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [changeReview]);
+
+  // Touch swipe support on deck
+  const handlePointerDown = (e: React.PointerEvent) => {
+    if (e.pointerType !== 'mouse') {
+      touchStartRef.current = { x: e.clientX, y: e.clientY };
+    }
   };
 
-  // Auto-shuffle cards every 3 seconds (pauses on hover)
-  useEffect(() => {
-    if (isPaused) return;
-    const interval = setInterval(() => {
-      handleShuffle();
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [isPaused]);
+  const handlePointerUp = (e: React.PointerEvent) => {
+    if (!touchStartRef.current) return;
+    const dx = e.clientX - touchStartRef.current.x;
+    const dy = e.clientY - touchStartRef.current.y;
+    touchStartRef.current = null;
 
-  // Responsive swipe distance: ~250px on desktop, ~170px on mobile
-  const swipeDistance = typeof window !== 'undefined' && window.innerWidth < 640 ? 170 : 250;
+    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) {
+      if (dx < 0) {
+        changeReview((index + 1) % REVIEWS.length, true);
+      } else {
+        changeReview((index + REVIEWS.length - 1) % REVIEWS.length, true);
+      }
+    }
+  };
 
-  // Derive the 3 cards currently visible in the stack
-  const total = TESTIMONIALS_DATA.length;
-  const frontCard = TESTIMONIALS_DATA[activeIndex];
-  const upcomingCard = TESTIMONIALS_DATA[(activeIndex + 1) % total];
-  const backCard = TESTIMONIALS_DATA[(activeIndex + 2) % total];
-
-  // Helper renderer for a single testimonial card
-  const renderCardContent = (item: TestimonialItem, indexNumber: number) => (
-    <div className="relative w-full h-full flex flex-col justify-between">
-      {/* Curved orange corner tab accent */}
-      <div className="absolute bottom-0 right-0 w-11 h-11 rounded-br-[28px] sm:rounded-br-[34px] overflow-hidden pointer-events-none">
-        <div className="absolute bottom-0 right-0 w-11 h-11 bg-[#FC6603] rounded-tl-[24px]" />
-      </div>
-
-      <div>
-        {/* Top Row: Orange Quotation Marks & Index Counter */}
-        <div className="flex items-start justify-between">
-          <svg
-            className="w-10 h-8 sm:w-11 sm:h-9 text-[#FC6603] fill-current"
-            viewBox="0 0 36 28"
-            aria-hidden="true"
-          >
-            <path d="M0 16.8C0 7.56 6.048 1.4 15.12 0L17.64 4.76C12.096 5.88 9.576 9.24 9.072 13.16C10.08 12.6 11.424 12.32 13.104 12.32C16.8 12.32 19.824 15.12 19.824 19.32C19.824 23.8 16.128 27.44 11.2 27.44C5.04 27.44 0 22.96 0 16.8ZM16.128 16.8C16.128 7.56 22.176 1.4 31.248 0L33.768 4.76C28.224 5.88 25.704 9.24 25.2 13.16C26.208 12.6 27.552 12.32 29.232 12.32C32.928 12.32 35.952 15.12 35.952 19.32C35.952 23.8 32.256 27.44 27.328 27.44C21.168 27.44 16.128 22.96 16.128 16.8Z" />
-          </svg>
-
-          <span className="font-mono text-[12px] sm:text-[13px] font-bold text-[#FC6603] tracking-widest">
-            {indexNumber.toString().padStart(2, '0')} / {total.toString().padStart(2, '0')}
-          </span>
-        </div>
-
-        {/* Category Tag */}
-        <div className="font-mono text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.2em] text-[#71717A] mt-4">
-          {item.tag}
-        </div>
-
-        {/* Big Bold Quote Text */}
-        <blockquote className="font-display font-bold text-[22px] sm:text-[26px] md:text-[30px] lg:text-[32px] text-[#121316] leading-[1.26] tracking-tight mt-3 sm:mt-4">
-          “{item.quote}”
-        </blockquote>
-      </div>
-
-      {/* Bottom Row: Initials Badge, Name/Role & Review Type */}
-      <div className="pt-6 sm:pt-8 mt-6 sm:mt-8 border-t border-black/[0.08] flex items-center justify-between gap-4">
-        <div className="flex items-center gap-3.5">
-          <div className="w-11 h-11 rounded-full bg-[#121316] text-white font-display font-extrabold text-[13px] sm:text-[14px] flex items-center justify-center shrink-0 shadow-sm">
-            {item.initials}
-          </div>
-
-          <div>
-            <h4 className="font-display font-bold text-[16px] sm:text-[17px] text-[#121316] tracking-tight leading-tight">
-              {item.author}
-            </h4>
-            <p className="font-sans text-[12.5px] sm:text-[13.5px] text-[#71717A] mt-0.5">
-              {item.role}
-            </p>
-          </div>
-        </div>
-
-        <div className="font-mono text-[10px] sm:text-[11px] font-semibold text-[#8E8E93] uppercase tracking-[0.16em] shrink-0 mr-4">
-          {item.label}
-        </div>
-      </div>
-    </div>
-  );
+  // Keyboard navigation
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      changeReview((index + 1) % REVIEWS.length, true);
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      changeReview((index + REVIEWS.length - 1) % REVIEWS.length, true);
+    }
+  };
 
   return (
     <section
-      aria-label="Client Testimonials"
-      className="relative py-20 sm:py-28 md:py-32 bg-[#090A0D] border-t border-white/[0.06] overflow-hidden"
+      ref={sectionRef}
+      id="testimonials"
+      aria-labelledby="testimonials-title"
+      className="relative isolation-isolate overflow-hidden min-h-[720px] lg:min-h-[780px] xl:min-h-[840px] flex items-center py-20 lg:py-24 xl:py-28 bg-[#0B0B0C] text-[#F7F7F5]"
+      style={{
+        backgroundImage:
+          'radial-gradient(ellipse at 65% 50%, rgba(25, 19, 15, 0.45), transparent 62%)',
+      }}
     >
-      {/* Subtle ambient lighting */}
-      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[600px] h-[400px] bg-[#FC6603]/[0.035] rounded-full blur-[140px] pointer-events-none" />
+      {/* Subtle Noise Texture Overlay */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none opacity-[0.035]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23fff' filter='url(%23n)' opacity='.8' d='M0 0h180v180H0z'/%3E%3C/svg%3E")`,
+        }}
+      />
 
-      <div className="relative z-10 w-full max-w-[1380px] mx-auto px-4 sm:px-6 lg:px-8 flex">
-        {/* =========================================================================
-            FAR LEFT: Much Bigger Vertical "TESTIMONIALS /" Moving in Infinite Loop
-           ========================================================================= */}
-        <div className="relative hidden md:flex w-20 lg:w-28 shrink-0 overflow-hidden items-center justify-center border-r border-white/[0.08] mr-8 lg:mr-14 select-none">
-          <motion.div
-            animate={{ y: ['0%', '-50%'] }}
-            transition={{
-              duration: 18,
-              repeat: Infinity,
-              ease: 'linear',
-            }}
-            className="flex flex-col gap-10 [writing-mode:vertical-rl] py-6"
+      {/* =========================================================================
+          ZONE 1: FAR LEFT VERTICAL OVERSIZED MARQUEE (DESKTOP) / HORIZONTAL (MOBILE)
+         ========================================================================= */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none select-none z-0
+          max-md:absolute max-md:left-0 max-md:right-0 max-md:top-2 max-md:w-full max-md:h-[70px]
+          md:absolute md:left-[4vw] lg:left-[4.5vw] md:top-0 md:bottom-0 md:w-[7vw] md:min-w-[70px] md:max-w-[110px]
+          overflow-hidden"
+        style={{
+          maskImage:
+            typeof window !== 'undefined' && window.innerWidth < 768
+              ? 'linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)'
+              : 'linear-gradient(transparent, #000 10%, #000 90%, transparent)',
+          WebkitMaskImage:
+            typeof window !== 'undefined' && window.innerWidth < 768
+              ? 'linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)'
+              : 'linear-gradient(transparent, #000 10%, #000 90%, transparent)',
+        }}
+      >
+        <div
+          className={`flex w-full ${isPaused ? '[animation-play-state:paused]' : ''}
+            max-md:w-max max-md:flex-row max-md:animate-[marquee-x_28s_linear_infinite]
+            md:flex-col md:animate-[marquee-y_30s_linear_infinite]`}
+        >
+          {/* Loop Group 1 */}
+          <div className="flex max-md:flex-row max-md:gap-[22px] max-md:pr-[22px] md:flex-col md:items-center md:gap-6 md:pb-6">
+            <span
+              className="font-display font-extrabold text-[#646464] tracking-[-0.065em] leading-none select-none
+                max-md:text-[60px] max-md:[writing-mode:horizontal-tb]
+                md:text-[clamp(60px,5.5vw,98px)] md:[writing-mode:vertical-rl]"
+            >
+              TESTIMONIALS
+            </span>
+            <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[46px] md:text-[66px]">
+              /
+            </b>
+            <span
+              className="font-display font-extrabold text-[#646464] tracking-[-0.065em] leading-none select-none
+                max-md:text-[60px] max-md:[writing-mode:horizontal-tb]
+                md:text-[clamp(60px,5.5vw,98px)] md:[writing-mode:vertical-rl]"
+            >
+              TESTIMONIALS
+            </span>
+            <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[46px] md:text-[66px]">
+              /
+            </b>
+          </div>
+
+          {/* Loop Group 2 (Exact duplicate for seamless looping) */}
+          <div
+            className="flex max-md:flex-row max-md:gap-[22px] max-md:pr-[22px] md:flex-col md:items-center md:gap-6 md:pb-6"
+            aria-hidden="true"
           >
-            {/* Block 1 */}
-            <div className="flex items-center gap-8">
-              <span className="font-mono font-black text-3xl lg:text-4xl tracking-[0.24em] uppercase text-white/20 hover:text-white/35 transition-colors">
-                TESTIMONIALS
-              </span>
-              <span className="text-[#FC6603] font-black text-3xl lg:text-4xl">/</span>
-              <span className="font-mono font-black text-3xl lg:text-4xl tracking-[0.24em] uppercase text-white/20 hover:text-white/35 transition-colors">
-                TESTIMONIALS
-              </span>
-              <span className="text-[#FC6603] font-black text-3xl lg:text-4xl">/</span>
-              <span className="font-mono font-black text-3xl lg:text-4xl tracking-[0.24em] uppercase text-white/20 hover:text-white/35 transition-colors">
-                TESTIMONIALS
-              </span>
-              <span className="text-[#FC6603] font-black text-3xl lg:text-4xl">/</span>
-            </div>
-
-            {/* Block 2 (Exact duplicate for seamless infinite loop) */}
-            <div className="flex items-center gap-8" aria-hidden="true">
-              <span className="font-mono font-black text-3xl lg:text-4xl tracking-[0.24em] uppercase text-white/20 hover:text-white/35 transition-colors">
-                TESTIMONIALS
-              </span>
-              <span className="text-[#FC6603] font-black text-3xl lg:text-4xl">/</span>
-              <span className="font-mono font-black text-3xl lg:text-4xl tracking-[0.24em] uppercase text-white/20 hover:text-white/35 transition-colors">
-                TESTIMONIALS
-              </span>
-              <span className="text-[#FC6603] font-black text-3xl lg:text-4xl">/</span>
-              <span className="font-mono font-black text-3xl lg:text-4xl tracking-[0.24em] uppercase text-white/20 hover:text-white/35 transition-colors">
-                TESTIMONIALS
-              </span>
-              <span className="text-[#FC6603] font-black text-3xl lg:text-4xl">/</span>
-            </div>
-          </motion.div>
+            <span
+              className="font-display font-extrabold text-[#646464] tracking-[-0.065em] leading-none select-none
+                max-md:text-[60px] max-md:[writing-mode:horizontal-tb]
+                md:text-[clamp(60px,5.5vw,98px)] md:[writing-mode:vertical-rl]"
+            >
+              TESTIMONIALS
+            </span>
+            <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[46px] md:text-[66px]">
+              /
+            </b>
+            <span
+              className="font-display font-extrabold text-[#646464] tracking-[-0.065em] leading-none select-none
+                max-md:text-[60px] max-md:[writing-mode:horizontal-tb]
+                md:text-[clamp(60px,5.5vw,98px)] md:[writing-mode:vertical-rl]"
+            >
+              TESTIMONIALS
+            </span>
+            <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[46px] md:text-[66px]">
+              /
+            </b>
+          </div>
         </div>
+      </div>
 
-        {/* =========================================================================
-            MAIN SECTION CONTENT: 2-Column Grid (Headings on Left, Shuffling Cards on Right)
-           ========================================================================= */}
-        <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
-          {/* LEFT COLUMN: Eyebrow, Headings, Subtitle & Write a review Button */}
-          <div className="lg:col-span-5 flex flex-col items-start">
-            {/* Eyebrow: // CLIENT STORIES */}
-            <div className="font-mono text-[11px] sm:text-[12px] font-semibold text-[#FC6603] uppercase tracking-[0.2em] mb-3 flex items-center gap-2">
-              <span className="font-bold">//</span>
-              <span className="text-[#FC6603]">CLIENT STORIES</span>
-            </div>
+      {/* =========================================================================
+          MAIN CONTAINER: 2-COLUMN GRID (MIDDLE LEFT INTRO & RIGHT CARDS STACK)
+         ========================================================================= */}
+      <div className="relative z-10 w-full max-w-[1420px] mx-auto px-6 sm:px-8 md:pl-[15vw] md:pr-[6vw]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 xl:gap-16 items-center">
+          {/* =========================================================================
+              ZONE 2: MIDDLE LEFT SECTION INTRODUCTION & CTA
+             ========================================================================= */}
+          <header className="lg:col-span-5 flex flex-col items-start pt-14 md:pt-0 pb-4 lg:pb-16">
+            {/* Eyebrow */}
+            <p className="font-mono text-[12px] font-medium tracking-[0.16em] text-[#FC6603] uppercase mb-5 sm:mb-6">
+              // CLIENT STORIES
+            </p>
 
-            {/* Heading: Exact font sizes from other sections */}
-            <h2 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-[-0.03em] leading-[1.08] text-white">
-              <span className="block">Their words.</span>
+            {/* Two-Line Heading */}
+            <h2
+              id="testimonials-title"
+              className="font-display font-bold text-[clamp(36px,3.4vw,60px)] leading-[1.03] tracking-[-0.05em] text-white mb-6 sm:mb-7"
+            >
+              Their words.
               <span className="block text-[#FC6603]">Our motivation.</span>
             </h2>
 
-            {/* Subtitle */}
-            <p className="font-sans text-[15px] sm:text-[16px] text-[#A1A1AA] leading-relaxed mt-4 max-w-md">
+            {/* Supporting Text */}
+            <p className="font-sans text-[17px] sm:text-[18px] text-[#AAAAAA] leading-[1.6] max-w-[360px] mb-8 sm:mb-9">
               A closer look at the experience of working with us.
             </p>
 
-            {/* CTA Button: Write a review */}
-            <div className="mt-8 sm:mt-10">
-              <Link
-                to="/contact"
-                className="group relative inline-flex items-center gap-3 pl-6 pr-2.5 py-2.5 sm:pl-7 sm:pr-3 sm:py-3 rounded-full bg-[#16171B] border border-white/[0.14] text-white hover:border-[#FC6603] hover:bg-[#1C1D22] transition-all duration-300 shadow-[0_4px_24px_rgba(0,0,0,0.5)] hover:shadow-[0_0_28px_rgba(252,102,3,0.35)] hover:scale-[1.02] active:scale-[0.98]"
+            {/* CTA Button: Let’s talk ↗ */}
+            <Link
+              to="/contact"
+              className="group inline-flex items-center gap-4 text-[18px] sm:text-[19px] text-[#F4F4F1] font-sans border-b border-[#B8B8B8] pb-2 transition-colors hover:border-[#FC6603] hover:text-white focus-visible:outline-2 focus-visible:outline-[#FC6603] focus-visible:outline-offset-6"
+            >
+              <span>Let’s talk</span>
+              <span
+                aria-hidden="true"
+                className="inline-block transition-transform duration-250 ease-out group-hover:translate-x-[3px] group-hover:-translate-y-[3px]"
               >
-                <span className="font-mono text-[12px] sm:text-[13px] font-bold uppercase tracking-[0.14em] text-white group-hover:text-[#FC6603] transition-colors">
-                  Write a review
-                </span>
-                <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#FC6603] text-white flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:rotate-45 shadow-sm">
-                  <ArrowUpRight className="w-3.5 h-3.5 stroke-[2.5]" />
-                </span>
-              </Link>
-            </div>
-          </div>
+                ↗
+              </span>
+            </Link>
+          </header>
 
-          {/* RIGHT COLUMN: Auto-Shuffling Stacked Cards with Smooth Swipe-Right Animation */}
+          {/* =========================================================================
+              ZONE 3: RIGHT LAYERED SHUFFLING CARDS & CONTROLS
+             ========================================================================= */}
           <div
-            className="lg:col-span-7 relative flex items-center justify-center py-6 sm:py-8"
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
-            onClick={handleShuffle}
-            title="Click to shuffle to next review"
+            ref={reviewAreaRef}
+            role="region"
+            aria-roledescription="carousel"
+            aria-label="Client reviews"
+            tabIndex={0}
+            onPointerEnter={(e) => {
+              if (e.pointerType === 'mouse') setHovered(true);
+            }}
+            onPointerLeave={() => setHovered(false)}
+            onFocus={() => setFocused(true)}
+            onBlur={(e) => {
+              if (!reviewAreaRef.current?.contains(e.relatedTarget as Node)) {
+                setFocused(false);
+              }
+            }}
+            onKeyDown={handleKeyDown}
+            className="lg:col-span-7 w-full max-w-[600px] mx-auto justify-self-center pt-4 lg:pt-8 focus-visible:outline-none"
           >
-            {/* Card Stack Container */}
-            <div className="relative w-full max-w-[620px] min-h-[390px] sm:min-h-[420px] flex items-center justify-center cursor-pointer select-none">
-              {/* -----------------------------------------------------------------
-                  CARD 3: Furthest Back Card (Pewter slate bg-[#45474E] -> moves to Middle)
-                 ----------------------------------------------------------------- */}
-              <motion.div
-                key={`back-${backCard.id}`}
-                className="absolute inset-0 rounded-[28px] sm:rounded-[34px] bg-[#42444A] border border-white/10 shadow-2xl overflow-hidden p-8 sm:p-10 md:p-12"
-                initial={false}
-                animate={
-                  isShuffling
-                    ? {
-                        x: -36,
-                        y: -12,
-                        rotate: -5,
-                        scale: 0.95,
-                        zIndex: 15,
-                        opacity: 0.96,
-                      }
-                    : {
-                        x: 36,
-                        y: 8,
-                        rotate: 6.5,
-                        scale: 0.91,
-                        zIndex: 10,
-                        opacity: 0.92,
-                      }
-                }
-                transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-              >
-                {/* Pewter slate surface matching screenshot */}
-                <div className="absolute inset-0 bg-[#42444A] pointer-events-none" />
-              </motion.div>
+            {/* 3D Overlapping Card Deck with Container Queries */}
+            <div
+              ref={deckRef}
+              onPointerDown={handlePointerDown}
+              onPointerUp={handlePointerUp}
+              onPointerCancel={() => {
+                touchStartRef.current = null;
+              }}
+              className="relative w-full aspect-[411/254] max-md:min-h-[290px] [container-type:inline-size] touch-pan-y [perspective:1400px] isolation-isolate select-none"
+            >
+              {[0, 1, 2].map((slot) => {
+                const reviewIdx = (index + slot) % REVIEWS.length;
+                const r = REVIEWS[reviewIdx];
+                const isFront = slot === 0;
 
-              {/* -----------------------------------------------------------------
-                  CARD 2: Middle Card (Dark charcoal bg-[#18191D] -> steps to Front)
-                 ----------------------------------------------------------------- */}
-              <motion.div
-                key={`upcoming-${upcomingCard.id}`}
-                className="absolute inset-0 rounded-[28px] sm:rounded-[34px] bg-[#F5EFE6] text-[#121316] border border-white/10 shadow-2xl overflow-hidden p-8 sm:p-10 md:p-12"
-                initial={false}
-                animate={
-                  isShuffling
-                    ? {
-                        x: 0,
-                        y: 0,
-                        rotate: 0,
-                        scale: 1.0,
-                        zIndex: 25,
-                      }
-                    : {
-                        x: -36,
-                        y: -12,
-                        rotate: -5,
-                        scale: 0.95,
-                        zIndex: 20,
-                      }
-                }
-                transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-              >
-                {renderCardContent(upcomingCard, ((activeIndex + 1) % total) + 1)}
+                // Color tokens for slots matching HTML reference:
+                // Slot 0 (Front): Ivory #F5EFE5
+                // Slot 1 (Middle): Muted warm-grey #B9B2A8
+                // Slot 2 (Rear): Charcoal #292827
+                const bgStyle =
+                  slot === 0
+                    ? 'bg-[#F5EFE5] text-[#191919] border border-white/40 shadow-[0_14px_30px_rgba(0,0,0,0.2)]'
+                    : slot === 1
+                    ? 'bg-[#B9B2A8] text-[#71695F] border border-white/20 shadow-[0_8px_20px_rgba(0,0,0,0.12)]'
+                    : 'bg-[#292827] text-[#77736E] border border-white/[0.08] shadow-none';
 
-                {/* Dark charcoal veil that smoothly fades out as this card steps forward */}
-                <motion.div
-                  className="absolute inset-0 bg-[#18191D] pointer-events-none"
-                  initial={false}
-                  animate={{ opacity: isShuffling ? 0 : 0.94 }}
-                  transition={{ duration: 0.5, ease: 'easeInOut' }}
-                />
-              </motion.div>
+                return (
+                  <article
+                    key={reviewIdx}
+                    data-slot={slot}
+                    aria-hidden={!isFront}
+                    aria-roledescription="slide"
+                    aria-label={`${reviewIdx + 1} of ${REVIEWS.length}`}
+                    style={{
+                      transform: POSES[slot],
+                      zIndex: 3 - slot,
+                    }}
+                    className={`absolute inset-0 rounded-[5cqw] p-[5.5cqw_7cqw_5cqw] overflow-hidden flex flex-col will-change-transform ${bgStyle}`}
+                  >
+                    {/* Subtle Paper Texture Overlay on Front Card */}
+                    <div
+                      aria-hidden="true"
+                      className="absolute inset-0 pointer-events-none opacity-[0.04]"
+                      style={{
+                        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23888888' filter='url(%23n)' d='M0 0h120v120H0z'/%3E%3C/svg%3E")`,
+                      }}
+                    />
 
-              {/* -----------------------------------------------------------------
-                  CARD 1: Front Active Card (Cream bg-[#F5EFE6] -> Swipes Right then tucks to Back)
-                 ----------------------------------------------------------------- */}
-              <motion.div
-                key={`front-${frontCard.id}`}
-                className="relative w-full rounded-[28px] sm:rounded-[34px] bg-[#F5EFE6] text-[#121316] p-8 sm:p-10 md:p-12 shadow-[0_30px_70px_rgba(0,0,0,0.65)] overflow-hidden"
-                initial={false}
-                animate={
-                  isShuffling
-                    ? {
-                        x: [0, swipeDistance, 36],
-                        y: [0, -6, 8],
-                        rotate: [0, 8.5, 6.5],
-                        scale: [1.0, 0.98, 0.91],
-                        zIndex: [30, 30, 10],
-                      }
-                    : {
-                        x: 0,
-                        y: 0,
-                        rotate: 0,
-                        scale: 1.0,
-                        zIndex: 30,
-                      }
-                }
-                transition={
-                  isShuffling
-                    ? {
-                        duration: 0.65,
-                        times: [0, 0.42, 1],
-                        ease: [0.22, 1, 0.36, 1],
-                      }
-                    : { duration: 0.2 }
-                }
-              >
-                {renderCardContent(frontCard, activeIndex + 1)}
+                    {/* Small Orange Curved Accent in Bottom-Right Corner (Only on Front Card) */}
+                    {isFront && (
+                      <div
+                        aria-hidden="true"
+                        className="absolute bottom-0 right-0 w-[9cqw] h-[9cqw] bg-[#FC6603] rounded-tl-full pointer-events-none"
+                      />
+                    )}
 
-                {/* Pewter veil that smoothly fades in as this card tucks into the back slot */}
-                {isShuffling && (
-                  <motion.div
-                    className="absolute inset-0 bg-[#42444A] pointer-events-none"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: [0, 0.35, 0.94] }}
-                    transition={{ duration: 0.65, times: [0, 0.4, 1] }}
-                  />
-                )}
-              </motion.div>
+                    {/* Card Top Row: Quotation Icon & Counter */}
+                    <div className="flex items-center justify-between mb-[3cqw] relative z-10">
+                      <svg
+                        className={`w-[8cqw] h-[5.5cqw] ${
+                          isFront ? 'fill-[#FC6603]' : 'fill-[#77736E]'
+                        }`}
+                        viewBox="0 0 52 42"
+                        aria-hidden="true"
+                      >
+                        <path d="M0 42V21C0 8 8 1 22 0v10C15 11 12 15 12 21h10v21H0zm30 0V21C30 8 38 1 52 0v10c-7 1-10 5-10 11h10v21H30z" />
+                      </svg>
+                      <span
+                        className={`font-mono text-[2.35cqw] ${
+                          isFront ? 'text-[#D65300]' : 'text-[#77736E]'
+                        }`}
+                      >
+                        {pad(reviewIdx + 1)} / {pad(REVIEWS.length)}
+                      </span>
+                    </div>
+
+                    {/* Category Label */}
+                    <p className="font-mono font-bold text-[2.6cqw] leading-[1.2] tracking-[0.08em] uppercase mb-[1.8cqw] relative z-10">
+                      {r.category}
+                    </p>
+
+                    {/* Testimonial Quote */}
+                    <blockquote className="font-display font-medium text-[6.5cqw] leading-[1.1] tracking-[-0.04em] mb-[4cqw] max-w-full relative z-10">
+                      “{r.quote}”
+                    </blockquote>
+
+                    {/* Author Footer */}
+                    <footer className="mt-auto flex items-center gap-[3.4cqw] border-t border-[#262626]/20 pt-[3.5cqw] relative z-10">
+                      {/* Initials Avatar */}
+                      <div
+                        aria-hidden="true"
+                        className="w-[7.8cqw] h-[7.8cqw] shrink-0 bg-[#232323] text-white rounded-full grid place-items-center text-[2.6cqw] font-bold"
+                      >
+                        {r.initials}
+                      </div>
+
+                      {/* Name & Role */}
+                      <div className="border-l border-[#262626]/20 pl-[3.4cqw]">
+                        <div className="font-sans font-bold text-[3.2cqw] leading-tight mb-[0.5cqw] text-inherit">
+                          {r.name}
+                        </div>
+                        <div className="font-sans text-[2.6cqw] text-[#726C65] leading-tight">
+                          {r.role}
+                        </div>
+                      </div>
+
+                      {/* Illustrative Sample Label */}
+                      <span className="ml-auto font-mono text-[2cqw] tracking-[0.035em] text-[#766E64] text-right whitespace-nowrap leading-[1.4]">
+                        ILLUSTRATIVE REVIEW
+                      </span>
+                    </footer>
+                  </article>
+                );
+              })}
             </div>
+
+            {/* =========================================================================
+                CONTROLS: PROGRESS INDICATORS, COUNTER, AND TRANSPORT BUTTONS
+               ========================================================================= */}
+            <div className="flex items-center gap-3 sm:gap-5 mt-10 sm:mt-12">
+              {/* Counter: 01 / 05 */}
+              <span
+                className="font-mono text-[12px] text-[#A1A1AA] whitespace-nowrap min-w-[58px] select-none"
+                aria-hidden="true"
+              >
+                {pad(index + 1)} / {pad(REVIEWS.length)}
+              </span>
+
+              {/* Clickable Progress Segments */}
+              <div
+                className="flex-1 flex gap-1.5 sm:gap-2"
+                role="tablist"
+                aria-label="Choose a review"
+              >
+                {REVIEWS.map((r, i) => {
+                  const isCurrent = i === index;
+                  const scaleX = isCurrent ? Math.max(0.05, elapsed / INTERVAL) : 0;
+
+                  return (
+                    <button
+                      key={i}
+                      type="button"
+                      role="tab"
+                      aria-selected={isCurrent}
+                      aria-label={`Show review ${i + 1}: ${r.category.toLowerCase()}`}
+                      onClick={() => changeReview(i, true)}
+                      className="group relative h-6 flex-1 bg-transparent border-0 py-2.5 px-0 cursor-pointer focus-visible:outline-2 focus-visible:outline-[#FC6603] focus-visible:outline-offset-2"
+                    >
+                      {/* Base Track */}
+                      <span className="absolute left-0 right-0 top-2.5 h-1 bg-[#454544] rounded-full transition-colors group-hover:bg-[#5A5A58]" />
+                      {/* Active Progress Bar */}
+                      <span
+                        className="block h-1 relative origin-left bg-[#FC6603] rounded-full transition-transform duration-75 ease-linear"
+                        style={{
+                          transform: `scaleX(${scaleX})`,
+                        }}
+                      />
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Transport Buttons: Previous, Pause/Play, Next */}
+              <div className="flex items-center gap-2 sm:gap-2.5">
+                {/* Previous Button */}
+                <button
+                  type="button"
+                  onClick={() =>
+                    changeReview((index + REVIEWS.length - 1) % REVIEWS.length, true)
+                  }
+                  aria-label="Previous review"
+                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-[#888888] bg-transparent text-[#EEEEEE] grid place-items-center transition-all duration-200 hover:bg-white/[0.08] hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-[#FC6603] focus-visible:outline-offset-2"
+                >
+                  <svg
+                    className="w-4 h-4"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    aria-hidden="true"
+                  >
+                    <path d="M20 12H4m7-7-7 7 7 7" />
+                  </svg>
+                </button>
+
+                {/* Pause / Play Toggle Button */}
+                <button
+                  type="button"
+                  disabled={reducedMotion}
+                  onClick={() => setManualPause((prev) => !prev)}
+                  aria-label={
+                    reducedMotion
+                      ? 'Animations disabled by reduced-motion preference'
+                      : manualPause
+                      ? 'Play animations'
+                      : 'Pause animations'
+                  }
+                  className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full grid place-items-center transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-[#FC6603] focus-visible:outline-offset-2 ${
+                    manualPause
+                      ? 'bg-transparent border border-[#888888] text-white hover:bg-white/[0.08]'
+                      : 'bg-[#FC6603] border border-[#FC6603] text-white shadow-[0_0_15px_rgba(252,102,3,0.3)]'
+                  }`}
+                >
+                  {manualPause ? (
+                    <svg
+                      className="w-4 h-4 ml-0.5"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  ) : (
+                    <svg
+                      className="w-4 h-4"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      aria-hidden="true"
+                    >
+                      <path d="M8 5v14M16 5v14" />
+                    </svg>
+                  )}
+                </button>
+
+                {/* Next Button */}
+                <button
+                  type="button"
+                  onClick={() => changeReview((index + 1) % REVIEWS.length, true)}
+                  aria-label="Next review"
+                  className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-[#888888] bg-transparent text-[#EEEEEE] grid place-items-center transition-all duration-200 hover:bg-white/[0.08] hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-[#FC6603] focus-visible:outline-offset-2"
+                >
+                  <svg
+                    className="w-4 h-4"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                    aria-hidden="true"
+                  >
+                    <path d="M4 12h16m-7-7 7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            {/* Screen Reader Live Announcement */}
+            <p className="sr-only" aria-live="polite" aria-atomic="true">
+              {announcement}
+            </p>
           </div>
         </div>
       </div>

@@ -35,8 +35,8 @@ export const WhyChooseAlphaLinkxSection: React.FC = () => {
 
             {/* Heading: Exact font size from HowWeWorkSection (text-3xl sm:text-4xl md:text-5xl lg:text-[54px]) */}
             <h2 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-[-0.03em] leading-[1.08] text-white">
-              <span className="block">Built to turn visibility</span>
-              <span className="block text-[#FC6603]">into measurable momentum.</span>
+              <span className="block">From visibility</span>
+              <span className="block text-[#FC6603]">To momentum.</span>
             </h2>
 
             {/* Supporting Text */}
@@ -51,7 +51,7 @@ export const WhyChooseAlphaLinkxSection: React.FC = () => {
               to="/contact"
               className="group relative inline-flex items-center gap-3 pl-6 pr-2 sm:pl-7 sm:pr-2.5 py-2.5 sm:py-3 rounded-full bg-[#FC6603] text-white font-mono text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.16em] shadow-[0_0_24px_rgba(252,102,3,0.35)] hover:bg-[#ff5500] hover:shadow-[0_0_32px_rgba(252,102,3,0.55)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
             >
-              <span>LET'S TALK</span>
+              <span>WORK WITH ALPHALINKX</span>
               <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white flex items-center justify-center text-black shrink-0 transition-transform duration-300 group-hover:rotate-45 shadow-sm">
                 <svg
                   className="w-3.5 h-3.5"
@@ -133,7 +133,7 @@ export const WhyChooseAlphaLinkxSection: React.FC = () => {
               {/* Comparison Table */}
               <div className="relative mt-4 sm:mt-5">
                 {/* Table Header */}
-                <div className="grid grid-cols-12 items-end pb-2">
+                <div className="grid grid-cols-12 items-end">
                   <div className="col-span-7" />
                   <div className="col-span-2 text-center">
                     <span className="font-mono text-[11px] sm:text-[12px] font-medium tracking-[0.14em] uppercase text-[#71717A]">
@@ -190,18 +190,6 @@ export const WhyChooseAlphaLinkxSection: React.FC = () => {
               </div>
             </div>
 
-            {/* Bottom CTA Button */}
-            <div className="pt-4 sm:pt-5 flex justify-center">
-              <Link
-                to="/contact"
-                className="group inline-flex items-center gap-2 px-7 sm:px-8 py-2.5 sm:py-3 rounded-full bg-[#FAF5EE] text-[#0A0A0B] font-mono font-bold text-[11px] sm:text-[12px] tracking-[0.14em] uppercase hover:bg-[#FC6603] hover:text-white transition-all duration-300 shadow-md hover:shadow-[0_0_25px_rgba(252,102,3,0.4)]"
-              >
-                <span>WORK WITH ALPHALINXX</span>
-                <span className="inline-block transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-                  ↗
-                </span>
-              </Link>
-            </div>
           </div>
         </div>
       </div>

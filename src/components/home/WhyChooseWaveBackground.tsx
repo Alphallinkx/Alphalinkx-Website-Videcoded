@@ -38,18 +38,17 @@ export const WhyChooseWaveBackground: React.FC = () => {
     camera.position.set(-10, 42, 92);
     camera.lookAt(15, 6, -15);
 
-    // Grid Dimensions
-    // 140 columns (X) by 90 rows (Z) = 12,600 particles
-    const cols = 140;
-    const rows = 90;
+    // Grid Dimensions: High-density 160 cols x 100 rows for razor-sharp particle terrain
+    const cols = 160;
+    const rows = 100;
     const count = cols * rows;
 
     const positions = new Float32Array(count * 3);
     const isOrange = new Float32Array(count);
     const particleIndex = new Float32Array(count);
 
-    const xSpacing = 1.9;
-    const zSpacing = 1.8;
+    const xSpacing = 1.6;
+    const zSpacing = 1.5;
     const xOffset = (cols * xSpacing) / 2;
     const zOffset = (rows * zSpacing) / 2;
 
@@ -73,7 +72,7 @@ export const WhyChooseWaveBackground: React.FC = () => {
         if (distFromOrange === 0) {
           isOrange[idx] = 1.0; // primary orange crest
         } else if (distFromOrange === 1) {
-          isOrange[idx] = 0.45; // softer adjacent orange glow
+          isOrange[idx] = 0.40; // softer adjacent orange glow
         } else {
           isOrange[idx] = 0.0;
         }
@@ -127,28 +126,29 @@ export const WhyChooseWaveBackground: React.FC = () => {
           vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
           gl_Position = projectionMatrix * mvPosition;
 
-          // Size attenuation with perspective (refined, crisper point sizes)
-          float size = aIsOrange > 0.8 ? 42.0 : (aIsOrange > 0.2 ? 32.0 : 24.0);
-          gl_PointSize = (size * uPixelRatio) * (70.0 / -mvPosition.z);
+          // Crisp, pin-sharp point sizes (calibrated for high-res micro-dots, zero blur)
+          float size = aIsOrange > 0.8 ? 16.0 : (aIsOrange > 0.2 ? 12.0 : 8.5);
+          float calculatedSize = (size * uPixelRatio) * (48.0 / -mvPosition.z);
+          gl_PointSize = clamp(calculatedSize, 1.5, 9.0);
 
           // Perspective depth fade (particles fade softly into background darkness)
-          float depthFade = smoothstep(180.0, 45.0, -mvPosition.z);
+          float depthFade = smoothstep(185.0, 42.0, -mvPosition.z);
           // Height-based luminance (crests are brighter than troughs)
           float heightFactor = smoothstep(-22.0, 24.0, pos.y);
 
           if (aIsOrange > 0.8) {
-            // Refined, focused Neon Brand Orange
-            vColor = vec3(0.99, 0.40, 0.02);
-            vAlpha = 0.85 * depthFade;
+            // Vivid, solid Brand Orange (#FC6603)
+            vColor = vec3(1.0, 0.40, 0.02);
+            vAlpha = 1.0 * depthFade;
           } else if (aIsOrange > 0.2) {
-            // Soft warm orange transition
-            vColor = vec3(0.95, 0.46, 0.12);
-            vAlpha = 0.55 * depthFade;
+            // Warm orange transition dot
+            vColor = vec3(0.96, 0.46, 0.12);
+            vAlpha = 0.70 * depthFade;
           } else {
-            // Crisp Silver-White particles with subdued glow
-            float brightness = mix(0.30, 0.88, heightFactor);
+            // Crisp, solid silver-white dots (sharp, no haze)
+            float brightness = mix(0.40, 1.0, heightFactor);
             vColor = vec3(brightness);
-            vAlpha = mix(0.12, 0.65, heightFactor) * depthFade;
+            vAlpha = mix(0.25, 0.95, heightFactor) * depthFade;
           }
         }
       `,
@@ -158,15 +158,13 @@ export const WhyChooseWaveBackground: React.FC = () => {
         varying vec3 vColor;
 
         void main() {
-          // Circular particle with crisp core and subtle, restrained halo
+          // Point coordinate relative to center (-0.5 to 0.5)
           vec2 coord = gl_PointCoord - vec2(0.5);
           float dist = length(coord);
           if (dist > 0.5) discard;
 
-          // Crisp defined particle with restrained radial falloff
-          float core = 1.0 - smoothstep(0.0, 0.25, dist);
-          float halo = 1.0 - smoothstep(0.15, 0.48, dist);
-          float alpha = (core * 0.70 + halo * 0.30) * vAlpha;
+          // Razor-sharp solid circular dot with 1px smooth edge anti-aliasing (NO blur/fuzziness)
+          float alpha = (1.0 - smoothstep(0.40, 0.50, dist)) * vAlpha;
 
           gl_FragColor = vec4(vColor, alpha);
         }

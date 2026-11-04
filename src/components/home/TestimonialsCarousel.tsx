@@ -120,7 +120,7 @@ export const TestimonialsCarousel: React.FC = () => {
   const isPausedRef = useRef(isPaused);
   isPausedRef.current = isPaused;
 
-  // Smooth slide change function with Web Animations API
+  // Smooth slide change with seamless entering fade animation
   const changeReview = useCallback(
     async (target: number, isManual = false) => {
       if (isBusyRef.current || target === indexRef.current) return;
@@ -129,12 +129,48 @@ export const TestimonialsCarousel: React.FC = () => {
       setElapsed(0);
 
       const deck = deckRef.current;
-      const cards = deck ? (Array.from(deck.children) as HTMLElement[]) : [];
+      if (!deck) {
+        setIndex(target);
+        setIsBusy(false);
+        return;
+      }
+
+      const cards = Array.from(deck.children) as HTMLElement[];
       const direction =
         target === (indexRef.current + REVIEWS.length - 1) % REVIEWS.length ? -1 : 1;
 
       if (!reducedMotion && cards.length >= 3) {
         try {
+          // Prepare the incoming card for slot 2 so it smoothly fades in from behind
+          const incomingSlotIdx = (target + 2) % REVIEWS.length;
+          const incomingReview = REVIEWS[incomingSlotIdx];
+          const incomingCard = document.createElement('article');
+          incomingCard.className =
+            'review-card absolute inset-0 rounded-[5cqw] p-[5.5cqw_7cqw_5cqw] overflow-hidden flex flex-col will-change-transform bg-[#292827] text-[#77736E] border border-white/[0.08] shadow-none';
+          incomingCard.style.zIndex = '0';
+          incomingCard.style.transform = 'translate(-12%, -8%) rotate(-9deg) scale(0.92)';
+          incomingCard.style.opacity = '0';
+          incomingCard.innerHTML = `
+            <div class="flex items-center justify-between mb-[3cqw] relative z-10">
+              <svg class="w-[8cqw] h-[5.5cqw] fill-[#77736E]" viewBox="0 0 52 42">
+                <path d="M0 42V21C0 8 8 1 22 0v10C15 11 12 15 12 21h10v21H0zm30 0V21C30 8 38 1 52 0v10c-7 1-10 5-10 11h10v21H30z"/>
+              </svg>
+              <span class="font-mono text-[2.35cqw] text-[#77736E]">${pad(incomingSlotIdx + 1)} / ${pad(REVIEWS.length)}</span>
+            </div>
+            <p class="font-mono font-bold text-[2.6cqw] leading-[1.2] tracking-[0.08em] uppercase mb-[1.8cqw] relative z-10">${incomingReview.category}</p>
+            <blockquote class="font-display font-medium text-[6.5cqw] leading-[1.1] tracking-[-0.04em] mb-[4cqw] max-w-full relative z-10">“${incomingReview.quote}”</blockquote>
+            <footer class="mt-auto flex items-center gap-[3.4cqw] border-t border-[#262626]/20 pt-[3.5cqw] relative z-10">
+              <div class="w-[7.8cqw] h-[7.8cqw] shrink-0 bg-[#232323] text-white rounded-full grid place-items-center text-[2.6cqw] font-bold">${incomingReview.initials}</div>
+              <div class="border-l border-[#262626]/20 pl-[3.4cqw]">
+                <div class="font-sans font-bold text-[3.2cqw] leading-tight mb-[0.5cqw] text-inherit">${incomingReview.name}</div>
+                <div class="font-sans text-[2.6cqw] text-[#726C65] leading-tight">${incomingReview.role}</div>
+              </div>
+              <span class="ml-auto font-mono text-[2cqw] tracking-[0.035em] text-[#766E64] text-right whitespace-nowrap leading-[1.4]">ILLUSTRATIVE REVIEW</span>
+            </footer>
+          `;
+          deck.appendChild(incomingCard);
+
+          // 1. Front card smoothly exits
           const exitAnim = cards[0].animate(
             [
               { transform: POSES[0], opacity: 1, offset: 0 },
@@ -156,18 +192,41 @@ export const TestimonialsCarousel: React.FC = () => {
             }
           );
 
-          const liftAnims = cards.slice(1).map((card, i) =>
-            card.animate(
-              [{ transform: POSES[i + 1] }, { transform: POSES[i] }],
-              {
-                duration: 820,
-                easing: 'cubic-bezier(0.22, 0.68, 0.2, 1)',
-                fill: 'forwards',
-              }
-            )
+          // 2. Middle card lifts into Slot 0
+          const lift1 = cards[1].animate(
+            [{ transform: POSES[1] }, { transform: POSES[0] }],
+            {
+              duration: 820,
+              easing: 'cubic-bezier(0.22, 0.68, 0.2, 1)',
+              fill: 'forwards',
+            }
           );
 
-          await Promise.all([exitAnim.finished, ...liftAnims.map((a) => a.finished)]);
+          // 3. Rear card lifts into Slot 1
+          const lift2 = cards[2].animate(
+            [{ transform: POSES[2] }, { transform: POSES[1] }],
+            {
+              duration: 820,
+              easing: 'cubic-bezier(0.22, 0.68, 0.2, 1)',
+              fill: 'forwards',
+            }
+          );
+
+          // 4. Incoming card smoothly fades in and settles into Slot 2
+          const enterAnim = incomingCard.animate(
+            [
+              { transform: 'translate(-12%, -8%) rotate(-9deg) scale(0.92)', opacity: 0 },
+              { transform: POSES[2], opacity: 1 },
+            ],
+            {
+              duration: 820,
+              easing: 'cubic-bezier(0.22, 0.68, 0.2, 1)',
+              fill: 'forwards',
+            }
+          );
+
+          await Promise.all([exitAnim.finished, lift1.finished, lift2.finished, enterAnim.finished]);
+          incomingCard.remove();
         } catch {
           // Fallback if animation interrupted
         }
@@ -270,13 +329,13 @@ export const TestimonialsCarousel: React.FC = () => {
       />
 
       {/* =========================================================================
-          ZONE 1: FAR LEFT VERTICAL OVERSIZED MARQUEE (DESKTOP) / HORIZONTAL (MOBILE)
+          ZONE 1: FAR LEFT VERTICAL OVERSIZED MARQUEE WITH EXPANDED LETTER SPACING
          ========================================================================= */}
       <div
         aria-hidden="true"
         className="pointer-events-none select-none z-0
           max-md:absolute max-md:left-0 max-md:right-0 max-md:top-2 max-md:w-full max-md:h-[70px]
-          md:absolute md:left-[4vw] lg:left-[4.5vw] md:top-0 md:bottom-0 md:w-[7vw] md:min-w-[70px] md:max-w-[110px]
+          md:absolute md:left-[3vw] lg:left-[4vw] md:top-0 md:bottom-0 md:w-[8vw] md:min-w-[75px] md:max-w-[120px]
           overflow-hidden"
         style={{
           maskImage:
@@ -295,52 +354,52 @@ export const TestimonialsCarousel: React.FC = () => {
             md:flex-col md:animate-[marquee-y_30s_linear_infinite]`}
         >
           {/* Loop Group 1 */}
-          <div className="flex max-md:flex-row max-md:gap-[22px] max-md:pr-[22px] md:flex-col md:items-center md:gap-6 md:pb-6">
+          <div className="flex max-md:flex-row max-md:gap-[26px] max-md:pr-[26px] md:flex-col md:items-center md:gap-7 md:pb-7">
             <span
-              className="font-display font-extrabold text-[#646464] tracking-[-0.065em] leading-none select-none
-                max-md:text-[60px] max-md:[writing-mode:horizontal-tb]
-                md:text-[clamp(60px,5.5vw,98px)] md:[writing-mode:vertical-rl]"
+              className="font-display font-extrabold text-[#646464] tracking-[0.14em] sm:tracking-[0.18em] leading-none select-none
+                max-md:text-[56px] max-md:[writing-mode:horizontal-tb]
+                md:text-[clamp(56px,5vw,90px)] md:[writing-mode:vertical-rl]"
             >
               TESTIMONIALS
             </span>
-            <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[46px] md:text-[66px]">
+            <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[60px] my-1 md:my-2">
               /
             </b>
             <span
-              className="font-display font-extrabold text-[#646464] tracking-[-0.065em] leading-none select-none
-                max-md:text-[60px] max-md:[writing-mode:horizontal-tb]
-                md:text-[clamp(60px,5.5vw,98px)] md:[writing-mode:vertical-rl]"
+              className="font-display font-extrabold text-[#646464] tracking-[0.14em] sm:tracking-[0.18em] leading-none select-none
+                max-md:text-[56px] max-md:[writing-mode:horizontal-tb]
+                md:text-[clamp(56px,5vw,90px)] md:[writing-mode:vertical-rl]"
             >
               TESTIMONIALS
             </span>
-            <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[46px] md:text-[66px]">
+            <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[60px] my-1 md:my-2">
               /
             </b>
           </div>
 
           {/* Loop Group 2 (Exact duplicate for seamless looping) */}
           <div
-            className="flex max-md:flex-row max-md:gap-[22px] max-md:pr-[22px] md:flex-col md:items-center md:gap-6 md:pb-6"
+            className="flex max-md:flex-row max-md:gap-[26px] max-md:pr-[26px] md:flex-col md:items-center md:gap-7 md:pb-7"
             aria-hidden="true"
           >
             <span
-              className="font-display font-extrabold text-[#646464] tracking-[-0.065em] leading-none select-none
-                max-md:text-[60px] max-md:[writing-mode:horizontal-tb]
-                md:text-[clamp(60px,5.5vw,98px)] md:[writing-mode:vertical-rl]"
+              className="font-display font-extrabold text-[#646464] tracking-[0.14em] sm:tracking-[0.18em] leading-none select-none
+                max-md:text-[56px] max-md:[writing-mode:horizontal-tb]
+                md:text-[clamp(56px,5vw,90px)] md:[writing-mode:vertical-rl]"
             >
               TESTIMONIALS
             </span>
-            <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[46px] md:text-[66px]">
+            <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[60px] my-1 md:my-2">
               /
             </b>
             <span
-              className="font-display font-extrabold text-[#646464] tracking-[-0.065em] leading-none select-none
-                max-md:text-[60px] max-md:[writing-mode:horizontal-tb]
-                md:text-[clamp(60px,5.5vw,98px)] md:[writing-mode:vertical-rl]"
+              className="font-display font-extrabold text-[#646464] tracking-[0.14em] sm:tracking-[0.18em] leading-none select-none
+                max-md:text-[56px] max-md:[writing-mode:horizontal-tb]
+                md:text-[clamp(56px,5vw,90px)] md:[writing-mode:vertical-rl]"
             >
               TESTIMONIALS
             </span>
-            <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[46px] md:text-[66px]">
+            <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[60px] my-1 md:my-2">
               /
             </b>
           </div>
@@ -348,46 +407,57 @@ export const TestimonialsCarousel: React.FC = () => {
       </div>
 
       {/* =========================================================================
-          MAIN CONTAINER: 2-COLUMN GRID (MIDDLE LEFT INTRO & RIGHT CARDS STACK)
+          MAIN CONTAINER: 2-COLUMN GRID WITH GENEROUS BREATHING ROOM
          ========================================================================= */}
-      <div className="relative z-10 w-full max-w-[1420px] mx-auto px-6 sm:px-8 md:pl-[15vw] md:pr-[6vw]">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 xl:gap-16 items-center">
+      <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-8 md:pl-[11vw] lg:pl-[13vw] md:pr-[4vw] lg:pr-[6vw]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 xl:gap-24 items-center">
           {/* =========================================================================
-              ZONE 2: MIDDLE LEFT SECTION INTRODUCTION & CTA
+              ZONE 2: MIDDLE LEFT SECTION INTRODUCTION & WRITE A REVIEW BUTTON
              ========================================================================= */}
-          <header className="lg:col-span-5 flex flex-col items-start pt-14 md:pt-0 pb-4 lg:pb-16">
+          <header className="lg:col-span-5 flex flex-col items-start pt-14 md:pt-0 pb-4 lg:pb-16 max-w-[460px]">
             {/* Eyebrow */}
-            <p className="font-mono text-[12px] font-medium tracking-[0.16em] text-[#FC6603] uppercase mb-5 sm:mb-6">
+            <p className="font-mono text-[12px] font-medium tracking-[0.16em] text-[#FC6603] uppercase mb-4 sm:mb-5">
               // CLIENT STORIES
             </p>
 
             {/* Two-Line Heading */}
             <h2
               id="testimonials-title"
-              className="font-display font-bold text-[clamp(36px,3.4vw,60px)] leading-[1.03] tracking-[-0.05em] text-white mb-6 sm:mb-7"
+              className="font-display font-bold text-[clamp(36px,3.4vw,58px)] leading-[1.03] tracking-[-0.04em] text-white mb-5 sm:mb-6"
             >
               Their words.
               <span className="block text-[#FC6603]">Our motivation.</span>
             </h2>
 
             {/* Supporting Text */}
-            <p className="font-sans text-[17px] sm:text-[18px] text-[#AAAAAA] leading-[1.6] max-w-[360px] mb-8 sm:mb-9">
+            <p className="font-sans text-[16px] sm:text-[17px] text-[#AAAAAA] leading-[1.6] max-w-[380px] mb-8 sm:mb-9">
               A closer look at the experience of working with us.
             </p>
 
-            {/* CTA Button: Let’s talk ↗ */}
-            <Link
-              to="/contact"
-              className="group inline-flex items-center gap-4 text-[18px] sm:text-[19px] text-[#F4F4F1] font-sans border-b border-[#B8B8B8] pb-2 transition-colors hover:border-[#FC6603] hover:text-white focus-visible:outline-2 focus-visible:outline-[#FC6603] focus-visible:outline-offset-6"
-            >
-              <span>Let’s talk</span>
-              <span
-                aria-hidden="true"
-                className="inline-block transition-transform duration-250 ease-out group-hover:translate-x-[3px] group-hover:-translate-y-[3px]"
+            {/* CTA Button: Write a review */}
+            <div>
+              <Link
+                to="/contact"
+                className="group relative inline-flex items-center gap-3.5 pl-6 pr-2.5 py-2.5 sm:pl-7 sm:pr-3 sm:py-3 rounded-full bg-[#16171B] border border-white/[0.14] text-white hover:border-[#FC6603] hover:bg-[#1C1D22] transition-all duration-300 shadow-[0_4px_24px_rgba(0,0,0,0.5)] hover:shadow-[0_0_28px_rgba(252,102,3,0.35)] hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-[#FC6603] focus-visible:outline-offset-4"
               >
-                ↗
-              </span>
-            </Link>
+                <span className="font-mono text-[12px] sm:text-[13px] font-bold uppercase tracking-[0.14em] text-white group-hover:text-[#FC6603] transition-colors">
+                  Write a review
+                </span>
+                <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#FC6603] text-white flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:rotate-45 shadow-sm">
+                  <svg
+                    className="w-3.5 h-3.5 stroke-[2.5]"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <line x1="7" y1="17" x2="17" y2="7" />
+                    <polyline points="7 7 17 7 17 17" />
+                  </svg>
+                </span>
+              </Link>
+            </div>
           </header>
 
           {/* =========================================================================
@@ -410,7 +480,7 @@ export const TestimonialsCarousel: React.FC = () => {
               }
             }}
             onKeyDown={handleKeyDown}
-            className="lg:col-span-7 w-full max-w-[600px] mx-auto justify-self-center pt-4 lg:pt-8 focus-visible:outline-none"
+            className="lg:col-span-7 w-full max-w-[580px] lg:max-w-[600px] ml-auto justify-self-end pt-4 lg:pt-8 focus-visible:outline-none"
           >
             {/* 3D Overlapping Card Deck with Container Queries */}
             <div
@@ -449,7 +519,7 @@ export const TestimonialsCarousel: React.FC = () => {
                       transform: POSES[slot],
                       zIndex: 3 - slot,
                     }}
-                    className={`absolute inset-0 rounded-[5cqw] p-[5.5cqw_7cqw_5cqw] overflow-hidden flex flex-col will-change-transform ${bgStyle}`}
+                    className={`review-card absolute inset-0 rounded-[5cqw] p-[5.5cqw_7cqw_5cqw] overflow-hidden flex flex-col will-change-transform ${bgStyle}`}
                   >
                     {/* Subtle Paper Texture Overlay on Front Card */}
                     <div

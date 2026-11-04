@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Check, X } from 'lucide-react';
+import { WhyChooseWaveBackground } from './WhyChooseWaveBackground';
 
 interface ComparisonRow {
   feature: string;
@@ -19,10 +20,10 @@ const COMPARISON_ROWS: ComparisonRow[] = [
 export const WhyChooseAlphaLinkxSection: React.FC = () => {
   return (
     <section className="relative py-14 sm:py-18 md:py-24 bg-[#060709] border-t border-white/[0.06] overflow-hidden">
-      {/* Background glow accent */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-[#FC6603]/[0.035] rounded-full blur-[140px] pointer-events-none" />
+      {/* 3D Animated Undulating Wave Particle Background */}
+      <WhyChooseWaveBackground />
 
-      <div className="relative max-w-[1040px] mx-auto px-4 sm:px-6">
+      <div className="relative z-10 max-w-[1040px] mx-auto px-4 sm:px-6">
         {/* Section Header: Headings on LEFT, Orange CTA on RIGHT (middle aligned) - exactly like HowWeWorkSection */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 sm:gap-8 mb-10 sm:mb-12">
           {/* LEFT SIDE: Eyebrow, Heading (matching HowWeWork font sizes), Subtitle */}

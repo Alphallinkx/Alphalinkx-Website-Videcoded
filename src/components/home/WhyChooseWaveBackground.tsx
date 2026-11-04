@@ -10,9 +10,27 @@ import * as THREE from 'three';
  * - Soft depth-fade into pitch-black background
  * - 60-120fps GPU accelerated with automatic viewport pause via IntersectionObserver
  */
-export const WhyChooseWaveBackground: React.FC = () => {
+interface WhyChooseWaveBackgroundProps {
+  /**
+   * Master opacity factor for all wave particles (0.0 = invisible, 1.0 = fully bright).
+   * Default: 0.45 (subtle, elegant backdrop).
+   */
+  opacity?: number;
+}
+
+export const WhyChooseWaveBackground: React.FC<WhyChooseWaveBackgroundProps> = ({
+  opacity = 0.45,
+}) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const materialRef = useRef<THREE.ShaderMaterial | null>(null);
+
+  // Dynamically update opacity uniform when prop changes
+  useEffect(() => {
+    if (materialRef.current) {
+      materialRef.current.uniforms.uOpacity.value = opacity;
+    }
+  }, [opacity]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -92,6 +110,12 @@ export const WhyChooseWaveBackground: React.FC = () => {
       uniforms: {
         uTime: { value: 0 },
         uPixelRatio: { value: dpr },
+        // =========================================================================
+        // MASTER OPACITY FACTOR: Controls visible opacity of all particles
+        // Lower = dimmer / more subtle (e.g., 0.30 - 0.50)
+        // Higher = brighter / more pronounced (e.g., 0.70 - 1.0)
+        // =========================================================================
+        uOpacity: { value: opacity },
       },
       vertexShader: `
         attribute float aIsOrange;
@@ -132,7 +156,7 @@ export const WhyChooseWaveBackground: React.FC = () => {
           gl_PointSize = clamp(calculatedSize, 1.5, 9.0);
 
           // Perspective depth fade (particles fade softly into background darkness)
-          float depthFade = smoothstep(185.0, 42.0, -mvPosition.z);
+          float depthFade = smoothstep(250.0, 42.0, -mvPosition.z);
           // Height-based luminance (crests are brighter than troughs)
           float heightFactor = smoothstep(-22.0, 24.0, pos.y);
 
@@ -156,6 +180,7 @@ export const WhyChooseWaveBackground: React.FC = () => {
         varying float vIsOrange;
         varying float vAlpha;
         varying vec3 vColor;
+        uniform float uOpacity; // Master opacity factor (0.0 to 1.0)
 
         void main() {
           // Point coordinate relative to center (-0.5 to 0.5)
@@ -164,7 +189,7 @@ export const WhyChooseWaveBackground: React.FC = () => {
           if (dist > 0.5) discard;
 
           // Razor-sharp solid circular dot with 1px smooth edge anti-aliasing (NO blur/fuzziness)
-          float alpha = (1.0 - smoothstep(0.40, 0.50, dist)) * vAlpha;
+          float alpha = (1.0 - smoothstep(0.40, 0.50, dist)) * vAlpha * uOpacity;
 
           gl_FragColor = vec4(vColor, alpha);
         }
@@ -176,6 +201,7 @@ export const WhyChooseWaveBackground: React.FC = () => {
 
     const points = new THREE.Points(geometry, material);
     scene.add(points);
+    materialRef.current = material;
 
     // Resize Handler
     const handleResize = () => {
@@ -233,6 +259,7 @@ export const WhyChooseWaveBackground: React.FC = () => {
       geometry.dispose();
       material.dispose();
       renderer.dispose();
+      materialRef.current = null;
     };
   }, []);
 

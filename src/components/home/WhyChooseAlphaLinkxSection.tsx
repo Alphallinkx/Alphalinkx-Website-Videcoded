@@ -165,7 +165,7 @@ export const WhyChooseAlphaLinkxSection: React.FC = () => {
                       >
                         {/* Feature Title */}
                         <div className="col-span-7 pr-2">
-                          <span className="text-white font-bold text-[14px] sm:text-[16px] md:text-[17px] tracking-tight">
+                          <span className="text-white font-bold text-[20px] sm:text-[16px] md:text-[17px] tracking-tight">
                             {row.feature}
                           </span>
                         </div>

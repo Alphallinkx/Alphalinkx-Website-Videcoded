@@ -460,15 +460,21 @@ export const HowWeWorkSection: React.FC = () => {
       ref={sectionRef}
       id="process"
       aria-labelledby="how-we-work-heading"
-      className={`hww-section relative w-full bg-[#060709] py-14 sm:py-16 lg:py-20 overflow-x-clip selection:bg-[#FC6603] selection:text-black border-b border-white/[0.08] ${
+      className={`hww-section relative w-full bg-[#FC6603] py-14 sm:py-16 lg:py-20 overflow-x-clip selection:bg-black selection:text-white border-b border-black/10 ${
         isAnimReady ? 'hww-anim-ready' : ''
       } ${isInView ? 'hww-in-view' : ''} ${isSettled ? 'hww-settled' : ''}`}
     >
-      {/* Background ambient radial glow matching mockup */}
+      {/* Textured Orange Background Image Overlay */}
       <div
         aria-hidden="true"
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[450px] bg-[radial-gradient(ellipse_at_center,rgba(252,102,3,0.06)_0%,transparent_70%)] pointer-events-none"
-      />
+        className="absolute inset-0 pointer-events-none select-none overflow-hidden"
+      >
+        <img
+          src="/assets/how-we-work-orange-bg.jpg"
+          alt=""
+          className="w-full h-full object-cover object-center"
+        />
+      </div>
 
       <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 xl:px-10 w-full">
         {/* =========================================================================
@@ -478,28 +484,28 @@ export const HowWeWorkSection: React.FC = () => {
           {/* LEFT SIDE: Section Eyebrow, Heading, and Single-Line Subtext */}
           <div className="flex flex-col items-start text-left max-w-2xl">
             {/* Eyebrow: // HOW WE WORK */}
-            <div className="hww-eyebrow font-mono text-[11px] sm:text-[12px] font-semibold text-[#FC6603] uppercase tracking-[0.2em] mb-2 sm:mb-2.5 flex items-center gap-2">
-              <span className="font-bold">//</span>
-              <span className="text-white/80">HOW WE WORK</span>
+            <div className="hww-eyebrow font-mono text-[11px] sm:text-[12px] font-bold text-[#0A0A0B] uppercase tracking-[0.22em] mb-2 sm:mb-2.5 flex items-center gap-2">
+              <span className="opacity-70 font-bold">//</span>
+              <span>HOW WE WORK</span>
             </div>
 
             {/* Heading: Four steps. One clear direction. */}
             <h2
               id="how-we-work-heading"
-              className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-[-0.03em] leading-[1.08] text-white"
+              className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-[-0.03em] leading-[1.08]"
             >
               <span className="block overflow-hidden pb-1">
-                <span className="hww-heading-line hww-line-1">Four steps.</span>
+                <span className="hww-heading-line hww-line-1 text-[#0A0A0B]">Four steps.</span>
               </span>
               <span className="block overflow-hidden pb-1">
-                <span className="hww-heading-line hww-line-2 text-[#FC6603]">
+                <span className="hww-heading-line hww-line-2 text-white">
                   One clear direction.
                 </span>
               </span>
             </h2>
 
             {/* Supporting Text (Strictly Single Line on Desktop) */}
-            <p className="hww-subtext font-sans text-[15px] sm:text-[16px] text-[#A1A1AA] leading-relaxed mt-2.5 whitespace-normal sm:whitespace-nowrap">
+            <p className="hww-subtext font-sans text-[15px] sm:text-[16px] text-white/95 leading-relaxed mt-2.5 whitespace-normal sm:whitespace-nowrap">
               From understanding your business to building what comes next.
             </p>
           </div>
@@ -508,11 +514,11 @@ export const HowWeWorkSection: React.FC = () => {
           <div className="hww-cta-row flex items-center gap-3 shrink-0 self-start sm:self-center">
             <Link
               to="/contact"
-              className="group relative inline-flex items-center gap-3 pl-6 pr-2 sm:pl-7 sm:pr-2.5 py-2.5 sm:py-3 rounded-full bg-[#FC6603] text-white font-mono text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.16em] shadow-[0_0_24px_rgba(252,102,3,0.35)] hover:bg-[#ff5500] hover:shadow-[0_0_32px_rgba(252,102,3,0.55)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FC6603] focus-visible:ring-offset-2 focus-visible:ring-offset-[#060709]"
+              className="group relative inline-flex items-center gap-3 pl-6 pr-2 sm:pl-7 sm:pr-2.5 py-2.5 sm:py-3 rounded-full bg-[#0A0A0B] text-white font-mono text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.16em] shadow-[0_12px_28px_rgba(0,0,0,0.35)] hover:bg-black hover:shadow-[0_16px_36px_rgba(0,0,0,0.5)] border border-black/20 transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black focus-visible:ring-offset-2 focus-visible:ring-offset-[#FC6603]"
               data-cursor="CONNECT"
             >
               <span>LET'S TALK</span>
-              <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white flex items-center justify-center text-black shrink-0 transition-transform duration-300 group-hover:rotate-45 shadow-sm">
+              <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white flex items-center justify-center text-[#0A0A0B] shrink-0 transition-transform duration-300 group-hover:rotate-45 shadow-sm">
                 <svg
                   className="w-3.5 h-3.5"
                   viewBox="0 0 24 24"

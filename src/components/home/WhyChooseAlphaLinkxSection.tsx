@@ -71,10 +71,10 @@ export const WhyChooseAlphaLinkxSection: React.FC = () => {
           </div>
         </div>
 
-        {/* Two Cards Grid - exact 338px : 677px (1:2 ratio) & 428px calibrated height */}
+        {/* Two Cards Grid - exact 338px : 677px (1:2 ratio) & balanced 20px top/bottom padding */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch">
           {/* Left Card: Strategy with a reason */}
-          <div className="lg:col-span-4 relative rounded-[26px] sm:rounded-[30px] overflow-hidden shadow-2xl border border-stone-200/30 flex flex-col justify-between h-auto lg:h-[430px]">
+          <div className="lg:col-span-4 relative rounded-[26px] sm:rounded-[30px] overflow-hidden shadow-2xl border border-stone-200/30 flex flex-col justify-between">
             {/* Full-bleed background image with texture, peach glow, and ribbon artwork */}
             <img
               src="/assets/why-left-card-bg.jpg"
@@ -82,8 +82,8 @@ export const WhyChooseAlphaLinkxSection: React.FC = () => {
               className="absolute inset-0 w-full h-full object-cover object-bottom select-none pointer-events-none"
             />
 
-            {/* Content overlay */}
-            <div className="relative z-10 p-6 sm:p-7 md:p-8 flex flex-col justify-start">
+            {/* Content overlay with exact 20px top/bottom padding */}
+            <div className="relative z-10 px-6 sm:px-7 py-[20px] flex flex-col justify-start h-full">
               <h3 className="font-display font-extrabold text-[28px] sm:text-[32px] md:text-[34px] text-[#111113] leading-[1.04] tracking-[-0.03em]">
                 Strategy<br />with a reason.
               </h3>
@@ -118,8 +118,8 @@ export const WhyChooseAlphaLinkxSection: React.FC = () => {
             </div>
           </div>
 
-          {/* Right Card: Us vs. the usual */}
-          <div className="lg:col-span-8 relative rounded-[26px] sm:rounded-[30px] p-6 sm:p-7 md:p-8 bg-[#111113] border border-white/[0.08] flex flex-col justify-between shadow-[0_20px_50px_rgba(0,0,0,0.5)] h-auto lg:h-[430px]">
+          {/* Right Card: Us vs. the usual with exact 20px top and bottom padding */}
+          <div className="lg:col-span-8 relative rounded-[26px] sm:rounded-[30px] px-6 sm:px-7 md:px-8 py-[20px] bg-[#111113] border border-white/[0.08] flex flex-col justify-between shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
             <div>
               {/* Header inside right card */}
               <div>
@@ -132,9 +132,9 @@ export const WhyChooseAlphaLinkxSection: React.FC = () => {
               </div>
 
               {/* Comparison Table */}
-              <div className="relative mt-4 sm:mt-5">
+              <div className="relative mt-4 sm:mt-5 pb-1">
                 {/* Table Header */}
-                <div className="grid grid-cols-12 items-end">
+                <div className="grid grid-cols-12 items-end pb-0">
                   <div className="col-span-7" />
                   <div className="col-span-2 text-center">
                     <span className="font-mono text-[11px] sm:text-[12px] font-medium tracking-[0.14em] uppercase text-[#71717A]">
@@ -165,7 +165,7 @@ export const WhyChooseAlphaLinkxSection: React.FC = () => {
                       >
                         {/* Feature Title */}
                         <div className="col-span-7 pr-2">
-                          <span className="text-white font-bold text-[20px] sm:text-[16px] md:text-[17px] tracking-tight">
+                          <span className="text-white font-bold text-[14px] sm:text-[16px] md:text-[20px] tracking-tight">
                             {row.feature}
                           </span>
                         </div>

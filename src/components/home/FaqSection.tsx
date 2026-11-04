@@ -52,10 +52,19 @@ export const FaqSection: React.FC = () => {
     <section
       id="faq"
       aria-label="Frequently Asked Questions"
-      className="relative py-20 sm:py-24 md:py-28 bg-[#060709] border-t border-white/[0.06] overflow-hidden"
+      className="relative py-20 sm:py-24 md:py-28 bg-[#FC6603] overflow-hidden"
     >
-      {/* Background ambient lighting */}
-      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[700px] h-[400px] bg-[#FC6603]/[0.03] rounded-full blur-[140px] pointer-events-none" />
+      {/* Textured Orange Background Image Overlay */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none select-none overflow-hidden"
+      >
+        <img
+          src="/assets/faq-orange-bg.jpg"
+          alt=""
+          className="w-full h-full object-cover object-center"
+        />
+      </div>
 
       <div className="relative z-10 max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
@@ -64,15 +73,15 @@ export const FaqSection: React.FC = () => {
              ========================================================================= */}
           <div className="lg:col-span-7 flex flex-col">
             {/* Eyebrow: // FAQ */}
-            <div className="font-mono text-[11px] sm:text-[12px] font-semibold text-[#FC6603] uppercase tracking-[0.2em] mb-2.5 flex items-center gap-2">
+            <div className="font-mono text-[11px] sm:text-[12px] font-bold text-[#0A0A0B] uppercase tracking-[0.22em] mb-2.5 flex items-center gap-2">
               <span className="font-bold">//</span>
-              <span className="text-white/80">FAQ</span>
+              <span className="tracking-[0.24em]">FAQ</span>
             </div>
 
-            {/* Heading: Exact font size from previous sections (text-3xl sm:text-4xl md:text-5xl lg:text-[54px]) */}
-            <h2 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-[-0.03em] leading-[1.08] text-white mb-8 sm:mb-10">
-              <span className="block">Your questions.</span>
-              <span className="block text-[#FC6603]">Clear answers.</span>
+            {/* Heading: Adjusted for orange background (Black + Crisp White) */}
+            <h2 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-[-0.03em] leading-[1.08] mb-8 sm:mb-10">
+              <span className="block text-[#0A0A0B]">Your questions.</span>
+              <span className="block text-white">Clear answers.</span>
             </h2>
 
             {/* Accordion List with Bigger Layout & Text */}

@@ -18,31 +18,56 @@ const COMPARISON_ROWS: ComparisonRow[] = [
 
 export const WhyChooseAlphaLinkxSection: React.FC = () => {
   return (
-    <section className="relative py-12 sm:py-16 md:py-20 bg-[#060709] border-t border-white/[0.06] overflow-hidden">
+    <section className="relative py-14 sm:py-18 md:py-24 bg-[#060709] border-t border-white/[0.06] overflow-hidden">
       {/* Background glow accent */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[#FC6603]/[0.035] rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-[#FC6603]/[0.035] rounded-full blur-[140px] pointer-events-none" />
 
       <div className="relative max-w-[1040px] mx-auto px-4 sm:px-6">
-        {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-9">
-          {/* Eyebrow Pill */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#18181A] border border-white/[0.1] mb-3.5 shadow-sm">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#FC6603] shadow-[0_0_8px_#FC6603]" />
-            <span className="font-mono text-[11px] font-semibold tracking-[0.16em] uppercase text-zinc-300">
-              // WHY ALPHALINXX
-            </span>
+        {/* Section Header: Headings on LEFT, Orange CTA on RIGHT (middle aligned) - exactly like HowWeWorkSection */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 sm:gap-8 mb-10 sm:mb-12">
+          {/* LEFT SIDE: Eyebrow, Heading (matching HowWeWork font sizes), Subtitle */}
+          <div className="flex flex-col items-start text-left max-w-2xl">
+            {/* Eyebrow: // WHY ALPHALINXX */}
+            <div className="font-mono text-[11px] sm:text-[12px] font-semibold text-[#FC6603] uppercase tracking-[0.2em] mb-2 sm:mb-2.5 flex items-center gap-2">
+              <span className="font-bold">//</span>
+              <span className="text-white/80">WHY ALPHALINXX</span>
+            </div>
+
+            {/* Heading: Exact font size from HowWeWorkSection (text-3xl sm:text-4xl md:text-5xl lg:text-[54px]) */}
+            <h2 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-[-0.03em] leading-[1.08] text-white">
+              <span className="block">Built to turn visibility</span>
+              <span className="block text-[#FC6603]">into measurable momentum.</span>
+            </h2>
+
+            {/* Supporting Text */}
+            <p className="font-sans text-[15px] sm:text-[16px] text-[#A1A1AA] leading-relaxed mt-2.5">
+              Strategy, design and growth execution—connected by one clear direction.
+            </p>
           </div>
 
-          {/* Heading */}
-          <h2 className="font-display font-extrabold text-[30px] sm:text-[38px] md:text-[44px] tracking-tight leading-[1.1]">
-            <span className="text-white block">Built to turn visibility</span>
-            <span className="text-[#FC6603] block mt-0.5">into measurable momentum.</span>
-          </h2>
-
-          {/* Subtitle */}
-          <p className="mt-2.5 text-[13px] sm:text-[14px] text-[#A1A1AA] font-sans leading-relaxed max-w-xl mx-auto">
-            Strategy, design and growth execution—connected by one clear direction.
-          </p>
+          {/* RIGHT SIDE: Brand CTA Button (LET'S TALK ↗ with glowing orange pill and white circle arrow) */}
+          <div className="flex items-center gap-3 shrink-0 self-start sm:self-center">
+            <Link
+              to="/contact"
+              className="group relative inline-flex items-center gap-3 pl-6 pr-2 sm:pl-7 sm:pr-2.5 py-2.5 sm:py-3 rounded-full bg-[#FC6603] text-white font-mono text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.16em] shadow-[0_0_24px_rgba(252,102,3,0.35)] hover:bg-[#ff5500] hover:shadow-[0_0_32px_rgba(252,102,3,0.55)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
+            >
+              <span>LET'S TALK</span>
+              <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white flex items-center justify-center text-black shrink-0 transition-transform duration-300 group-hover:rotate-45 shadow-sm">
+                <svg
+                  className="w-3.5 h-3.5"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <line x1="7" y1="17" x2="17" y2="7"></line>
+                  <polyline points="7 7 17 7 17 17"></polyline>
+                </svg>
+              </span>
+            </Link>
+          </div>
         </div>
 
         {/* Two Cards Grid - exact 338px : 677px (1:2 ratio) & 428px calibrated height */}

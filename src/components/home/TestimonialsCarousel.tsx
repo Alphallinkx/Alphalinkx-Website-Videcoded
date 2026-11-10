@@ -214,34 +214,34 @@ export const TestimonialsCarousel: React.FC = () => {
           aria-hidden="true"
           className="pointer-events-none select-none z-0 testimonials-marquee-mask
             max-md:absolute max-md:left-0 max-md:right-0 max-md:top-2 max-md:w-full max-md:h-[70px]
-            md:absolute md:left-10 md:top-0 md:bottom-0 md:w-[92px] lg:w-[112px] xl:w-[132px] 2xl:w-[144px]
+            md:absolute md:left-10 md:top-0 md:bottom-0 md:w-[96px] lg:w-[116px] xl:w-[136px] 2xl:w-[150px]
             overflow-hidden"
         >
           <div
-            className={`flex w-full ${isPaused ? '[animation-play-state:paused]' : ''}
+            className={`flex w-full will-change-transform ${isPaused ? '[animation-play-state:paused]' : ''}
               max-md:w-max max-md:flex-row max-md:animate-[marquee-x_28s_linear_infinite]
               md:flex-col md:animate-[marquee-y_30s_linear_infinite]`}
           >
             {/* Loop Group 1 */}
             <div className="flex max-md:flex-row max-md:gap-[28px] max-md:pr-[28px] md:flex-col md:items-center md:gap-8 md:pb-8">
               <span
-                className="font-display font-extrabold text-[#646464] tracking-[0em] leading-none select-none
+                className="block font-display font-extrabold text-[#646464] tracking-[0em] leading-none select-none
                   max-md:text-[56px] max-md:[writing-mode:horizontal-tb]
                   md:text-[clamp(74px,7.2vw,128px)] md:[writing-mode:vertical-rl]"
               >
                 TESTIMONIALS
               </span>
-              <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[clamp(56px,5.5vw,94px)] my-1 md:my-3">
+              <b className="block font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[clamp(56px,5.5vw,94px)] my-1 md:my-3">
                 /
               </b>
               <span
-                className="font-display font-extrabold text-[#646464] tracking-[0em] leading-none select-none
+                className="block font-display font-extrabold text-[#646464] tracking-[0em] leading-none select-none
                   max-md:text-[56px] max-md:[writing-mode:horizontal-tb]
                   md:text-[clamp(74px,7.2vw,128px)] md:[writing-mode:vertical-rl]"
               >
                 TESTIMONIALS
               </span>
-              <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[clamp(56px,5.5vw,94px)] my-1 md:my-3">
+              <b className="block font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[clamp(56px,5.5vw,94px)] my-1 md:my-3">
                 /
               </b>
             </div>
@@ -252,23 +252,23 @@ export const TestimonialsCarousel: React.FC = () => {
               aria-hidden="true"
             >
               <span
-                className="font-display font-extrabold text-[#646464] tracking-[0em] leading-none select-none
+                className="block font-display font-extrabold text-[#646464] tracking-[0em] leading-none select-none
                   max-md:text-[56px] max-md:[writing-mode:horizontal-tb]
                   md:text-[clamp(74px,7.2vw,128px)] md:[writing-mode:vertical-rl]"
               >
                 TESTIMONIALS
               </span>
-              <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[clamp(56px,5.5vw,94px)] my-1 md:my-3">
+              <b className="block font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[clamp(56px,5.5vw,94px)] my-1 md:my-3">
                 /
               </b>
               <span
-                className="font-display font-extrabold text-[#646464] tracking-[0em] leading-none select-none
+                className="block font-display font-extrabold text-[#646464] tracking-[0em] leading-none select-none
                   max-md:text-[56px] max-md:[writing-mode:horizontal-tb]
                   md:text-[clamp(74px,7.2vw,128px)] md:[writing-mode:vertical-rl]"
               >
                 TESTIMONIALS
               </span>
-              <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[clamp(56px,5.5vw,94px)] my-1 md:my-3">
+              <b className="block font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[clamp(56px,5.5vw,94px)] my-1 md:my-3">
                 /
               </b>
             </div>

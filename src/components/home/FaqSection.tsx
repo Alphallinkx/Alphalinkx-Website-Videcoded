@@ -84,8 +84,8 @@ export const FaqSection: React.FC = () => {
               <span className="block text-white">Clear answers.</span>
             </h2>
 
-            {/* Accordion List with Bigger Layout & Text */}
-            <div className="space-y-3 sm:space-y-3.5">
+            {/* Accordion List with Controlled Width for Clean Breathing Space */}
+            <div className="w-full lg:max-w-[510px] xl:max-w-[610px] space-y-3 sm:space-y-3.5">
               {FAQ_ITEMS.map((faq, idx) => {
                 const isOpen = openIndex === idx;
 

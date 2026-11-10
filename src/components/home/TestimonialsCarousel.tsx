@@ -188,7 +188,7 @@ export const TestimonialsCarousel: React.FC = () => {
       ref={sectionRef}
       id="testimonials"
       aria-labelledby="testimonials-title"
-      className="relative isolation-isolate overflow-hidden min-h-[720px] lg:min-h-[780px] xl:min-h-[840px] flex items-center py-20 lg:py-24 xl:py-28 bg-[#0B0B0C] text-[#F7F7F5]"
+      className="relative isolation-isolate overflow-hidden bg-[#0B0B0C] text-[#F7F7F5]"
       style={{
         backgroundImage:
           'radial-gradient(ellipse at 65% 50%, rgba(25, 19, 15, 0.45), transparent 62%)',
@@ -204,92 +204,96 @@ export const TestimonialsCarousel: React.FC = () => {
       />
 
       {/* =========================================================================
-          ZONE 1: FAR LEFT VERTICAL OVERSIZED MARQUEE WITH EXPANDED LETTER SPACING
+          HEADER-ALIGNED WRAPPER: ANCHORS MARQUEE & BODY TO NAVBAR CONTAINER
          ========================================================================= */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none select-none z-0
-          max-md:absolute max-md:left-0 max-md:right-0 max-md:top-2 max-md:w-full max-md:h-[70px]
-          md:absolute md:left-2 lg:left-4 xl:left-6 md:top-0 md:bottom-0 md:w-[65px] lg:w-[75px]
-          overflow-hidden"
-        style={{
-          maskImage:
-            typeof window !== 'undefined' && window.innerWidth < 768
-              ? 'linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)'
-              : 'linear-gradient(transparent, #000 10%, #000 90%, transparent)',
-          WebkitMaskImage:
-            typeof window !== 'undefined' && window.innerWidth < 768
-              ? 'linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)'
-              : 'linear-gradient(transparent, #000 10%, #000 90%, transparent)',
-        }}
-      >
+      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-10 min-h-[720px] lg:min-h-[780px] xl:min-h-[840px] flex items-center py-20 lg:py-24 xl:py-28">
+        {/* =========================================================================
+            ZONE 1: INWARD VERTICAL OVERSIZED MARQUEE (ALIGNED WITH HEADER)
+           ========================================================================= */}
         <div
-          className={`flex w-full ${isPaused ? '[animation-play-state:paused]' : ''}
-            max-md:w-max max-md:flex-row max-md:animate-[marquee-x_28s_linear_infinite]
-            md:flex-col md:animate-[marquee-y_30s_linear_infinite]`}
+          aria-hidden="true"
+          className="pointer-events-none select-none z-0
+            max-md:absolute max-md:left-0 max-md:right-0 max-md:top-2 max-md:w-full max-md:h-[70px]
+            md:absolute md:left-10 md:top-0 md:bottom-0 md:w-[92px] lg:w-[112px] xl:w-[132px] 2xl:w-[144px]
+            overflow-hidden"
+          style={{
+            maskImage:
+              typeof window !== 'undefined' && window.innerWidth < 768
+                ? 'linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)'
+                : 'linear-gradient(transparent, #000 10%, #000 90%, transparent)',
+            WebkitMaskImage:
+              typeof window !== 'undefined' && window.innerWidth < 768
+                ? 'linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)'
+                : 'linear-gradient(transparent, #000 10%, #000 90%, transparent)',
+          }}
         >
-          {/* Loop Group 1 */}
-          <div className="flex max-md:flex-row max-md:gap-[28px] max-md:pr-[28px] md:flex-col md:items-center md:gap-8 md:pb-8">
-            <span
-              className="font-display font-extrabold text-[#646464] tracking-[0.2em] sm:tracking-[0.25em] leading-none select-none
-                max-md:text-[56px] max-md:[writing-mode:horizontal-tb]
-                md:text-[clamp(52px,4.5vw,80px)] md:[writing-mode:vertical-rl]"
-            >
-              TESTIMONIALS
-            </span>
-            <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[56px] my-1 md:my-2">
-              /
-            </b>
-            <span
-              className="font-display font-extrabold text-[#646464] tracking-[0.2em] sm:tracking-[0.25em] leading-none select-none
-                max-md:text-[56px] max-md:[writing-mode:horizontal-tb]
-                md:text-[clamp(52px,4.5vw,80px)] md:[writing-mode:vertical-rl]"
-            >
-              TESTIMONIALS
-            </span>
-            <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[56px] my-1 md:my-2">
-              /
-            </b>
-          </div>
-
-          {/* Loop Group 2 (Exact duplicate for seamless looping) */}
           <div
-            className="flex max-md:flex-row max-md:gap-[28px] max-md:pr-[28px] md:flex-col md:items-center md:gap-8 md:pb-8"
-            aria-hidden="true"
+            className={`flex w-full ${isPaused ? '[animation-play-state:paused]' : ''}
+              max-md:w-max max-md:flex-row max-md:animate-[marquee-x_28s_linear_infinite]
+              md:flex-col md:animate-[marquee-y_30s_linear_infinite]`}
           >
-            <span
-              className="font-display font-extrabold text-[#646464] tracking-[0.2em] sm:tracking-[0.25em] leading-none select-none
-                max-md:text-[56px] max-md:[writing-mode:horizontal-tb]
-                md:text-[clamp(52px,4.5vw,80px)] md:[writing-mode:vertical-rl]"
+            {/* Loop Group 1 */}
+            <div className="flex max-md:flex-row max-md:gap-[28px] max-md:pr-[28px] md:flex-col md:items-center md:gap-8 md:pb-8">
+              <span
+                className="font-display font-extrabold text-[#646464] tracking-[0.16em] sm:tracking-[0.2em] leading-none select-none
+                  max-md:text-[56px] max-md:[writing-mode:horizontal-tb]
+                  md:text-[clamp(74px,7.2vw,128px)] md:[writing-mode:vertical-rl]"
+              >
+                TESTIMONIALS
+              </span>
+              <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[clamp(56px,5.5vw,94px)] my-1 md:my-3">
+                /
+              </b>
+              <span
+                className="font-display font-extrabold text-[#646464] tracking-[0.16em] sm:tracking-[0.2em] leading-none select-none
+                  max-md:text-[56px] max-md:[writing-mode:horizontal-tb]
+                  md:text-[clamp(74px,7.2vw,128px)] md:[writing-mode:vertical-rl]"
+              >
+                TESTIMONIALS
+              </span>
+              <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[clamp(56px,5.5vw,94px)] my-1 md:my-3">
+                /
+              </b>
+            </div>
+
+            {/* Loop Group 2 (Exact duplicate for seamless looping) */}
+            <div
+              className="flex max-md:flex-row max-md:gap-[28px] max-md:pr-[28px] md:flex-col md:items-center md:gap-8 md:pb-8"
+              aria-hidden="true"
             >
-              TESTIMONIALS
-            </span>
-            <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[56px] my-1 md:my-2">
-              /
-            </b>
-            <span
-              className="font-display font-extrabold text-[#646464] tracking-[0.2em] sm:tracking-[0.25em] leading-none select-none
-                max-md:text-[56px] max-md:[writing-mode:horizontal-tb]
-                md:text-[clamp(52px,4.5vw,80px)] md:[writing-mode:vertical-rl]"
-            >
-              TESTIMONIALS
-            </span>
-            <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[56px] my-1 md:my-2">
-              /
-            </b>
+              <span
+                className="font-display font-extrabold text-[#646464] tracking-[0.16em] sm:tracking-[0.2em] leading-none select-none
+                  max-md:text-[56px] max-md:[writing-mode:horizontal-tb]
+                  md:text-[clamp(74px,7.2vw,128px)] md:[writing-mode:vertical-rl]"
+              >
+                TESTIMONIALS
+              </span>
+              <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[clamp(56px,5.5vw,94px)] my-1 md:my-3">
+                /
+              </b>
+              <span
+                className="font-display font-extrabold text-[#646464] tracking-[0.16em] sm:tracking-[0.2em] leading-none select-none
+                  max-md:text-[56px] max-md:[writing-mode:horizontal-tb]
+                  md:text-[clamp(74px,7.2vw,128px)] md:[writing-mode:vertical-rl]"
+              >
+                TESTIMONIALS
+              </span>
+              <b className="font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[clamp(56px,5.5vw,94px)] my-1 md:my-3">
+                /
+              </b>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* =========================================================================
-          MAIN CONTAINER: ALIGNED WITH SITE GRID (REMOVED EXTRA LEFT PADDING)
-         ========================================================================= */}
-      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:pl-20 lg:pl-24 xl:px-10 md:pr-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 xl:gap-16 items-center">
-          {/* =========================================================================
-              ZONE 2: MIDDLE LEFT SECTION INTRODUCTION & WRITE A REVIEW BUTTON
-             ========================================================================= */}
-          <header className="lg:col-span-5 flex flex-col items-start pt-14 md:pt-0 pb-4 lg:pb-16 max-w-[440px]">
+        {/* =========================================================================
+            MAIN BODY: INDENTED PAST MARQUEE & ALIGNED WITH HEADER BOUNDS
+           ========================================================================= */}
+        <div className="relative z-10 w-full md:pl-[112px] lg:pl-[140px] xl:pl-[175px] 2xl:pl-[205px]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 xl:gap-12 items-center">
+            {/* =========================================================================
+                ZONE 2: INWARD SECTION INTRODUCTION & WRITE A REVIEW BUTTON
+               ========================================================================= */}
+            <header className="lg:col-span-5 flex flex-col items-start pt-14 md:pt-0 pb-4 lg:pb-10 max-w-[440px]">
             {/* Eyebrow */}
             <p className="font-mono text-[12px] font-medium tracking-[0.16em] text-[#FC6603] uppercase mb-4 sm:mb-5">
               // CLIENT STORIES
@@ -355,7 +359,7 @@ export const TestimonialsCarousel: React.FC = () => {
               }
             }}
             onKeyDown={handleKeyDown}
-            className="lg:col-span-7 w-full max-w-[570px] lg:max-w-[590px] ml-auto justify-self-end pt-4 lg:pt-8 focus-visible:outline-none"
+            className="lg:col-span-7 w-full max-w-[560px] lg:max-w-[575px] ml-auto justify-self-end pt-4 lg:pt-8 focus-visible:outline-none"
           >
             {/* 3D Overlapping Card Deck with Silky Smooth Slot Transitions */}
             <div
@@ -645,6 +649,7 @@ export const TestimonialsCarousel: React.FC = () => {
               {announcement}
             </p>
           </div>
+        </div>
         </div>
       </div>
     </section>

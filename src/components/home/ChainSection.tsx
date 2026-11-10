@@ -99,11 +99,18 @@ export const ChainSection: React.FC = () => {
       measureNodes();
     };
 
+    let ro: ResizeObserver | null = null;
+    if (typeof ResizeObserver !== 'undefined' && trackRef.current) {
+      ro = new ResizeObserver(() => measureNodes());
+      ro.observe(trackRef.current);
+    }
+
     window.addEventListener('resize', handleResize, { passive: true });
     const timer = setTimeout(measureNodes, 250);
 
     return () => {
       unsubscribe();
+      ro?.disconnect();
       window.removeEventListener('resize', handleResize);
       clearTimeout(timer);
     };

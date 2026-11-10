@@ -66,8 +66,8 @@ export const FaqSection: React.FC = () => {
         />
       </div>
 
-      <div className="relative z-10 max-w-[1240px] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+      <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-10 xl:gap-16 items-start">
           {/* =========================================================================
               LEFT COLUMN: FAQs Eyebrow + Exact Heading + Bigger, Prominent FAQs
              ========================================================================= */}
@@ -79,20 +79,20 @@ export const FaqSection: React.FC = () => {
             </div>
 
             {/* Heading: Adjusted for orange background (Black + Crisp White) */}
-            <h2 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-[-0.03em] leading-[1.08] mb-8 sm:mb-10">
+            <h2 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-[-0.03em] leading-[1.08] mb-7 sm:mb-9">
               <span className="block text-[#0A0A0B]">Your questions.</span>
               <span className="block text-white">Clear answers.</span>
             </h2>
 
             {/* Accordion List with Bigger Layout & Text */}
-            <div className="space-y-3.5 sm:space-y-4">
+            <div className="space-y-3 sm:space-y-3.5">
               {FAQ_ITEMS.map((faq, idx) => {
                 const isOpen = openIndex === idx;
 
                 return (
                   <div
                     key={idx}
-                    className={`rounded-[22px] transition-all duration-300 border ${
+                    className={`rounded-[18px] sm:rounded-[22px] transition-all duration-300 border ${
                       isOpen
                         ? 'bg-[#16171B] border-white/20 shadow-xl'
                         : 'bg-[#121316] border-white/[0.08] hover:border-white/[0.16] hover:bg-[#15161A]'
@@ -101,12 +101,12 @@ export const FaqSection: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => toggle(idx)}
-                      className="w-full px-6 sm:px-7 py-5 sm:py-5.5 text-left flex items-center justify-between gap-4 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FC6603] rounded-[22px]"
+                      className="w-full px-5 sm:px-7 py-4 sm:py-[22px] text-left flex items-center justify-between gap-3 sm:gap-4 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FC6603] rounded-[18px] sm:rounded-[22px]"
                       aria-expanded={isOpen}
                     >
-                      <div className="flex items-center gap-4 sm:gap-5 pr-2">
+                      <div className="flex items-center gap-3.5 sm:gap-5 pr-2">
                         {/* Number */}
-                        <span className="font-mono font-bold text-[14px] sm:text-[15px] md:text-[16px] text-white/75 group-hover:text-white transition-colors shrink-0">
+                        <span className="font-mono font-bold text-[13.5px] sm:text-[15px] md:text-[16px] text-white/75 group-hover:text-white transition-colors shrink-0">
                           {faq.number}
                         </span>
 
@@ -122,15 +122,15 @@ export const FaqSection: React.FC = () => {
                           isOpen ? 'rotate-45 text-[#FC6603]' : ''
                         }`}
                       >
-                        <Plus className="w-5 h-5 sm:w-5.5 sm:h-5.5 stroke-[2.2]" />
+                        <Plus className="w-5 h-5 sm:w-[22px] sm:h-[22px] stroke-[2.2]" />
                       </div>
                     </button>
 
                     {/* Animated Answer Body */}
                     <div
-                      className={`overflow-hidden transition-all duration-300 ease-in-out px-6 sm:px-7 ${
+                      className={`overflow-hidden transition-all duration-300 ease-in-out px-5 sm:px-7 ${
                         isOpen
-                          ? 'max-h-80 pb-6 pt-1 opacity-100'
+                          ? 'max-h-96 pb-5 sm:pb-6 pt-1 opacity-100'
                           : 'max-h-0 pb-0 pt-0 opacity-0'
                       }`}
                     >
@@ -145,31 +145,49 @@ export const FaqSection: React.FC = () => {
           </div>
 
           {/* =========================================================================
-              RIGHT COLUMN: Big Discovery Booking Card in Front of Headings
+              RIGHT COLUMN: Big Discovery Booking Card Aligned with Header Right Edge
              ========================================================================= */}
-          <div className="lg:col-span-5 lg:sticky lg:top-24">
-            <div className="relative rounded-[28px] sm:rounded-[34px] p-8 sm:p-9 md:p-10 bg-[#121316] border border-white/[0.08] shadow-[0_25px_60px_rgba(0,0,0,0.6)] overflow-hidden">
+          <div className="lg:col-span-5 lg:sticky lg:top-28 lg:pt-12 xl:pt-14">
+            <div className="relative rounded-[26px] sm:rounded-[34px] p-6 sm:p-8 xl:p-10 bg-[#121316] border border-white/[0.08] shadow-[0_25px_60px_rgba(0,0,0,0.6)] overflow-hidden">
               {/* Top ambient orange blur */}
-              <div className="absolute top-0 right-0 w-56 h-56 bg-[#FC6603]/[0.09] rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute top-0 right-0 w-56 h-56 bg-[#FC6603]/[0.08] rounded-full blur-3xl pointer-events-none" />
 
-              {/* Card Top Row: Glowing Calendar Badge & AlphaLinkx Mark */}
+              {/* Recreated Crisp White AlphaLinkx Corner Mark (Cropped at Top-Right Edge) */}
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 422 415"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="absolute -top-1 right-0 w-[108px] h-[108px] sm:w-[126px] sm:h-[126px] xl:w-[140px] xl:h-[140px] pointer-events-none select-none z-10"
+              >
+                {/* Right vertical stem ("l") */}
+                <path
+                  d="M393 6C362 12 330 34 319 68V214C334 252 360 296 393 338V6Z"
+                  fill="#FFFFFF"
+                />
+                {/* Upper arch + diagonal swoosh ("a") */}
+                <path
+                  d="M34 212C58 148 112 105 174 105C238 105 276 154 311 230C342 296 376 340 422 368V403C416 407 402 407 383 407C348 400 318 378 289 335C266 298 248 258 233 230C204 176 168 164 132 167C96 170 62 186 34 212Z"
+                  fill="#FFFFFF"
+                />
+                {/* Lower crescent bowl ("a") */}
+                <path
+                  d="M141 185C106 208 95 236 95 268C95 308 128 340 168 340C198 340 226 320 245 286L276 347C250 385 208 408 158 408C82 408 24 348 24 274C24 224 62 192 141 185Z"
+                  fill="#FFFFFF"
+                />
+              </svg>
+
+              {/* Card Top Row: Glowing Calendar Badge */}
               <div className="flex items-start justify-between relative z-10">
                 {/* Glowing Calendar Badge */}
-                <div className="w-14 h-14 sm:w-15 sm:h-15 rounded-2xl bg-[#1C1410] border border-[#FC6603]/35 flex items-center justify-center text-[#FC6603] shadow-[0_0_22px_rgba(252,102,3,0.22)] shrink-0">
-                  <Calendar className="w-7 h-7 stroke-[1.8]" />
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-[#1C1410] border border-[#FC6603]/35 flex items-center justify-center text-[#FC6603] shadow-[0_0_22px_rgba(252,102,3,0.22)] shrink-0">
+                  <Calendar className="w-6 h-6 sm:w-7 sm:h-7 stroke-[1.8]" />
                 </div>
-
-                {/* AlphaLinkx Mark */}
-                <img
-                  src="/assets/al-mark-orange.png"
-                  alt="AlphaLinkx"
-                  className="w-16 h-16 sm:w-20 sm:h-20 object-contain opacity-95 shrink-0 -mt-1 -mr-1"
-                />
               </div>
 
               {/* Headings */}
-              <div className="relative z-10 mt-7 sm:mt-8">
-                <h3 className="font-display font-extrabold text-[23px] sm:text-[26px] md:text-[28px] text-white leading-[1.18] tracking-tight">
+              <div className="relative z-10 mt-8 sm:mt-10">
+                <h3 className="font-display font-extrabold text-[22px] sm:text-[25px] lg:text-[24px] xl:text-[27px] text-white leading-[1.18] tracking-tight">
                   Still have questions?<br />
                   Let’s talk about your goals.
                 </h3>
@@ -181,11 +199,11 @@ export const FaqSection: React.FC = () => {
               </div>
 
               {/* Action Buttons Row */}
-              <div className="relative z-10 mt-8 flex items-center gap-4 sm:gap-6 flex-wrap">
+              <div className="relative z-10 mt-7 sm:mt-8 flex items-center gap-4 sm:gap-5 xl:gap-6 flex-wrap">
                 {/* Glowing Orange Pill Button: BOOK A CALL ↗ */}
                 <Link
                   to="/contact"
-                  className="group inline-flex items-center gap-3 pl-6 pr-2.5 py-2.5 rounded-full bg-[#FC6603] text-white font-mono font-bold text-[12px] sm:text-[13px] tracking-[0.12em] uppercase shadow-[0_0_24px_rgba(252,102,3,0.4)] hover:bg-[#ff5500] hover:shadow-[0_0_32px_rgba(252,102,3,0.6)] transition-all duration-300 hover:scale-[1.02]"
+                  className="group inline-flex items-center gap-2.5 sm:gap-3 pl-5 sm:pl-6 pr-2 sm:pr-2.5 py-2 sm:py-2.5 rounded-full bg-[#FC6603] text-white font-mono font-bold text-[11.5px] sm:text-[12.5px] tracking-[0.12em] uppercase shadow-[0_0_24px_rgba(252,102,3,0.4)] hover:bg-[#ff5500] hover:shadow-[0_0_32px_rgba(252,102,3,0.6)] transition-all duration-300 hover:scale-[1.02] shrink-0"
                 >
                   <span>BOOK A CALL</span>
                   <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white flex items-center justify-center text-black shrink-0 transition-transform duration-300 group-hover:rotate-45 shadow-sm">

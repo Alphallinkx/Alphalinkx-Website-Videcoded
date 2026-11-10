@@ -212,20 +212,10 @@ export const TestimonialsCarousel: React.FC = () => {
            ========================================================================= */}
         <div
           aria-hidden="true"
-          className="pointer-events-none select-none z-0
+          className="pointer-events-none select-none z-0 testimonials-marquee-mask
             max-md:absolute max-md:left-0 max-md:right-0 max-md:top-2 max-md:w-full max-md:h-[70px]
             md:absolute md:left-10 md:top-0 md:bottom-0 md:w-[92px] lg:w-[112px] xl:w-[132px] 2xl:w-[144px]
             overflow-hidden"
-          style={{
-            maskImage:
-              typeof window !== 'undefined' && window.innerWidth < 768
-                ? 'linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)'
-                : 'linear-gradient(transparent, #000 10%, #000 90%, transparent)',
-            WebkitMaskImage:
-              typeof window !== 'undefined' && window.innerWidth < 768
-                ? 'linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)'
-                : 'linear-gradient(transparent, #000 10%, #000 90%, transparent)',
-          }}
         >
           <div
             className={`flex w-full ${isPaused ? '[animation-play-state:paused]' : ''}

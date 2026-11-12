@@ -6,8 +6,6 @@ import { ChainSection } from '../components/home/ChainSection';
 import { ClientLogoMarquee } from '../components/home/ClientLogoMarquee';
 import { HowWeWorkSection } from '../components/home/HowWeWorkSection';
 import { SelectedWorkSection } from '../components/home/SelectedWorkSection';
-import { ServicesListSection } from '../components/home/ServicesListSection';
-import { NetworkProcessSection } from '../components/home/NetworkProcessSection';
 import { StatsSection } from '../components/home/StatsSection';
 import { WhyChooseAlphaLinkxSection } from '../components/home/WhyChooseAlphaLinkxSection';
 import { TestimonialsCarousel } from '../components/home/TestimonialsCarousel';

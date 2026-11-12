@@ -52,17 +52,19 @@ export const FaqSection: React.FC = () => {
     <section
       id="faq"
       aria-label="Frequently Asked Questions"
-      className="relative py-20 sm:py-24 md:py-28 bg-[#FC6603] overflow-hidden"
+      className="relative py-20 sm:py-24 md:py-28 bg-[#FC6603] overflow-clip"
     >
-      {/* Textured Orange Background Image Overlay */}
+      {/* Static Textured Orange Background Image (fixed height prevents zoom/shift when accordions expand) */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 pointer-events-none select-none overflow-hidden"
+        className="absolute inset-x-0 top-0 h-[1550px] sm:h-[1350px] lg:h-[1150px] min-h-full pointer-events-none select-none overflow-hidden"
       >
         <img
           src="/assets/faq-orange-bg.jpg"
           alt=""
-          className="w-full h-full object-cover object-center"
+          loading="lazy"
+          decoding="async"
+          className="w-full h-full object-cover object-top"
         />
       </div>
 
@@ -145,10 +147,11 @@ export const FaqSection: React.FC = () => {
           </div>
 
           {/* =========================================================================
-              RIGHT COLUMN: Big Discovery Booking Card Aligned with Header Right Edge
+              RIGHT COLUMN: Sticky Discovery Booking Card Aligned with "Your questions."
              ========================================================================= */}
-          <div className="lg:col-span-5 lg:sticky lg:top-28 lg:pt-12 xl:pt-14">
-            <div className="relative rounded-[26px] sm:rounded-[34px] p-6 sm:p-8 xl:p-10 bg-[#121316] border border-white/[0.08] shadow-[0_25px_60px_rgba(0,0,0,0.6)] overflow-hidden">
+          <div className="lg:col-span-5 lg:pt-[28px] lg:self-stretch">
+            <div className="lg:sticky lg:top-7">
+              <div className="relative rounded-[26px] sm:rounded-[34px] p-6 sm:p-8 xl:p-10 bg-[#121316] border border-white/[0.08] shadow-[0_25px_60px_rgba(0,0,0,0.6)] overflow-hidden">
               {/* Top ambient orange blur */}
               <div className="absolute top-0 right-0 w-56 h-56 bg-[#FC6603]/[0.08] rounded-full blur-3xl pointer-events-none" />
 
@@ -214,6 +217,7 @@ export const FaqSection: React.FC = () => {
                   <Phone className="w-4 h-4 text-white group-hover:text-[#FC6603] transition-colors stroke-[2.2]" />
                   <span>Call Now</span>
                 </a>
+              </div>
               </div>
             </div>
           </div>

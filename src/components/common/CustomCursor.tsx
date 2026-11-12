@@ -19,61 +19,83 @@ export const CustomCursor: React.FC = () => {
     let ringX = -100;
     let ringY = -100;
     let isRunning = true;
+    let reqId: number | null = null;
+    let visibleFlag = false;
+    let lastCursorText = '';
+    let lastHovered = false;
+
+    const scheduleRender = () => {
+      if (isRunning && reqId === null) {
+        reqId = requestAnimationFrame(render);
+      }
+    };
 
     const onMouseMove = (e: MouseEvent) => {
       mouseX = e.clientX;
       mouseY = e.clientY;
-      if (!isVisible) setIsVisible(true);
+      if (!visibleFlag) {
+        visibleFlag = true;
+        setIsVisible(true);
+      }
 
-      // Check for cursor text triggers
+      // Check for cursor text triggers only updating React state when changed
       const target = e.target as HTMLElement | null;
       const cursorTarget = target?.closest('[data-cursor]') as HTMLElement | null;
-      if (cursorTarget) {
-        const text = cursorTarget.getAttribute('data-cursor') || '';
-        setCursorText(text);
-        setIsHovered(true);
-      } else {
-        const isClickable = target?.closest('a, button, input, [role="button"]');
-        setCursorText('');
-        setIsHovered(Boolean(isClickable));
+      const nextText = cursorTarget ? cursorTarget.getAttribute('data-cursor') || '' : '';
+      const nextHovered = cursorTarget
+        ? true
+        : Boolean(target?.closest('a, button, input, [role="button"]'));
+
+      if (nextText !== lastCursorText) {
+        lastCursorText = nextText;
+        setCursorText(nextText);
       }
+      if (nextHovered !== lastHovered) {
+        lastHovered = nextHovered;
+        setIsHovered(nextHovered);
+      }
+
+      scheduleRender();
     };
 
     const onMouseLeave = () => {
+      visibleFlag = false;
       setIsVisible(false);
     };
 
     window.addEventListener('mousemove', onMouseMove, { passive: true });
     document.addEventListener('mouseleave', onMouseLeave);
 
-    // RAF loop for smooth lerping
+    // RAF loop for smooth lerping; automatically idles once ring reaches dot
     const render = () => {
+      reqId = null;
       if (!isRunning) return;
 
       if (dotRef.current) {
         dotRef.current.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
       }
 
-      // Lerp for trailing ring
-      ringX += (mouseX - ringX) * 0.18;
-      ringY += (mouseY - ringY) * 0.18;
+      const dx = mouseX - ringX;
+      const dy = mouseY - ringY;
+      ringX += dx * 0.18;
+      ringY += dy * 0.18;
 
       if (ringRef.current) {
         ringRef.current.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
       }
 
-      requestAnimationFrame(render);
+      if (Math.abs(dx) > 0.05 || Math.abs(dy) > 0.05) {
+        reqId = requestAnimationFrame(render);
+      }
     };
-
-    const reqId = requestAnimationFrame(render);
 
     return () => {
       isRunning = false;
-      cancelAnimationFrame(reqId);
+      if (reqId !== null) cancelAnimationFrame(reqId);
       window.removeEventListener('mousemove', onMouseMove);
       document.removeEventListener('mouseleave', onMouseLeave);
     };
-  }, [isVisible]);
+  }, []);
 
   const isTouch = typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches;
   if (isTouch) return null;

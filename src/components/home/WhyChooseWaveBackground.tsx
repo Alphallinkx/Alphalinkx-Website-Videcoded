@@ -45,7 +45,7 @@ export const WhyChooseWaveBackground: React.FC<WhyChooseWaveBackgroundProps> = (
       powerPreference: 'high-performance',
     });
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     renderer.setPixelRatio(dpr);
 
     // Scene & Camera
@@ -213,22 +213,23 @@ export const WhyChooseWaveBackground: React.FC<WhyChooseWaveBackgroundProps> = (
       camera.updateProjectionMatrix();
 
       renderer.setSize(width, height);
-      material.uniforms.uPixelRatio.value = Math.min(window.devicePixelRatio || 1, 2);
+      material.uniforms.uPixelRatio.value = Math.min(window.devicePixelRatio || 1, 1.5);
     };
 
     handleResize();
     const resizeObserver = new ResizeObserver(handleResize);
     resizeObserver.observe(container);
 
-    // Animation Loop with Visibility Optimization
-    let animationFrameId: number;
-    let isVisible = true;
+    // Animation Loop with Visibility Optimization (0% idle GPU/CPU when off-screen or hidden)
+    let animationFrameId: number | null = null;
+    let isVisible = false;
     let lastTime = performance.now();
 
     const animate = (currentTime: number) => {
-      animationFrameId = requestAnimationFrame(animate);
-
-      if (!isVisible) return;
+      if (!isVisible || document.hidden) {
+        animationFrameId = null;
+        return;
+      }
 
       const delta = (currentTime - lastTime) * 0.001;
       lastTime = currentTime;
@@ -237,25 +238,49 @@ export const WhyChooseWaveBackground: React.FC<WhyChooseWaveBackgroundProps> = (
       material.uniforms.uTime.value += Math.min(delta, 0.05);
 
       renderer.render(scene, camera);
+      animationFrameId = requestAnimationFrame(animate);
     };
 
-    // Pause rendering when scrolled out of view to preserve 100% GPU / battery
+    const startLoop = () => {
+      if (animationFrameId === null && isVisible && !document.hidden) {
+        lastTime = performance.now();
+        animationFrameId = requestAnimationFrame(animate);
+      }
+    };
+
+    const stopLoop = () => {
+      if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+      }
+    };
+
+    // Initial render so canvas isn't blank before scrolling near it
+    renderer.render(scene, camera);
+
     const intersectionObserver = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           isVisible = entry.isIntersecting;
+          if (isVisible) startLoop();
+          else stopLoop();
         });
       },
-      { rootMargin: '100px' }
+      { rootMargin: '150px' }
     );
     intersectionObserver.observe(container);
 
-    animationFrameId = requestAnimationFrame(animate);
+    const handleVisibilityChange = () => {
+      if (document.hidden) stopLoop();
+      else startLoop();
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      stopLoop();
       resizeObserver.disconnect();
       intersectionObserver.disconnect();
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       geometry.dispose();
       material.dispose();
       renderer.dispose();

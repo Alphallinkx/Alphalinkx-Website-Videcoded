@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import confetti from 'canvas-confetti';
 import { FORM_OPTIONS, BRAND } from '../../content/siteContent';
 import { BrandButton } from '../common/BrandButton';
@@ -21,16 +21,136 @@ export const InquirySection: React.FC = () => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  // Mouse follow gradient on headline
+  // Zero-re-render mouse tracking for section glow, card border glow & headline gradient
+  const sectionRef = useRef<HTMLElement>(null);
+  const glowWrapRef = useRef<HTMLDivElement>(null);
+  const cardShellRef = useRef<HTMLDivElement>(null);
+  const cardBorderGlowRef = useRef<HTMLDivElement>(null);
+  const cardSurfaceGlowRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLHeadingElement>(null);
-  const [mousePos, setMousePos] = useState({ x: 50, y: 50 });
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLHeadingElement>) => {
-    if (!headlineRef.current) return;
-    const rect = headlineRef.current.getBoundingClientRect();
+  useEffect(() => {
+    const section = sectionRef.current;
+    const glow = glowWrapRef.current;
+    if (!section || !glow) return;
+
+    const prefersReduced =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const getOffsets = () => {
+      const sRect = section.getBoundingClientRect();
+      const cRect = cardShellRef.current?.getBoundingClientRect();
+      return {
+        sRect,
+        offsetX: cRect ? cRect.left - sRect.left : sRect.width * 0.5,
+        offsetY: cRect ? cRect.top - sRect.top : sRect.height * 0.5,
+      };
+    };
+
+    const { sRect: initialRect, offsetX: initOX, offsetY: initOY } = getOffsets();
+    let cardOffsetX = initOX;
+    let cardOffsetY = initOY;
+    let curX = initialRect.width * 0.5;
+    let curY = initialRect.height * 0.36;
+    let targetX = curX;
+    let targetY = curY;
+    let rafId: number | null = null;
+    let isUnmounted = false;
+
+    const applyTransforms = () => {
+      glow.style.transform = `translate3d(${curX}px, ${curY}px, 0)`;
+      const cx = curX - cardOffsetX;
+      const cy = curY - cardOffsetY;
+      if (cardBorderGlowRef.current) {
+        cardBorderGlowRef.current.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
+      }
+      if (cardSurfaceGlowRef.current) {
+        cardSurfaceGlowRef.current.style.transform = `translate3d(${cx}px, ${cy}px, 0)`;
+      }
+    };
+
+    applyTransforms();
+
+    const animate = () => {
+      rafId = null;
+      if (isUnmounted) return;
+
+      const dx = targetX - curX;
+      const dy = targetY - curY;
+      curX += dx * 0.12;
+      curY += dy * 0.12;
+
+      applyTransforms();
+
+      if (Math.abs(dx) > 0.35 || Math.abs(dy) > 0.35) {
+        rafId = requestAnimationFrame(animate);
+      }
+    };
+
+    const startAnim = () => {
+      if (!prefersReduced && rafId === null) {
+        rafId = requestAnimationFrame(animate);
+      }
+    };
+
+    const onPointerMove = (e: PointerEvent) => {
+      if (prefersReduced) return;
+      const { sRect, offsetX, offsetY } = getOffsets();
+      cardOffsetX = offsetX;
+      cardOffsetY = offsetY;
+      targetX = e.clientX - sRect.left;
+      targetY = e.clientY - sRect.top;
+      glow.style.opacity = '1';
+      if (cardBorderGlowRef.current) cardBorderGlowRef.current.style.opacity = '1';
+      if (cardSurfaceGlowRef.current) cardSurfaceGlowRef.current.style.opacity = '1';
+      startAnim();
+    };
+
+    const onPointerLeave = () => {
+      const { sRect, offsetX, offsetY } = getOffsets();
+      cardOffsetX = offsetX;
+      cardOffsetY = offsetY;
+      targetX = sRect.width * 0.5;
+      targetY = sRect.height * 0.36;
+      glow.style.opacity = '0.72';
+      if (cardBorderGlowRef.current) cardBorderGlowRef.current.style.opacity = '0';
+      if (cardSurfaceGlowRef.current) cardSurfaceGlowRef.current.style.opacity = '0';
+      startAnim();
+    };
+
+    const onResize = () => {
+      const { sRect, offsetX, offsetY } = getOffsets();
+      cardOffsetX = offsetX;
+      cardOffsetY = offsetY;
+      curX = sRect.width * 0.5;
+      curY = sRect.height * 0.36;
+      targetX = curX;
+      targetY = curY;
+      applyTransforms();
+    };
+
+    section.addEventListener('pointermove', onPointerMove, { passive: true });
+    section.addEventListener('pointerleave', onPointerLeave);
+    window.addEventListener('resize', onResize, { passive: true });
+
+    return () => {
+      isUnmounted = true;
+      if (rafId !== null) cancelAnimationFrame(rafId);
+      section.removeEventListener('pointermove', onPointerMove);
+      section.removeEventListener('pointerleave', onPointerLeave);
+      window.removeEventListener('resize', onResize);
+    };
+  }, []);
+
+  const handleHeadlineMouseMove = (e: React.MouseEvent<HTMLHeadingElement>) => {
+    const el = headlineRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
     const y = ((e.clientY - rect.top) / rect.height) * 100;
-    setMousePos({ x, y });
+    el.style.setProperty('--hx', `${x}%`);
+    el.style.setProperty('--hy', `${y}%`);
   };
 
   const toggleInterest = (val: string) => {
@@ -90,23 +210,65 @@ export const InquirySection: React.FC = () => {
 
   return (
     <section
+      ref={sectionRef}
       id="contact"
       aria-label="Multi-Step Project Inquiry"
       className="relative py-28 md:py-44 bg-[#0A0A0B] overflow-hidden"
     >
+      {/* Subtle Technical Dot Grid Matrix */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-[0.22]"
+        style={{
+          backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.22) 1px, transparent 1px)',
+          backgroundSize: '28px 28px',
+        }}
+      />
+
+      {/* Soft Static Corner/Top Vignette */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_70%_at_50%_40%,transparent_25%,rgba(10,10,11,0.88)_100%)]"
+      />
+
+      {/* Interactive GPU Mouse-Tracking Orange Glow Layer (pure translate3d, zero repaints) */}
+      <div
+        ref={glowWrapRef}
+        aria-hidden="true"
+        className="pointer-events-none absolute top-0 left-0 will-change-transform transition-opacity duration-500"
+        style={{ opacity: 0.72 }}
+      >
+        {/* Outer atmospheric orange halo */}
+        <div
+          className="w-[780px] h-[780px] -ml-[390px] -mt-[390px] rounded-full"
+          style={{
+            background:
+              'radial-gradient(circle, rgba(252,102,3,0.22) 0%, rgba(255,90,31,0.10) 32%, rgba(255,90,31,0.03) 56%, transparent 72%)',
+          }}
+        />
+        {/* Inner warm core hotspot */}
+        <div
+          className="absolute top-0 left-0 w-[340px] h-[340px] -ml-[170px] -mt-[170px] rounded-full"
+          style={{
+            background:
+              'radial-gradient(circle, rgba(255,138,61,0.18) 0%, rgba(252,102,3,0.06) 45%, transparent 72%)',
+          }}
+        />
+      </div>
+
       <div id="free-audit" className="absolute -top-24 left-0 pointer-events-none" aria-hidden="true" />
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10">
+      <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10">
         {/* Massive Headline with Mouse-Follow Gradient */}
         <div className="text-center mb-16">
           <span className="font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-[#FF5A1F] block mb-3">
-            // 10 KICKOFF SPRINT
+            // KICKOFF SPRINT
           </span>
           <h2
             ref={headlineRef}
-            onMouseMove={handleMouseMove}
+            onMouseMove={handleHeadlineMouseMove}
             className="font-display font-extrabold text-5xl sm:text-7xl md:text-8xl tracking-[-0.03em] uppercase select-none transition-colors duration-150 leading-[1.05]"
             style={{
-              backgroundImage: `radial-gradient(circle at ${mousePos.x}% ${mousePos.y}%, #FF8A3D 0%, #FF5A1F 30%, #FFFFFF 70%)`,
+              backgroundImage: `radial-gradient(circle at var(--hx, 50%) var(--hy, 50%), #FF8A3D 0%, #FF5A1F 30%, #FFFFFF 70%)`,
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
             }}
@@ -118,15 +280,45 @@ export const InquirySection: React.FC = () => {
           </p>
         </div>
 
-        {/* Multi-Step Chip Selection Card */}
-        <div className="max-w-3xl mx-auto rounded-3xl bg-[#111113] border border-white/10 p-8 sm:p-14 shadow-2xl relative overflow-hidden backdrop-blur-xl">
-          {/* Progress Bar */}
-          <div className="w-full h-1.5 bg-white/10 rounded-full mb-10 overflow-hidden">
+        {/* Multi-Step Chip Selection Card with Interactive Mouse-Tracking Border Glow */}
+        <div
+          ref={cardShellRef}
+          className="max-w-3xl mx-auto rounded-3xl p-[1.5px] bg-white/10 shadow-2xl relative overflow-hidden"
+        >
+          {/* Mouse-Tracking Luminous Orange Border Glow */}
+          <div
+            ref={cardBorderGlowRef}
+            aria-hidden="true"
+            className="pointer-events-none absolute top-0 left-0 w-[520px] h-[520px] -ml-[260px] -mt-[260px] rounded-full will-change-transform transition-opacity duration-300"
+            style={{
+              opacity: 0,
+              background:
+                'radial-gradient(circle, rgba(255,154,77,1) 0%, rgba(252,102,3,0.85) 28%, rgba(255,90,31,0.32) 52%, transparent 72%)',
+            }}
+          />
+
+          {/* Inner Card Surface */}
+          <div className="relative rounded-[calc(1.5rem-1.5px)] bg-[#111113] p-8 sm:p-14 overflow-hidden">
+            {/* Subtle Inner Ambient Pointer Sheen */}
             <div
-              className="h-full bg-gradient-to-r from-[#FF5A1F] to-[#FF8A3D] transition-all duration-300"
-              style={{ width: `${(currentStep / totalSteps) * 100}%` }}
+              ref={cardSurfaceGlowRef}
+              aria-hidden="true"
+              className="pointer-events-none absolute top-0 left-0 w-[500px] h-[500px] -ml-[250px] -mt-[250px] rounded-full will-change-transform transition-opacity duration-300"
+              style={{
+                opacity: 0,
+                background:
+                  'radial-gradient(circle, rgba(252,102,3,0.09) 0%, rgba(255,90,31,0.03) 40%, transparent 70%)',
+              }}
             />
-          </div>
+
+            <div className="relative z-10">
+              {/* Progress Bar */}
+              <div className="w-full h-1.5 bg-white/10 rounded-full mb-10 overflow-hidden">
+                <div
+                  className="h-full bg-gradient-to-r from-[#FF5A1F] to-[#FF8A3D] transition-all duration-300"
+                  style={{ width: `${(currentStep / totalSteps) * 100}%` }}
+                />
+              </div>
 
           {/* Success State */}
           {isSuccess ? (
@@ -399,6 +591,8 @@ export const InquirySection: React.FC = () => {
               )}
             </form>
           )}
+            </div>
+          </div>
         </div>
       </div>
     </section>

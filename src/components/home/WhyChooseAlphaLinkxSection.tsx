@@ -62,6 +62,8 @@ export const WhyChooseAlphaLinkxSection: React.FC = () => {
             <img
               src="/assets/why-left-card-bg.jpg"
               alt="Strategy with a reason"
+              loading="lazy"
+              decoding="async"
               className="absolute inset-0 w-full h-full object-cover object-bottom select-none pointer-events-none"
             />
 

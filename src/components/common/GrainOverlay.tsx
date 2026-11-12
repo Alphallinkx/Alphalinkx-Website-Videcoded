@@ -1,30 +1,21 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { getNoiseDataUrl } from '../../lib/noiseTexture';
 
 export const GrainOverlay: React.FC = () => {
+  const noiseUrl = useMemo(() => getNoiseDataUrl(160), []);
+
   return (
     <div
       aria-hidden="true"
       className="hidden md:block fixed inset-0 pointer-events-none z-[80] overflow-hidden opacity-[0.035]"
-    >
-      <svg
-        className="w-full h-full"
-        xmlns="http://www.w3.org/2000/svg"
-        version="1.1"
-      >
-        <filter id="noiseFilter">
-          <feTurbulence
-            type="fractalNoise"
-            baseFrequency="0.8"
-            numOctaves="3"
-            stitchTiles="stitch"
-          />
-          <feColorMatrix
-            type="matrix"
-            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"
-          />
-        </filter>
-        <rect width="100%" height="100%" filter="url(#noiseFilter)" />
-      </svg>
-    </div>
+      style={
+        noiseUrl
+          ? {
+              backgroundImage: `url("${noiseUrl}")`,
+              backgroundRepeat: 'repeat',
+            }
+          : undefined
+      }
+    />
   );
 };

@@ -90,6 +90,8 @@ export const StatsSection: React.FC = () => {
         <img
           src="/assets/metrics-orange-bg.jpg"
           alt=""
+          loading="lazy"
+          decoding="async"
           className="w-full h-full object-cover object-center"
         />
       </div>

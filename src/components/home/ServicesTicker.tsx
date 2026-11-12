@@ -39,7 +39,8 @@ export const ServicesTicker: React.FC = () => {
   const baseSpeed = 0.95; // auto-scroll drift speed
 
   useEffect(() => {
-    let animId: number;
+    let animId: number | null = null;
+    let isVisible = false;
     let lastTime = performance.now();
 
     const measureWidth = () => {
@@ -57,6 +58,11 @@ export const ServicesTicker: React.FC = () => {
     window.addEventListener('resize', measureWidth);
 
     const loop = (time: number) => {
+      if (!isVisible || document.hidden) {
+        animId = null;
+        return;
+      }
+
       const delta = Math.min((time - lastTime) / 16.666, 2.5);
       lastTime = time;
 
@@ -95,10 +101,48 @@ export const ServicesTicker: React.FC = () => {
       animId = requestAnimationFrame(loop);
     };
 
-    animId = requestAnimationFrame(loop);
+    const startLoop = () => {
+      if (animId === null && isVisible && !document.hidden) {
+        lastTime = performance.now();
+        animId = requestAnimationFrame(loop);
+      }
+    };
+
+    const stopLoop = () => {
+      if (animId !== null) {
+        cancelAnimationFrame(animId);
+        animId = null;
+      }
+    };
+
+    const el = containerRef.current;
+    const observer =
+      el && typeof IntersectionObserver !== 'undefined'
+        ? new IntersectionObserver(
+            ([entry]) => {
+              isVisible = entry.isIntersecting;
+              if (isVisible) startLoop();
+              else stopLoop();
+            },
+            { rootMargin: '150px' }
+          )
+        : null;
+    if (el && observer) observer.observe(el);
+    else {
+      isVisible = true;
+      startLoop();
+    }
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) stopLoop();
+      else startLoop();
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
 
     return () => {
-      cancelAnimationFrame(animId);
+      stopLoop();
+      observer?.disconnect();
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('resize', measureWidth);
     };
   }, []);

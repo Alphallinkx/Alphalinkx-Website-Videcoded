@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { motion } from 'motion/react';
 import { BrandButton } from '../common/BrandButton';
+import { getNoiseDataUrl } from '../../lib/noiseTexture';
 
 interface Review {
   category: string;
@@ -56,19 +57,21 @@ export const TestimonialsCarousel: React.FC = () => {
   const [manualPause, setManualPause] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   const [isTabHidden, setIsTabHidden] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
-  const [elapsed, setElapsed] = useState(0);
   const [announcement, setAnnouncement] = useState('');
 
   const sectionRef = useRef<HTMLElement>(null);
   const reviewAreaRef = useRef<HTMLDivElement>(null);
   const deckRef = useRef<HTMLDivElement>(null);
+  const barRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
   const lastTimeRef = useRef<number>(performance.now());
   const elapsedRef = useRef(0);
-  const isPausedRef = useRef(false);
+  const indexRef = useRef(0);
+  indexRef.current = index;
+  const noiseUrl = useMemo(() => getNoiseDataUrl(160), []);
 
   // Track reduced motion preference
   useEffect(() => {
@@ -107,11 +110,20 @@ export const TestimonialsCarousel: React.FC = () => {
 
   const isPaused =
     manualPause || hovered || focused || !visible || isTabHidden || reducedMotion;
-  isPausedRef.current = isPaused;
+
+  const updateBarTransform = (activeIdx: number, elapsedMs: number) => {
+    REVIEWS.forEach((_, idx) => {
+      const bar = barRefs.current[idx];
+      if (!bar) return;
+      const sx = idx === activeIdx ? Math.max(0.05, Math.min(1, elapsedMs / INTERVAL)) : 0;
+      bar.style.transform = `scaleX(${sx})`;
+    });
+  };
 
   const changeReview = (target: number, isManual = false) => {
     elapsedRef.current = 0;
-    setElapsed(0);
+    indexRef.current = target;
+    updateBarTransform(target, 0);
     setIndex(target);
     lastTimeRef.current = performance.now();
 
@@ -122,33 +134,40 @@ export const TestimonialsCarousel: React.FC = () => {
     }
   };
 
-  // Autoplay timer with RAF for silky-smooth progress sync
+  // Autoplay timer with RAF: runs ONLY when visible & unpaused and updates DOM directly (zero per-frame React re-renders)
   useEffect(() => {
+    updateBarTransform(indexRef.current, elapsedRef.current);
+
+    if (isPaused) return;
+
     let animId: number;
+    lastTimeRef.current = performance.now();
 
     const tick = (now: number) => {
       const delta = Math.min(now - lastTimeRef.current, 100);
       lastTimeRef.current = now;
 
-      if (!isPausedRef.current) {
-        elapsedRef.current += delta;
-        setElapsed(elapsedRef.current);
-
-        if (elapsedRef.current >= INTERVAL) {
-          elapsedRef.current = 0;
-          setElapsed(0);
-          setIndex((prev) => (prev + 1) % REVIEWS.length);
+      elapsedRef.current += delta;
+      if (elapsedRef.current >= INTERVAL) {
+        elapsedRef.current = 0;
+        const nextIdx = (indexRef.current + 1) % REVIEWS.length;
+        indexRef.current = nextIdx;
+        updateBarTransform(nextIdx, 0);
+        setIndex(nextIdx);
+      } else {
+        const bar = barRefs.current[indexRef.current];
+        if (bar) {
+          bar.style.transform = `scaleX(${Math.max(0.05, Math.min(1, elapsedRef.current / INTERVAL))})`;
         }
       }
 
       animId = requestAnimationFrame(tick);
     };
 
-    lastTimeRef.current = performance.now();
     animId = requestAnimationFrame(tick);
 
     return () => cancelAnimationFrame(animId);
-  }, []);
+  }, [isPaused]);
 
   // Touch swipe support on deck
   const handlePointerDown = (e: React.PointerEvent) => {
@@ -213,9 +232,14 @@ export const TestimonialsCarousel: React.FC = () => {
       <div
         aria-hidden="true"
         className="absolute inset-0 pointer-events-none opacity-[0.035]"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23fff' filter='url(%23n)' opacity='.8' d='M0 0h180v180H0z'/%3E%3C/svg%3E")`,
-        }}
+        style={
+          noiseUrl
+            ? {
+                backgroundImage: `url("${noiseUrl}")`,
+                backgroundRepeat: 'repeat',
+              }
+            : undefined
+        }
       />
 
       {/* =========================================================================
@@ -428,9 +452,14 @@ export const TestimonialsCarousel: React.FC = () => {
                       <div
                         aria-hidden="true"
                         className="absolute inset-0 pointer-events-none opacity-[0.04]"
-                        style={{
-                          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Cpath fill='%23888888' filter='url(%23n)' d='M0 0h120v120H0z'/%3E%3C/svg%3E")`,
-                        }}
+                        style={
+                          noiseUrl
+                            ? {
+                                backgroundImage: `url("${noiseUrl}")`,
+                                backgroundRepeat: 'repeat',
+                              }
+                            : undefined
+                        }
                       />
 
                       {/* Small Orange Curved Accent in Bottom-Right Corner (Fades out when not front) */}
@@ -518,7 +547,6 @@ export const TestimonialsCarousel: React.FC = () => {
                 >
                   {REVIEWS.map((r, i) => {
                     const isCurrent = i === index;
-                    const scaleX = isCurrent ? Math.max(0.05, elapsed / INTERVAL) : 0;
 
                     return (
                       <button
@@ -532,12 +560,12 @@ export const TestimonialsCarousel: React.FC = () => {
                       >
                         {/* Base Track */}
                         <span className="absolute left-0 right-0 top-2.5 h-1 bg-[#454544] rounded-full transition-colors group-hover:bg-[#5A5A58]" />
-                        {/* Active Progress Bar */}
+                        {/* Active Progress Bar (updated via ref so hover/focus re-renders never reset progress) */}
                         <span
-                          className="block h-1 relative origin-left bg-[#FC6603] rounded-full transition-transform duration-75 ease-linear"
-                          style={{
-                            transform: `scaleX(${scaleX})`,
+                          ref={(el) => {
+                            barRefs.current[i] = el;
                           }}
+                          className="block h-1 relative origin-left bg-[#FC6603] rounded-full"
                         />
                       </button>
                     );

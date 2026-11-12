@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, Suspense } from 'react';
+import React, { useRef, useEffect, useState, Suspense } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
@@ -25,6 +25,7 @@ function Links({ scroll }: LinksProps) {
   const isMobile = size.width < 768 || viewport.width < 5.0;
 
   const entrance = useRef(0);
+  const scaleTarget = useRef(new THREE.Vector3(1, 1, 1));
 
   useFrame((state, raw) => {
     // When scrolled well past the hero, skip updates to keep the rest of the site buttery smooth
@@ -47,7 +48,8 @@ function Links({ scroll }: LinksProps) {
       : Math.min(1.0, Math.max(0.56, viewport.width / 6.8));
 
     const currentTargetScale = targetScale * (0.6 + 0.4 * entranceEase);
-    g.scale.lerp(new THREE.Vector3(currentTargetScale, currentTargetScale, currentTargetScale), 1 - Math.exp(-6 * dt));
+    scaleTarget.current.setScalar(currentTargetScale);
+    g.scale.lerp(scaleTarget.current, 1 - Math.exp(-6 * dt));
 
     // Base Group Rotation & Motion
     // Follows mouse pointer gently and tilts with scroll + entrance easing
@@ -207,8 +209,32 @@ export interface HeroSceneProps {
 }
 
 export const HeroScene3D: React.FC<HeroSceneProps> = ({ scroll }) => {
+  const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const [isVisible, setIsVisible] = useState(true);
+  const [isTabHidden, setIsTabHidden] = useState(false);
+
+  // Pause R3F continuous frameloop cleanly when hero is scrolled out or tab is hidden
+  useEffect(() => {
+    const el = containerRef.current;
+    const observer =
+      el && typeof IntersectionObserver !== 'undefined'
+        ? new IntersectionObserver(
+            ([entry]) => setIsVisible(entry.isIntersecting),
+            { rootMargin: '200px' }
+          )
+        : null;
+    if (el && observer) observer.observe(el);
+
+    const onVisibility = () => setIsTabHidden(document.hidden);
+    document.addEventListener('visibilitychange', onVisibility);
+
+    return () => {
+      observer?.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
+  }, []);
 
   // WebGL context loss prevention & recovery
   useEffect(() => {
@@ -234,9 +260,13 @@ export const HeroScene3D: React.FC<HeroSceneProps> = ({ scroll }) => {
   }, []);
 
   return (
-    <div className="absolute inset-0 w-full h-full pointer-events-none select-none z-[2] bg-transparent">
+    <div
+      ref={containerRef}
+      className="absolute inset-0 w-full h-full pointer-events-none select-none z-[2] bg-transparent"
+    >
       <Canvas
         ref={canvasRef}
+        frameloop={isVisible && !isTabHidden ? 'always' : 'demand'}
         // DPR capped at 1 on mobile for butter-smooth 60-120fps scrolling with zero GPU strain
         dpr={isMobile ? 1 : [1, 1.75]}
         camera={{ position: [0, 0, 7.2], fov: 38 }}

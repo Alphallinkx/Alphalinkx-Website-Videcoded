@@ -31,6 +31,8 @@ export const Footer: React.FC = () => {
               <img
                 src="/assets/alphalinkx-mark.png"
                 alt="AlphaLinkx Logo"
+                loading="lazy"
+                decoding="async"
                 className="h-9 w-auto object-contain group-hover:scale-105 transition-transform duration-200"
               />
               <span className="font-display font-extrabold text-xl text-white tracking-[-0.02em] group-hover:text-[#FF5A1F] transition-colors">

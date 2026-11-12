@@ -23,7 +23,7 @@ export const HeroParticles: React.FC = () => {
     const ctx = canvas.getContext('2d', { alpha: true });
     if (!ctx) return;
 
-    let animationFrameId: number;
+    let animationFrameId: number | null = null;
     let isVisible = true;
     let width = 0;
     let height = 0;
@@ -107,14 +107,35 @@ export const HeroParticles: React.FC = () => {
     handleResize();
     window.addEventListener('resize', handleResize);
 
-    // Pause rendering when hero is out of view (saves 100% CPU when scrolling down)
+    const startLoop = () => {
+      if (animationFrameId === null && isVisible && !document.hidden) {
+        animationFrameId = requestAnimationFrame(render);
+      }
+    };
+
+    const stopLoop = () => {
+      if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+      }
+    };
+
+    // Pause rendering completely when hero is out of view or tab hidden (0% idle CPU)
     const observer = new IntersectionObserver(
       ([entry]) => {
         isVisible = entry.isIntersecting;
+        if (isVisible) startLoop();
+        else stopLoop();
       },
       { threshold: 0.05 }
     );
     if (canvas.parentElement) observer.observe(canvas.parentElement);
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) stopLoop();
+      else startLoop();
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
 
     const handlePointerMove = (e: MouseEvent | TouchEvent) => {
       if (!canvas) return;
@@ -143,8 +164,8 @@ export const HeroParticles: React.FC = () => {
     window.addEventListener('mouseleave', handlePointerLeave);
 
     const render = () => {
-      if (!isVisible) {
-        animationFrameId = requestAnimationFrame(render);
+      if (!isVisible || document.hidden) {
+        animationFrameId = null;
         return;
       }
 
@@ -222,11 +243,12 @@ export const HeroParticles: React.FC = () => {
       animationFrameId = requestAnimationFrame(render);
     };
 
-    animationFrameId = requestAnimationFrame(render);
+    startLoop();
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      stopLoop();
       observer.disconnect();
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handlePointerMove);
       window.removeEventListener('touchmove', handlePointerMove);

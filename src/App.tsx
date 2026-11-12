@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Lenis from 'lenis';
 import { motion, AnimatePresence } from 'motion/react';
@@ -9,16 +9,17 @@ import { Preloader } from './components/common/Preloader';
 import { GrainOverlay } from './components/common/GrainOverlay';
 import { ScrollProgressBar } from './components/common/ScrollProgressBar';
 import { HomePage } from './pages/HomePage';
-import { AboutPage } from './pages/AboutPage';
-import { ServicesPage } from './pages/ServicesPage';
-import { ServiceDetailPage } from './pages/ServiceDetailPage';
-import { ProjectsPage } from './pages/ProjectsPage';
-import { ProjectDetailPage } from './pages/ProjectDetailPage';
-import { ContactPage } from './pages/ContactPage';
-import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage';
-import { TermsOfServicePage } from './pages/TermsOfServicePage';
-import { AdminDashboardPage } from './pages/AdminDashboardPage';
-import { NotFoundPage } from './pages/NotFoundPage';
+
+const AboutPage = lazy(() => import('./pages/AboutPage').then((m) => ({ default: m.AboutPage })));
+const ServicesPage = lazy(() => import('./pages/ServicesPage').then((m) => ({ default: m.ServicesPage })));
+const ServiceDetailPage = lazy(() => import('./pages/ServiceDetailPage').then((m) => ({ default: m.ServiceDetailPage })));
+const ProjectsPage = lazy(() => import('./pages/ProjectsPage').then((m) => ({ default: m.ProjectsPage })));
+const ProjectDetailPage = lazy(() => import('./pages/ProjectDetailPage').then((m) => ({ default: m.ProjectDetailPage })));
+const ContactPage = lazy(() => import('./pages/ContactPage').then((m) => ({ default: m.ContactPage })));
+const PrivacyPolicyPage = lazy(() => import('./pages/PrivacyPolicyPage').then((m) => ({ default: m.PrivacyPolicyPage })));
+const TermsOfServicePage = lazy(() => import('./pages/TermsOfServicePage').then((m) => ({ default: m.TermsOfServicePage })));
+const AdminDashboardPage = lazy(() => import('./pages/AdminDashboardPage').then((m) => ({ default: m.AdminDashboardPage })));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage').then((m) => ({ default: m.NotFoundPage })));
 
 /**
  * Global Smooth Momentum Scroll Manager
@@ -46,12 +47,23 @@ function SmoothScrollManager() {
 
     (window as any).lenis = lenis;
 
-    let rafId: number;
+    let rafId: number | null = null;
     function raf(time: number) {
+      if (document.hidden) {
+        rafId = null;
+        return;
+      }
       lenis.raf(time);
       rafId = requestAnimationFrame(raf);
     }
     rafId = requestAnimationFrame(raf);
+
+    const handleVisibilityChange = () => {
+      if (!document.hidden && rafId === null) {
+        rafId = requestAnimationFrame(raf);
+      }
+    };
+    document.addEventListener('visibilitychange', handleVisibilityChange);
 
     // Global anchor click interceptor for silky smooth scrolling to sections
     const handleAnchorClick = (e: MouseEvent) => {
@@ -88,7 +100,8 @@ function SmoothScrollManager() {
 
     return () => {
       document.removeEventListener('click', handleAnchorClick, { capture: true });
-      cancelAnimationFrame(rafId);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      if (rafId !== null) cancelAnimationFrame(rafId);
       lenis.destroy();
       delete (window as any).lenis;
     };
@@ -136,23 +149,25 @@ function AnimatedRoutes() {
         transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
         className="w-full flex-1 flex flex-col"
       >
-        <Routes location={location}>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/services" element={<ServicesPage />} />
-          <Route path="/services/:slug" element={<ServiceDetailPage />} />
-          {/* Both /work and /projects paths supported */}
-          <Route path="/work" element={<ProjectsPage />} />
-          <Route path="/work/:slug" element={<ProjectDetailPage />} />
-          <Route path="/projects" element={<ProjectsPage />} />
-          <Route path="/projects/:slug" element={<ProjectDetailPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
-          <Route path="/terms-of-service" element={<TermsOfServicePage />} />
-          <Route path="/admin" element={<AdminDashboardPage />} />
-          <Route path="/404" element={<NotFoundPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
+        <Suspense fallback={null}>
+          <Routes location={location}>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/services" element={<ServicesPage />} />
+            <Route path="/services/:slug" element={<ServiceDetailPage />} />
+            {/* Both /work and /projects paths supported */}
+            <Route path="/work" element={<ProjectsPage />} />
+            <Route path="/work/:slug" element={<ProjectDetailPage />} />
+            <Route path="/projects" element={<ProjectsPage />} />
+            <Route path="/projects/:slug" element={<ProjectDetailPage />} />
+            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+            <Route path="/terms-of-service" element={<TermsOfServicePage />} />
+            <Route path="/admin" element={<AdminDashboardPage />} />
+            <Route path="/404" element={<NotFoundPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </Suspense>
       </motion.div>
     </AnimatePresence>
   );

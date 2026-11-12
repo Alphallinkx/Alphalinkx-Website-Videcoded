@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { useReducedMotion } from 'motion/react';
 
 interface Partner {
@@ -127,111 +127,145 @@ const PARTNER_LIST: Partner[] = [
   },
 ];
 
+// Matches original 0.9px/frame @ 60fps = 54px/sec drift speed
+const SPEED_PX_PER_SEC = 54;
+
 /**
- * CARDLESS MODERN ENTERPRISE PARTNERS MARQUEE
- * 
- * Design Architecture:
- * - 100% Card-Free: Eliminates visual box fatigue on the page.
- * - Floating Organic Lockups: Authentic vector logos + bold typography + technical descriptors.
- * - Luminous Hover Aura: Subtle radial ambient glow behind logos without card borders.
- * - Buttery Smooth Physics: rAnimationFrame momentum drag & drop with zero-jump hover freeze.
- * - Clean Enterprise Header: Minimalist telemetry HUD without distracting pause buttons.
+ * Compositor-Driven Enterprise Partners Marquee
+ * - Runs auto-drift via Web Animations API (0ms main-thread JS frames when scrolling/viewing)
+ * - No CSS mask-image or per-item drop-shadow filter passes that stall GPU compositing
+ * - Seamless pointer drag & inertia handoff
  */
 export const ClientLogoMarquee: React.FC = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const set1Ref = useRef<HTMLDivElement>(null);
 
-  const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [isDragging, setIsDragging] = useState(false);
   const prefersReduced = useReducedMotion();
 
-  // Animation & Physics Tracking Refs (zero React re-render overhead)
-  const currentXRef = useRef<number>(0);
-  const isHoveredRef = useRef<boolean>(false);
-  const isDraggingRef = useRef<boolean>(false);
-  const dragStartXRef = useRef<number>(0);
-  const dragStartPosRef = useRef<number>(0);
-  const lastMouseXRef = useRef<number>(0);
-  const velocityRef = useRef<number>(0);
-  const hasMovedRef = useRef<boolean>(false);
-  const setWidthRef = useRef<number>(0);
+  const waapiRef = useRef<Animation | null>(null);
+  const setWidthRef = useRef(0);
+  const currentXRef = useRef(0);
+  const isHoveredRef = useRef(false);
+  const isDraggingRef = useRef(false);
+  const dragStartXRef = useRef(0);
+  const dragStartPosRef = useRef(0);
+  const lastMouseXRef = useRef(0);
+  const velocityRef = useRef(0);
+  const inertiaRafRef = useRef<number | null>(null);
 
-  // Auto-scroll drift speed in pixels per 60fps frame
-  const baseSpeed = 0.9;
+  const normalizeX = (x: number, setWidth: number) => {
+    if (setWidth <= 0) return x;
+    let wrapped = x % setWidth;
+    if (wrapped > 0) wrapped -= setWidth;
+    return wrapped;
+  };
 
-  // 120 FPS Momentum Physics & Infinite Wrap Loop
-  useEffect(() => {
-    let animId: number;
-    let lastTime = performance.now();
-
-    const measureWidth = () => {
-      if (set1Ref.current) {
-        setWidthRef.current = set1Ref.current.offsetWidth;
-      }
-    };
-
-    measureWidth();
-    if (document.fonts) {
-      document.fonts.ready.then(measureWidth);
+  const stopWaapi = useCallback(() => {
+    if (waapiRef.current) {
+      waapiRef.current.cancel();
+      waapiRef.current = null;
     }
-    window.addEventListener('resize', measureWidth);
+  }, []);
 
-    const loop = (time: number) => {
-      const delta = Math.min((time - lastTime) / 16.666, 2.5);
-      lastTime = time;
+  const stopInertia = useCallback(() => {
+    if (inertiaRafRef.current !== null) {
+      cancelAnimationFrame(inertiaRafRef.current);
+      inertiaRafRef.current = null;
+    }
+  }, []);
 
+  const startWaapiFrom = useCallback(
+    (offsetX: number) => {
+      const track = trackRef.current;
       const setWidth = setWidthRef.current;
+      if (!track || setWidth <= 0 || prefersReduced) return;
 
-      if (!isDraggingRef.current) {
-        // Momentum deceleration on release
-        if (Math.abs(velocityRef.current) > 0.05) {
-          currentXRef.current += velocityRef.current * delta;
-          velocityRef.current *= Math.pow(0.92, delta);
-        } else {
-          velocityRef.current = 0;
-          // Normal auto-drift when not hovered and prefersReduced is false
-          if (!isHoveredRef.current && !prefersReduced) {
-            currentXRef.current -= baseSpeed * delta;
-          }
+      stopWaapi();
+      track.style.transform = '';
+
+      const wrappedX = normalizeX(offsetX, setWidth);
+      currentXRef.current = wrappedX;
+
+      const durationMs = (setWidth / SPEED_PX_PER_SEC) * 1000;
+      const anim = track.animate(
+        [
+          { transform: 'translate3d(0px, 0, 0)' },
+          { transform: `translate3d(-${setWidth}px, 0, 0)` },
+        ],
+        {
+          duration: durationMs,
+          iterations: Infinity,
+          easing: 'linear',
+        }
+      );
+
+      anim.currentTime = (-wrappedX / setWidth) * durationMs;
+      if (isHoveredRef.current) {
+        anim.pause();
+      }
+      waapiRef.current = anim;
+    },
+    [prefersReduced, stopWaapi]
+  );
+
+  const readCurrentX = (): number => {
+    const track = trackRef.current;
+    if (!track) return currentXRef.current;
+    try {
+      const matrix = new DOMMatrix(getComputedStyle(track).transform);
+      return normalizeX(matrix.m41, setWidthRef.current);
+    } catch {
+      return currentXRef.current;
+    }
+  };
+
+  useEffect(() => {
+    const measureAndStart = () => {
+      if (!set1Ref.current) return;
+      const w = set1Ref.current.offsetWidth;
+      if (w > 0 && w !== setWidthRef.current) {
+        setWidthRef.current = w;
+        if (!isDraggingRef.current && inertiaRafRef.current === null) {
+          startWaapiFrom(currentXRef.current);
         }
       }
-
-      // Infinite wrap in both directions
-      if (setWidth > 0) {
-        while (currentXRef.current <= -setWidth) {
-          currentXRef.current += setWidth;
-          dragStartPosRef.current += setWidth;
-        }
-        while (currentXRef.current > 0) {
-          currentXRef.current -= setWidth;
-          dragStartPosRef.current -= setWidth;
-        }
-      }
-
-      if (trackRef.current) {
-        trackRef.current.style.transform = `translate3d(${currentXRef.current}px, 0, 0)`;
-      }
-
-      animId = requestAnimationFrame(loop);
     };
 
-    animId = requestAnimationFrame(loop);
+    measureAndStart();
+    if (document.fonts) {
+      document.fonts.ready.then(measureAndStart);
+    }
+
+    const ro =
+      typeof ResizeObserver !== 'undefined' && set1Ref.current
+        ? new ResizeObserver(measureAndStart)
+        : null;
+    if (ro && set1Ref.current) ro.observe(set1Ref.current);
 
     return () => {
-      cancelAnimationFrame(animId);
-      window.removeEventListener('resize', measureWidth);
+      ro?.disconnect();
+      stopInertia();
+      stopWaapi();
     };
-  }, [prefersReduced]);
+  }, [startWaapiFrom, stopInertia, stopWaapi]);
 
-  // Pointer Grab Handlers
   const handlePointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
     if (e.button !== 0) return;
 
+    stopInertia();
+    const liveX = waapiRef.current ? readCurrentX() : currentXRef.current;
+    stopWaapi();
+
+    currentXRef.current = liveX;
+    if (trackRef.current) {
+      trackRef.current.style.transform = `translate3d(${liveX}px, 0, 0)`;
+    }
+
     isDraggingRef.current = true;
     setIsDragging(true);
-    hasMovedRef.current = false;
     dragStartXRef.current = e.clientX;
-    dragStartPosRef.current = currentXRef.current;
+    dragStartPosRef.current = liveX;
     lastMouseXRef.current = e.clientX;
     velocityRef.current = 0;
 
@@ -246,30 +280,15 @@ export const ClientLogoMarquee: React.FC = () => {
     if (!isDraggingRef.current) return;
 
     const deltaX = e.clientX - dragStartXRef.current;
-    if (Math.abs(deltaX) > 3) {
-      hasMovedRef.current = true;
-    }
-
     const frameDelta = e.clientX - lastMouseXRef.current;
     velocityRef.current = frameDelta * 0.85;
     lastMouseXRef.current = e.clientX;
 
-    currentXRef.current = dragStartPosRef.current + deltaX;
-
-    const setWidth = setWidthRef.current;
-    if (setWidth > 0) {
-      while (currentXRef.current <= -setWidth) {
-        currentXRef.current += setWidth;
-        dragStartPosRef.current += setWidth;
-      }
-      while (currentXRef.current > 0) {
-        currentXRef.current -= setWidth;
-        dragStartPosRef.current -= setWidth;
-      }
-    }
+    const wrapped = normalizeX(dragStartPosRef.current + deltaX, setWidthRef.current);
+    currentXRef.current = wrapped;
 
     if (trackRef.current) {
-      trackRef.current.style.transform = `translate3d(${currentXRef.current}px, 0, 0)`;
+      trackRef.current.style.transform = `translate3d(${wrapped}px, 0, 0)`;
     }
   };
 
@@ -284,27 +303,49 @@ export const ClientLogoMarquee: React.FC = () => {
     } catch {
       // safely fallback
     }
+
+    // Brief inertia deceleration on RAF only until velocity decays, then hand back to GPU WAAPI
+    if (Math.abs(velocityRef.current) > 0.25) {
+      let lastTime = performance.now();
+      const glide = (now: number) => {
+        const delta = Math.min((now - lastTime) / 16.666, 2.5);
+        lastTime = now;
+
+        currentXRef.current = normalizeX(
+          currentXRef.current + velocityRef.current * delta,
+          setWidthRef.current
+        );
+        velocityRef.current *= Math.pow(0.92, delta);
+
+        if (trackRef.current) {
+          trackRef.current.style.transform = `translate3d(${currentXRef.current}px, 0, 0)`;
+        }
+
+        if (Math.abs(velocityRef.current) > 0.1) {
+          inertiaRafRef.current = requestAnimationFrame(glide);
+        } else {
+          inertiaRafRef.current = null;
+          startWaapiFrom(currentXRef.current);
+        }
+      };
+      inertiaRafRef.current = requestAnimationFrame(glide);
+    } else {
+      startWaapiFrom(currentXRef.current);
+    }
   };
 
-  // Card-Free Floating Partner Lockup
   const renderPartnerLockup = (partner: Partner, keySuffix: string) => (
     <div key={`${partner.id}-${keySuffix}`} className="flex items-center gap-6 sm:gap-8 md:gap-9 shrink-0">
       <div className="group relative flex items-center gap-3 sm:gap-3.5 select-none py-1.5 px-1 cursor-grab active:cursor-grabbing">
-        {/* Subtle Ambient Radial Aura behind Logo on Hover */}
-        <div
-          aria-hidden="true"
-          className="absolute -inset-2 rounded-2xl bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0.12)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-        />
-
-        {/* Authentic SVG Logo */}
-        <div className="relative w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-110 drop-shadow-[0_2px_8px_rgba(0,0,0,0.25)]">
+        {/* Authentic SVG Logo (no CSS blur filter during motion) */}
+        <div className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center shrink-0 transition-transform duration-200 group-hover:scale-110">
           {partner.renderLogo()}
         </div>
 
         {/* Identity & Technical Category */}
         <div className="flex flex-col min-w-0">
           <div className="flex items-center gap-2">
-            <span className="font-display font-extrabold text-[14.5px] sm:text-[16px] text-white tracking-tight whitespace-nowrap leading-none transition-colors group-hover:text-[#0A0A0B] drop-shadow-[0_1px_2px_rgba(0,0,0,0.25)]">
+            <span className="font-display font-extrabold text-[14.5px] sm:text-[16px] text-white tracking-tight whitespace-nowrap leading-none transition-colors group-hover:text-[#0A0A0B] [text-shadow:0_1px_2px_rgba(0,0,0,0.2)]">
               {partner.name}
             </span>
             <span className="font-mono text-[8px] sm:text-[8.5px] font-bold text-[#0A0A0B]/85 group-hover:text-[#0A0A0B] tracking-[0.14em] uppercase px-1.5 py-0.5 rounded border border-black/15 bg-black/10 group-hover:bg-black/20 transition-colors leading-none">
@@ -312,7 +353,7 @@ export const ClientLogoMarquee: React.FC = () => {
             </span>
           </div>
 
-          <span className="font-mono text-[9px] sm:text-[9.5px] font-bold text-[#0A0A0B] tracking-[0.16em] uppercase whitespace-nowrap mt-1 leading-none transition-colors">
+          <span className="font-mono text-[9px] sm:text-[9.5px] font-bold text-[#0A0A0B] tracking-[0.16em] uppercase whitespace-nowrap mt-1 leading-none">
             {partner.category}
           </span>
         </div>
@@ -326,43 +367,48 @@ export const ClientLogoMarquee: React.FC = () => {
   return (
     <section
       aria-label="Trusted by and infrastructure partners"
-      className="relative py-3 sm:py-4 bg-[#FC6603] border-y border-black/10 overflow-hidden select-none"
+      className="relative py-3 sm:py-4 bg-[#FC6603] border-y border-black/10 overflow-hidden select-none [contain:layout_style_paint]"
     >
-      {/* ================= SHORT STRIP FLOATING PARTNERS MARQUEE ================= */}
       <div
-        ref={containerRef}
         onMouseEnter={() => {
           isHoveredRef.current = true;
+          waapiRef.current?.pause();
         }}
         onMouseLeave={() => {
           isHoveredRef.current = false;
+          if (!isDraggingRef.current && inertiaRafRef.current === null && !prefersReduced) {
+            waapiRef.current?.play();
+          }
         }}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
-        className={`relative w-full overflow-hidden flex items-center [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)] touch-pan-y ${
+        className={`relative w-full overflow-hidden flex items-center touch-pan-y ${
           isDragging ? 'cursor-grabbing' : 'cursor-grab'
         }`}
       >
-        {/* Hardware-accelerated GPU Stream */}
+        {/* Lightweight Edge Fade Overlays (replaces GPU-heavy CSS mask-image) */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 left-0 w-[8%] z-10 bg-gradient-to-r from-[#FC6603] to-transparent"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-y-0 right-0 w-[8%] z-10 bg-gradient-to-l from-[#FC6603] to-transparent"
+        />
+
+        {/* Compositor-Accelerated Stream (2 sets: ~5,000px total) */}
         <div
           ref={trackRef}
           className="flex shrink-0 items-center will-change-transform py-1"
         >
-          {/* Set 1 (Measured for seamless wrap) */}
           <div ref={set1Ref} className="flex shrink-0 items-center gap-6 sm:gap-8 md:gap-9 pr-6 sm:pr-8 md:pr-9">
             {PARTNER_LIST.map((partner) => renderPartnerLockup(partner, 's1'))}
           </div>
 
-          {/* Set 2 (Duplicate for continuous seamless loop) */}
           <div className="flex shrink-0 items-center gap-6 sm:gap-8 md:gap-9 pr-6 sm:pr-8 md:pr-9" aria-hidden="true">
             {PARTNER_LIST.map((partner) => renderPartnerLockup(partner, 's2'))}
-          </div>
-
-          {/* Set 3 (Buffer for ultra-wide displays & backward dragging) */}
-          <div className="flex shrink-0 items-center gap-6 sm:gap-8 md:gap-9 pr-6 sm:pr-8 md:pr-9" aria-hidden="true">
-            {PARTNER_LIST.map((partner) => renderPartnerLockup(partner, 's3'))}
           </div>
         </div>
       </div>

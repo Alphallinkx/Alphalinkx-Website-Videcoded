@@ -4,7 +4,8 @@ import { motion, AnimatePresence } from 'motion/react';
 import { fetchProjects } from '../../lib/api';
 import { ProjectItem } from '../../types';
 import { ProjectModal } from '../common/ProjectModal';
-import { ArrowUpRight, ArrowRight, Eye, Sparkles } from 'lucide-react';
+import { BrandButton } from '../common/BrandButton';
+import { ArrowUpRight, ArrowRight, Sparkles } from 'lucide-react';
 
 export const FeaturedProjectsSection: React.FC = () => {
   const [projects, setProjects] = useState<ProjectItem[]>([]);
@@ -141,17 +142,17 @@ export const FeaturedProjectsSection: React.FC = () => {
 
                     {/* Gradient Overlay & Hover Floating Action */}
                     <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <button
+                      <BrandButton
                         type="button"
+                        variant="orange"
                         onClick={(e) => {
                           e.stopPropagation();
                           setActiveModalProject(project);
                         }}
-                        className="px-6 py-3 rounded-full bg-[#FC6603] text-white text-xs font-semibold flex items-center gap-2 shadow-[0_0_25px_rgba(252,102,3,0.5)] transform translate-y-3 group-hover/img:translate-y-0 transition-transform duration-300"
+                        className="transform translate-y-3 group-hover/img:translate-y-0"
                       >
-                        <Eye className="w-3.5 h-3.5" />
-                        <span>Quick View Case Study</span>
-                      </button>
+                        Quick View Case Study
+                      </BrandButton>
                     </div>
 
                     {/* Documented Outcome Highlight Badge */}

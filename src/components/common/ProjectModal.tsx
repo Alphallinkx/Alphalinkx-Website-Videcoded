@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { ProjectItem } from '../../types';
 import { X, ExternalLink, CheckCircle2, Layers } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { BrandButton } from './BrandButton';
 
 interface ProjectModalProps {
   project: ProjectItem | null;
@@ -141,13 +142,13 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
             >
               Open Dedicated Case Study Page →
             </Link>
-            <Link
+            <BrandButton
               to="/contact"
+              variant="orange"
               onClick={onClose}
-              className="px-5 py-2 rounded-full text-xs font-semibold text-white bg-[#FC6603] hover:bg-[#FF771E] transition-colors"
             >
               Start Similar Project
-            </Link>
+            </BrandButton>
           </div>
         </motion.div>
       </div>

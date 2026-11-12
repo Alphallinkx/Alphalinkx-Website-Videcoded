@@ -2,6 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'motion/react';
 import { DIAGNOSIS_CARDS, type DiagnosisCardItem } from '../../content/siteContent';
+import { BrandButton } from '../common/BrandButton';
 
 /**
  * High-Impact Animated Vector Illustrations specifically tailored for each Diagnosis card.
@@ -620,13 +621,9 @@ export const DiagnosisSection: React.FC = () => {
             transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             className="lg:shrink-0 mt-2 sm:mt-3 lg:mt-14 xl:mt-16 self-start"
           >
-            <Link
-              to="/contact"
-              className="group relative inline-flex items-center gap-2.5 px-6 sm:px-7 py-3 sm:py-3.5 md:py-4 rounded-full bg-[#FC6603] text-black font-mono text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.16em] shadow-[0_0_24px_rgba(252,102,3,0.35)] hover:bg-white hover:text-black hover:shadow-[0_0_32px_rgba(255,255,255,0.4)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
-            >
-              <span>Get a Free Audit</span>
-              <span className="text-[12px] sm:text-[13px] transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">↗</span>
-            </Link>
+            <BrandButton to="/contact" variant="orange">
+              Get a Free Audit
+            </BrandButton>
           </motion.div>
         </div>
 

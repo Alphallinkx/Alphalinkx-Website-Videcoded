@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { BrandButton } from '../common/BrandButton';
 
 interface Review {
   category: string;
@@ -188,13 +188,28 @@ export const TestimonialsCarousel: React.FC = () => {
       ref={sectionRef}
       id="testimonials"
       aria-labelledby="testimonials-title"
-      className="relative isolation-isolate overflow-hidden bg-[#0B0B0C] text-[#F7F7F5]"
-      style={{
-        backgroundImage:
-          'radial-gradient(ellipse at 65% 50%, rgba(25, 19, 15, 0.45), transparent 62%)',
-      }}
+      className="relative isolation-isolate overflow-hidden bg-[#070708] text-[#F7F7F5] border-t border-white/[0.06]"
     >
-      {/* Subtle Noise Texture Overlay */}
+      {/* Multi-layered Atmospheric Orange Glow Gradients over Obsidian Black */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: [
+            'radial-gradient(ellipse 58% 58% at 74% 48%, rgba(252, 102, 3, 0.22) 0%, rgba(235, 84, 0, 0.09) 38%, rgba(160, 48, 0, 0.025) 62%, transparent 78%)',
+            'radial-gradient(ellipse 46% 48% at 24% 52%, rgba(252, 102, 3, 0.11) 0%, rgba(252, 102, 3, 0.035) 45%, transparent 74%)',
+            'linear-gradient(to top, rgba(252, 102, 3, 0.08) 0%, transparent 32%)',
+          ].join(', '),
+        }}
+      />
+
+      {/* Focused Soft Spotlight Halo Behind Stacked Cards */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-1/2 right-[4%] lg:right-[7%] -translate-y-1/2 w-[360px] sm:w-[480px] lg:w-[560px] h-[300px] sm:h-[380px] rounded-full bg-[#FC6603]/[0.13] blur-[95px]"
+      />
+
+      {/* Subtle Noise Texture Overlay (prevents gradient banding & adds tactile depth) */}
       <div
         aria-hidden="true"
         className="absolute inset-0 pointer-events-none opacity-[0.035]"
@@ -283,49 +298,32 @@ export const TestimonialsCarousel: React.FC = () => {
             {/* =========================================================================
                 ZONE 2: INWARD SECTION INTRODUCTION & WRITE A REVIEW BUTTON
                ========================================================================= */}
-            <header className="lg:col-span-5 flex flex-col items-start pt-14 md:pt-0 pb-4 lg:pb-10 max-w-[440px]">
+            <header className="lg:col-span-5 flex flex-col items-start pt-16 md:pt-0 pb-4 lg:pb-6 max-w-[480px]">
               {/* Eyebrow */}
-              <p className="font-mono text-[12px] font-medium tracking-[0.16em] text-[#FC6603] uppercase mb-4 sm:mb-5">
-              // CLIENT STORIES
+              <p className="font-mono text-[11px] sm:text-[12px] font-semibold tracking-[0.2em] text-[#FC6603] uppercase mb-3.5 sm:mb-4">
+                // CLIENT STORIES
               </p>
 
-              {/* Two-Line Heading */}
+              {/* Bold Three-Line Display Heading */}
               <h2
                 id="testimonials-title"
-                className="font-display font-bold text-[clamp(36px,3.4vw,56px)] leading-[1.03] tracking-[-0.04em] text-white mb-5 sm:mb-6"
+                className="font-display font-extrabold text-[38px] sm:text-[48px] md:text-[54px] lg:text-[46px] xl:text-[56px] 2xl:text-[62px] leading-[1.03] tracking-[-0.03em] text-white mb-5 sm:mb-6"
               >
-                Their words.
-                <span className="block text-[#FC6603]">Our motivation.</span>
+                <span className="block whitespace-nowrap">Our clients</span>
+                <span className="block whitespace-nowrap">don&apos;t just stay.</span>
+                <span className="block whitespace-nowrap text-[#FC6603]">They grow.</span>
               </h2>
 
-              {/* Supporting Text */}
-              <p className="font-sans text-[16px] sm:text-[17px] text-[#AAAAAA] leading-[1.6] max-w-[370px] mb-8 sm:mb-9">
-                A closer look at the experience of working with us.
+              {/* Expanded Supporting Description (Consistent 16px) */}
+              <p className="font-sans text-[16px] text-[#A1A1AA] leading-[1.65] max-w-[420px] mb-8 sm:mb-9">
+                A closer look at the experience of working with us — from clear strategy and thoughtful design to seamless engineering that helps your business grow with confidence.
               </p>
 
-              {/* CTA Button: Write a review */}
+              {/* CTA Button: Write a review (Site-consistent Glowing Orange Pill) */}
               <div>
-                <Link
-                  to="/contact"
-                  className="group relative inline-flex items-center gap-3.5 pl-6 pr-2.5 py-2.5 sm:pl-7 sm:pr-3 sm:py-3 rounded-full bg-[#16171B] border border-white/[0.14] text-white hover:border-[#FC6603] hover:bg-[#1C1D22] transition-all duration-300 shadow-[0_4px_24px_rgba(0,0,0,0.5)] hover:shadow-[0_0_28px_rgba(252,102,3,0.35)] hover:scale-[1.02] active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-[#FC6603] focus-visible:outline-offset-4"
-                >
-                  <span className="font-mono text-[12px] sm:text-[13px] font-bold uppercase tracking-[0.14em] text-white group-hover:text-[#FC6603] transition-colors">
-                    Write a review
-                  </span>
-                  <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#FC6603] text-white flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:rotate-45 shadow-sm">
-                    <svg
-                      className="w-3.5 h-3.5 stroke-[2.5]"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <line x1="7" y1="17" x2="17" y2="7" />
-                      <polyline points="7 7 17 7 17 17" />
-                    </svg>
-                  </span>
-                </Link>
+                <BrandButton to="/contact" variant="orange">
+                  Write a review
+                </BrandButton>
               </div>
             </header>
 

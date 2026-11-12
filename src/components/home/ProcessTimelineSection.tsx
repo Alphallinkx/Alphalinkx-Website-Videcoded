@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Search, Map, Code, Rocket, CheckCircle2, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Search, Map, Code, Rocket, CheckCircle2 } from 'lucide-react';
+import { BrandButton } from '../common/BrandButton';
 
 export const ProcessTimelineSection: React.FC = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -169,14 +169,13 @@ export const ProcessTimelineSection: React.FC = () => {
                 <span className="text-xs font-mono text-zinc-400 mt-1">
                   Active Execution Stream
                 </span>
-                <Link
+                <BrandButton
                   to="/contact"
-                  className="mt-6 inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-semibold text-white bg-[#FC6603] hover:bg-[#FF771E] transition-colors shadow-[0_0_15px_rgba(252,102,3,0.3)]"
-                  data-cursor-hover
+                  variant="orange"
+                  className="mt-6"
                 >
-                  <span>Initiate Phase 01</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
+                  Initiate Phase 01
+                </BrandButton>
               </div>
             </motion.div>
           </AnimatePresence>

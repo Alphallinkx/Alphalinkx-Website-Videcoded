@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useId } from 'react';
-import { Link } from 'react-router-dom';
+import { BrandButton } from '../common/BrandButton';
 
 /* =========================================================================
    PROCESS PHASES CONFIGURATION
@@ -506,27 +506,9 @@ export const HowWeWorkSection: React.FC = () => {
 
           {/* RIGHT SIDE: Brand CTA Button (Middle Aligned to Title) */}
           <div className="hww-cta-row flex items-center gap-3 shrink-0 self-start sm:self-center">
-            <Link
-              to="/contact"
-              className="group relative inline-flex items-center gap-3 pl-6 pr-2 sm:pl-7 sm:pr-2.5 py-2.5 sm:py-3 rounded-full bg-[#FC6603] text-white font-mono text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.16em] shadow-[0_0_24px_rgba(252,102,3,0.35)] hover:bg-[#ff5500] hover:shadow-[0_0_32px_rgba(252,102,3,0.55)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FC6603] focus-visible:ring-offset-2 focus-visible:ring-offset-[#060709]"
-              data-cursor="CONNECT"
-            >
-              <span>LET'S TALK</span>
-              <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white flex items-center justify-center text-black shrink-0 transition-transform duration-300 group-hover:rotate-45 shadow-sm">
-                <svg
-                  className="w-3.5 h-3.5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <line x1="7" y1="17" x2="17" y2="7"></line>
-                  <polyline points="7 7 17 7 17 17"></polyline>
-                </svg>
-              </span>
-            </Link>
+            <BrandButton to="/contact" variant="orange" dataCursor="CONNECT">
+              LET&apos;S TALK
+            </BrandButton>
           </div>
         </div>
 

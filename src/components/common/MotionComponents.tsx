@@ -2,6 +2,7 @@ import React, { type ReactNode } from "react";
 import { motion, useMotionValue, useSpring, useReducedMotion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { BRAND_BUTTON_BASE_CLASS } from "./BrandButton";
 
 export const ease = [0.22, 1, 0.36, 1] as const;
 
@@ -77,8 +78,16 @@ export function MagneticButton({
 
   const styles =
     variant === "primary"
-      ? "bg-[#FF5A1F] text-black hover:bg-white hover:text-black font-bold shadow-[0_0_28px_rgba(255,90,31,0.4)] hover:shadow-[0_0_35px_rgba(255,255,255,0.4)]"
-      : "border border-white/20 text-white hover:border-[#FF5A1F] hover:text-[#FF5A1F] bg-[#111113]/70 hover:bg-[#161619] backdrop-blur-md";
+      ? {
+          container:
+            "bg-[#FC6603] text-white shadow-[0_4px_20px_rgba(252,102,3,0.32)] hover:bg-[#FF6E12] hover:shadow-[0_8px_28px_rgba(252,102,3,0.52)] focus-visible:ring-[#FC6603]",
+          badge: "bg-white text-[#0A0A0B]",
+        }
+      : {
+          container:
+            "bg-white text-[#0A0A0B] shadow-[0_4px_20px_rgba(255,255,255,0.14)] hover:bg-[#F4F4F5] hover:shadow-[0_8px_26px_rgba(255,255,255,0.26)] focus-visible:ring-white",
+          badge: "bg-[#FC6603] text-white",
+        };
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (isInternalRoute) {
@@ -103,10 +112,15 @@ export function MagneticButton({
         x.set(0);
         y.set(0);
       }}
-      className={`group relative inline-flex items-center gap-3 rounded-full px-8 py-4 font-mono text-[12px] font-medium uppercase tracking-[0.18em] transition-all duration-300 ${styles} ${className}`}
+      className={`${BRAND_BUTTON_BASE_CLASS} ${styles.container} ${className}`}
     >
-      <span>{children}</span>
-      <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+      <span className="leading-none">{children}</span>
+      <span
+        aria-hidden="true"
+        className={`w-[30px] h-[30px] rounded-full flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:rotate-45 shadow-sm ${styles.badge}`}
+      >
+        <ArrowUpRight className="w-4 h-4 stroke-[2.25]" />
+      </span>
     </motion.a>
   );
 }

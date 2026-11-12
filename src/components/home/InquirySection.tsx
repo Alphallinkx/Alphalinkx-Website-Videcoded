@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import confetti from 'canvas-confetti';
 import { FORM_OPTIONS, BRAND } from '../../content/siteContent';
+import { BrandButton } from '../common/BrandButton';
 
 export const InquirySection: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -184,14 +185,14 @@ export const InquirySection: React.FC = () => {
                   </div>
 
                   <div className="pt-6 flex justify-end">
-                    <button
+                    <BrandButton
                       type="button"
+                      variant="white"
                       disabled={interests.length === 0}
                       onClick={() => setCurrentStep(2)}
-                      className="px-8 py-3.5 rounded-full bg-white text-black font-mono text-[12px] font-medium uppercase tracking-[0.18em] hover:bg-[#FF5A1F] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                     >
-                      Next: Budget →
-                    </button>
+                      Next: Budget
+                    </BrandButton>
                   </div>
                 </div>
               )}
@@ -234,14 +235,14 @@ export const InquirySection: React.FC = () => {
                     >
                       ← Back
                     </button>
-                    <button
+                    <BrandButton
                       type="button"
+                      variant="white"
                       disabled={!budget}
                       onClick={() => setCurrentStep(3)}
-                      className="px-8 py-3.5 rounded-full bg-white text-black font-mono text-[12px] font-medium uppercase tracking-[0.18em] hover:bg-[#FF5A1F] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                     >
-                      Next: Contact Details →
-                    </button>
+                      Next: Contact Details
+                    </BrandButton>
                   </div>
                 </div>
               )}
@@ -330,14 +331,14 @@ export const InquirySection: React.FC = () => {
                     >
                       ← Back
                     </button>
-                    <button
+                    <BrandButton
                       type="button"
+                      variant="white"
                       disabled={!name || !email}
                       onClick={() => setCurrentStep(4)}
-                      className="px-8 py-3.5 rounded-full bg-white text-black font-mono text-[12px] font-medium uppercase tracking-[0.18em] hover:bg-[#FF5A1F] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                     >
-                      Next: Final Step →
-                    </button>
+                      Next: Final Step
+                    </BrandButton>
                   </div>
                 </div>
               )}
@@ -386,13 +387,13 @@ export const InquirySection: React.FC = () => {
                     >
                       ← Back
                     </button>
-                    <button
+                    <BrandButton
                       type="submit"
+                      variant="orange"
                       disabled={isSubmitting}
-                      className="px-10 py-4 rounded-full bg-gradient-to-r from-[#FF5A1F] to-[#FF8A3D] text-black font-mono text-[12px] font-medium uppercase tracking-[0.18em] hover:shadow-[0_0_30px_rgba(255,90,31,0.6)] transition-all hover:scale-105 active:scale-95 disabled:opacity-50"
                     >
-                      {isSubmitting ? 'TRANSMITTING BRIEF…' : 'TRANSMIT BRIEF →'}
-                    </button>
+                      {isSubmitting ? 'TRANSMITTING BRIEF…' : 'TRANSMIT BRIEF'}
+                    </BrandButton>
                   </div>
                 </div>
               )}

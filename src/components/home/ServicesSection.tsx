@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
 import { fetchServices } from '../../lib/api';
 import { ServiceItem } from '../../types';
+import { BrandButton } from '../common/BrandButton';
 import {
   Code2,
   Search,
@@ -166,14 +167,13 @@ export const ServicesSection: React.FC = () => {
                             ))}
                           </ul>
 
-                          <Link
+                          <BrandButton
                             to={`/services/${service.slug}`}
-                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-semibold text-white bg-[#FC6603] hover:bg-[#FF771E] transition-colors w-full justify-center shadow-[0_0_15px_rgba(252,102,3,0.3)]"
-                            data-cursor-hover
+                            variant="orange"
+                            className="w-full justify-between"
                           >
-                            <span>View Full Specifications & Pricing</span>
-                            <ArrowUpRight className="w-3.5 h-3.5" />
-                          </Link>
+                            View Full Specifications &amp; Pricing
+                          </BrandButton>
                         </div>
                       </div>
                     </motion.div>

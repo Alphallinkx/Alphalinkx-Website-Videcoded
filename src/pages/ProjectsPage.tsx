@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { fetchProjects } from '../lib/api';
 import { ProjectItem } from '../types';
 import { ProjectModal } from '../components/common/ProjectModal';
-import { ArrowUpRight, Eye } from 'lucide-react';
+import { BrandButton } from '../components/common/BrandButton';
+import { ArrowUpRight } from 'lucide-react';
 
 export const ProjectsPage: React.FC = () => {
   const [projects, setProjects] = useState<ProjectItem[]>([]);
@@ -96,17 +97,16 @@ export const ProjectsPage: React.FC = () => {
                   className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover/img:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                  <button
+                  <BrandButton
                     type="button"
+                    variant="orange"
                     onClick={(e) => {
                       e.stopPropagation();
                       setActiveModalProject(project);
                     }}
-                    className="px-5 py-2.5 rounded-full bg-[#FF5A1F] text-black font-mono text-[12px] font-medium uppercase tracking-[0.18em] flex items-center gap-2 shadow-xl"
                   >
-                    <Eye className="w-3.5 h-3.5" />
-                    <span>Quick Preview</span>
-                  </button>
+                    Quick Preview
+                  </BrandButton>
                 </div>
               </div>
 

@@ -1,8 +1,8 @@
 import React, { useRef } from 'react';
-import { Link } from 'react-router-dom';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Float } from '@react-three/drei';
 import * as THREE from 'three';
+import { BrandButton } from '../components/common/BrandButton';
 
 // 3D Broken Chain Links
 function BrokenChainScene() {
@@ -78,14 +78,9 @@ export const NotFoundPage: React.FC = () => {
         </p>
 
         <div className="pt-6">
-          <Link
-            to="/"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-gradient-to-r from-[#FF5A1F] to-[#FF8A3D] text-black font-mono text-[12px] font-medium uppercase tracking-[0.18em] shadow-[0_0_25px_rgba(255,90,31,0.5)] hover:scale-105 active:scale-95 transition-all"
-            data-cursor="RELINK"
-          >
-            <span>Relink to Home Node</span>
-            <span>→</span>
-          </Link>
+          <BrandButton to="/" variant="orange" dataCursor="RELINK">
+            Relink to Home Node
+          </BrandButton>
         </div>
       </div>
     </main>

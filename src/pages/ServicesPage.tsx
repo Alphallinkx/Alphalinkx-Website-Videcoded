@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { fetchServices } from '../lib/api';
 import { ServiceItem } from '../types';
+import { BrandButton } from '../components/common/BrandButton';
 import {
   Code2,
   Search,
@@ -115,13 +116,9 @@ export const ServicesPage: React.FC = () => {
           <p className="font-sans text-[16px] text-[#C2C2C2] mt-2 max-w-md mx-auto leading-[1.6]">
             We frequently combine web development, branding, and custom AI agents into comprehensive end-to-end deliverables.
           </p>
-          <Link
-            to="/contact"
-            className="mt-6 inline-flex items-center gap-2 px-7 py-3 rounded-full font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-black bg-[#FF5A1F] hover:bg-[#FF8A3D] shadow-lg shadow-[#FF5A1F]/25 transition-all"
-          >
-            <span>Start a Project</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+          <BrandButton to="/contact" variant="orange" className="mt-6">
+            Start a Project
+          </BrandButton>
         </div>
       </div>
     </div>

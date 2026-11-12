@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Check, X } from 'lucide-react';
+import { BrandButton } from '../common/BrandButton';
 import { WhyChooseWaveBackground } from './WhyChooseWaveBackground';
 
 interface ComparisonRow {
@@ -48,26 +48,9 @@ export const WhyChooseAlphaLinkxSection: React.FC = () => {
 
           {/* RIGHT SIDE: Brand CTA Button */}
           <div className="flex items-center gap-3 shrink-0 self-start md:self-center">
-            <Link
-              to="/contact"
-              className="group relative inline-flex items-center gap-3 pl-5 pr-2 sm:pl-7 sm:pr-2.5 py-2.5 sm:py-3 rounded-full bg-[#FC6603] text-white font-mono text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.16em] shadow-[0_0_24px_rgba(252,102,3,0.35)] hover:bg-[#ff5500] hover:shadow-[0_0_32px_rgba(252,102,3,0.55)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
-            >
-              <span>WORK WITH ALPHALINKX</span>
-              <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white flex items-center justify-center text-black shrink-0 transition-transform duration-300 group-hover:rotate-45 shadow-sm">
-                <svg
-                  className="w-3.5 h-3.5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <line x1="7" y1="17" x2="17" y2="7"></line>
-                  <polyline points="7 7 17 7 17 17"></polyline>
-                </svg>
-              </span>
-            </Link>
+            <BrandButton to="/contact" variant="orange">
+              WORK WITH ALPHALINKX
+            </BrandButton>
           </div>
         </div>
 
@@ -103,17 +86,11 @@ export const WhyChooseAlphaLinkxSection: React.FC = () => {
                 ))}
               </ul>
 
-              {/* Action Link */}
+              {/* Action Button (Black variant for high contrast over light peach card) */}
               <div className="mt-6">
-                <Link
-                  to="/contact"
-                  className="group inline-flex items-center gap-1.5 text-[12px] sm:text-[13px] font-mono font-bold tracking-[0.16em] uppercase text-[#E45D10] border-b border-[#E45D10] pb-0.5 hover:text-[#fc6603] hover:border-[#fc6603] transition-colors"
-                >
-                  <span>START A PROJECT</span>
-                  <span className="inline-block transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-                    ↗
-                  </span>
-                </Link>
+                <BrandButton to="/contact" variant="black">
+                  START A PROJECT
+                </BrandButton>
               </div>
             </div>
           </div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Calendar, Plus, ArrowUpRight, Phone } from 'lucide-react';
+import { Calendar, Plus, Phone } from 'lucide-react';
+import { BrandButton } from '../common/BrandButton';
 
 interface FaqItem {
   number: string;
@@ -201,15 +201,9 @@ export const FaqSection: React.FC = () => {
               {/* Action Buttons Row */}
               <div className="relative z-10 mt-7 sm:mt-8 flex items-center gap-4 sm:gap-5 xl:gap-6 flex-wrap">
                 {/* Glowing Orange Pill Button: BOOK A CALL ↗ */}
-                <Link
-                  to="/contact"
-                  className="group inline-flex items-center gap-2.5 sm:gap-3 pl-5 sm:pl-6 pr-2 sm:pr-2.5 py-2 sm:py-2.5 rounded-full bg-[#FC6603] text-white font-mono font-bold text-[11.5px] sm:text-[12.5px] tracking-[0.12em] uppercase shadow-[0_0_24px_rgba(252,102,3,0.4)] hover:bg-[#ff5500] hover:shadow-[0_0_32px_rgba(252,102,3,0.6)] transition-all duration-300 hover:scale-[1.02] shrink-0"
-                >
-                  <span>BOOK A CALL</span>
-                  <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white flex items-center justify-center text-black shrink-0 transition-transform duration-300 group-hover:rotate-45 shadow-sm">
-                    <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
-                  </span>
-                </Link>
+                <BrandButton to="/contact" variant="orange">
+                  BOOK A CALL
+                </BrandButton>
 
                 {/* Call Now with Phone Icon */}
                 <a

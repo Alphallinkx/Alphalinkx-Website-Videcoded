@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { fetchProjectBySlug } from '../lib/api';
 import { ProjectItem } from '../types';
+import { BrandButton } from '../components/common/BrandButton';
 import {
   ArrowLeft,
-  ArrowRight,
   CheckCircle2,
   ExternalLink,
   Layers,
@@ -177,13 +177,13 @@ export const ProjectDetailPage: React.FC = () => {
               <p className="text-xs text-zinc-400 mb-6">
                 Our architects can evaluate your scope and build a production roadmap.
               </p>
-              <Link
+              <BrandButton
                 to="/contact"
-                className="w-full inline-flex items-center justify-center gap-2 py-3 rounded-full text-xs font-semibold text-white bg-[#FC6603] hover:bg-[#FF771E] shadow-lg shadow-[#FC6603]/30 transition-all"
+                variant="orange"
+                className="w-full justify-between"
               >
-                <span>Initiate Your Brief</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </Link>
+                Initiate Your Brief
+              </BrandButton>
             </div>
           </div>
         </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { SERVICE_CATEGORIES, BRAND } from '../../content/siteContent';
+import { BrandButton } from '../common/BrandButton';
 
 export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -69,7 +70,7 @@ export const Navbar: React.FC = () => {
           isVisible ? 'translate-y-0' : '-translate-y-full'
         } ${
           isScrolled
-            ? 'bg-[#0A0A0B]/85 backdrop-blur-xl border-b border-white/[0.08] py-3.5 shadow-2xl'
+            ? 'bg-[#0A0A0B]/85 backdrop-blur-xl border-b border-white/[0.08] py-3 shadow-2xl'
             : 'bg-transparent py-5'
         }`}
       >
@@ -192,16 +193,14 @@ export const Navbar: React.FC = () => {
 
           {/* CTA Right (Desktop) & Mobile Hamburger */}
           <div className="flex items-center gap-4">
-            <Link
+            <BrandButton
               to="/contact"
-              className="group relative hidden sm:inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#FC6603] text-black font-mono text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.16em] shadow-[0_0_24px_rgba(252,102,3,0.35)] hover:bg-white hover:text-black hover:shadow-[0_0_32px_rgba(255,255,255,0.4)] transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FC6603]"
-              data-cursor="CONNECT"
+              variant="orange"
+              dataCursor="CONNECT"
+              className="hidden sm:inline-flex"
             >
-              <span>Let's Talk</span>
-              <span className="text-[12px] sm:text-[13px] font-bold transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-                ↗
-              </span>
-            </Link>
+              Let&apos;s Talk
+            </BrandButton>
 
             {/* Mobile hamburger */}
             <button
@@ -232,7 +231,7 @@ export const Navbar: React.FC = () => {
           role="dialog"
           aria-modal="true"
           aria-label="Services Mega Menu"
-          className="fixed inset-0 top-[68px] z-40 bg-[#0A0A0B]/95 backdrop-blur-2xl border-b border-white/[0.08] overflow-y-auto animate-in fade-in duration-200"
+          className="fixed inset-0 top-[76px] z-40 bg-[#0A0A0B]/95 backdrop-blur-2xl border-b border-white/[0.08] overflow-y-auto animate-in fade-in duration-200"
         >
           <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-12">
             <div className="flex items-center justify-between pb-6 mb-8 border-b border-white/10">
@@ -293,13 +292,13 @@ export const Navbar: React.FC = () => {
                   We unite web engineering, AI answer optimization, and paid acquisition into one compounding machine.
                 </p>
               </div>
-              <Link
+              <BrandButton
                 to="/contact"
+                variant="orange"
                 onClick={() => setIsMegaMenuOpen(false)}
-                className="shrink-0 px-6 py-2.5 rounded-full text-[12px] font-mono font-medium uppercase tracking-[0.18em] text-black bg-[#FF5A1F] hover:bg-[#FF8A3D] transition-colors"
               >
-                Request Growth Audit →
-              </Link>
+                Request Growth Audit
+              </BrandButton>
             </div>
           </div>
         </div>
@@ -368,17 +367,15 @@ export const Navbar: React.FC = () => {
           </div>
 
           <div className="pt-8 border-t border-white/10 flex flex-col gap-4">
-            <Link
+            <BrandButton
               to="/contact"
+              variant="orange"
+              dataCursor="CONNECT"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="group relative w-full py-3.5 flex items-center justify-center gap-2 rounded-full bg-[#FC6603] text-black font-mono text-[12px] font-bold uppercase tracking-[0.16em] shadow-[0_0_24px_rgba(252,102,3,0.35)] hover:bg-white hover:text-black hover:shadow-[0_0_32px_rgba(255,255,255,0.4)] transition-all duration-300 active:scale-[0.98]"
-              data-cursor="CONNECT"
+              className="w-full justify-between"
             >
-              <span>Let's Talk</span>
-              <span className="text-[13px] font-bold transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">
-                ↗
-              </span>
-            </Link>
+              Let&apos;s Talk
+            </BrandButton>
             <div className="flex items-center justify-between font-mono text-[12px] font-medium text-[#8A8A8E] tracking-[0.18em]">
               <span>{BRAND.email}</span>
               <span>{BRAND.est}</span>

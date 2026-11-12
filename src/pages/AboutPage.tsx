@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { motion } from 'motion/react';
-import { ArrowRight, CheckCircle2, Shield, Zap, Sparkles, Code2, Users } from 'lucide-react';
+import { CheckCircle2, Shield, Zap, Sparkles, Code2, Users } from 'lucide-react';
+import { BrandButton } from '../components/common/BrandButton';
 
 export const AboutPage: React.FC = () => {
   useEffect(() => {
@@ -129,13 +129,9 @@ export const AboutPage: React.FC = () => {
               Book an initial strategy consultation with our senior technical team.
             </p>
           </div>
-          <Link
-            to="/contact"
-            className="px-8 py-3.5 rounded-full font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-black bg-[#FF5A1F] hover:bg-[#FF8A3D] transition-all shrink-0 flex items-center gap-2 shadow-[0_0_20px_rgba(255,90,31,0.35)]"
-          >
-            <span>Start a Project</span>
-            <ArrowRight className="w-4 h-4" />
-          </Link>
+          <BrandButton to="/contact" variant="orange">
+            Start a Project
+          </BrandButton>
         </div>
       </div>
     </div>

@@ -1,8 +1,9 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'motion/react';
 import { DIAGNOSIS_CARDS, type DiagnosisCardItem } from '../../content/siteContent';
 import { BrandButton } from '../common/BrandButton';
+import { getNoiseDataUrl } from '../../lib/noiseTexture';
 
 /**
  * High-Impact Animated Vector Illustrations specifically tailored for each Diagnosis card.
@@ -561,13 +562,47 @@ const DiagnosisCard: React.FC<DiagnosisCardProps> = ({ item, index }) => {
  */
 export const DiagnosisSection: React.FC = () => {
   const prefersReduced = useReducedMotion();
+  const noiseUrl = useMemo(() => getNoiseDataUrl(160), []);
 
   return (
     <section
       id="diagnosis"
       aria-labelledby="diagnosis-heading"
-      className="relative py-16 sm:py-24 md:py-32 lg:py-36 bg-[#0A0A0B] border-b border-white/[0.08] overflow-hidden"
+      className="relative py-16 sm:py-24 md:py-32 lg:py-36 bg-[#070708] border-b border-white/[0.08] overflow-hidden isolation-isolate"
     >
+      {/* Multi-layered Atmospheric Orange Glow Gradients over Obsidian Black (Exact Testimonials Specs) */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: [
+            'radial-gradient(ellipse 58% 58% at 74% 48%, rgba(252, 102, 3, 0.22) 0%, rgba(235, 84, 0, 0.09) 38%, rgba(160, 48, 0, 0.025) 62%, transparent 78%)',
+            'radial-gradient(ellipse 46% 48% at 24% 52%, rgba(252, 102, 3, 0.11) 0%, rgba(252, 102, 3, 0.035) 45%, transparent 74%)',
+            'linear-gradient(to top, rgba(252, 102, 3, 0.08) 0%, transparent 32%)',
+          ].join(', '),
+        }}
+      />
+
+      {/* Focused Soft Spotlight Halo Behind Right Side (Exact Testimonials Specs) */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-1/2 right-[4%] lg:right-[7%] -translate-y-1/2 w-[360px] sm:w-[480px] lg:w-[560px] h-[300px] sm:h-[380px] rounded-full bg-[#FC6603]/[0.13] blur-[95px]"
+      />
+
+      {/* Subtle Noise Texture Overlay (prevents gradient banding & adds tactile depth) */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 pointer-events-none opacity-[0.035]"
+        style={
+          noiseUrl
+            ? {
+                backgroundImage: `url("${noiseUrl}")`,
+                backgroundRepeat: 'repeat',
+              }
+            : undefined
+        }
+      />
+
       {/* Top Ambient Subtle Hairline in Brand Orange */}
       <div
         aria-hidden="true"

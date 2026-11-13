@@ -40,37 +40,40 @@ export type BrandButtonProps = LinkButtonProps | AnchorButtonProps | NativeButto
 
 const VARIANT_CLASSES: Record<
   BrandButtonVariant,
-  { container: string; badge: string }
+  { container: string; badge: string; arrow: string }
 > = {
-  // Primary CTA on dark/black backgrounds
+  // Primary CTA (On dark/black backgrounds): Radiant theme orange pill with white circular badge & orange arrow
   orange: {
     container:
-      'bg-[#FC6603] text-white shadow-[0_4px_20px_rgba(252,102,3,0.32)] hover:bg-[#FF6E12] hover:shadow-[0_8px_28px_rgba(252,102,3,0.52)] focus-visible:ring-[#FC6603]',
-    badge: 'bg-white text-[#0A0A0B]',
+      'bg-gradient-to-r from-[#FF5A1F] via-[#FF6926] to-[#FC6603] text-white shadow-[0_4px_24px_rgba(255,90,31,0.45)] hover:shadow-[0_6px_32px_rgba(255,90,31,0.7)] hover:brightness-105 focus-visible:ring-[#FF5A1F]',
+    badge: 'bg-white text-[#FC6603] shadow-[0_2px_8px_rgba(0,0,0,0.2)]',
+    arrow: 'text-[#FC6603]',
   },
-  // High-contrast light CTA on dark/orange backgrounds
-  white: {
-    container:
-      'bg-white text-[#0A0A0B] shadow-[0_4px_20px_rgba(255,255,255,0.14)] hover:bg-[#F4F4F5] hover:shadow-[0_8px_26px_rgba(255,255,255,0.26)] focus-visible:ring-white',
-    badge: 'bg-[#FC6603] text-white',
-  },
-  // High-contrast dark CTA on orange, cream, or white backgrounds (shadow-only ring keeps exact 50px height)
+  // Dark CTA (For orange, peach, cream, or light backgrounds): Deep black pill with theme orange circular badge & white arrow
   black: {
     container:
-      'bg-[#0A0A0B] text-white shadow-[0_6px_20px_rgba(0,0,0,0.25),inset_0_0_0_1px_rgba(255,255,255,0.12)] hover:bg-[#16161A] hover:shadow-[0_10px_28px_rgba(0,0,0,0.38),inset_0_0_0_1px_rgba(255,255,255,0.2)] focus-visible:ring-[#0A0A0B]',
-    badge: 'bg-white text-[#0A0A0B]',
+      'bg-[#0A0A0B] text-white border border-white/15 shadow-[0_6px_24px_rgba(0,0,0,0.45)] hover:bg-[#141416] hover:border-[#FF5A1F]/60 hover:shadow-[0_8px_28px_rgba(255,90,31,0.3)] focus-visible:ring-[#FF5A1F]',
+    badge: 'bg-[#FF5A1F] text-white shadow-[0_0_14px_rgba(255,90,31,0.5)]',
+    arrow: 'text-white',
+  },
+  // Light CTA (For dark or orange backgrounds where a white pill is desired): Crisp white pill with theme orange circular badge & white arrow
+  white: {
+    container:
+      'bg-white text-[#0A0A0B] border border-white/20 shadow-[0_4px_20px_rgba(255,255,255,0.18)] hover:bg-[#F4F4F5] hover:shadow-[0_8px_26px_rgba(255,255,255,0.3)] focus-visible:ring-white',
+    badge: 'bg-[#FF5A1F] text-white shadow-[0_0_14px_rgba(255,90,31,0.45)]',
+    arrow: 'text-white',
   },
 };
 
 export const BRAND_BUTTON_BASE_CLASS =
-  'group relative inline-flex items-center justify-center gap-3 pt-[10px] pr-[10px] pb-[10px] pl-[20px] rounded-full border-0 font-mono text-[14px] font-semibold uppercase tracking-[0.14em] leading-none whitespace-nowrap antialiased transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#060709] disabled:opacity-45 disabled:pointer-events-none';
+  'group relative inline-flex items-center justify-center gap-3.5 pt-[7px] pr-[7px] pb-[7px] pl-[22px] rounded-full font-sans text-[14.5px] font-semibold leading-none whitespace-nowrap antialiased transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] shrink-0 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[#060709] disabled:opacity-50 disabled:pointer-events-none select-none';
 
 /**
  * Site-wide canonical pill CTA button:
- * - Uniform 14px JetBrains Mono 600 typography
- * - Exact 10px 10px 10px 20px padding
- * - Identical 30px circular arrow badge (strictly 50px total height everywhere)
- * - Adaptive high-contrast surface variants ('orange' | 'white' | 'black')
+ * - Adapts intelligently to background colors for maximum contrast & beauty:
+ *   - 'orange' (default on dark/black backgrounds): Radiant theme orange pill with white circular badge
+ *   - 'black' (on orange or light backgrounds): Deep black pill with theme orange circular badge (user reference)
+ *   - 'white' (on dark or orange backgrounds): Crisp white pill with theme orange circular badge
  */
 export const BrandButton: React.FC<BrandButtonProps> = ({
   children,
@@ -86,12 +89,12 @@ export const BrandButton: React.FC<BrandButtonProps> = ({
 
   const innerContent = (
     <>
-      <span className="leading-none">{children}</span>
+      <span className="leading-none tracking-[-0.01em]">{children}</span>
       <span
         aria-hidden="true"
-        className={`w-[30px] h-[30px] rounded-full flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:rotate-45 shadow-sm ${styles.badge}`}
+        className={`w-[32px] h-[32px] rounded-full flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:rotate-45 shadow-sm ${styles.badge}`}
       >
-        <ArrowUpRight className="w-4 h-4 stroke-[2.25]" />
+        <ArrowUpRight className={`w-4 h-4 stroke-[2.5] ${styles.arrow}`} />
       </span>
     </>
   );

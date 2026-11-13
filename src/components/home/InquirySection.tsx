@@ -1,11 +1,38 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import confetti from 'canvas-confetti';
 import { FORM_OPTIONS, BRAND } from '../../content/siteContent';
 import { BrandButton } from '../common/BrandButton';
+import { CountryPhoneInput } from '../common/CountryPhoneInput';
 
 export const InquirySection: React.FC = () => {
   const [currentStep, setCurrentStep] = useState(1);
+  const [direction, setDirection] = useState<1 | -1>(1);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const totalSteps = 4;
+
+  const goToStep = (step: number) => {
+    setDirection(step > currentStep ? 1 : -1);
+    setCurrentStep(step);
+  };
+
+  const stepVariants = {
+    enter: (dir: number) => ({
+      x: dir > 0 ? 32 : -32,
+      opacity: 0,
+      filter: 'blur(4px)',
+    }),
+    center: {
+      x: 0,
+      opacity: 1,
+      filter: 'blur(0px)',
+    },
+    exit: (dir: number) => ({
+      x: dir > 0 ? -32 : 32,
+      opacity: 0,
+      filter: 'blur(4px)',
+    }),
+  };
 
   // Form state
   const [interests, setInterests] = useState<string[]>([]);
@@ -20,6 +47,20 @@ export const InquirySection: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [step3Error, setStep3Error] = useState('');
+
+  const handleNextFromStep3 = () => {
+    if (!name.trim()) {
+      setStep3Error('Please enter your name to proceed.');
+      return;
+    }
+    if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      setStep3Error('Please enter a valid work email to proceed.');
+      return;
+    }
+    setStep3Error('');
+    goToStep(4);
+  };
 
   // Zero-re-render mouse tracking for section glow, card border glow & headline gradient
   const sectionRef = useRef<HTMLElement>(null);
@@ -159,6 +200,26 @@ export const InquirySection: React.FC = () => {
     } else {
       setInterests([...interests, val]);
     }
+  };
+
+  const handleSelectInterest = (opt: string) => {
+    if (isTransitioning) return;
+    setInterests([opt]);
+    setIsTransitioning(true);
+    setTimeout(() => {
+      goToStep(2);
+      setIsTransitioning(false);
+    }, 420);
+  };
+
+  const handleSelectBudget = (b: string) => {
+    if (isTransitioning) return;
+    setBudget(b);
+    setIsTransitioning(true);
+    setTimeout(() => {
+      goToStep(3);
+      setIsTransitioning(false);
+    }, 420);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -315,7 +376,7 @@ export const InquirySection: React.FC = () => {
               {/* Progress Bar */}
               <div className="w-full h-1.5 bg-white/10 rounded-full mb-10 overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-[#FF5A1F] to-[#FF8A3D] transition-all duration-300"
+                  className="h-full bg-gradient-to-r from-[#FF5A1F] to-[#FF8A3D] transition-all duration-500 ease-out"
                   style={{ width: `${(currentStep / totalSteps) * 100}%` }}
                 />
               </div>
@@ -346,249 +407,274 @@ export const InquirySection: React.FC = () => {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-8">
-              {/* STEP 1: INTERESTS */}
-              {currentStep === 1 && (
-                <div className="space-y-6 animate-in fade-in duration-200">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-display font-bold text-xl sm:text-2xl text-white tracking-[-0.01em]">
-                      1. What nodes are you looking to activate?
-                    </h3>
-                    <span className="font-mono text-[12px] font-medium text-[#8A8A8E] tracking-[0.18em]">01 / 04</span>
-                  </div>
+              <AnimatePresence mode="wait" custom={direction}>
+                {/* STEP 1: INTERESTS */}
+                {currentStep === 1 && (
+                  <motion.div
+                    key="step-1"
+                    custom={direction}
+                    variants={stepVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                    className="space-y-6"
+                  >
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-display font-bold text-xl sm:text-2xl text-white tracking-[-0.01em]">
+                        1. What nodes are you looking to activate?
+                      </h3>
+                      <span className="font-mono text-[12px] font-medium text-[#8A8A8E] tracking-[0.18em]">01 / 04</span>
+                    </div>
 
-                  <div className="flex flex-wrap gap-3 pt-2">
-                    {FORM_OPTIONS.interests.map((opt) => {
-                      const isSelected = interests.includes(opt);
-                      return (
-                        <button
-                          key={opt}
-                          type="button"
-                          onClick={() => toggleInterest(opt)}
-                          className={`px-5 py-3 rounded-full text-[12px] font-mono font-medium tracking-[0.18em] transition-all duration-200 ${
-                            isSelected
-                              ? 'bg-[#FF5A1F] text-black shadow-[0_0_20px_rgba(255,90,31,0.4)] scale-105'
-                              : 'bg-white/5 text-[#8A8A8E] hover:text-white border border-white/10 hover:border-white/20'
-                          }`}
-                        >
-                          {opt}
-                        </button>
-                      );
-                    })}
-                  </div>
+                    <div className="flex flex-wrap gap-3 pt-2">
+                      {FORM_OPTIONS.interests.map((opt) => {
+                        const isSelected = interests.includes(opt);
+                        return (
+                          <button
+                            key={opt}
+                            type="button"
+                            onClick={() => handleSelectInterest(opt)}
+                            className={`px-5 py-3 rounded-full text-[12px] font-mono font-medium tracking-[0.18em] transition-all duration-200 cursor-pointer ${
+                              isSelected
+                                ? 'bg-[#FF5A1F] text-black shadow-[0_0_24px_rgba(255,90,31,0.55)] scale-105 border border-[#FF5A1F]'
+                                : 'bg-white/5 text-[#8A8A8E] hover:text-white hover:bg-white/10 border border-white/10 hover:border-[#FF5A1F]/50 hover:scale-[1.02]'
+                            }`}
+                          >
+                            {opt}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </motion.div>
+                )}
 
-                  <div className="pt-6 flex justify-end">
-                    <BrandButton
-                      type="button"
-                      variant="white"
-                      disabled={interests.length === 0}
-                      onClick={() => setCurrentStep(2)}
-                    >
-                      Next: Budget
-                    </BrandButton>
-                  </div>
-                </div>
-              )}
+                {/* STEP 2: BUDGET */}
+                {currentStep === 2 && (
+                  <motion.div
+                    key="step-2"
+                    custom={direction}
+                    variants={stepVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                    className="space-y-6"
+                  >
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-display font-bold text-xl sm:text-2xl text-white tracking-[-0.01em]">
+                        2. What is your estimated investment budget?
+                      </h3>
+                      <span className="font-mono text-[12px] font-medium text-[#8A8A8E] tracking-[0.18em]">02 / 04</span>
+                    </div>
 
-              {/* STEP 2: BUDGET */}
-              {currentStep === 2 && (
-                <div className="space-y-6 animate-in fade-in duration-200">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-display font-bold text-xl sm:text-2xl text-white tracking-[-0.01em]">
-                      2. What is your estimated investment budget?
-                    </h3>
-                    <span className="font-mono text-[12px] font-medium text-[#8A8A8E] tracking-[0.18em]">02 / 04</span>
-                  </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                      {FORM_OPTIONS.budgets.map((b) => {
+                        const isSelected = budget === b;
+                        return (
+                          <button
+                            key={b}
+                            type="button"
+                            onClick={() => handleSelectBudget(b)}
+                            className={`p-4 rounded-2xl text-left font-mono text-[12px] font-medium tracking-[0.18em] transition-all duration-200 cursor-pointer ${
+                              isSelected
+                                ? 'bg-[#FF5A1F] text-black shadow-[0_0_24px_rgba(255,90,31,0.55)] scale-[1.02] border border-[#FF5A1F]'
+                                : 'bg-white/5 text-[#8A8A8E] hover:text-white hover:bg-white/10 border border-white/10 hover:border-[#FF5A1F]/50 hover:scale-[1.01]'
+                            }`}
+                          >
+                            {b}
+                          </button>
+                        );
+                      })}
+                    </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                    {FORM_OPTIONS.budgets.map((b) => {
-                      const isSelected = budget === b;
-                      return (
-                        <button
-                          key={b}
-                          type="button"
-                          onClick={() => setBudget(b)}
-                          className={`p-4 rounded-2xl text-left font-mono text-[12px] font-medium tracking-[0.18em] transition-all duration-200 ${
-                            isSelected
-                              ? 'bg-[#FF5A1F] text-black shadow-[0_0_20px_rgba(255,90,31,0.4)]'
-                              : 'bg-white/5 text-[#8A8A8E] hover:text-white border border-white/10 hover:border-white/20'
-                          }`}
-                        >
-                          {b}
-                        </button>
-                      );
-                    })}
-                  </div>
+                    <div className="pt-4 flex items-center justify-start">
+                      <button
+                        type="button"
+                        onClick={() => goToStep(1)}
+                        className="font-mono text-[12px] font-medium text-[#8A8A8E] hover:text-white uppercase tracking-[0.18em] transition-colors"
+                      >
+                        ← Back
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
 
-                  <div className="pt-6 flex items-center justify-between">
-                    <button
-                      type="button"
-                      onClick={() => setCurrentStep(1)}
-                      className="font-mono text-[12px] font-medium text-[#8A8A8E] hover:text-white uppercase tracking-[0.18em]"
-                    >
-                      ← Back
-                    </button>
-                    <BrandButton
-                      type="button"
-                      variant="white"
-                      disabled={!budget}
-                      onClick={() => setCurrentStep(3)}
-                    >
-                      Next: Contact Details
-                    </BrandButton>
-                  </div>
-                </div>
-              )}
+                {/* STEP 3: CONTACT INFORMATION */}
+                {currentStep === 3 && (
+                  <motion.div
+                    key="step-3"
+                    custom={direction}
+                    variants={stepVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                    className="space-y-6"
+                  >
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-display font-bold text-xl sm:text-2xl text-white tracking-[-0.01em]">
+                        3. Where should we deliver the growth plan?
+                      </h3>
+                      <span className="font-mono text-[12px] font-medium text-[#8A8A8E] tracking-[0.18em]">03 / 04</span>
+                    </div>
 
-              {/* STEP 3: CONTACT INFORMATION */}
-              {currentStep === 3 && (
-                <div className="space-y-6 animate-in fade-in duration-200">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-display font-bold text-xl sm:text-2xl text-white tracking-[-0.01em]">
-                      3. Where should we deliver the growth plan?
-                    </h3>
-                    <span className="font-mono text-[12px] font-medium text-[#8A8A8E] tracking-[0.18em]">03 / 04</span>
-                  </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="block font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em] mb-1.5">
+                          Your Name *
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={name}
+                          onChange={(e) => {
+                            setName(e.target.value);
+                            if (step3Error) setStep3Error('');
+                          }}
+                          placeholder="Marcus Vance"
+                          className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-sans text-[15px] focus:outline-none focus:border-[#FF5A1F] transition-colors"
+                        />
+                      </div>
+                      <div>
+                        <label className="block font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em] mb-1.5">
+                          Work Email *
+                        </label>
+                        <input
+                          type="email"
+                          required
+                          value={email}
+                          onChange={(e) => {
+                            setEmail(e.target.value);
+                            if (step3Error) setStep3Error('');
+                          }}
+                          placeholder="marcus@company.com"
+                          className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-sans text-[15px] focus:outline-none focus:border-[#FF5A1F] transition-colors"
+                        />
+                      </div>
+                      <div>
+                        <label className="block font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em] mb-1.5">
+                          Phone / WhatsApp
+                        </label>
+                        <CountryPhoneInput
+                          value={phone}
+                          onChange={(fullNumber) => setPhone(fullNumber)}
+                        />
+                      </div>
+                      <div>
+                        <label className="block font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em] mb-1.5">
+                          Website or Domain URL
+                        </label>
+                        <input
+                          type="text"
+                          value={website}
+                          onChange={(e) => setWebsite(e.target.value)}
+                          placeholder="company.com"
+                          className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-sans text-[15px] focus:outline-none focus:border-[#FF5A1F] transition-colors"
+                        />
+                      </div>
+                    </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em] mb-1.5">
-                        Your Name *
+                        Brief Description / Core Challenge
                       </label>
-                      <input
-                        type="text"
-                        required
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        placeholder="Marcus Vance"
-                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-sans text-[15px] focus:outline-none focus:border-[#FF5A1F]"
+                      <textarea
+                        rows={3}
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        placeholder="Outline your primary growth bottleneck or target goals..."
+                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-sans text-[15px] focus:outline-none focus:border-[#FF5A1F] transition-colors"
                       />
                     </div>
-                    <div>
-                      <label className="block font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em] mb-1.5">
-                        Work Email *
-                      </label>
-                      <input
-                        type="email"
-                        required
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="marcus@company.com"
-                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-sans text-[15px] focus:outline-none focus:border-[#FF5A1F]"
-                      />
+
+                    {step3Error && (
+                      <p className="font-mono text-[12px] font-medium text-[#FF5A1F] bg-[#FF5A1F]/10 px-4 py-2.5 rounded-xl border border-[#FF5A1F]/30 animate-in fade-in">
+                        ⚠ {step3Error}
+                      </p>
+                    )}
+
+                    <div className="pt-4 flex items-center justify-between">
+                      <button
+                        type="button"
+                        onClick={() => goToStep(2)}
+                        className="font-mono text-[12px] font-medium text-[#8A8A8E] hover:text-white uppercase tracking-[0.18em] transition-colors"
+                      >
+                        ← Back
+                      </button>
+                      <BrandButton
+                        type="button"
+                        onClick={handleNextFromStep3}
+                      >
+                        Next: Final Step
+                      </BrandButton>
                     </div>
-                    <div>
-                      <label className="block font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em] mb-1.5">
-                        Phone / WhatsApp
-                      </label>
-                      <input
-                        type="tel"
-                        value={phone}
-                        onChange={(e) => setPhone(e.target.value)}
-                        placeholder="+1 (555) 000-0000"
-                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-sans text-[15px] focus:outline-none focus:border-[#FF5A1F]"
-                      />
+                  </motion.div>
+                )}
+
+                {/* STEP 4: REFERRAL SOURCE & TRANSMIT */}
+                {currentStep === 4 && (
+                  <motion.div
+                    key="step-4"
+                    custom={direction}
+                    variants={stepVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                    className="space-y-6"
+                  >
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-display font-bold text-xl sm:text-2xl text-white tracking-[-0.01em]">
+                        4. How did you discover AlphaLinkx?
+                      </h3>
+                      <span className="font-mono text-[12px] font-medium text-[#8A8A8E] tracking-[0.18em]">04 / 04</span>
                     </div>
-                    <div>
-                      <label className="block font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em] mb-1.5">
-                        Website or Domain URL
-                      </label>
-                      <input
-                        type="text"
-                        value={website}
-                        onChange={(e) => setWebsite(e.target.value)}
-                        placeholder="company.com"
-                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-sans text-[15px] focus:outline-none focus:border-[#FF5A1F]"
-                      />
+
+                    <div className="flex flex-wrap gap-3 pt-2">
+                      {FORM_OPTIONS.referralSources.map((source) => {
+                        const isSelected = referral === source;
+                        return (
+                          <button
+                            key={source}
+                            type="button"
+                            onClick={() => setReferral(source)}
+                            className={`px-5 py-3 rounded-full text-[12px] font-mono font-medium tracking-[0.18em] transition-all duration-200 ${
+                              isSelected
+                                ? 'bg-[#FF5A1F] text-black shadow-[0_0_20px_rgba(255,90,31,0.4)]'
+                                : 'bg-white/5 text-[#8A8A8E] hover:text-white border border-white/10 hover:border-white/20'
+                            }`}
+                          >
+                            {source}
+                          </button>
+                        );
+                      })}
                     </div>
-                  </div>
 
-                  <div>
-                    <label className="block font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em] mb-1.5">
-                      Brief Description / Core Challenge
-                    </label>
-                    <textarea
-                      rows={3}
-                      value={message}
-                      onChange={(e) => setMessage(e.target.value)}
-                      placeholder="Outline your primary growth bottleneck or target goals..."
-                      className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-sans text-[15px] focus:outline-none focus:border-[#FF5A1F]"
-                    />
-                  </div>
+                    {errorMessage && (
+                      <p className="font-mono text-[12px] font-medium text-rose-500 bg-rose-500/10 p-3 rounded-xl border border-rose-500/20">
+                        {errorMessage}
+                      </p>
+                    )}
 
-                  <div className="pt-4 flex items-center justify-between">
-                    <button
-                      type="button"
-                      onClick={() => setCurrentStep(2)}
-                      className="font-mono text-[12px] font-medium text-[#8A8A8E] hover:text-white uppercase tracking-[0.18em]"
-                    >
-                      ← Back
-                    </button>
-                    <BrandButton
-                      type="button"
-                      variant="white"
-                      disabled={!name || !email}
-                      onClick={() => setCurrentStep(4)}
-                    >
-                      Next: Final Step
-                    </BrandButton>
-                  </div>
-                </div>
-              )}
-
-              {/* STEP 4: REFERRAL SOURCE & TRANSMIT */}
-              {currentStep === 4 && (
-                <div className="space-y-6 animate-in fade-in duration-200">
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-display font-bold text-xl sm:text-2xl text-white tracking-[-0.01em]">
-                      4. How did you discover AlphaLinkx?
-                    </h3>
-                    <span className="font-mono text-[12px] font-medium text-[#8A8A8E] tracking-[0.18em]">04 / 04</span>
-                  </div>
-
-                  <div className="flex flex-wrap gap-3 pt-2">
-                    {FORM_OPTIONS.referralSources.map((source) => {
-                      const isSelected = referral === source;
-                      return (
-                        <button
-                          key={source}
-                          type="button"
-                          onClick={() => setReferral(source)}
-                          className={`px-5 py-3 rounded-full text-[12px] font-mono font-medium tracking-[0.18em] transition-all duration-200 ${
-                            isSelected
-                              ? 'bg-[#FF5A1F] text-black shadow-[0_0_20px_rgba(255,90,31,0.4)]'
-                              : 'bg-white/5 text-[#8A8A8E] hover:text-white border border-white/10 hover:border-white/20'
-                          }`}
-                        >
-                          {source}
-                        </button>
-                      );
-                    })}
-                  </div>
-
-                  {errorMessage && (
-                    <p className="font-mono text-[12px] font-medium text-rose-500 bg-rose-500/10 p-3 rounded-xl border border-rose-500/20">
-                      {errorMessage}
-                    </p>
-                  )}
-
-                  <div className="pt-6 flex items-center justify-between">
-                    <button
-                      type="button"
-                      onClick={() => setCurrentStep(3)}
-                      className="font-mono text-[12px] font-medium text-[#8A8A8E] hover:text-white uppercase tracking-[0.18em]"
-                    >
-                      ← Back
-                    </button>
-                    <BrandButton
-                      type="submit"
-                      variant="orange"
-                      disabled={isSubmitting}
-                    >
-                      {isSubmitting ? 'TRANSMITTING BRIEF…' : 'TRANSMIT BRIEF'}
-                    </BrandButton>
-                  </div>
-                </div>
-              )}
+                    <div className="pt-6 flex items-center justify-between">
+                      <button
+                        type="button"
+                        onClick={() => goToStep(3)}
+                        className="font-mono text-[12px] font-medium text-[#8A8A8E] hover:text-white uppercase tracking-[0.18em]"
+                      >
+                        ← Back
+                      </button>
+                      <BrandButton
+                        type="submit"
+                        disabled={isSubmitting}
+                      >
+                        {isSubmitting ? 'Submitting Brief…' : 'Submit Brief'}
+                      </BrandButton>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </form>
           )}
             </div>

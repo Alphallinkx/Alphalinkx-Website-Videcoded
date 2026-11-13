@@ -374,6 +374,32 @@ h1, h2, h3, h4, h5, h6, .font-display {
   background: #FC6603;
 }
 
+/* Dedicated compact scrollbar for dropdowns and popovers */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 90, 31, 0.4) transparent;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(255, 90, 31, 0.4);
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #FF5A1F;
+}
+
 /* Subtle Tech Grid Background */
 .bg-tech-grid {
   background-size: 40px 40px;

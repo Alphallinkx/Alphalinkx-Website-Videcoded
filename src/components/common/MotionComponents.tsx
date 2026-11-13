@@ -63,7 +63,7 @@ export function MagneticButton({
 }: {
   href: string;
   children: ReactNode;
-  variant?: "primary" | "ghost";
+  variant?: "primary" | "ghost" | "white" | "black";
   className?: string;
   dataCursor?: string;
 }) {
@@ -80,13 +80,23 @@ export function MagneticButton({
     variant === "primary"
       ? {
           container:
-            "bg-[#FC6603] text-white shadow-[0_4px_20px_rgba(252,102,3,0.32)] hover:bg-[#FF6E12] hover:shadow-[0_8px_28px_rgba(252,102,3,0.52)] focus-visible:ring-[#FC6603]",
-          badge: "bg-white text-[#0A0A0B]",
+            "bg-gradient-to-r from-[#FF5A1F] via-[#FF6926] to-[#FC6603] text-white shadow-[0_4px_24px_rgba(255,90,31,0.45)] hover:shadow-[0_6px_32px_rgba(255,90,31,0.7)] hover:brightness-105 focus-visible:ring-[#FF5A1F]",
+          badge: "bg-white text-[#FC6603] shadow-[0_2px_8px_rgba(0,0,0,0.2)]",
+          arrow: "text-[#FC6603]",
+        }
+      : variant === "black"
+      ? {
+          container:
+            "bg-[#0A0A0B] text-white border border-white/15 shadow-[0_6px_24px_rgba(0,0,0,0.45)] hover:bg-[#141416] hover:border-[#FF5A1F]/60 hover:shadow-[0_8px_28px_rgba(255,90,31,0.3)] focus-visible:ring-[#FF5A1F]",
+          badge: "bg-[#FF5A1F] text-white shadow-[0_0_14px_rgba(255,90,31,0.5)]",
+          arrow: "text-white",
         }
       : {
+          // White pill with theme orange circular badge (user requested)
           container:
-            "bg-white text-[#0A0A0B] shadow-[0_4px_20px_rgba(255,255,255,0.14)] hover:bg-[#F4F4F5] hover:shadow-[0_8px_26px_rgba(255,255,255,0.26)] focus-visible:ring-white",
-          badge: "bg-[#FC6603] text-white",
+            "bg-white text-[#0A0A0B] border border-white/20 shadow-[0_4px_20px_rgba(255,255,255,0.18)] hover:bg-[#F4F4F5] hover:shadow-[0_8px_26px_rgba(255,255,255,0.3)] focus-visible:ring-white",
+          badge: "bg-[#FF5A1F] text-white shadow-[0_0_14px_rgba(255,90,31,0.45)]",
+          arrow: "text-white",
         };
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -114,12 +124,12 @@ export function MagneticButton({
       }}
       className={`${BRAND_BUTTON_BASE_CLASS} ${styles.container} ${className}`}
     >
-      <span className="leading-none">{children}</span>
+      <span className="leading-none tracking-[-0.01em]">{children}</span>
       <span
         aria-hidden="true"
-        className={`w-[30px] h-[30px] rounded-full flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:rotate-45 shadow-sm ${styles.badge}`}
+        className={`w-[32px] h-[32px] rounded-full flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:rotate-45 shadow-sm ${styles.badge}`}
       >
-        <ArrowUpRight className="w-4 h-4 stroke-[2.25]" />
+        <ArrowUpRight className={`w-4 h-4 stroke-[2.5] ${styles.arrow}`} />
       </span>
     </motion.a>
   );

@@ -183,7 +183,7 @@ export const HeroSection: React.FC = () => {
 
           <MagneticButton
             href="/#work"
-            variant="ghost"
+            variant="white"
             dataCursor="EXPLORE"
           >
             See Our Work

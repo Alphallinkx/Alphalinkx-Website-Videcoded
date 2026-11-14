@@ -322,7 +322,13 @@ export const InquirySection: React.FC = () => {
       <div id="free-audit" className="absolute -top-24 left-0 pointer-events-none" aria-hidden="true" />
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10">
         {/* Massive Headline with Mouse-Follow Gradient */}
-        <div className="text-center mb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 32, filter: 'blur(6px)' }}
+          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center mb-16"
+        >
           <span className="font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-[#FF5A1F] block mb-3">
             // KICKOFF SPRINT
           </span>
@@ -341,11 +347,15 @@ export const InquirySection: React.FC = () => {
           <p className="font-sans text-[16px] text-[#C2C2C2] mt-4 max-w-xl mx-auto leading-[1.6]">
             Configure your growth parameters below to receive an engineered roadmap from our specialist squad.
           </p>
-        </div>
+        </motion.div>
 
         {/* Multi-Step Chip Selection Card with Interactive Mouse-Tracking Border Glow */}
-        <div
+        <motion.div
           ref={cardShellRef}
+          initial={{ opacity: 0, y: 36, scale: 0.98, filter: 'blur(6px)' }}
+          whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
           className="max-w-3xl mx-auto rounded-3xl p-[1.5px] bg-white/10 shadow-2xl relative overflow-hidden"
         >
           {/* Mouse-Tracking Luminous Orange Border Glow */}
@@ -681,7 +691,7 @@ export const InquirySection: React.FC = () => {
           )}
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

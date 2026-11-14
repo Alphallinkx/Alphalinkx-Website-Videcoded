@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { motion } from 'motion/react';
 import { Calendar, Plus, Phone } from 'lucide-react';
 import { BrandButton } from '../common/BrandButton';
 
@@ -75,7 +76,13 @@ export const FaqSection: React.FC = () => {
           {/* =========================================================================
               LEFT COLUMN: FAQs Eyebrow + Exact Heading + Bigger, Prominent FAQs
              ========================================================================= */}
-          <div className="lg:col-span-7 flex flex-col">
+          <motion.div
+            initial={{ opacity: 0, y: 32, filter: 'blur(6px)' }}
+            whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-7 flex flex-col"
+          >
             {/* Eyebrow: // FAQ */}
             <div className="font-mono text-[11px] sm:text-[12px] font-bold text-[#0A0A0B] uppercase tracking-[0.22em] mb-2.5 flex items-center gap-2">
               <span className="font-bold">//</span>
@@ -94,8 +101,12 @@ export const FaqSection: React.FC = () => {
                 const isOpen = openIndex === idx;
 
                 return (
-                  <div
+                  <motion.div
                     key={idx}
+                    initial={{ opacity: 0, y: 18 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.1 }}
+                    transition={{ duration: 0.6, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
                     className={`rounded-[18px] sm:rounded-[22px] transition-all duration-300 border ${
                       isOpen
                         ? 'bg-[#16171B] border-white/20 shadow-xl'
@@ -142,16 +153,22 @@ export const FaqSection: React.FC = () => {
                         {faq.answer}
                       </p>
                     </div>
-                  </div>
+                  </motion.div>
                 );
               })}
             </div>
-          </div>
+          </motion.div>
 
           {/* =========================================================================
               RIGHT COLUMN: Sticky Discovery Booking Card Aligned with "Your questions."
              ========================================================================= */}
-          <div className="lg:col-span-5 lg:pt-[28px] lg:self-stretch">
+          <motion.div
+            initial={{ opacity: 0, y: 36, scale: 0.98, filter: 'blur(6px)' }}
+            whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5 lg:pt-[28px] lg:self-stretch"
+          >
             <div className="lg:sticky lg:top-7">
               <div className="relative rounded-[26px] sm:rounded-[34px] p-6 sm:p-8 xl:p-10 bg-[#121316] border border-white/[0.08] shadow-[0_25px_60px_rgba(0,0,0,0.6)] overflow-hidden">
               {/* Top ambient orange blur */}
@@ -222,7 +239,7 @@ export const FaqSection: React.FC = () => {
               </div>
               </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

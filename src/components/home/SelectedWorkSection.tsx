@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { motion } from 'motion/react';
 import { BrandButton } from '../common/BrandButton';
 import { ProjectModal } from '../common/ProjectModal';
 import { ProjectItem } from '../../types';
@@ -139,7 +140,13 @@ export const SelectedWorkSection: React.FC = () => {
       {/* =========================================================================
           STANDARD WIDTH CONTAINER: SECTION HEADER (CENTERED)
          ========================================================================= */}
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 xl:px-10 relative z-10 mb-10 sm:mb-12 lg:mb-14 text-center flex flex-col items-center">
+      <motion.div
+        initial={{ opacity: 0, y: 32, filter: 'blur(6px)' }}
+        whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+        className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 xl:px-10 relative z-10 mb-10 sm:mb-12 lg:mb-14 text-center flex flex-col items-center"
+      >
         {/* Eyebrow: // SELECTED WORK */}
         <div className="font-mono text-[11px] sm:text-[12px] font-semibold uppercase tracking-[0.2em] text-[#8E929E] mb-2 sm:mb-2.5 flex items-center justify-center gap-2">
           <span className="text-[#FC6603] font-bold">//</span>
@@ -156,7 +163,7 @@ export const SelectedWorkSection: React.FC = () => {
         <p className="font-sans text-[15px] sm:text-[16px] text-[#A1A1AA] leading-relaxed mt-4 max-w-xl mx-auto">
           See how bold ideas become work that moves businesses forward.
         </p>
-      </div>
+      </motion.div>
 
       {/* =========================================================================
           FULL-WIDTH RESPONSIVE CARDS CONTAINER (Creovibe Project Block v1 Skin)
@@ -166,9 +173,17 @@ export const SelectedWorkSection: React.FC = () => {
           <div className="tm-sc-projects tm-sc-projects-grid border-radius-around-box">
             <div className="isotope-layout grid-3 gutter-10 clearfix">
               <div className="isotope-layout-inner">
-                {RECENT_PROJECTS.map((project) => (
-                  <div
+                {RECENT_PROJECTS.map((project, idx) => (
+                  <motion.div
                     key={project.id}
+                    initial={{ opacity: 0, y: 36, scale: 0.98, filter: 'blur(6px)' }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+                    viewport={{ once: true, amount: 0.15 }}
+                    transition={{
+                      duration: 0.85,
+                      delay: idx * 0.12,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
                     className={`isotope-item projct-order ${project.category.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
                   >
                     <div className="project-item projects-current-theme1">
@@ -240,7 +255,7 @@ export const SelectedWorkSection: React.FC = () => {
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </div>
@@ -251,11 +266,17 @@ export const SelectedWorkSection: React.FC = () => {
       {/* =========================================================================
           BOTTOM CENTER CALL-TO-ACTION BUTTON
          ========================================================================= */}
-      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 xl:px-10 relative z-10 mt-10 sm:mt-12 lg:mt-14 flex justify-center">
+      <motion.div
+        initial={{ opacity: 0, y: 24, filter: 'blur(4px)' }}
+        whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+        className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 xl:px-10 relative z-10 mt-10 sm:mt-12 lg:mt-14 flex justify-center"
+      >
         <BrandButton to="/projects" variant="orange" dataCursor="VIEW ALL">
           View All Projects
         </BrandButton>
-      </div>
+      </motion.div>
 
       {/* Interactive Case Study Modal */}
       <ProjectModal

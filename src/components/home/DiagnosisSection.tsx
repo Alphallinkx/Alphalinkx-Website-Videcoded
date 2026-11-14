@@ -465,13 +465,13 @@ const DiagnosisCard: React.FC<DiagnosisCardProps> = ({ item, index }) => {
 
   return (
     <motion.div
-      initial={prefersReduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.15 }}
+      initial={prefersReduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 32, filter: 'blur(6px)' }}
+      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+      viewport={{ once: true, amount: 0.12 }}
       transition={{
-        duration: 0.52,
-        delay: prefersReduced ? 0 : index * 0.06,
-        ease: [0.22, 1, 0.36, 1],
+        duration: 0.8,
+        delay: prefersReduced ? 0 : index * 0.08,
+        ease: [0.16, 1, 0.3, 1],
       }}
       className="h-full"
     >
@@ -616,10 +616,10 @@ export const DiagnosisSection: React.FC = () => {
         <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6 mb-10 sm:mb-12 md:mb-16">
           {/* Left Column: Mono Tag, Heading, and Single-Line Supporting Text with Inline Services Link */}
           <motion.div
-            initial={prefersReduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={prefersReduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 32, filter: 'blur(6px)' }}
+            whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
             className="flex-1 max-w-3xl xl:max-w-4xl"
           >
             {/* Section Mono Label (JetBrains Mono) */}
@@ -652,10 +652,10 @@ export const DiagnosisSection: React.FC = () => {
 
           {/* Right Column: "Get a Free Audit" Button positioned in front of the section heading on desktop */}
           <motion.div
-            initial={prefersReduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={prefersReduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 24, filter: 'blur(4px)' }}
+            whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.5, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.85, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             className="lg:shrink-0 mt-2 sm:mt-3 lg:mt-14 xl:mt-16 self-start"
           >
             <BrandButton to="/contact" variant="orange">

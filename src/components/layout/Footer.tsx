@@ -73,7 +73,13 @@ export const Footer: React.FC = () => {
       {/* Main Content Container */}
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 pt-20 sm:pt-24 pb-10 sm:pb-14">
         {/* Navigation Grid (Brand Column + 4 Ordered Link Columns) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-10 xl:gap-14 pb-16 sm:pb-20 border-b border-white/20 items-start">
+        <motion.div
+          initial={{ opacity: 0, y: 32, filter: 'blur(6px)' }}
+          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-10 xl:gap-14 pb-16 sm:pb-20 border-b border-white/20 items-start"
+        >
           
           {/* =========================================================================
               COLUMN 1: PROMINENT ALL-WHITE BRAND LOGO, COMPELLING CTA DESCRIPTION, SOCIAL ICONS
@@ -288,7 +294,7 @@ export const Footer: React.FC = () => {
             </div>
 
           </div>
-        </div>
+        </motion.div>
       </div>
 
       {/* =========================================================================

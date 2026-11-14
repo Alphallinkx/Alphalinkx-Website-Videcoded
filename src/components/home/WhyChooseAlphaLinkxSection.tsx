@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { motion } from 'motion/react';
 import { Check, X } from 'lucide-react';
 import { BrandButton } from '../common/BrandButton';
 import { WhyChooseWaveBackground } from './WhyChooseWaveBackground';
@@ -27,7 +28,13 @@ export const WhyChooseAlphaLinkxSection: React.FC = () => {
 
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10">
         {/* Section Header: Headings on LEFT, Orange CTA on RIGHT (aligned with site header) */}
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-8 mb-10 sm:mb-12 lg:mb-14">
+        <motion.div
+          initial={{ opacity: 0, y: 32, filter: 'blur(6px)' }}
+          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-8 mb-10 sm:mb-12 lg:mb-14"
+        >
           {/* LEFT SIDE: Eyebrow, Heading (matching HowWeWork font sizes), Subtitle */}
           <div className="flex flex-col items-start text-left max-w-2xl">
             {/* Eyebrow: // WHY ALPHALINXX */}
@@ -54,12 +61,18 @@ export const WhyChooseAlphaLinkxSection: React.FC = () => {
               WORK WITH ALPHALINKX
             </BrandButton>
           </div>
-        </div>
+        </motion.div>
 
         {/* Two Cards Grid - 1:2 ratio aligned with 1400px header bounds */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-7 xl:gap-8 items-stretch">
           {/* Left Card: Strategy with a reason */}
-          <div className="lg:col-span-4 relative rounded-[24px] sm:rounded-[30px] overflow-hidden shadow-2xl border border-stone-200/30 flex flex-col justify-between min-h-[380px] sm:min-h-[420px] lg:min-h-[430px]">
+          <motion.div
+            initial={{ opacity: 0, y: 36, scale: 0.98, filter: 'blur(6px)' }}
+            whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.85, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-4 relative rounded-[24px] sm:rounded-[30px] overflow-hidden shadow-2xl border border-stone-200/30 flex flex-col justify-between min-h-[380px] sm:min-h-[420px] lg:min-h-[430px]"
+          >
             {/* Full-bleed background image with texture, peach glow, and ribbon artwork */}
             <img
               src="/assets/why-left-card-bg.jpg"
@@ -97,10 +110,16 @@ export const WhyChooseAlphaLinkxSection: React.FC = () => {
                 </BrandButton>
               </div>
             </div>
-          </div>
+          </motion.div>
 
           {/* Right Card: Us vs. the usual */}
-          <div className="lg:col-span-8 relative rounded-[24px] sm:rounded-[30px] px-5 sm:px-8 lg:px-10 py-6 sm:py-8 bg-[#111113] border border-white/[0.08] flex flex-col justify-between shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+          <motion.div
+            initial={{ opacity: 0, y: 36, scale: 0.98, filter: 'blur(6px)' }}
+            whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.85, delay: 0.22, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-8 relative rounded-[24px] sm:rounded-[30px] px-5 sm:px-8 lg:px-10 py-6 sm:py-8 bg-[#111113] border border-white/[0.08] flex flex-col justify-between shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+          >
             <div>
               {/* Header inside right card */}
               <div>
@@ -169,7 +188,7 @@ export const WhyChooseAlphaLinkxSection: React.FC = () => {
               </div>
             </div>
 
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

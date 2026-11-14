@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
+import { motion } from 'motion/react';
 
 interface CapabilityItem {
   id: string;
@@ -289,7 +290,13 @@ export const ServicesTicker: React.FC = () => {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_100%_at_50%_50%,rgba(252,102,3,0.05),transparent_75%)] pointer-events-none" />
 
       {/* Scrolling Track Container with Smooth Edge Gradient Masks */}
-      <div className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent_0%,black_6%,black_94%,transparent_100%)] pointer-events-none">
+      <motion.div
+        initial={{ opacity: 0, y: 18 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.2 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="relative w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent_0%,black_6%,black_94%,transparent_100%)] pointer-events-none"
+      >
         <div
           ref={trackRef}
           className="flex w-max will-change-transform pointer-events-auto"
@@ -298,7 +305,7 @@ export const ServicesTicker: React.FC = () => {
           {renderCapabilitySet('set2')}
           {renderCapabilitySet('set3')}
         </div>
-      </div>
+      </motion.div>
 
       {/* Bottom Ambient Line */}
       <div className="absolute bottom-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent pointer-events-none" />

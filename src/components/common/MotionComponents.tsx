@@ -7,6 +7,107 @@ import { useRouter } from "next/navigation";
 import { BRAND_BUTTON_BASE_CLASS } from "./BrandButton";
 
 export const ease = [0.22, 1, 0.36, 1] as const;
+export const smoothEase = [0.16, 1, 0.3, 1] as const;
+
+export function SmoothReveal({
+  children,
+  delay = 0,
+  y = 36,
+  duration = 0.85,
+  className = "",
+  amount = 0.15,
+}: {
+  children: ReactNode;
+  delay?: number;
+  y?: number;
+  duration?: number;
+  className?: string;
+  amount?: number;
+}) {
+  const reduce = useReducedMotion();
+  if (reduce) return <div className={className}>{children}</div>;
+
+  return (
+    <motion.div
+      className={className}
+      initial={{ opacity: 0, y, filter: 'blur(6px)' }}
+      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+      viewport={{ once: true, amount }}
+      transition={{ duration, ease: smoothEase, delay }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+export function StaggerContainer({
+  children,
+  stagger = 0.08,
+  delayChildren = 0.05,
+  className = "",
+  amount = 0.15,
+}: {
+  children: ReactNode;
+  stagger?: number;
+  delayChildren?: number;
+  className?: string;
+  amount?: number;
+}) {
+  const reduce = useReducedMotion();
+  if (reduce) return <div className={className}>{children}</div>;
+
+  return (
+    <motion.div
+      className={className}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount }}
+      variants={{
+        hidden: {},
+        visible: {
+          transition: {
+            staggerChildren: stagger,
+            delayChildren,
+          },
+        },
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+export function StaggerItem({
+  children,
+  y = 32,
+  duration = 0.8,
+  className = "",
+}: {
+  children: ReactNode;
+  y?: number;
+  duration?: number;
+  className?: string;
+}) {
+  const reduce = useReducedMotion();
+  if (reduce) return <div className={className}>{children}</div>;
+
+  return (
+    <motion.div
+      className={className}
+      variants={{
+        hidden: { opacity: 0, y, filter: 'blur(6px)' },
+        visible: {
+          opacity: 1,
+          y: 0,
+          filter: 'blur(0px)',
+          transition: { duration, ease: smoothEase },
+        },
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 export function Reveal({
   children,

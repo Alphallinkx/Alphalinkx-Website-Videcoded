@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import { motion } from 'motion/react';
 import { TrendingUp, Gauge, BarChart3, RotateCw } from 'lucide-react';
 import { STATS } from '../../content/siteContent';
 
@@ -100,7 +101,13 @@ export const StatsSection: React.FC = () => {
 
       <div className="relative z-10 max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header: Centered & Compact spacing */}
-        <div className="max-w-3xl mx-auto text-center mb-9 sm:mb-10 px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 32, filter: 'blur(6px)' }}
+          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-3xl mx-auto text-center mb-9 sm:mb-10 px-4"
+        >
           <div className="font-mono text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.22em] text-[#0A0A0B] mb-2 sm:mb-2.5">
             // 07 VERIFIED METRICS
           </div>
@@ -111,7 +118,7 @@ export const StatsSection: React.FC = () => {
           <p className="font-sans text-[15px] sm:text-[16px] text-white/90 mt-3 sm:mt-3.5 max-w-2xl mx-auto leading-relaxed">
             Every metric captured directly from production deployments and verified revenue pipelines.
           </p>
-        </div>
+        </motion.div>
 
         {/* 4 Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-5 xl:gap-6">
@@ -123,8 +130,16 @@ export const StatsSection: React.FC = () => {
             const Icon = meta.icon;
 
             return (
-              <div
+              <motion.div
                 key={idx}
+                initial={{ opacity: 0, y: 36, scale: 0.98, filter: 'blur(6px)' }}
+                whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{
+                  duration: 0.85,
+                  delay: idx * 0.1,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
                 className="flex flex-col justify-between p-6 sm:p-7 rounded-[24px] bg-[#121214] border border-white/5 shadow-[0_16px_36px_rgba(0,0,0,0.32)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_22px_45px_rgba(0,0,0,0.45)] group h-full"
               >
                 <div>
@@ -156,7 +171,7 @@ export const StatsSection: React.FC = () => {
                     {stat.wittyCaption}
                   </p>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>

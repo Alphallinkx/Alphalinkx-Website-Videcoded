@@ -2,11 +2,36 @@
 
 import React, { useState, useRef } from 'react';
 import Link from 'next/link';
-import { motion } from 'motion/react';
+import { motion, type Variants } from 'motion/react';
 import { Phone, Mail, ArrowUp } from 'lucide-react';
 import { BRAND } from '../../content/siteContent';
 
 const WORDMARK_LETTERS = ['A', 'L', 'P', 'H', 'A', 'L', 'I', 'N', 'K', 'X'] as const;
+
+const letterVariants: Variants = {
+  hidden: {
+    y: '125%',
+  },
+  visible: (index: number) => ({
+    y: '0%',
+    transition: {
+      duration: 0.85,
+      ease: [0.16, 1, 0.3, 1],
+      delay: index * 0.04,
+    },
+  }),
+  animating: (index: number) => ({
+    y: ['0%', '125%', '125%', '0%'],
+    transition: {
+      duration: 1.35,
+      times: [0, 0.38, 0.45, 1],
+      ease: ['easeInOut', 'linear', [0.16, 1, 0.3, 1]] as any,
+      repeat: Infinity,
+      repeatDelay: 0.5,
+      delay: index * 0.045,
+    },
+  }),
+};
 
 export const Footer: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
@@ -300,59 +325,40 @@ export const Footer: React.FC = () => {
           GIANT BOTTOM ARCHITECTURAL WORDMARK: "ALPHALINKX"
           - Full-bleed edge-to-edge massive typography
           - Pure white letters without black mouse-hover mask
-          - Fluid letter-by-letter wave motion animation
+          - Masked letter-by-letter drop & rise kinetic animation
+            ("going down as it hiding, coming from the down with upward motion")
          ========================================================================= */}
       <div
         ref={wordmarkRef}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className="relative z-10 w-full overflow-hidden select-none pt-4 sm:pt-6 md:pt-8 pb-8 sm:pb-12 md:pb-16 px-2 sm:px-4 flex items-center justify-center cursor-default"
+        className="relative z-10 w-full select-none pt-4 sm:pt-6 md:pt-8 pb-8 sm:pb-12 md:pb-16 px-2 sm:px-4 flex items-center justify-center cursor-pointer"
+        data-cursor="ALPHALINKX"
       >
-        <motion.div
-          initial={{ opacity: 0, y: 40, scale: 0.97 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full flex items-center justify-center overflow-visible"
-        >
+        <div className="w-full flex items-center justify-center overflow-hidden">
           <h2
-            className="w-full text-center font-display font-black text-[13.5vw] sm:text-[14.5vw] md:text-[15.2vw] lg:text-[15.8vw] leading-[0.8] tracking-[-0.04em] uppercase select-none text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.18)] whitespace-nowrap flex items-center justify-center"
+            className="w-full text-center font-display font-black text-[13.5vw] sm:text-[14.5vw] md:text-[15.2vw] lg:text-[15.8vw] leading-[0.88] tracking-[-0.04em] uppercase select-none text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.18)] whitespace-nowrap flex items-center justify-center"
           >
             {WORDMARK_LETTERS.map((char, index) => (
-              <motion.span
+              <span
                 key={index}
-                className="inline-block will-change-transform text-white"
-                animate={
-                  isHovered
-                    ? {
-                        y: [0, -32, 0, 14, 0],
-                        transition: {
-                          duration: 1.35,
-                          repeat: Infinity,
-                          ease: 'easeInOut',
-                          delay: index * 0.08,
-                        },
-                      }
-                    : {
-                        y: [0, -8, 0],
-                        transition: {
-                          duration: 2.8,
-                          repeat: Infinity,
-                          ease: 'easeInOut',
-                          delay: index * 0.12,
-                        },
-                      }
-                }
-                whileHover={{
-                  scale: 1.08,
-                  transition: { type: 'spring', stiffness: 400, damping: 20 },
-                }}
+                className="relative inline-flex overflow-hidden pb-2 pt-1 leading-[0.88]"
               >
-                {char}
-              </motion.span>
+                <motion.span
+                  className="inline-block will-change-transform text-white select-none"
+                  custom={index}
+                  initial="hidden"
+                  whileInView={isHovered ? undefined : 'visible'}
+                  viewport={{ once: true, amount: 0.2 }}
+                  animate={isHovered ? 'animating' : 'visible'}
+                  variants={letterVariants}
+                >
+                  {char}
+                </motion.span>
+              </span>
             ))}
           </h2>
-        </motion.div>
+        </div>
       </div>
 
       {/* =========================================================================

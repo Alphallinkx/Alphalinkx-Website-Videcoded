@@ -6,18 +6,11 @@ import { motion } from 'motion/react';
 import { Phone, Mail, ArrowUp } from 'lucide-react';
 import { BRAND } from '../../content/siteContent';
 
+const WORDMARK_LETTERS = ['A', 'L', 'P', 'H', 'A', 'L', 'I', 'N', 'K', 'X'] as const;
+
 export const Footer: React.FC = () => {
-  const [spotlightPos, setSpotlightPos] = useState({ x: 50, y: 50 });
   const [isHovered, setIsHovered] = useState(false);
   const wordmarkRef = useRef<HTMLDivElement>(null);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!wordmarkRef.current) return;
-    const rect = wordmarkRef.current.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    setSpotlightPos({ x, y });
-  };
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -305,35 +298,59 @@ export const Footer: React.FC = () => {
 
       {/* =========================================================================
           GIANT BOTTOM ARCHITECTURAL WORDMARK: "ALPHALINKX"
-          - Full-bleed edge-to-edge massive typography (inspired by reference "TWO 26")
-          - Dynamic Mouse-Tracking Spotlight: pure white base, turns black wherever cursor moves
-          - Beautiful smooth entrance animation
+          - Full-bleed edge-to-edge massive typography
+          - Pure white letters without black mouse-hover mask
+          - Fluid letter-by-letter wave motion animation
          ========================================================================= */}
       <div
         ref={wordmarkRef}
-        onMouseMove={handleMouseMove}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
-        className="relative z-10 w-full overflow-hidden select-none pt-2 sm:pt-4 pb-4 sm:pb-8 px-2 sm:px-4 flex items-center justify-center cursor-default"
+        className="relative z-10 w-full overflow-hidden select-none pt-4 sm:pt-6 md:pt-8 pb-8 sm:pb-12 md:pb-16 px-2 sm:px-4 flex items-center justify-center cursor-default"
       >
         <motion.div
           initial={{ opacity: 0, y: 40, scale: 0.97 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full flex items-center justify-center"
+          className="w-full flex items-center justify-center overflow-visible"
         >
           <h2
-            style={{
-              backgroundImage: isHovered
-                ? `radial-gradient(circle 280px at ${spotlightPos.x}% ${spotlightPos.y}%, #0A0A0B 0%, #0A0A0B 35%, rgba(10, 10, 11, 0.85) 55%, rgba(255, 255, 255, 0.95) 75%, #FFFFFF 100%)`
-                : 'linear-gradient(to bottom, #FFFFFF, #FFFFFF)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-            }}
-            className="w-full text-center font-display font-black text-[13.5vw] sm:text-[14.5vw] md:text-[15.2vw] lg:text-[15.8vw] leading-[0.76] tracking-[-0.04em] uppercase select-none drop-shadow-[0_4px_24px_rgba(0,0,0,0.12)] whitespace-nowrap"
+            className="w-full text-center font-display font-black text-[13.5vw] sm:text-[14.5vw] md:text-[15.2vw] lg:text-[15.8vw] leading-[0.8] tracking-[-0.04em] uppercase select-none text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.18)] whitespace-nowrap flex items-center justify-center"
           >
-            ALPHALINKX
+            {WORDMARK_LETTERS.map((char, index) => (
+              <motion.span
+                key={index}
+                className="inline-block will-change-transform text-white"
+                animate={
+                  isHovered
+                    ? {
+                        y: [0, -32, 0, 14, 0],
+                        transition: {
+                          duration: 1.35,
+                          repeat: Infinity,
+                          ease: 'easeInOut',
+                          delay: index * 0.08,
+                        },
+                      }
+                    : {
+                        y: [0, -8, 0],
+                        transition: {
+                          duration: 2.8,
+                          repeat: Infinity,
+                          ease: 'easeInOut',
+                          delay: index * 0.12,
+                        },
+                      }
+                }
+                whileHover={{
+                  scale: 1.08,
+                  transition: { type: 'spring', stiffness: 400, damping: 20 },
+                }}
+              >
+                {char}
+              </motion.span>
+            ))}
           </h2>
         </motion.div>
       </div>

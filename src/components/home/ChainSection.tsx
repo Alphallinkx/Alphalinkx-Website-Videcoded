@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { motion, useScroll, useSpring, useTransform, useReducedMotion } from 'motion/react';
 import { CHAIN_LINKS } from '../../content/siteContent';
@@ -202,7 +204,9 @@ export const ChainSection: React.FC = () => {
                 >
                   {/* Center Chain Node with Chain SVG Icon */}
                   <div
-                    ref={(el) => (nodeRefs.current[idx] = el)}
+                    ref={(el) => {
+                      nodeRefs.current[idx] = el;
+                    }}
                     className="link-node"
                     aria-hidden="true"
                   >

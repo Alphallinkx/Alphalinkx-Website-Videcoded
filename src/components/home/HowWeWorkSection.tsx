@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useRef, useId } from 'react';
 import { BrandButton } from '../common/BrandButton';
 

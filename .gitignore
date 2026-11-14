@@ -6,3 +6,6 @@ dist
 .DS_Store
 .node
 .npm-cache
+
+.next
+next-env.d.ts

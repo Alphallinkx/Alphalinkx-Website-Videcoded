@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useRef, useEffect, useState, Suspense } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
@@ -209,11 +211,16 @@ export interface HeroSceneProps {
 }
 
 export const HeroScene3D: React.FC<HeroSceneProps> = ({ scroll }) => {
+  const [mounted, setMounted] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   const [isVisible, setIsVisible] = useState(true);
   const [isTabHidden, setIsTabHidden] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   // Pause R3F continuous frameloop cleanly when hero is scrolled out or tab is hidden
   useEffect(() => {
@@ -257,7 +264,11 @@ export const HeroScene3D: React.FC<HeroSceneProps> = ({ scroll }) => {
       canvas.removeEventListener('webglcontextlost', handleContextLost);
       canvas.removeEventListener('webglcontextrestored', handleContextRestored);
     };
-  }, []);
+  }, [mounted]);
+
+  if (!mounted) {
+    return <div ref={containerRef} className="absolute inset-0 w-full h-full pointer-events-none select-none z-[2] bg-transparent" />;
+  }
 
   return (
     <div

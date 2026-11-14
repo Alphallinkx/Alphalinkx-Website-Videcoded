@@ -1,4 +1,6 @@
-import React, { useRef, useState } from 'react';
+'use client';
+
+import React, { useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, Html } from '@react-three/drei';
 import * as THREE from 'three';
@@ -116,6 +118,15 @@ function ConstellationCluster() {
 }
 
 export const TechConstellation3D: React.FC = () => {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return <div className="w-full h-[480px] relative select-none" />;
+  }
+
   return (
     <div className="w-full h-[480px] relative select-none">
       <Canvas

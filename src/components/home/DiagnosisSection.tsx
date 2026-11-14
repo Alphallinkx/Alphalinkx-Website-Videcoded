@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useRef, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useReducedMotion } from 'motion/react';

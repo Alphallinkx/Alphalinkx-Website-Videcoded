@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { TechConstellation3D } from '../3d/TechConstellation3D';
 import { Cpu, Terminal, Shield, Zap } from 'lucide-react';

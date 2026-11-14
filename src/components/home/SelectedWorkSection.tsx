@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { BrandButton } from '../common/BrandButton';
 import { ProjectModal } from '../common/ProjectModal';

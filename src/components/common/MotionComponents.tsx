@@ -1,3 +1,5 @@
+'use client';
+
 import React, { type ReactNode } from "react";
 import { motion, useMotionValue, useSpring, useReducedMotion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";

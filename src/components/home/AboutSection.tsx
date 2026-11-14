@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { TechConstellation3D } from '../3d/TechConstellation3D';

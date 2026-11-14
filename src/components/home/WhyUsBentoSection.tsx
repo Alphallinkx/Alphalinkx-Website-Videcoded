@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { Compass, Cpu, Gauge, BarChart3, Users, MessageSquareCode, ArrowUpRight } from 'lucide-react';
 

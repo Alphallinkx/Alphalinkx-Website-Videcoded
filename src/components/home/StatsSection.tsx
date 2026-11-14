@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
 import { TrendingUp, Gauge, BarChart3, RotateCw } from 'lucide-react';
 import { STATS } from '../../content/siteContent';

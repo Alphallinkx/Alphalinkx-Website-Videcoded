@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { Calendar, Plus, Phone } from 'lucide-react';
 import { BrandButton } from '../common/BrandButton';

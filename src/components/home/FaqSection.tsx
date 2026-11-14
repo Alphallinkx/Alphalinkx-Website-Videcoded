@@ -54,7 +54,7 @@ export const FaqSection: React.FC = () => {
     <section
       id="faq"
       aria-label="Frequently Asked Questions"
-      className="relative py-20 sm:py-24 md:py-28 bg-[#FC6603] overflow-clip"
+      className="relative py-20 bg-[#FC6603] overflow-clip"
     >
       {/* Static Textured Orange Background Image (fixed height prevents zoom/shift when accordions expand) */}
       <div

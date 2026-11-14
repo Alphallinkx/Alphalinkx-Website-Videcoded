@@ -10,7 +10,7 @@ export default function TermsOfServicePage() {
   }, []);
 
   return (
-    <div className="pt-32 pb-24 bg-[#060709] bg-tech-grid min-h-screen">
+    <div className="pt-32 pb-20 bg-[#060709] bg-tech-grid min-h-screen">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <Link
           href="/"

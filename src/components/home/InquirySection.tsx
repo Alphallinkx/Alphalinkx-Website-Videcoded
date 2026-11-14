@@ -276,7 +276,7 @@ export const InquirySection: React.FC = () => {
       ref={sectionRef}
       id="contact"
       aria-label="Multi-Step Project Inquiry"
-      className="relative py-28 md:py-44 bg-[#0A0A0B] overflow-hidden"
+      className="relative py-20 bg-[#0A0A0B] overflow-hidden"
     >
       {/* Subtle Technical Dot Grid Matrix */}
       <div

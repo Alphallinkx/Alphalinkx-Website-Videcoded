@@ -128,7 +128,7 @@ export const SelectedWorkSection: React.FC = () => {
     <section
       id="work"
       aria-label="Recent Projects"
-      className="relative py-20 sm:py-24 lg:py-28 bg-[#060709] border-b border-white/[0.08] overflow-hidden selection:bg-[#FC6603] selection:text-black"
+      className="relative py-20 bg-[#060709] border-b border-white/[0.08] overflow-hidden selection:bg-[#FC6603] selection:text-black"
     >
       {/* Background Subtle Ambient Orange Radial Glow */}
       <div

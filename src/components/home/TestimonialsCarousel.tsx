@@ -247,7 +247,7 @@ export const TestimonialsCarousel: React.FC = () => {
       {/* =========================================================================
           HEADER-ALIGNED WRAPPER: ANCHORS MARQUEE & BODY TO NAVBAR CONTAINER
          ========================================================================= */}
-      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-10 min-h-[720px] lg:min-h-[780px] xl:min-h-[840px] flex items-center py-20 lg:py-24 xl:py-28">
+      <div className="relative z-10 w-full max-w-[1400px] mx-auto px-6 md:px-10 flex items-center py-20">
         {/* =========================================================================
             ZONE 1: INWARD VERTICAL OVERSIZED MARQUEE (ALIGNED WITH HEADER)
            ========================================================================= */}

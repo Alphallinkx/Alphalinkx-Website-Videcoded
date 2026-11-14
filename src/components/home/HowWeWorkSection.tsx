@@ -462,7 +462,7 @@ export const HowWeWorkSection: React.FC = () => {
       ref={sectionRef}
       id="process"
       aria-labelledby="how-we-work-heading"
-      className={`hww-section relative w-full bg-[#060709] py-14 sm:py-16 lg:py-20 overflow-x-clip selection:bg-[#FC6603] selection:text-black border-b border-white/[0.08] ${
+      className={`hww-section relative w-full bg-[#060709] py-20 overflow-x-clip selection:bg-[#FC6603] selection:text-black border-b border-white/[0.08] ${
         isAnimReady ? 'hww-anim-ready' : ''
       } ${isInView ? 'hww-in-view' : ''} ${isSettled ? 'hww-settled' : ''}`}
     >

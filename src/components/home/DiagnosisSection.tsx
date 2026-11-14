@@ -570,7 +570,7 @@ export const DiagnosisSection: React.FC = () => {
     <section
       id="diagnosis"
       aria-labelledby="diagnosis-heading"
-      className="relative py-16 sm:py-24 md:py-32 lg:py-36 bg-[#070708] border-b border-white/[0.08] overflow-hidden isolation-isolate"
+      className="relative py-20 bg-[#070708] border-b border-white/[0.08] overflow-hidden isolation-isolate"
     >
       {/* Multi-layered Atmospheric Orange Glow Gradients over Obsidian Black (Exact Testimonials Specs) */}
       <div

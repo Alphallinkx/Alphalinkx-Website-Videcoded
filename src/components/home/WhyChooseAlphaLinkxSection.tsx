@@ -21,7 +21,7 @@ const COMPARISON_ROWS: ComparisonRow[] = [
 
 export const WhyChooseAlphaLinkxSection: React.FC = () => {
   return (
-    <section className="relative py-16 sm:py-20 md:py-24 lg:py-28 bg-[#060709] border-t border-white/[0.06] overflow-hidden">
+    <section className="relative py-20 bg-[#060709] border-t border-white/[0.06] overflow-hidden">
       {/* 3D Animated Undulating Wave Particle Background */}
       <WhyChooseWaveBackground />
 

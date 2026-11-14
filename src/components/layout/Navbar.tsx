@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { SERVICE_CATEGORIES, BRAND } from '../../content/siteContent';
 import { BrandButton } from '../common/BrandButton';
 
@@ -11,7 +12,7 @@ export const Navbar: React.FC = () => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const location = useLocation();
+  const pathname = usePathname();
 
   useEffect(() => {
     let ticking = false;
@@ -50,7 +51,7 @@ export const Navbar: React.FC = () => {
   useEffect(() => {
     setIsMegaMenuOpen(false);
     setIsMobileMenuOpen(false);
-  }, [location.pathname]);
+  }, [pathname]);
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -79,7 +80,7 @@ export const Navbar: React.FC = () => {
         <div className="max-w-[1400px] mx-auto px-6 md:px-10 flex items-center justify-between">
           {/* Logo on Left */}
           <Link
-            to="/"
+            href="/"
             className="flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF5A1F] rounded-lg transition-transform hover:scale-105 duration-200 shrink-0"
             aria-label="AlphaLinkx Home"
           >
@@ -258,7 +259,7 @@ export const Navbar: React.FC = () => {
               {SERVICE_CATEGORIES.map((cat) => (
                 <Link
                   key={cat.id}
-                  to={`/services/${cat.slug}`}
+                  href={`/services/${cat.slug}`}
                   onClick={() => setIsMegaMenuOpen(false)}
                   className="group flex flex-col p-5 rounded-2xl bg-[#111113]/60 border border-white/[0.07] hover:border-[#FF5A1F]/50 hover:bg-[#161619] transition-all duration-200"
                 >
@@ -333,7 +334,7 @@ export const Navbar: React.FC = () => {
               {SERVICE_CATEGORIES.map((cat) => (
                 <Link
                   key={cat.id}
-                  to={`/services/${cat.slug}`}
+                  href={`/services/${cat.slug}`}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="font-display text-xl text-white/90 hover:text-[#FF5A1F] pl-3 flex items-center justify-between"
                 >

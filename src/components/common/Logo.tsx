@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 interface LogoProps {
   className?: string;
@@ -18,7 +18,7 @@ export const Logo: React.FC<LogoProps> = ({ className = '', size = 'md' }) => {
 
   return (
     <Link
-      to="/"
+      href="/"
       className={`inline-flex items-center focus:outline-none transition-transform hover:scale-105 duration-200 ${className}`}
       aria-label="AlphaLinkx Home"
     >

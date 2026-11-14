@@ -1,14 +1,14 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { fetchProjects } from '../lib/api';
-import { ProjectItem } from '../types';
-import { ProjectModal } from '../components/common/ProjectModal';
-import { BrandButton } from '../components/common/BrandButton';
+import Link from 'next/link';
+import { fetchProjects } from '@/lib/api';
+import { ProjectItem } from '@/types';
+import { ProjectModal } from '@/components/common/ProjectModal';
+import { BrandButton } from '@/components/common/BrandButton';
 import { ArrowUpRight } from 'lucide-react';
 
-export const ProjectsPage: React.FC = () => {
+export function ProjectsView() {
   const [projects, setProjects] = useState<ProjectItem[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [activeModalProject, setActiveModalProject] = useState<ProjectItem | null>(null);
@@ -131,7 +131,7 @@ export const ProjectsPage: React.FC = () => {
                     Overview
                   </button>
                   <Link
-                    to={`/projects/${project.slug}`}
+                    href={`/projects/${project.slug}`}
                     className="inline-flex items-center gap-1.5 font-mono text-[12px] font-medium text-[#FF5A1F] hover:text-[#FF8A3D] uppercase tracking-[0.18em] group/btn"
                   >
                     <span>Full Case Study</span>
@@ -150,4 +150,4 @@ export const ProjectsPage: React.FC = () => {
       />
     </div>
   );
-};
+}

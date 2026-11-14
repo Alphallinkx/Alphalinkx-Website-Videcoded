@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { motion } from 'motion/react';
 import { Phone, Mail, ArrowUp } from 'lucide-react';
 import { BRAND } from '../../content/siteContent';
@@ -94,7 +94,7 @@ export const Footer: React.FC = () => {
             <div>
               {/* Prominent All-White Official Logo Lockup */}
               <Link
-                to="/"
+                href="/"
                 aria-label="AlphaLinkx Home"
                 className="inline-block group transition-transform duration-300 hover:scale-[1.03]"
               >
@@ -143,7 +143,7 @@ export const Footer: React.FC = () => {
               </h3>
               <ul className="space-y-3 font-sans text-[15px] sm:text-[15.5px] font-medium text-white/90">
                 <li>
-                  <Link to="/" className="hover:text-[#0A0A0B] transition-colors block">
+                  <Link href="/" className="hover:text-[#0A0A0B] transition-colors block">
                     Home
                   </Link>
                 </li>
@@ -173,7 +173,7 @@ export const Footer: React.FC = () => {
                   </a>
                 </li>
                 <li>
-                  <Link to="/contact" className="hover:text-[#0A0A0B] transition-colors block">
+                  <Link href="/contact" className="hover:text-[#0A0A0B] transition-colors block">
                     Contact Us
                   </Link>
                 </li>
@@ -187,32 +187,32 @@ export const Footer: React.FC = () => {
               </h3>
               <ul className="space-y-3 font-sans text-[15px] sm:text-[15.5px] font-medium text-white/90">
                 <li>
-                  <Link to="/services/search-ai-visibility" className="hover:text-[#0A0A0B] transition-colors block">
+                  <Link href="/services/search-ai-visibility" className="hover:text-[#0A0A0B] transition-colors block">
                     Search & AI Visibility
                   </Link>
                 </li>
                 <li>
-                  <Link to="/services/hyper-performance-web" className="hover:text-[#0A0A0B] transition-colors block">
+                  <Link href="/services/hyper-performance-web" className="hover:text-[#0A0A0B] transition-colors block">
                     Website Development
                   </Link>
                 </li>
                 <li>
-                  <Link to="/services/local-dominance-gmb" className="hover:text-[#0A0A0B] transition-colors block">
+                  <Link href="/services/local-dominance-gmb" className="hover:text-[#0A0A0B] transition-colors block">
                     GMB & Local Dominance
                   </Link>
                 </li>
                 <li>
-                  <Link to="/services/paid-media-roas" className="hover:text-[#0A0A0B] transition-colors block">
+                  <Link href="/services/paid-media-roas" className="hover:text-[#0A0A0B] transition-colors block">
                     Paid Media & High-ROAS
                   </Link>
                 </li>
                 <li>
-                  <Link to="/services/full-stack-retainer" className="hover:text-[#0A0A0B] transition-colors block">
+                  <Link href="/services/full-stack-retainer" className="hover:text-[#0A0A0B] transition-colors block">
                     Full-Stack Retainer
                   </Link>
                 </li>
                 <li>
-                  <Link to="/services" className="hover:text-[#0A0A0B] transition-colors inline-flex items-center gap-1.5 text-[14px] font-semibold pt-1">
+                  <Link href="/services" className="hover:text-[#0A0A0B] transition-colors inline-flex items-center gap-1.5 text-[14px] font-semibold pt-1">
                     <span>View All Services</span>
                     <span>→</span>
                   </Link>
@@ -227,27 +227,27 @@ export const Footer: React.FC = () => {
               </h3>
               <ul className="space-y-3 font-sans text-[15px] sm:text-[15.5px] font-medium text-white/90">
                 <li>
-                  <Link to="/privacy-policy" className="hover:text-[#0A0A0B] transition-colors block">
+                  <Link href="/privacy-policy" className="hover:text-[#0A0A0B] transition-colors block">
                     Privacy Policy
                   </Link>
                 </li>
                 <li>
-                  <Link to="/terms-of-service" className="hover:text-[#0A0A0B] transition-colors block">
+                  <Link href="/terms-of-service" className="hover:text-[#0A0A0B] transition-colors block">
                     Terms of Service
                   </Link>
                 </li>
                 <li>
-                  <Link to="/privacy-policy#cookies" className="hover:text-[#0A0A0B] transition-colors block">
+                  <Link href="/privacy-policy#cookies" className="hover:text-[#0A0A0B] transition-colors block">
                     Cookie Policy
                   </Link>
                 </li>
                 <li>
-                  <Link to="/terms-of-service#security" className="hover:text-[#0A0A0B] transition-colors block">
+                  <Link href="/terms-of-service#security" className="hover:text-[#0A0A0B] transition-colors block">
                     Security & SLA
                   </Link>
                 </li>
                 <li>
-                  <Link to="/contact" className="hover:text-[#0A0A0B] transition-colors block">
+                  <Link href="/contact" className="hover:text-[#0A0A0B] transition-colors block">
                     Compliance Audit
                   </Link>
                 </li>
@@ -346,10 +346,10 @@ export const Footer: React.FC = () => {
           <p>© 2026 All Rights Reserved by AlphaLinkx.</p>
 
           <div className="flex items-center gap-6">
-            <Link to="/privacy-policy" className="hover:text-white transition-colors">
+            <Link href="/privacy-policy" className="hover:text-white transition-colors">
               Privacy
             </Link>
-            <Link to="/terms-of-service" className="hover:text-white transition-colors">
+            <Link href="/terms-of-service" className="hover:text-white transition-colors">
               Terms
             </Link>
             <button

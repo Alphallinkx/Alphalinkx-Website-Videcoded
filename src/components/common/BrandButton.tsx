@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 
 export type BrandButtonVariant = 'orange' | 'white' | 'black';
@@ -104,7 +104,7 @@ export const BrandButton: React.FC<BrandButtonProps> = ({
   if ('to' in rest && rest.to !== undefined) {
     return (
       <Link
-        to={rest.to}
+        href={rest.to}
         onClick={onClick}
         aria-label={ariaLabel}
         data-cursor={dataCursor}

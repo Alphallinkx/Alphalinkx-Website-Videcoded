@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef, useEffect, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { motion, useReducedMotion } from 'motion/react';
 import { DIAGNOSIS_CARDS, type DiagnosisCardItem } from '../../content/siteContent';
 import { BrandButton } from '../common/BrandButton';
@@ -641,7 +641,7 @@ export const DiagnosisSection: React.FC = () => {
             <p className="font-sans text-[16px] text-[#A1A1AA] leading-[1.6] mt-3 sm:mt-4 font-normal whitespace-normal xl:whitespace-nowrap">
               Recognise any of these challenges? Here’s where growth can get held back.{' '}
               <Link
-                to="/services"
+                href="/services"
                 className="inline-flex items-center gap-1 font-mono text-[12px] sm:text-[13px] font-semibold text-[#FC6603] hover:text-[#FF8833] transition-colors duration-200 underline underline-offset-4 decoration-[#FC6603]/40 hover:decoration-[#FC6603] whitespace-nowrap ml-1 group/link"
               >
                 <span>View our services</span>

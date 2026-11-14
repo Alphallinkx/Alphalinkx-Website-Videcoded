@@ -4,7 +4,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ProjectItem } from '../../types';
 import { X, ExternalLink, CheckCircle2, Layers } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { BrandButton } from './BrandButton';
 
 interface ProjectModalProps {
@@ -138,7 +138,7 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           {/* Footer Action */}
           <div className="px-6 py-4 border-t border-white/10 bg-black/60 flex items-center justify-between">
             <Link
-              to={`/projects/${project.slug}`}
+              href={`/projects/${project.slug}`}
               onClick={onClose}
               className="text-xs font-medium text-[#FC6603] hover:underline"
             >

@@ -3,7 +3,7 @@
 import React, { type ReactNode } from "react";
 import { motion, useMotionValue, useSpring, useReducedMotion } from "motion/react";
 import { ArrowUpRight } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import { BRAND_BUTTON_BASE_CLASS } from "./BrandButton";
 
 export const ease = [0.22, 1, 0.36, 1] as const;
@@ -69,7 +69,7 @@ export function MagneticButton({
   className?: string;
   dataCursor?: string;
 }) {
-  const navigate = useNavigate();
+  const router = useRouter();
   const reduce = useReducedMotion();
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -104,7 +104,7 @@ export function MagneticButton({
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (isInternalRoute) {
       e.preventDefault();
-      navigate(href);
+      router.push(href);
     }
   };
 

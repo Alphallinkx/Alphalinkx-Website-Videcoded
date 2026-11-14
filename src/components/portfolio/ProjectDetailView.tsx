@@ -1,20 +1,19 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { fetchProjectBySlug } from '../lib/api';
-import { ProjectItem } from '../types';
-import { BrandButton } from '../components/common/BrandButton';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
+import { fetchProjectBySlug } from '@/lib/api';
+import { ProjectItem } from '@/types';
+import { BrandButton } from '@/components/common/BrandButton';
 import {
   ArrowLeft,
   CheckCircle2,
-  ExternalLink,
-  Layers,
-  Sparkles,
 } from 'lucide-react';
 
-export const ProjectDetailPage: React.FC = () => {
-  const { slug } = useParams<{ slug: string }>();
+export function ProjectDetailView() {
+  const params = useParams();
+  const slug = params?.slug as string | undefined;
   const [project, setProject] = useState<ProjectItem | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -46,7 +45,7 @@ export const ProjectDetailPage: React.FC = () => {
         <h2 className="text-3xl font-display font-bold text-white">Project Not Found</h2>
         <p className="text-zinc-400 mt-2 mb-6 text-sm">The case study you requested could not be located.</p>
         <Link
-          to="/projects"
+          href="/projects"
           className="px-6 py-2.5 rounded-full text-xs font-semibold text-white bg-[#FC6603]"
         >
           View All Projects
@@ -61,7 +60,7 @@ export const ProjectDetailPage: React.FC = () => {
         {/* Back Link */}
         <div className="mb-8">
           <Link
-            to="/projects"
+            href="/projects"
             className="inline-flex items-center gap-2 font-mono text-[12px] font-medium tracking-[0.18em] uppercase text-zinc-400 hover:text-white transition-colors"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
@@ -192,4 +191,4 @@ export const ProjectDetailPage: React.FC = () => {
       </div>
     </div>
   );
-};
+}

@@ -1,42 +1,12 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import { motion, type Variants } from 'motion/react';
+import { motion } from 'motion/react';
 import { Phone, Mail, ArrowUp } from 'lucide-react';
 import { BRAND } from '../../content/siteContent';
 
-const WORDMARK_LETTERS = ['A', 'L', 'P', 'H', 'A', 'L', 'I', 'N', 'K', 'X'] as const;
-
-const letterVariants: Variants = {
-  hidden: {
-    y: '125%',
-  },
-  visible: (index: number) => ({
-    y: '0%',
-    transition: {
-      duration: 0.85,
-      ease: [0.16, 1, 0.3, 1],
-      delay: index * 0.04,
-    },
-  }),
-  animating: (index: number) => ({
-    y: ['0%', '125%', '125%', '0%'],
-    transition: {
-      duration: 1.35,
-      times: [0, 0.38, 0.45, 1],
-      ease: ['easeInOut', 'linear', [0.16, 1, 0.3, 1]] as any,
-      repeat: Infinity,
-      repeatDelay: 0.5,
-      delay: index * 0.045,
-    },
-  }),
-};
-
 export const Footer: React.FC = () => {
-  const [isHovered, setIsHovered] = useState(false);
-  const wordmarkRef = useRef<HTMLDivElement>(null);
-
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -323,42 +293,21 @@ export const Footer: React.FC = () => {
 
       {/* =========================================================================
           GIANT BOTTOM ARCHITECTURAL WORDMARK: "ALPHALINKX"
-          - Full-bleed edge-to-edge massive typography
-          - Pure white letters without black mouse-hover mask
-          - Masked letter-by-letter drop & rise kinetic animation
-            ("going down as it hiding, coming from the down with upward motion")
+          - Full-bleed edge-to-edge massive typography (inspired by reference "TWO 26")
+          - Solid pure white text with smooth entrance animation
          ========================================================================= */}
-      <div
-        ref={wordmarkRef}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-        className="relative z-10 w-full select-none pt-4 sm:pt-6 md:pt-8 pb-8 sm:pb-12 md:pb-16 px-2 sm:px-4 flex items-center justify-center cursor-pointer"
-        data-cursor="ALPHALINKX"
-      >
-        <div className="w-full flex items-center justify-center overflow-hidden">
-          <h2
-            className="w-full text-center font-display font-black text-[13.5vw] sm:text-[14.5vw] md:text-[15.2vw] lg:text-[15.8vw] leading-[0.88] tracking-[-0.04em] uppercase select-none text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.18)] whitespace-nowrap flex items-center justify-center"
-          >
-            {WORDMARK_LETTERS.map((char, index) => (
-              <span
-                key={index}
-                className="relative inline-flex overflow-hidden pb-2 pt-1 leading-[0.88]"
-              >
-                <motion.span
-                  className="inline-block will-change-transform text-white select-none"
-                  custom={index}
-                  initial="hidden"
-                  whileInView={isHovered ? undefined : 'visible'}
-                  viewport={{ once: true, amount: 0.2 }}
-                  animate={isHovered ? 'animating' : 'visible'}
-                  variants={letterVariants}
-                >
-                  {char}
-                </motion.span>
-              </span>
-            ))}
+      <div className="relative z-10 w-full overflow-hidden select-none pt-2 sm:pt-4 pb-4 sm:pb-8 px-2 sm:px-4 flex items-center justify-center cursor-default">
+        <motion.div
+          initial={{ opacity: 0, y: 40, scale: 0.97 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          className="w-full flex items-center justify-center"
+        >
+          <h2 className="w-full text-center font-display font-black text-[13.5vw] sm:text-[14.5vw] md:text-[15.2vw] lg:text-[15.8vw] leading-[0.76] tracking-[-0.04em] uppercase select-none text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.12)] whitespace-nowrap">
+            ALPHALINKX
           </h2>
-        </div>
+        </motion.div>
       </div>
 
       {/* =========================================================================

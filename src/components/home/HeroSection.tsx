@@ -143,46 +143,26 @@ export const HeroSection: React.FC = () => {
         {/* Main Prominent Headline with Cinematic Mask Reveal (Bricolage Grotesque 800, tracking: -0.03em, leading: 1.02) */}
         <h1 className="font-display font-extrabold text-[clamp(2.85rem,8.5vw,6.25rem)] text-white tracking-[-0.03em] uppercase leading-[1.05] sm:leading-[1.02] drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)] flex flex-col items-center text-center w-full">
           <span className="block overflow-hidden py-1 sm:py-1.5">
-            <motion.span
-              initial={{ y: '115%', opacity: 0 }}
-              animate={{ y: '0%', opacity: 1 }}
-              transition={{ duration: 0.95, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-              className="block sm:whitespace-nowrap will-change-transform"
-            >
+            <span className="block sm:whitespace-nowrap will-change-transform">
               BE THE <span className="text-[#FC6603]">ALPHA</span>
-            </motion.span>
+            </span>
           </span>
           <span className="block overflow-hidden py-1 sm:py-1.5">
-            <motion.span
-              initial={{ y: '115%', opacity: 0 }}
-              animate={{ y: '0%', opacity: 1 }}
-              transition={{ duration: 0.95, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-              className="block sm:whitespace-nowrap mt-1 sm:mt-2 text-white will-change-transform"
-            >
+            <span className="block sm:whitespace-nowrap mt-1 sm:mt-2 text-white will-change-transform">
               IN YOUR MARKET.
-            </motion.span>
+            </span>
           </span>
         </h1>
 
         {/* Clear, Prominent Value Proposition Subtext (Schibsted Grotesk, 17px-20px, text-white, line-height: 1.6) */}
-        <motion.div
-          initial={{ opacity: 0, y: 32, filter: 'blur(8px)' }}
-          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          transition={{ duration: 0.85, delay: 0.55, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-6 sm:mt-8 max-w-xl sm:max-w-2xl md:max-w-3xl mx-auto px-2 sm:px-4"
-        >
+        <div className="mt-6 sm:mt-8 max-w-xl sm:max-w-2xl md:max-w-3xl mx-auto px-2 sm:px-4">
           <p className="text-[17px] sm:text-[19px] md:text-[20px] text-white font-normal font-sans leading-[1.6] drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)]">
             Your competitors are taking the customers that should be yours. We change that. We manage your growth and turn yours into an awesome business the first name in your market that people find, trust, and choose.
           </p>
-        </motion.div>
+        </div>
 
-        {/* Two CTAs with Staggered Scale-Up Reveal */}
-        <motion.div
-          initial={{ opacity: 0, y: 24, scale: 0.94 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.75, delay: 0.75, ease: [0.16, 1, 0.3, 1] }}
-          className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-4"
-        >
+        {/* Two CTAs */}
+        <div className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-4">
           <MagneticButton
             href="/contact"
             variant="primary"
@@ -198,14 +178,11 @@ export const HeroSection: React.FC = () => {
           >
             See Our Work
           </MagneticButton>
-        </motion.div>
+        </div>
       </motion.div>
 
-      {/* 06. Interactive Bottom Bar: Clickable "Unlink & Explore" CTA with Entrance Reveal (JetBrains Mono 500, 12px, tracking: 0.18em) */}
+      {/* 06. Interactive Bottom Bar: Clickable "Unlink & Explore" CTA (JetBrains Mono 500, 12px, tracking: 0.18em) */}
       <motion.div
-        initial={{ opacity: 0, y: 16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.95, ease: [0.16, 1, 0.3, 1] }}
         style={{ opacity: bottomOpacity }}
         className="relative z-10 w-full flex items-center justify-center font-mono text-[12px] font-medium text-[#8A8A8E] tracking-[0.18em] uppercase"
       >

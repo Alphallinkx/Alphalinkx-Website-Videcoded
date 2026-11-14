@@ -8,4 +8,5 @@ dist
 .npm-cache
 
 .next
+*.tsbuildinfo
 next-env.d.ts

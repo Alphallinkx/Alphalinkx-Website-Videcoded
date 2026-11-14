@@ -10,13 +10,7 @@ interface PreloaderProps {
 export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
   const [progress, setProgress] = useState(0);
   const [currentLineIndex, setCurrentLineIndex] = useState(0);
-  const [isFinished, setIsFinished] = useState<boolean>(() => {
-    if (typeof window === 'undefined') return true;
-    const hasLoadedBefore = sessionStorage.getItem('alphalinkx_preloader_seen');
-    const hasNoPreloaderParam = window.location.search.includes('no-preloader');
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    return Boolean(hasLoadedBefore || hasNoPreloaderParam || prefersReducedMotion);
-  });
+  const [isFinished, setIsFinished] = useState<boolean>(true);
 
   const lines = [
     '> linking nodes…',
@@ -28,14 +22,19 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
   useEffect(() => {
     // Check if user already saw preloader in this session to avoid annoyance on quick refreshes
     const hasLoadedBefore = sessionStorage.getItem('alphalinkx_preloader_seen');
+    const hasNoPreloaderParam = window.location.search.includes('no-preloader');
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (prefersReducedMotion || hasLoadedBefore) {
+    if (prefersReducedMotion || hasLoadedBefore || hasNoPreloaderParam) {
       setIsFinished(true);
       onComplete?.();
       return;
     }
 
+    // Only display preloader if not seen yet in this session
+    setIsFinished(false);
+
+    // Fast, responsive loading sequence (~300ms)
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
@@ -44,12 +43,12 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
             setIsFinished(true);
             sessionStorage.setItem('alphalinkx_preloader_seen', 'true');
             onComplete?.();
-          }, 600);
+          }, 250);
           return 100;
         }
 
         // Advance line according to progress
-        const next = prev + Math.floor(Math.random() * 8) + 3;
+        const next = prev + Math.floor(Math.random() * 14) + 8;
         const boundedNext = Math.min(next, 100);
 
         if (boundedNext > 75) setCurrentLineIndex(3);
@@ -58,7 +57,7 @@ export const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
 
         return boundedNext;
       });
-    }, 45);
+    }, 22);
 
     return () => clearInterval(interval);
   }, [onComplete]);

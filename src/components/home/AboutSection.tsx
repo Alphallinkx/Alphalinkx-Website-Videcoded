@@ -1,9 +1,17 @@
 'use client';
 
 import React from 'react';
+import dynamic from 'next/dynamic';
 import { Link } from 'react-router-dom';
-import { TechConstellation3D } from '../3d/TechConstellation3D';
 import { ArrowRight, Code2, Sparkles, Cpu, Layers } from 'lucide-react';
+
+const TechConstellation3D = dynamic(
+  () => import('../3d/TechConstellation3D').then((m) => m.TechConstellation3D),
+  {
+    ssr: false,
+    loading: () => <div className="w-full h-full bg-transparent" />,
+  }
+);
 
 export const AboutSection: React.FC = () => {
   const pillars = [

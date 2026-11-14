@@ -124,18 +124,24 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <>
-      <SmoothScrollManager />
-      {/* 01. Terminal Preloader with Curtain Split */}
-      <Preloader />
+      {mounted && (
+        <>
+          {/* Smooth momentum scrolling manager */}
+          <SmoothScrollManager />
 
-      {/* 02. Subtle Film-Grain Noise Overlay */}
-      <GrainOverlay />
+          {/* 01. Terminal Preloader with Curtain Split */}
+          <Preloader />
 
-      {/* 03. Thin Orange Top Scroll Progress Line */}
-      <ScrollProgressBar />
+          {/* 02. Subtle Film-Grain Noise Overlay */}
+          <GrainOverlay />
 
-      {/* 04. Custom Cursor with Lerp Ring and Context Labels */}
-      <CustomCursor />
+          {/* 03. Thin Orange Top Scroll Progress Line */}
+          <ScrollProgressBar />
+
+          {/* 04. Custom Cursor with Lerp Ring and Context Labels */}
+          <CustomCursor />
+        </>
+      )}
 
       <div className="flex flex-col min-h-screen bg-[#0A0A0B] text-[#F5F5F4] antialiased selection:bg-[#FF5A1F] selection:text-black">
         <Navbar />

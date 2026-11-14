@@ -1,11 +1,19 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
+import dynamic from 'next/dynamic';
 import { motion, useScroll, useTransform } from 'motion/react';
-import { HeroScene3D } from '../3d/HeroScene3D';
 import { HeroParticles } from './HeroParticles';
 import { HeroSocialBar } from './HeroSocialBar';
 import { Reveal, MaskLine, MagneticButton } from '../common/MotionComponents';
+
+// Dynamic import with ssr: false for lightning-fast initial load & zero hydration issues
+const HeroScene3D = dynamic(() => import('../3d/HeroScene3D'), {
+  ssr: false,
+  loading: () => (
+    <div className="absolute inset-0 w-full h-full pointer-events-none select-none z-[2] bg-transparent" />
+  ),
+});
 
 export const HeroSection: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);

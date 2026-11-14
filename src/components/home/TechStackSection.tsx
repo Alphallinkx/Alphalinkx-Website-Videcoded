@@ -1,8 +1,16 @@
 'use client';
 
 import React from 'react';
-import { TechConstellation3D } from '../3d/TechConstellation3D';
+import dynamic from 'next/dynamic';
 import { Cpu, Terminal, Shield, Zap } from 'lucide-react';
+
+const TechConstellation3D = dynamic(
+  () => import('../3d/TechConstellation3D').then((m) => m.TechConstellation3D),
+  {
+    ssr: false,
+    loading: () => <div className="w-full h-full bg-transparent" />,
+  }
+);
 
 export const TechStackSection: React.FC = () => {
   const techCategories = [

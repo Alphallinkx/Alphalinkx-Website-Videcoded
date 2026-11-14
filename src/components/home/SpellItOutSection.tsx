@@ -1,10 +1,18 @@
 'use client';
 
 import React, { useRef, useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { SPELL_IT_OUT_PANELS } from '../../content/siteContent';
-import { LetterIcon3D } from '../3d/LetterIcon3D';
+
+const LetterIcon3D = dynamic(
+  () => import('../3d/LetterIcon3D').then((m) => m.LetterIcon3D),
+  {
+    ssr: false,
+    loading: () => <div className="w-full h-full bg-transparent" />,
+  }
+);
 
 gsap.registerPlugin(ScrollTrigger);
 

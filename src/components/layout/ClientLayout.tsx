@@ -5,8 +5,6 @@ import { usePathname } from 'next/navigation';
 import Lenis from 'lenis';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
-import { CustomCursor } from '../common/CustomCursor';
-import { Preloader } from '../common/Preloader';
 import { GrainOverlay } from '../common/GrainOverlay';
 import { ScrollProgressBar } from '../common/ScrollProgressBar';
 
@@ -129,17 +127,11 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
           {/* Smooth momentum scrolling manager */}
           <SmoothScrollManager />
 
-          {/* 01. Terminal Preloader with Curtain Split */}
-          <Preloader />
-
-          {/* 02. Subtle Film-Grain Noise Overlay */}
+          {/* 01. Subtle Film-Grain Noise Overlay */}
           <GrainOverlay />
 
-          {/* 03. Thin Orange Top Scroll Progress Line */}
+          {/* 02. Thin Orange Top Scroll Progress Line */}
           <ScrollProgressBar />
-
-          {/* 04. Custom Cursor with Lerp Ring and Context Labels */}
-          <CustomCursor />
         </>
       )}
 

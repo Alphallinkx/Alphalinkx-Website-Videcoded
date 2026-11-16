@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { SERVICE_CATEGORIES, BRAND } from '../../content/siteContent';
-import { BrandButton } from '../common/BrandButton';
+import { Two26Button } from '../common/Two26Button';
 
 export const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -196,14 +196,13 @@ export const Navbar: React.FC = () => {
 
           {/* CTA Right (Desktop) & Mobile Hamburger */}
           <div className="flex items-center gap-4">
-            <BrandButton
+            <Two26Button
               to="/contact"
               variant="black"
-              dataCursor="CONNECT"
               className="hidden sm:inline-flex"
             >
               Let&apos;s Talk
-            </BrandButton>
+            </Two26Button>
 
             {/* Mobile hamburger */}
             <button
@@ -295,13 +294,13 @@ export const Navbar: React.FC = () => {
                   We unite web engineering, AI answer optimization, and paid acquisition into one compounding machine.
                 </p>
               </div>
-              <BrandButton
+              <Two26Button
                 to="/contact"
                 variant="black"
                 onClick={() => setIsMegaMenuOpen(false)}
               >
                 Request Growth Audit
-              </BrandButton>
+              </Two26Button>
             </div>
           </div>
         </div>
@@ -370,15 +369,14 @@ export const Navbar: React.FC = () => {
           </div>
 
           <div className="pt-8 border-t border-[#DAD1CC] flex flex-col gap-4">
-            <BrandButton
+            <Two26Button
               to="/contact"
               variant="black"
-              dataCursor="CONNECT"
               onClick={() => setIsMobileMenuOpen(false)}
               className="w-full justify-between"
             >
               Let&apos;s Talk
-            </BrandButton>
+            </Two26Button>
             <div className="flex items-center justify-between font-mono text-[12px] font-medium text-[#555555] tracking-[0.18em]">
               <span>{BRAND.email}</span>
               <span>{BRAND.est}</span>

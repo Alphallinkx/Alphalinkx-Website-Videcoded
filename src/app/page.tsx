@@ -1,56 +1,40 @@
 'use client';
 
 import React from 'react';
-import { HeroSection } from '@/components/home/HeroSection';
-import { ServicesTicker } from '@/components/home/ServicesTicker';
-import { DiagnosisSection } from '@/components/home/DiagnosisSection';
-import { ChainSection } from '@/components/home/ChainSection';
-import { ClientLogoMarquee } from '@/components/home/ClientLogoMarquee';
-import { HowWeWorkSection } from '@/components/home/HowWeWorkSection';
-import { SelectedWorkSection } from '@/components/home/SelectedWorkSection';
-import { StatsSection } from '@/components/home/StatsSection';
-import { WhyChooseAlphaLinkxSection } from '@/components/home/WhyChooseAlphaLinkxSection';
-import { TestimonialsCarousel } from '@/components/home/TestimonialsCarousel';
-import { FaqSection } from '@/components/home/FaqSection';
+import { Two26Hero } from '@/components/two26/Two26Hero';
+import { Two26AboutPinned } from '@/components/two26/Two26AboutPinned';
+import { Two26ShowcaseSlider } from '@/components/two26/Two26ShowcaseSlider';
+import { Two26Projects } from '@/components/two26/Two26Projects';
+import { Two26Services } from '@/components/two26/Two26Services';
+import { Two26Testimonials } from '@/components/two26/Two26Testimonials';
+import { Two26Faq } from '@/components/two26/Two26Faq';
 import { InquirySection } from '@/components/home/InquirySection';
 
 export default function HomePage() {
   return (
     <main className="w-full bg-[#F8EEE8] text-[#000000] overflow-x-clip selection:bg-[#FF5400] selection:text-white">
-      {/* 01. HERO: "Growth, Linked." (3D Centerpiece + Rotating Word + Meta Row) */}
-      <HeroSection />
+      {/* 01. HERO: Looking Suspiciously Good -> BE THE ALPHA IN YOUR MARKET */}
+      <Two26Hero />
 
-      {/* 02. SERVICES TICKER: Dual infinite marquees tilted -3° with velocity skew */}
-      <ServicesTicker />
+      {/* 02. ABOUT PINNED: Kinetic letter scrub + floating stickers */}
+      <Two26AboutPinned />
 
-      {/* 03. THE DIAGNOSIS: "Where is your growth chain breaking?" (6 Cards in 1 Row) */}
-      <DiagnosisSection />
+      {/* 03. SHOWCASE SLIDER: Full-bleed infinite horizontal marquee */}
+      <Two26ShowcaseSlider />
 
-      {/* 04. THE CHAIN: "Four links. One stronger customer journey." (Alternating Timeline + Progress Line) */}
-      <ChainSection />
+      {/* 04. SELECTED PROJECTS: Vertical cards with scroll clip-mask reveal */}
+      <Two26Projects />
 
-      {/* 05. CLIENT LOGO MARQUEE: Trusted by grayscale to orange-white hover */}
-      <ClientLogoMarquee />
+      {/* 05. CORE CAPABILITIES: What we do best with interactive expansion */}
+      <Two26Services />
 
-      {/* 06. HOW WE WORK: "FOUR LEVELS. ONE CLIMB." (3D Diagonal Staircase Climb) */}
-      <HowWeWorkSection />
+      {/* 06. TESTIMONIALS: 3D stacked card deck with organic rotation & shuffle */}
+      <Two26Testimonials />
 
-      {/* 07. SELECTED WORK: Asymmetric 2-column parallax with video hover preview */}
-      <SelectedWorkSection />
+      {/* 07. FAQ: Things you might ask with dual magnetic offset */}
+      <Two26Faq />
 
-      {/* 08. STATS: Results, not fluff (Count-up numbers + witty one-liners) */}
-      <StatsSection />
-
-      {/* 09. WHY CHOOSE ALPHALINKX: "Built to turn visibility into measurable momentum." */}
-      <WhyChooseAlphaLinkxSection />
-
-      {/* 10. TESTIMONIALS: 3D tilt cards with DRAG cursor */}
-      <TestimonialsCarousel />
-
-      {/* 11. FAQ: Smooth accordion with rotating "+" icon */}
-      <FaqSection />
-
-      {/* 12. BIG CTA + MULTI-STEP CONTACT FORM: "LET'S LINK UP." + Chip selections */}
+      {/* 08. MULTI-STEP KICKOFF INQUIRY SPRINT */}
       <InquirySection />
     </main>
   );

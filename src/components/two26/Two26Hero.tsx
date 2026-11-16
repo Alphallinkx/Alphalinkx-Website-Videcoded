@@ -138,7 +138,7 @@ export const Two26Hero: React.FC = () => {
             loop
             muted
             playsInline
-            poster="/assets/hero-loop-poster.jpg"
+            poster="https://cdn.prod.website-files.com/6a7d9d7d7c99784ba2cac874/6a7db9b17a581584f4171aad_Hero_poster.0000000.jpg"
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
           >
             <source src="https://cdn.prod.website-files.com/6aaad679fdb9d914f7f52049/6aaad679fdb9d914f7f52055_Hero_mp4.mp4" type="video/mp4" />

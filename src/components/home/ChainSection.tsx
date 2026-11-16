@@ -146,11 +146,11 @@ export const ChainSection: React.FC = () => {
         <div className="chain-sticky-head">
           <div className="wrap">
             <motion.div
-              initial={prefersReduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 22 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15 }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-              className="sec-head center transform-gpu"
+              initial={prefersReduced ? { opacity: 1, y: 0, filter: 'blur(0px)' } : { opacity: 0, y: 32, filter: 'blur(6px)' }}
+              whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+              className="sec-head center"
             >
               <span className="label">// The Chain</span>
               <h2 id="chain-heading">

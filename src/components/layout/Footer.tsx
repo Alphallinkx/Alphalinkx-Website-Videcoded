@@ -74,11 +74,11 @@ export const Footer: React.FC = () => {
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 pt-20 sm:pt-24 pb-10 sm:pb-14">
         {/* Navigation Grid (Brand Column + 4 Ordered Link Columns) */}
         <motion.div
-          initial={{ opacity: 0, y: 22 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 32, filter: 'blur(6px)' }}
+          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-10 xl:gap-14 pb-16 sm:pb-20 border-b border-white/20 items-start transform-gpu"
+          transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-10 xl:gap-14 pb-16 sm:pb-20 border-b border-white/20 items-start"
         >
           
           {/* =========================================================================
@@ -304,11 +304,11 @@ export const Footer: React.FC = () => {
          ========================================================================= */}
       <div className="relative z-10 w-full overflow-hidden select-none pt-2 sm:pt-4 pb-4 sm:pb-8 px-2 sm:px-4 flex items-center justify-center cursor-default">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="w-full flex items-center justify-center transform-gpu"
+          initial={{ opacity: 0, y: 40, scale: 0.97 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+          className="w-full flex items-center justify-center"
         >
           <h2 className="w-full text-center font-display font-black text-[13.5vw] sm:text-[14.5vw] md:text-[15.2vw] lg:text-[15.8vw] leading-[0.76] tracking-[-0.04em] uppercase select-none text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.12)] whitespace-nowrap">
             ALPHALINKX

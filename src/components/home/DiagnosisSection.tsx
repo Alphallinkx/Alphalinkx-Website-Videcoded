@@ -465,15 +465,15 @@ const DiagnosisCard: React.FC<DiagnosisCardProps> = ({ item, index }) => {
 
   return (
     <motion.div
-      initial={prefersReduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 22 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.1 }}
+      initial={prefersReduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 32, filter: 'blur(6px)' }}
+      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+      viewport={{ once: true, amount: 0.12 }}
       transition={{
-        duration: 0.55,
-        delay: prefersReduced ? 0 : index * 0.05,
+        duration: 0.8,
+        delay: prefersReduced ? 0 : index * 0.08,
         ease: [0.16, 1, 0.3, 1],
       }}
-      className="h-full transform-gpu"
+      className="h-full"
     >
       <div
         ref={cardRef}
@@ -598,9 +598,9 @@ export const DiagnosisSection: React.FC = () => {
         style={
           noiseUrl
             ? {
-                backgroundImage: `url("${noiseUrl}")`,
-                backgroundRepeat: 'repeat',
-              }
+              backgroundImage: `url("${noiseUrl}")`,
+              backgroundRepeat: 'repeat',
+            }
             : undefined
         }
       />
@@ -616,11 +616,11 @@ export const DiagnosisSection: React.FC = () => {
         <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6 mb-10 sm:mb-12 md:mb-16">
           {/* Left Column: Mono Tag, Heading, and Single-Line Supporting Text with Inline Services Link */}
           <motion.div
-            initial={prefersReduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 22 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="flex-1 max-w-3xl xl:max-w-4xl transform-gpu"
+            initial={prefersReduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 32, filter: 'blur(6px)' }}
+            whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+            className="flex-1 max-w-3xl xl:max-w-4xl"
           >
             {/* Section Mono Label (JetBrains Mono) */}
             <div className="font-mono text-[11px] sm:text-[12px] font-semibold text-[#FC6603] uppercase tracking-[0.2em] mb-2.5 sm:mb-3 flex items-center gap-2">

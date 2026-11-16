@@ -102,11 +102,11 @@ export const StatsSection: React.FC = () => {
       <div className="relative z-10 max-w-[1360px] mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header: Centered & Compact spacing */}
         <motion.div
-          initial={{ opacity: 0, y: 32, filter: 'blur(6px)' }}
-          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-3xl mx-auto text-center mb-9 sm:mb-10 px-4"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-3xl mx-auto text-center mb-9 sm:mb-10 px-4 transform-gpu"
         >
           <div className="font-mono text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.22em] text-[#0A0A0B] mb-2 sm:mb-2.5">
             // 07 VERIFIED METRICS
@@ -132,15 +132,15 @@ export const StatsSection: React.FC = () => {
             return (
               <motion.div
                 key={idx}
-                initial={{ opacity: 0, y: 36, scale: 0.98, filter: 'blur(6px)' }}
-                whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
-                viewport={{ once: true, amount: 0.15 }}
+                initial={{ opacity: 0, y: 22 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.12 }}
                 transition={{
-                  duration: 0.85,
-                  delay: idx * 0.1,
+                  duration: 0.55,
+                  delay: idx * 0.07,
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                className="flex flex-col justify-between p-6 sm:p-7 rounded-[24px] bg-[#121214] border border-white/5 shadow-[0_16px_36px_rgba(0,0,0,0.32)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_22px_45px_rgba(0,0,0,0.45)] group h-full"
+                className="flex flex-col justify-between p-6 sm:p-7 rounded-[24px] bg-[#121214] border border-white/5 shadow-[0_16px_36px_rgba(0,0,0,0.32)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_22px_45px_rgba(0,0,0,0.45)] group h-full transform-gpu"
               >
                 <div>
                   {/* Top Row: Metric Value on left + Animated Icon on right */}

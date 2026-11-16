@@ -367,7 +367,11 @@ export const ClientLogoMarquee: React.FC = () => {
   );
 
   return (
-    <section
+    <motion.section
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       aria-label="Trusted by and infrastructure partners"
       className="relative py-3 sm:py-4 bg-[#FC6603] border-y border-black/10 overflow-hidden select-none [contain:layout_style_paint]"
     >
@@ -401,12 +405,8 @@ export const ClientLogoMarquee: React.FC = () => {
         />
 
         {/* Compositor-Accelerated Stream (2 sets: ~5,000px total) */}
-        <motion.div
+        <div
           ref={trackRef}
-          initial={{ opacity: 0, y: 14 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
           className="flex shrink-0 items-center will-change-transform py-1"
         >
           <div ref={set1Ref} className="flex shrink-0 items-center gap-6 sm:gap-8 md:gap-9 pr-6 sm:pr-8 md:pr-9">
@@ -416,9 +416,9 @@ export const ClientLogoMarquee: React.FC = () => {
           <div className="flex shrink-0 items-center gap-6 sm:gap-8 md:gap-9 pr-6 sm:pr-8 md:pr-9" aria-hidden="true">
             {PARTNER_LIST.map((partner) => renderPartnerLockup(partner, 's2'))}
           </div>
-        </motion.div>
+        </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

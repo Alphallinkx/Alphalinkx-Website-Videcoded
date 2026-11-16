@@ -77,11 +77,11 @@ export const FaqSection: React.FC = () => {
               LEFT COLUMN: FAQs Eyebrow + Exact Heading + Bigger, Prominent FAQs
              ========================================================================= */}
           <motion.div
-            initial={{ opacity: 0, y: 32, filter: 'blur(6px)' }}
-            whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            initial={{ opacity: 0, y: 22 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-7 flex flex-col"
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-7 flex flex-col transform-gpu"
           >
             {/* Eyebrow: // FAQ */}
             <div className="font-mono text-[11px] sm:text-[12px] font-bold text-[#0A0A0B] uppercase tracking-[0.22em] mb-2.5 flex items-center gap-2">
@@ -103,11 +103,11 @@ export const FaqSection: React.FC = () => {
                 return (
                   <motion.div
                     key={idx}
-                    initial={{ opacity: 0, y: 18 }}
+                    initial={{ opacity: 0, y: 14 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.1 }}
-                    transition={{ duration: 0.6, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
-                    className={`rounded-[18px] sm:rounded-[22px] transition-all duration-300 border ${
+                    transition={{ duration: 0.45, delay: idx * 0.04, ease: [0.16, 1, 0.3, 1] }}
+                    className={`rounded-[18px] sm:rounded-[22px] transition-all duration-300 border transform-gpu ${
                       isOpen
                         ? 'bg-[#16171B] border-white/20 shadow-xl'
                         : 'bg-[#121316] border-white/[0.08] hover:border-white/[0.16] hover:bg-[#15161A]'
@@ -163,11 +163,11 @@ export const FaqSection: React.FC = () => {
               RIGHT COLUMN: Sticky Discovery Booking Card Aligned with "Your questions."
              ========================================================================= */}
           <motion.div
-            initial={{ opacity: 0, y: 36, scale: 0.98, filter: 'blur(6px)' }}
-            whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-5 lg:pt-[28px] lg:self-stretch"
+            transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-5 lg:pt-[28px] lg:self-stretch transform-gpu"
           >
             <div className="lg:sticky lg:top-7">
               <div className="relative rounded-[26px] sm:rounded-[34px] p-6 sm:p-8 xl:p-10 bg-[#121316] border border-white/[0.08] shadow-[0_25px_60px_rgba(0,0,0,0.6)] overflow-hidden">

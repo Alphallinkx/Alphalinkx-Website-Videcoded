@@ -325,11 +325,11 @@ export const TestimonialsCarousel: React.FC = () => {
                 ZONE 2: INWARD SECTION INTRODUCTION & WRITE A REVIEW BUTTON
                ========================================================================= */}
             <motion.header
-              initial={{ opacity: 0, y: 32, filter: 'blur(6px)' }}
-              whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
-              className="lg:col-span-5 flex flex-col items-start pt-16 md:pt-0 pb-4 lg:pb-6 max-w-[480px]"
+              initial={{ opacity: 0, y: 22 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+              className="lg:col-span-5 flex flex-col items-start pt-16 md:pt-0 pb-4 lg:pb-6 max-w-[480px] transform-gpu"
             >
               {/* Eyebrow */}
               <p className="font-mono text-[11px] sm:text-[12px] font-semibold tracking-[0.2em] text-[#FC6603] uppercase mb-3.5 sm:mb-4">
@@ -364,10 +364,10 @@ export const TestimonialsCarousel: React.FC = () => {
              ========================================================================= */}
             <motion.div
               ref={reviewAreaRef}
-              initial={{ opacity: 0, y: 36, filter: 'blur(6px)' }}
-              whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
               role="region"
               aria-roledescription="carousel"
               aria-label="Client reviews"

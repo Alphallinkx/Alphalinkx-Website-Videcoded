@@ -12,10 +12,10 @@ export const smoothEase = [0.16, 1, 0.3, 1] as const;
 export function SmoothReveal({
   children,
   delay = 0,
-  y = 36,
-  duration = 0.85,
+  y = 22,
+  duration = 0.6,
   className = "",
-  amount = 0.15,
+  amount = 0.12,
 }: {
   children: ReactNode;
   delay?: number;
@@ -29,9 +29,9 @@ export function SmoothReveal({
 
   return (
     <motion.div
-      className={className}
-      initial={{ opacity: 0, y, filter: 'blur(6px)' }}
-      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+      className={`transform-gpu ${className}`}
+      initial={{ opacity: 0, y }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount }}
       transition={{ duration, ease: smoothEase, delay }}
     >
@@ -42,10 +42,10 @@ export function SmoothReveal({
 
 export function StaggerContainer({
   children,
-  stagger = 0.08,
-  delayChildren = 0.05,
+  stagger = 0.06,
+  delayChildren = 0.04,
   className = "",
-  amount = 0.15,
+  amount = 0.12,
 }: {
   children: ReactNode;
   stagger?: number;
@@ -58,7 +58,7 @@ export function StaggerContainer({
 
   return (
     <motion.div
-      className={className}
+      className={`transform-gpu ${className}`}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount }}
@@ -79,8 +79,8 @@ export function StaggerContainer({
 
 export function StaggerItem({
   children,
-  y = 32,
-  duration = 0.8,
+  y = 20,
+  duration = 0.55,
   className = "",
 }: {
   children: ReactNode;
@@ -93,13 +93,12 @@ export function StaggerItem({
 
   return (
     <motion.div
-      className={className}
+      className={`transform-gpu ${className}`}
       variants={{
-        hidden: { opacity: 0, y, filter: 'blur(6px)' },
+        hidden: { opacity: 0, y },
         visible: {
           opacity: 1,
           y: 0,
-          filter: 'blur(0px)',
           transition: { duration, ease: smoothEase },
         },
       }}

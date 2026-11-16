@@ -323,11 +323,11 @@ export const InquirySection: React.FC = () => {
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10">
         {/* Massive Headline with Mouse-Follow Gradient */}
         <motion.div
-          initial={{ opacity: 0, y: 32, filter: 'blur(6px)' }}
-          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          initial={{ opacity: 0, y: 22 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center mb-16"
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="text-center mb-16 transform-gpu"
         >
           <span className="font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-[#FF5A1F] block mb-3">
             // KICKOFF SPRINT
@@ -352,11 +352,11 @@ export const InquirySection: React.FC = () => {
         {/* Multi-Step Chip Selection Card with Interactive Mouse-Tracking Border Glow */}
         <motion.div
           ref={cardShellRef}
-          initial={{ opacity: 0, y: 36, scale: 0.98, filter: 'blur(6px)' }}
-          whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-3xl mx-auto rounded-3xl p-[1.5px] bg-white/10 shadow-2xl relative overflow-hidden"
+          transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          className="max-w-3xl mx-auto rounded-3xl p-[1.5px] bg-white/10 shadow-2xl relative overflow-hidden transform-gpu"
         >
           {/* Mouse-Tracking Luminous Orange Border Glow */}
           <div

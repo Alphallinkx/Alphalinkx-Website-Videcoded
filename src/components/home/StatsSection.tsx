@@ -83,7 +83,7 @@ export const StatsSection: React.FC = () => {
     <section
       ref={sectionRef}
       aria-label="Key Performance Statistics"
-      className="relative py-[80px] bg-[#FC6603] overflow-hidden"
+      className="relative py-[80px] bg-[#FF5400] overflow-hidden"
     >
       {/* Textured Orange Background Image Overlay */}
       <div
@@ -108,19 +108,19 @@ export const StatsSection: React.FC = () => {
           transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="max-w-3xl mx-auto text-center mb-9 sm:mb-10 px-4 transform-gpu"
         >
-          <div className="font-mono text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.22em] text-[#0A0A0B] mb-2 sm:mb-2.5">
+          <div className="font-mono text-[11px] sm:text-[12px] font-bold uppercase tracking-[0.22em] text-[#000000] mb-2 sm:mb-2.5">
             // 07 VERIFIED METRICS
           </div>
           <h2 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-[-0.03em] leading-[1.08] mt-2">
-            <span className="block text-[#0A0A0B]">Results backed by</span>
+            <span className="block text-[#000000]">Results backed by</span>
             <span className="block text-white">real measurement.</span>
           </h2>
-          <p className="font-sans text-[15px] sm:text-[16px] text-white/90 mt-3 sm:mt-3.5 max-w-2xl mx-auto leading-relaxed">
+          <p className="font-sans text-[15px] sm:text-[16px] text-black/80 font-medium mt-3 sm:mt-3.5 max-w-2xl mx-auto leading-relaxed">
             Every metric captured directly from production deployments and verified revenue pipelines.
           </p>
         </motion.div>
 
-        {/* 4 Cards Grid */}
+        {/* 4 Cards Grid - Two26 Surface Cream Cards on Orange Band */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 lg:gap-5 xl:gap-6">
           {STATS.map((stat, idx) => {
             const meta = STAT_META[idx] || {
@@ -140,34 +140,34 @@ export const StatsSection: React.FC = () => {
                   delay: idx * 0.07,
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                className="flex flex-col justify-between p-6 sm:p-7 rounded-[24px] bg-[#121214] border border-white/5 shadow-[0_16px_36px_rgba(0,0,0,0.32)] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_22px_45px_rgba(0,0,0,0.45)] group h-full transform-gpu"
+                className="flex flex-col justify-between p-6 sm:p-7 rounded-[24px] bg-[#FDF8F5] border border-[#DAD1CC] shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md group h-full transform-gpu"
               >
                 <div>
                   {/* Top Row: Metric Value on left + Animated Icon on right */}
                   <div className="flex items-center justify-between gap-3 mb-3.5 sm:mb-4">
                     <div className="flex items-baseline gap-0.5">
-                      <span className="font-display font-black text-4xl sm:text-[42px] lg:text-[40px] xl:text-[46px] text-white tracking-[-0.03em] leading-none tabular-nums">
+                      <span className="font-display font-black text-4xl sm:text-[42px] lg:text-[40px] xl:text-[46px] text-[#000000] tracking-[-0.03em] leading-none tabular-nums">
                         <CountUpNumber value={stat.number} start={isInView} />
                       </span>
                       {stat.suffix && (
-                        <span className="font-display font-black text-2xl sm:text-[28px] lg:text-[26px] xl:text-[32px] text-[#FC6603] leading-none ml-0.5">
+                        <span className="font-display font-black text-2xl sm:text-[28px] lg:text-[26px] xl:text-[32px] text-[#FF5400] leading-none ml-0.5">
                           {stat.suffix}
                         </span>
                       )}
                     </div>
 
-                    <div className="text-white/95 shrink-0 group-hover:scale-110 group-hover:text-white transition-all duration-300">
+                    <div className="text-[#FF5400] shrink-0 group-hover:scale-110 transition-transform duration-300">
                       <Icon className={`w-7 h-7 sm:w-8 sm:h-8 stroke-[2] ${meta.animClass}`} />
                     </div>
                   </div>
 
                   {/* Metric Label */}
-                  <h3 className="font-display font-bold text-[16px] sm:text-[17px] text-white tracking-tight leading-snug mb-2">
+                  <h3 className="font-display font-bold text-[16px] sm:text-[17px] text-[#000000] tracking-tight leading-snug mb-2">
                     {stat.label}
                   </h3>
 
                   {/* Metric Description */}
-                  <p className="font-sans text-[13px] sm:text-[13.5px] text-[#A1A1AA] leading-[1.5]">
+                  <p className="font-sans text-[13px] sm:text-[13.5px] text-[#333333] leading-[1.5]">
                     {stat.wittyCaption}
                   </p>
                 </div>

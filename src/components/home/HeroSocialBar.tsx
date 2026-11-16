@@ -95,7 +95,7 @@ export const HeroSocialBar: React.FC = () => {
       {/* 02. Premium "FOLLOW US" Micro Label */}
       <div className="group/label py-1 cursor-default">
         <span
-          className="font-mono text-[9.5px] font-medium tracking-[0.28em] text-[#9E9EA4] group-hover/label:text-[#FF5A1F] transition-colors duration-300 uppercase select-none whitespace-nowrap block drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)]"
+          className="font-mono text-[9.5px] font-medium tracking-[0.28em] text-[#555555] group-hover/label:text-[#FF5400] transition-colors duration-300 uppercase select-none whitespace-nowrap block"
           style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}
         >
           FOLLOW US
@@ -103,14 +103,11 @@ export const HeroSocialBar: React.FC = () => {
       </div>
 
       {/* 03. Connector Line to Dock */}
-      <div className="w-[1px] h-5 bg-gradient-to-b from-transparent via-white/15 to-[#FF5A1F]/60" />
+      <div className="w-[1px] h-5 bg-gradient-to-b from-transparent via-[#DAD1CC] to-[#FF5400]/60" />
 
       {/* 04. Frosted Glass Social Dock */}
       <div className="relative group">
-        {/* Subtle orange halo glow behind the dock */}
-        <div className="absolute -inset-1 rounded-full bg-gradient-to-b from-[#FF5A1F]/20 via-transparent to-[#FF5A1F]/15 blur-md pointer-events-none -z-10 opacity-70 group-hover:opacity-100 transition-opacity duration-500" />
-
-        <div className="flex flex-col items-center gap-2 p-1.5 rounded-full bg-[#0E0F14]/90 border border-white/15 backdrop-blur-2xl shadow-[0_12px_40px_rgba(0,0,0,0.85),0_0_24px_rgba(255,90,31,0.08),inset_0_1px_0_rgba(255,255,255,0.1)]">
+        <div className="flex flex-col items-center gap-2 p-1.5 rounded-full bg-[#FDF8F5]/90 border border-[#DAD1CC] backdrop-blur-2xl shadow-sm">
           {SOCIAL_ITEMS.map((item) => (
             <div key={item.id} className="relative">
               <a
@@ -121,7 +118,7 @@ export const HeroSocialBar: React.FC = () => {
                 onMouseLeave={() => setHoveredId(null)}
                 data-cursor="LINK"
                 aria-label={item.name}
-                className="group/btn relative flex items-center justify-center w-9 h-9 rounded-full bg-white/[0.04] hover:bg-[#FF5A1F]/20 border border-white/5 hover:border-[#FF5A1F]/70 text-[#9E9EA4] hover:text-[#FF5A1F] transition-all duration-300 hover:scale-110 active:scale-95 hover:shadow-[0_0_20px_rgba(255,90,31,0.5)]"
+                className="group/btn relative flex items-center justify-center w-9 h-9 rounded-full bg-transparent hover:bg-[#FF5400]/10 border border-transparent hover:border-[#FF5400]/40 text-[#555555] hover:text-[#FF5400] transition-all duration-200 hover:scale-105 active:scale-95"
               >
                 {item.svg}
               </a>
@@ -134,14 +131,14 @@ export const HeroSocialBar: React.FC = () => {
                     animate={{ opacity: 1, x: 0, scale: 1 }}
                     exit={{ opacity: 0, x: -6, scale: 0.94 }}
                     transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
-                    className="pointer-events-none absolute left-full top-1/2 -translate-y-1/2 ml-3.5 px-3 py-1.5 rounded-full bg-[#101015]/95 border border-[#FF5A1F]/40 backdrop-blur-xl shadow-[0_8px_25px_rgba(0,0,0,0.9),0_0_15px_rgba(255,90,31,0.25)] whitespace-nowrap z-30 flex items-center gap-2"
+                    className="pointer-events-none absolute left-full top-1/2 -translate-y-1/2 ml-3.5 px-3 py-1.5 rounded-full bg-[#000000] border border-[#000000] shadow-md whitespace-nowrap z-30 flex items-center gap-2"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#FF5A1F] shadow-[0_0_6px_#FF5A1F]" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#FF5400]" />
                     <span className="font-mono text-[10.5px] font-medium uppercase tracking-[0.18em] text-white">
                       {item.name}
                     </span>
                     {/* Tooltip caret arrow pointing back to dock */}
-                    <div className="absolute right-full top-1/2 -translate-y-1/2 border-4 border-transparent border-r-[#101015]" />
+                    <div className="absolute right-full top-1/2 -translate-y-1/2 border-4 border-transparent border-r-[#000000]" />
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -152,8 +149,8 @@ export const HeroSocialBar: React.FC = () => {
 
       {/* 05. Bottom Terminal Accent Line & Micro-Dot */}
       <div className="flex flex-col items-center gap-1.5">
-        <div className="w-[1px] h-7 bg-gradient-to-t from-transparent via-white/10 to-[#FF5A1F]/40" />
-        <div className="w-1 h-1 rounded-full bg-white/20" />
+        <div className="w-[1px] h-7 bg-gradient-to-t from-transparent via-[#DAD1CC] to-[#FF5400]/40" />
+        <div className="w-1.5 h-1.5 rounded-full bg-[#DAD1CC]" />
       </div>
     </motion.div>
   );

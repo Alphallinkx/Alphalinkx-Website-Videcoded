@@ -54,7 +54,7 @@ export const Footer: React.FC = () => {
     <footer
       role="contentinfo"
       aria-label="Site Footer"
-      className="relative bg-[#FC6603] text-white overflow-hidden select-none"
+      className="relative bg-[#FF5400] text-white overflow-hidden select-none"
     >
       {/* Static Textured Orange Background Image */}
       <div
@@ -74,8 +74,8 @@ export const Footer: React.FC = () => {
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10 pt-20 sm:pt-24 pb-10 sm:pb-14">
         {/* Navigation Grid (Brand Column + 4 Ordered Link Columns) */}
         <motion.div
-          initial={{ opacity: 0, y: 32, filter: 'blur(6px)' }}
-          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.15 }}
           transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-10 xl:gap-14 pb-16 sm:pb-20 border-b border-white/20 items-start"
@@ -115,7 +115,7 @@ export const Footer: React.FC = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={s.name}
-                    className="w-10 h-10 rounded-full border border-white/40 hover:border-white bg-white/10 hover:bg-white text-white hover:text-[#FC6603] flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm"
+                    className="w-10 h-10 rounded-full border border-white/40 hover:border-white bg-white/10 hover:bg-white text-white hover:text-[#FF5400] flex items-center justify-center transition-all duration-300 hover:scale-110 shadow-sm"
                   >
                     {s.svg}
                   </a>
@@ -260,7 +260,7 @@ export const Footer: React.FC = () => {
                   href={`tel:${BRAND.phone}`}
                   className="group flex items-center gap-3.5 text-left transition-transform hover:translate-x-1"
                 >
-                  <div className="w-11 h-11 rounded-full bg-white text-[#FC6603] flex items-center justify-center shrink-0 shadow-md group-hover:scale-105 transition-transform duration-200">
+                  <div className="w-11 h-11 rounded-full bg-white text-[#FF5400] flex items-center justify-center shrink-0 shadow-md group-hover:scale-105 transition-transform duration-200">
                     <Phone className="w-5 h-5 stroke-[2.25]" />
                   </div>
                   <div>
@@ -278,7 +278,7 @@ export const Footer: React.FC = () => {
                   href={`mailto:${BRAND.email}`}
                   className="group flex items-center gap-3.5 text-left transition-transform hover:translate-x-1"
                 >
-                  <div className="w-11 h-11 rounded-full bg-white text-[#FC6603] flex items-center justify-center shrink-0 shadow-md group-hover:scale-105 transition-transform duration-200">
+                  <div className="w-11 h-11 rounded-full bg-white text-[#FF5400] flex items-center justify-center shrink-0 shadow-md group-hover:scale-105 transition-transform duration-200">
                     <Mail className="w-5 h-5 stroke-[2.25]" />
                   </div>
                   <div className="min-w-0">
@@ -300,18 +300,18 @@ export const Footer: React.FC = () => {
       {/* =========================================================================
           GIANT BOTTOM ARCHITECTURAL WORDMARK: "ALPHALINKX"
           - Full-bleed edge-to-edge massive typography (inspired by reference "TWO 26")
-          - Solid pure white text with smooth entrance animation
+          - Solid pure white text with black "H" matching reference
          ========================================================================= */}
       <div className="relative z-10 w-full overflow-hidden select-none pt-2 sm:pt-4 pb-4 sm:pb-8 px-2 sm:px-4 flex items-center justify-center cursor-default">
         <motion.div
-          initial={{ opacity: 0, y: 40, scale: 0.97 }}
+          initial={{ opacity: 0, y: 32, scale: 0.98 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
           className="w-full flex items-center justify-center"
         >
           <h2 className="w-full text-center font-display font-black text-[13.5vw] sm:text-[14.5vw] md:text-[15.2vw] lg:text-[15.8vw] leading-[0.76] tracking-[-0.04em] uppercase select-none text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.12)] whitespace-nowrap">
-            ALPHALINKX
+            ALP<span className="text-[#000000]">H</span>ALINKX
           </h2>
         </motion.div>
       </div>
@@ -333,7 +333,7 @@ export const Footer: React.FC = () => {
             <button
               type="button"
               onClick={scrollToTop}
-              className="flex items-center gap-1.5 text-white hover:text-[#FF5A1F] transition-colors font-bold uppercase cursor-pointer"
+              className="flex items-center gap-1.5 text-white hover:text-[#FF5400] transition-colors font-bold uppercase cursor-pointer"
             >
               <span>Back to top</span>
               <ArrowUp className="w-3.5 h-3.5 stroke-[2.5]" />

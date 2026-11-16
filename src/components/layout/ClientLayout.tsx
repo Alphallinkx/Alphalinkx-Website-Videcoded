@@ -143,7 +143,7 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
         </>
       )}
 
-      <div className="flex flex-col min-h-screen bg-[#0A0A0B] text-[#F5F5F4] antialiased selection:bg-[#FF5A1F] selection:text-black">
+      <div className="flex flex-col min-h-screen bg-[#F8EEE8] text-[#000000] antialiased selection:bg-[#FF5400] selection:text-white">
         <Navbar />
 
         <div className="flex-1 flex flex-col">

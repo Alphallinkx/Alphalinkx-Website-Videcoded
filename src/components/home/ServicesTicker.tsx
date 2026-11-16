@@ -249,9 +249,9 @@ export const ServicesTicker: React.FC = () => {
             onClick={handleLinkClick}
             draggable={false}
             tabIndex={isFirst ? 0 : -1}
-            className="group/item inline-flex items-center gap-2.5 sm:gap-3 text-[22px] sm:text-[25px] font-display font-extrabold uppercase tracking-[-0.01em] text-white hover:text-[#FC6603] transition-all duration-200 select-none"
+            className="group/item inline-flex items-center gap-2.5 sm:gap-3 text-[22px] sm:text-[25px] font-display font-extrabold uppercase tracking-[-0.01em] text-[#000000] hover:text-[#FF5400] transition-colors duration-200 select-none"
           >
-            <span className="font-mono text-[12px] sm:text-[13px] font-semibold text-[#FC6603] px-2 py-0.5 rounded border border-[#FC6603]/35 bg-[#FC6603]/10 tracking-[0.08em] group-hover/item:bg-[#FC6603] group-hover/item:text-black transition-colors duration-200 pointer-events-none">
+            <span className="font-mono text-[12px] sm:text-[13px] font-semibold text-[#FF5400] px-2 py-0.5 rounded border border-[#FF5400]/30 bg-[#FF5400]/10 tracking-[0.08em] group-hover/item:bg-[#000000] group-hover/item:text-white transition-colors duration-200 pointer-events-none">
               {item.id}
             </span>
             <span className="whitespace-nowrap transition-colors pointer-events-none">
@@ -260,7 +260,7 @@ export const ServicesTicker: React.FC = () => {
           </a>
           <span
             aria-hidden="true"
-            className="inline-flex items-center mx-5 sm:mx-8 text-[#FC6603] font-mono font-bold text-[18px] sm:text-[21px] tracking-[0.18em] select-none opacity-85 pointer-events-none"
+            className="inline-flex items-center mx-5 sm:mx-8 text-[#FF5400] font-mono font-bold text-[18px] sm:text-[21px] tracking-[0.18em] select-none opacity-85 pointer-events-none"
           >
             //
           </span>
@@ -279,16 +279,10 @@ export const ServicesTicker: React.FC = () => {
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onPointerCancel={handlePointerCancel}
-      className={`relative py-[20px] bg-[#07080C] border-y border-white/[0.08] overflow-hidden select-none touch-pan-y ${
+      className={`relative py-[20px] bg-[#ECEAE5] border-y border-[#DAD1CC] overflow-hidden select-none touch-pan-y ${
         isDragging ? 'cursor-grabbing' : 'cursor-grab'
       }`}
     >
-      {/* Top Ambient Glow Line */}
-      <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-[#FC6603]/40 to-transparent pointer-events-none" />
-
-      {/* Central Ambient Radial Glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_60%_100%_at_50%_50%,rgba(252,102,3,0.05),transparent_75%)] pointer-events-none" />
-
       {/* Scrolling Track Container with Smooth Edge Gradient Masks */}
       <motion.div
         initial={{ opacity: 0 }}
@@ -306,9 +300,6 @@ export const ServicesTicker: React.FC = () => {
           {renderCapabilitySet('set3')}
         </div>
       </motion.div>
-
-      {/* Bottom Ambient Line */}
-      <div className="absolute bottom-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent pointer-events-none" />
     </section>
   );
 };

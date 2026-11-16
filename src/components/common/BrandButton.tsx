@@ -44,25 +44,25 @@ const VARIANT_CLASSES: Record<
   BrandButtonVariant,
   { container: string; badge: string; arrow: string }
 > = {
-  // Primary CTA (On dark/black backgrounds): Radiant theme orange pill with white circular badge & orange arrow
-  orange: {
-    container:
-      'bg-gradient-to-r from-[#FF5A1F] via-[#FF6926] to-[#FC6603] text-white shadow-[0_4px_24px_rgba(255,90,31,0.45)] hover:shadow-[0_6px_32px_rgba(255,90,31,0.7)] hover:brightness-105 focus-visible:ring-[#FF5A1F]',
-    badge: 'bg-white text-[#FC6603] shadow-[0_2px_8px_rgba(0,0,0,0.2)]',
-    arrow: 'text-[#FC6603]',
-  },
-  // Dark CTA (For orange, peach, cream, or light backgrounds): Deep black pill with theme orange circular badge & white arrow
+  // Primary CTA (Two26 signature black pill): Deep black with white text and vibrant accent badge
   black: {
     container:
-      'bg-[#0A0A0B] text-white border border-white/15 shadow-[0_6px_24px_rgba(0,0,0,0.45)] hover:bg-[#141416] hover:border-[#FF5A1F]/60 hover:shadow-[0_8px_28px_rgba(255,90,31,0.3)] focus-visible:ring-[#FF5A1F]',
-    badge: 'bg-[#FF5A1F] text-white shadow-[0_0_14px_rgba(255,90,31,0.5)]',
+      'bg-[#000000] text-white border border-[#000000] hover:bg-[#1A1A1A] hover:border-[#FF5400] hover:scale-[1.03] active:scale-[0.98] shadow-sm focus-visible:ring-[#FF5400]',
+    badge: 'bg-[#FF5400] text-white shadow-sm',
     arrow: 'text-white',
   },
-  // Light CTA (For dark or orange backgrounds where a white pill is desired): Crisp white pill with theme orange circular badge & white arrow
+  // Vibrant Brand Accent CTA: Warm vibrant Two26 orange pill
+  orange: {
+    container:
+      'bg-[#FF5400] text-white border border-[#FF5400] hover:bg-[#EB4D00] hover:scale-[1.03] active:scale-[0.98] shadow-sm focus-visible:ring-[#FF5400]',
+    badge: 'bg-white text-[#FF5400] shadow-sm',
+    arrow: 'text-[#FF5400]',
+  },
+  // Secondary Light / Surface CTA: Two26 surface cream pill with hairline border
   white: {
     container:
-      'bg-white text-[#0A0A0B] border border-white/20 shadow-[0_4px_20px_rgba(255,255,255,0.18)] hover:bg-[#F4F4F5] hover:shadow-[0_8px_26px_rgba(255,255,255,0.3)] focus-visible:ring-white',
-    badge: 'bg-[#FF5A1F] text-white shadow-[0_0_14px_rgba(255,90,31,0.45)]',
+      'bg-[#FDF8F5] text-[#000000] border border-[#DAD1CC] hover:bg-[#F3EEEB] hover:border-[#FF5400] hover:scale-[1.03] active:scale-[0.98] shadow-sm focus-visible:ring-[#000000]',
+    badge: 'bg-[#000000] text-white shadow-sm',
     arrow: 'text-white',
   },
 };

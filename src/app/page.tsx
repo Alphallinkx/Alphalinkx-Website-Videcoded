@@ -16,7 +16,7 @@ import { InquirySection } from '@/components/home/InquirySection';
 
 export default function HomePage() {
   return (
-    <main className="w-full bg-[#0A0A0B] text-[#F5F5F4] overflow-x-clip selection:bg-[#FF5A1F] selection:text-black">
+    <main className="w-full bg-[#F8EEE8] text-[#000000] overflow-x-clip selection:bg-[#FF5400] selection:text-white">
       {/* 01. HERO: "Growth, Linked." (3D Centerpiece + Rotating Word + Meta Row) */}
       <HeroSection />
 

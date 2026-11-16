@@ -68,7 +68,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: '#060709',
+  themeColor: '#F8EEE8',
   width: 'device-width',
   initialScale: 1,
 };
@@ -77,7 +77,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`dark ${bricolageGrotesque.variable} ${jetbrainsMono.variable} ${schibstedGrotesk.variable}`}
+      className={`${bricolageGrotesque.variable} ${jetbrainsMono.variable} ${schibstedGrotesk.variable}`}
     >
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -87,7 +87,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           rel="stylesheet"
         />
       </head>
-      <body className="bg-[#060709] text-[#F8FAFC] antialiased selection:bg-[#FC6603] selection:text-white min-h-screen">
+      <body className="bg-[#F8EEE8] text-[#000000] antialiased selection:bg-[#FF5400] selection:text-white min-h-screen">
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>

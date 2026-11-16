@@ -34,10 +34,10 @@ export const ChainTopoBackground: React.FC = () => {
 
           {/* Full-height subtle contour stroke gradient */}
           <linearGradient id="contour-fade" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#8A9BB5" stopOpacity="0.25" />
-            <stop offset="30%" stopColor="#8A9BB5" stopOpacity="0.28" />
-            <stop offset="70%" stopColor="#8A9BB5" stopOpacity="0.22" />
-            <stop offset="100%" stopColor="#8A9BB5" stopOpacity="0.16" />
+            <stop offset="0%" stopColor="#000000" stopOpacity="0.08" />
+            <stop offset="30%" stopColor="#000000" stopOpacity="0.09" />
+            <stop offset="70%" stopColor="#000000" stopOpacity="0.07" />
+            <stop offset="100%" stopColor="#000000" stopOpacity="0.05" />
           </linearGradient>
 
           {/* Left Flank Contour Paths (Starting at Y=0 on top edge) */}
@@ -75,7 +75,7 @@ export const ChainTopoBackground: React.FC = () => {
 
         {/* 2. Reduced Quantity of Animated Traveling Orange Lines (Only 2 on Left Flank) */}
         <g
-          stroke="#FC6603"
+          stroke="#FF5400"
           strokeWidth="2.2"
           strokeLinecap="round"
           fill="none"
@@ -87,7 +87,7 @@ export const ChainTopoBackground: React.FC = () => {
 
         {/* 3. Reduced Quantity of Animated Traveling Orange Lines (Only 2 on Right Flank) */}
         <g
-          stroke="#FC6603"
+          stroke="#FF5400"
           strokeWidth="2.2"
           strokeLinecap="round"
           fill="none"

@@ -55,44 +55,30 @@ export const FaqSection: React.FC = () => {
     <section
       id="faq"
       aria-label="Frequently Asked Questions"
-      className="relative py-20 bg-[#FC6603] overflow-clip"
+      className="relative py-20 bg-[#F8EEE8] border-b border-[#DAD1CC] overflow-clip"
     >
-      {/* Static Textured Orange Background Image (fixed height prevents zoom/shift when accordions expand) */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-x-0 top-0 h-[1550px] sm:h-[1350px] lg:h-[1150px] min-h-full pointer-events-none select-none overflow-hidden"
-      >
-        <img
-          src="/assets/faq-orange-bg.jpg"
-          alt=""
-          loading="lazy"
-          decoding="async"
-          className="w-full h-full object-cover object-top"
-        />
-      </div>
-
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-10 xl:gap-16 items-start">
           {/* =========================================================================
               LEFT COLUMN: FAQs Eyebrow + Exact Heading + Bigger, Prominent FAQs
              ========================================================================= */}
           <motion.div
-            initial={{ opacity: 0, y: 32, filter: 'blur(6px)' }}
-            whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-7 flex flex-col"
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="lg:col-span-7 flex flex-col transform-gpu"
           >
             {/* Eyebrow: // FAQ */}
-            <div className="font-mono text-[11px] sm:text-[12px] font-bold text-[#0A0A0B] uppercase tracking-[0.22em] mb-2.5 flex items-center gap-2">
+            <div className="font-mono text-[11px] sm:text-[12px] font-bold text-[#FF5400] uppercase tracking-[0.22em] mb-2.5 flex items-center gap-2">
               <span className="font-bold">//</span>
               <span className="tracking-[0.24em]">FAQ</span>
             </div>
 
-            {/* Heading: Adjusted for orange background (Black + Crisp White) */}
+            {/* Heading: Two26 Headline */}
             <h2 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-[-0.03em] leading-[1.08] mb-7 sm:mb-9">
-              <span className="block text-[#0A0A0B]">Your questions.</span>
-              <span className="block text-white">Clear answers.</span>
+              <span className="block text-[#000000]">Your questions.</span>
+              <span className="block text-[#FF5400]">Clear answers.</span>
             </h2>
 
             {/* Accordion List with Controlled Width for Clean Breathing Space */}
@@ -103,36 +89,36 @@ export const FaqSection: React.FC = () => {
                 return (
                   <motion.div
                     key={idx}
-                    initial={{ opacity: 0, y: 18 }}
+                    initial={{ opacity: 0, y: 16 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.1 }}
-                    transition={{ duration: 0.6, delay: idx * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                    transition={{ duration: 0.5, delay: idx * 0.06, ease: [0.16, 1, 0.3, 1] }}
                     className={`rounded-[18px] sm:rounded-[22px] transition-all duration-300 border ${isOpen
-                        ? 'bg-[#16171B] border-white/20 shadow-xl'
-                        : 'bg-[#121316] border-white/[0.08] hover:border-white/[0.16] hover:bg-[#15161A]'
+                        ? 'bg-[#FDF8F5] border-[#FF5400] shadow-sm'
+                        : 'bg-[#FDF8F5] border-[#DAD1CC] hover:border-[#FF5400] hover:bg-[#F3EEEB]'
                       }`}
                   >
                     <button
                       type="button"
                       onClick={() => toggle(idx)}
-                      className="w-full px-5 sm:px-7 py-4 sm:py-[22px] text-left flex items-center justify-between gap-3 sm:gap-4 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FC6603] rounded-[18px] sm:rounded-[22px]"
+                      className="w-full px-5 sm:px-7 py-4 sm:py-[22px] text-left flex items-center justify-between gap-3 sm:gap-4 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF5400] rounded-[18px] sm:rounded-[22px]"
                       aria-expanded={isOpen}
                     >
                       <div className="flex items-center gap-3.5 sm:gap-5 pr-2">
                         {/* Number */}
-                        <span className="font-mono font-bold text-[13.5px] sm:text-[15px] md:text-[16px] text-white/75 group-hover:text-white transition-colors shrink-0">
+                        <span className="font-mono font-bold text-[13.5px] sm:text-[15px] md:text-[16px] text-[#FF5400] group-hover:text-[#FF5400] transition-colors shrink-0">
                           {faq.number}
                         </span>
 
-                        {/* Question Text - Bigger, bolder, prominent */}
-                        <span className="font-sans font-bold text-[15px] sm:text-[16.5px] md:text-[17.5px] text-white tracking-tight leading-snug">
+                        {/* Question Text */}
+                        <span className="font-sans font-bold text-[15px] sm:text-[16.5px] md:text-[17.5px] text-[#000000] tracking-tight leading-snug">
                           {faq.question}
                         </span>
                       </div>
 
                       {/* Expand / Collapse Icon */}
                       <div
-                        className={`w-8 h-8 rounded-full flex items-center justify-center text-white/70 group-hover:text-white shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-45 text-[#FC6603]' : ''
+                        className={`w-8 h-8 rounded-full flex items-center justify-center text-[#FF5400] group-hover:text-[#FF5400] shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-45' : ''
                           }`}
                       >
                         <Plus className="w-5 h-5 sm:w-[22px] sm:h-[22px] stroke-[2.2]" />
@@ -142,11 +128,11 @@ export const FaqSection: React.FC = () => {
                     {/* Animated Answer Body */}
                     <div
                       className={`overflow-hidden transition-all duration-300 ease-in-out px-5 sm:px-7 ${isOpen
-                          ? 'max-h-96 pb-5 sm:pb-6 pt-1 opacity-100'
-                          : 'max-h-0 pb-0 pt-0 opacity-0'
+                        ? 'max-h-96 pb-5 sm:pb-6 pt-1 opacity-100'
+                        : 'max-h-0 pb-0 pt-0 opacity-0'
                         }`}
                     >
-                      <p className="font-sans text-[14px] sm:text-[15px] text-[#A1A1AA] leading-relaxed border-t border-white/[0.08] pt-3.5">
+                      <p className="font-sans text-[14px] sm:text-[15px] text-[#333333] leading-relaxed border-t border-[#DAD1CC] pt-3.5">
                         {faq.answer}
                       </p>
                     </div>
@@ -160,16 +146,16 @@ export const FaqSection: React.FC = () => {
               RIGHT COLUMN: Sticky Discovery Booking Card Aligned with "Your questions."
              ========================================================================= */}
           <motion.div
-            initial={{ opacity: 0, y: 36, scale: 0.98, filter: 'blur(6px)' }}
-            whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+            initial={{ opacity: 0, y: 24, scale: 0.98 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.85, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-5 lg:pt-[28px] lg:self-stretch"
           >
             <div className="lg:sticky lg:top-7">
-              <div className="relative rounded-[26px] sm:rounded-[34px] p-6 sm:p-8 xl:p-10 bg-[#121316] border border-white/[0.08] shadow-[0_25px_60px_rgba(0,0,0,0.6)] overflow-hidden">
+              <div className="relative rounded-[26px] sm:rounded-[34px] p-6 sm:p-8 xl:p-10 bg-[#000000] border border-[#000000] shadow-[0_20px_50px_rgba(0,0,0,0.18)] overflow-hidden text-white">
                 {/* Top ambient orange blur */}
-                <div className="absolute top-0 right-0 w-56 h-56 bg-[#FC6603]/[0.08] rounded-full blur-3xl pointer-events-none" />
+                <div className="absolute top-0 right-0 w-56 h-56 bg-[#FF5400]/[0.12] rounded-full blur-3xl pointer-events-none" />
 
                 {/* Recreated Crisp White AlphaLinkx Corner Mark (Cropped at Top-Right Edge) */}
                 <svg
@@ -199,7 +185,7 @@ export const FaqSection: React.FC = () => {
                 {/* Card Top Row: Glowing Calendar Badge */}
                 <div className="flex items-start justify-between relative z-10">
                   {/* Glowing Calendar Badge */}
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-[#1C1410] border border-[#FC6603]/35 flex items-center justify-center text-[#FC6603] shadow-[0_0_22px_rgba(252,102,3,0.22)] shrink-0">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-[#1A1A1A] border border-[#FF5400]/40 flex items-center justify-center text-[#FF5400] shadow-[0_0_22px_rgba(255,84,0,0.22)] shrink-0">
                     <Calendar className="w-6 h-6 sm:w-7 sm:h-7 stroke-[1.8]" />
                   </div>
                 </div>
@@ -228,9 +214,9 @@ export const FaqSection: React.FC = () => {
                   <a
                     href="tel:+18005555465"
                     aria-label="Call AlphaLinkx"
-                    className="inline-flex items-center gap-2.5 font-sans font-semibold text-[14px] sm:text-[15px] text-white hover:text-[#FC6603] transition-colors py-2 group"
+                    className="inline-flex items-center gap-2.5 font-sans font-semibold text-[14px] sm:text-[15px] text-white hover:text-[#FF5400] transition-colors py-2 group"
                   >
-                    <Phone className="w-4 h-4 text-white group-hover:text-[#FC6603] transition-colors stroke-[2.2]" />
+                    <Phone className="w-4 h-4 text-white group-hover:text-[#FF5400] transition-colors stroke-[2.2]" />
                     <span>Call Now</span>
                   </a>
                 </div>

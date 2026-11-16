@@ -373,7 +373,7 @@ export const ClientLogoMarquee: React.FC = () => {
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       aria-label="Trusted by and infrastructure partners"
-      className="relative py-3 sm:py-4 bg-[#FC6603] border-y border-black/10 overflow-hidden select-none [contain:layout_style_paint]"
+      className="relative py-3 sm:py-4 bg-[#FF5400] border-y border-black/10 overflow-hidden select-none [contain:layout_style_paint]"
     >
       <div
         onMouseEnter={() => {
@@ -397,11 +397,11 @@ export const ClientLogoMarquee: React.FC = () => {
         {/* Lightweight Edge Fade Overlays (replaces GPU-heavy CSS mask-image) */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 left-0 w-[8%] z-10 bg-gradient-to-r from-[#FC6603] to-transparent"
+          className="pointer-events-none absolute inset-y-0 left-0 w-[8%] z-10 bg-gradient-to-r from-[#FF5400] to-transparent"
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-y-0 right-0 w-[8%] z-10 bg-gradient-to-l from-[#FC6603] to-transparent"
+          className="pointer-events-none absolute inset-y-0 right-0 w-[8%] z-10 bg-gradient-to-l from-[#FF5400] to-transparent"
         />
 
         {/* Compositor-Accelerated Stream (2 sets: ~5,000px total) */}

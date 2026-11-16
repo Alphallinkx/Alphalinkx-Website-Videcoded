@@ -14,7 +14,7 @@ import { getNoiseDataUrl } from '../../lib/noiseTexture';
  * Marked aria-hidden="true" for accessibility.
  */
 const DiagnosisIllustration: React.FC<{ id: DiagnosisCardItem['id'] }> = ({ id }) => {
-  const commonSvgClass = "w-[54px] h-[54px] sm:w-[58px] sm:h-[58px] lg:w-[62px] lg:h-[62px] text-white/50 group-hover:text-white/90 transition-colors duration-300 shrink-0";
+  const commonSvgClass = "w-[54px] h-[54px] sm:w-[58px] sm:h-[58px] lg:w-[62px] lg:h-[62px] text-black/45 group-hover:text-black/80 transition-colors duration-300 shrink-0";
 
   switch (id) {
     case 'visibility':
@@ -478,7 +478,7 @@ const DiagnosisCard: React.FC<DiagnosisCardProps> = ({ item, index }) => {
       <div
         ref={cardRef}
         data-diagnosis-id={item.id}
-        className="group relative h-full rounded-2xl bg-[#111113] hover:bg-[#141417] border border-white/10 hover:border-[#FC6603]/55 p-5 sm:p-5.5 lg:p-6 xl:p-5 2xl:p-6 flex flex-col overflow-hidden shadow-[0_8px_24px_-6px_rgba(0,0,0,0.5)] hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.85),0_0_24px_rgba(252,102,3,0.12)] transition-shadow duration-500 will-change-transform select-none cursor-default min-h-0 sm:min-h-[310px] lg:min-h-[330px] xl:min-h-[350px] 2xl:min-h-[360px]"
+        className="group relative h-full rounded-2xl bg-[#FDF8F5] hover:bg-[#F3EEEB] border border-[#DAD1CC] hover:border-[#FF5400] p-5 sm:p-5.5 lg:p-6 xl:p-5 2xl:p-6 flex flex-col overflow-hidden shadow-sm transition-all duration-300 will-change-transform select-none cursor-default min-h-0 sm:min-h-[310px] lg:min-h-[330px] xl:min-h-[350px] 2xl:min-h-[360px]"
         style={{
           transformStyle: 'preserve-3d',
           transform: 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)',
@@ -495,7 +495,7 @@ const DiagnosisCard: React.FC<DiagnosisCardProps> = ({ item, index }) => {
         {/* Minimal Corner Technical Tick at Bottom-Right */}
         <div
           aria-hidden="true"
-          className="absolute bottom-3 right-3 w-2 h-2 border-b border-r border-white/20 group-hover:border-[#FC6603]/70 transition-colors duration-400 pointer-events-none"
+          className="absolute bottom-3 right-3 w-2 h-2 border-b border-r border-black/15 group-hover:border-[#FF5400]/70 transition-colors duration-400 pointer-events-none"
           style={{ transform: 'translateZ(14px)' }}
         />
 
@@ -510,25 +510,22 @@ const DiagnosisCard: React.FC<DiagnosisCardProps> = ({ item, index }) => {
           </div>
 
           {/* Clean Monospace Sequence Index (JetBrains Mono) */}
-          <span className="font-mono text-[12px] sm:text-[13px] font-semibold text-white/35 group-hover:text-[#FC6603] transition-colors duration-300 tracking-[0.18em] pt-1">
+          <span className="font-mono text-[12px] sm:text-[13px] font-semibold text-[#888888] group-hover:text-[#FF5400] transition-colors duration-300 tracking-[0.18em] pt-1">
             0{index + 1}
           </span>
         </div>
 
         {/* Content Area: Balanced natural flow with harmonious spacing */}
         <div className="relative z-10 flex flex-col flex-1" style={{ transform: 'translateZ(18px)' }}>
-          {/* Category & Title Block:
-              - Mobile (< 640px): natural flow.
-              - Tablet / Desktop: Calibrated min-height ensuring uniform divider line alignment across all 6 cards.
-          */}
+          {/* Category & Title Block */}
           <div className="min-h-auto sm:min-h-[100px] md:min-h-[104px] lg:min-h-[114px] xl:min-h-[124px] 2xl:min-h-[120px] flex flex-col justify-start shrink-0">
-            {/* Category Label in Clean Brand Orange Monospace (JetBrains Mono) */}
-            <span className="font-mono text-[10.5px] sm:text-[11px] font-bold text-[#FC6603] uppercase tracking-[0.2em] block mb-2 sm:mb-2.5 shrink-0">
+            {/* Category Label in Clean Brand Orange Monospace */}
+            <span className="font-mono text-[10.5px] sm:text-[11px] font-bold text-[#FF5400] uppercase tracking-[0.2em] block mb-2 sm:mb-2.5 shrink-0">
               {item.category}
             </span>
 
-            {/* Authoritative Problem Statement Title (Bricolage Grotesque) */}
-            <h3 className="font-display font-bold text-[22px] text-white tracking-[-0.02em] leading-[1.2] group-hover:text-white transition-colors duration-300">
+            {/* Authoritative Problem Statement Title */}
+            <h3 className="font-display font-bold text-[22px] text-[#000000] tracking-[-0.02em] leading-[1.2] transition-colors duration-300">
               {item.title}
             </h3>
           </div>
@@ -536,13 +533,13 @@ const DiagnosisCard: React.FC<DiagnosisCardProps> = ({ item, index }) => {
           {/* Dedicated Horizontal Divider Line: cleanly separates title and description */}
           <div
             aria-hidden="true"
-            className="w-full h-[1px] bg-white/[0.08] my-3 sm:my-3.5 group-hover:bg-[#FC6603]/40 transition-colors duration-300 shrink-0"
+            className="w-full h-[1px] bg-[#DAD1CC] my-3 sm:my-3.5 group-hover:bg-[#FF5400]/40 transition-colors duration-300 shrink-0"
             style={{ transform: 'translateZ(14px)' }}
           />
 
           {/* Supporting Description Text (Schibsted Grotesk) */}
           <p
-            className="font-sans text-[15px] text-[#A1A1AA] group-hover:text-[#D4D4D8] leading-[1.55] font-normal transition-colors duration-300"
+            className="font-sans text-[15px] text-[#333333] leading-[1.55] font-normal transition-colors duration-300"
             style={{ transform: 'translateZ(12px)' }}
           >
             {item.description}
@@ -554,95 +551,49 @@ const DiagnosisCard: React.FC<DiagnosisCardProps> = ({ item, index }) => {
 };
 
 /**
- * Reusable DiagnosisSection Component.
- * Left-aligned editorial agency heading followed by six compact cards in one horizontal row on wide desktop,
- * transitioning gracefully to 3 columns on laptops, 2 on tablets, and 1 on mobile.
- * Features exact typography:
- * - Headings/Titles: 'Bricolage Grotesque' (font-display)
- * - Text/Descriptions: 'Schibsted Grotesk' (font-sans)
- * - Buttons/Accents: 'JetBrains Mono' (font-mono)
+ * Reusable DiagnosisSection Component styled with Two26 warm peach-cream canvas.
  */
 export const DiagnosisSection: React.FC = () => {
   const prefersReduced = useReducedMotion();
-  const noiseUrl = useMemo(() => getNoiseDataUrl(160), []);
 
   return (
     <section
       id="diagnosis"
       aria-labelledby="diagnosis-heading"
-      className="relative py-20 bg-[#070708] border-b border-white/[0.08] overflow-hidden isolation-isolate"
+      className="relative py-20 bg-[#F8EEE8] border-b border-[#DAD1CC] overflow-hidden isolation-isolate"
     >
-      {/* Multi-layered Atmospheric Orange Glow Gradients over Obsidian Black (Exact Testimonials Specs) */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: [
-            'radial-gradient(ellipse 58% 58% at 74% 48%, rgba(252, 102, 3, 0.22) 0%, rgba(235, 84, 0, 0.09) 38%, rgba(160, 48, 0, 0.025) 62%, transparent 78%)',
-            'radial-gradient(ellipse 46% 48% at 24% 52%, rgba(252, 102, 3, 0.11) 0%, rgba(252, 102, 3, 0.035) 45%, transparent 74%)',
-            'linear-gradient(to top, rgba(252, 102, 3, 0.08) 0%, transparent 32%)',
-          ].join(', '),
-        }}
-      />
-
-      {/* Focused Soft Spotlight Halo Behind Right Side (Exact Testimonials Specs) */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 right-[4%] lg:right-[7%] -translate-y-1/2 w-[360px] sm:w-[480px] lg:w-[560px] h-[300px] sm:h-[380px] rounded-full bg-[#FC6603]/[0.13] blur-[95px]"
-      />
-
-      {/* Subtle Noise Texture Overlay (prevents gradient banding & adds tactile depth) */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 pointer-events-none opacity-[0.035]"
-        style={
-          noiseUrl
-            ? {
-              backgroundImage: `url("${noiseUrl}")`,
-              backgroundRepeat: 'repeat',
-            }
-            : undefined
-        }
-      />
-
-      {/* Top Ambient Subtle Hairline in Brand Orange */}
-      <div
-        aria-hidden="true"
-        className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-[#FC6603]/35 to-transparent pointer-events-none"
-      />
-
       <div className="relative z-10 max-w-[1440px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 md:px-8 xl:px-6 2xl:px-10">
         {/* Section Header: Flex layout with Left-Aligned Heading & Right-Aligned "Get a Free Audit" CTA */}
         <div className="flex flex-col lg:flex-row lg:items-start justify-between gap-6 mb-10 sm:mb-12 md:mb-16">
           {/* Left Column: Mono Tag, Heading, and Single-Line Supporting Text with Inline Services Link */}
           <motion.div
-            initial={prefersReduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 32, filter: 'blur(6px)' }}
-            whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            initial={prefersReduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
             className="flex-1 max-w-3xl xl:max-w-4xl"
           >
-            {/* Section Mono Label (JetBrains Mono) */}
-            <div className="font-mono text-[11px] sm:text-[12px] font-semibold text-[#FC6603] uppercase tracking-[0.2em] mb-2.5 sm:mb-3 flex items-center gap-2">
+            {/* Section Mono Label */}
+            <div className="font-mono text-[11px] sm:text-[12px] font-semibold text-[#FF5400] uppercase tracking-[0.2em] mb-2.5 sm:mb-3 flex items-center gap-2">
               <span>//</span>
-              <span className="text-white/60">THE DIAGNOSIS</span>
+              <span className="text-[#555555]">THE DIAGNOSIS</span>
             </div>
 
-            {/* Heading (Bricolage Grotesque) with "chain" moved to line 2 before "breaking?" */}
+            {/* Heading */}
             <h2
               id="diagnosis-heading"
-              className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] text-white tracking-[-0.03em] leading-[1.08]"
+              className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] text-[#000000] tracking-[-0.03em] leading-[1.08]"
             >
               Where is your growth <br className="hidden sm:inline" />
-              chain <span className="text-[#FC6603]">breaking?</span>
+              chain <span className="text-[#FF5400]">breaking?</span>
             </h2>
 
-            {/* Supporting Text (Schibsted Grotesk) in a single continuous line on desktop with link */}
-            <p className="font-sans text-[16px] text-[#A1A1AA] leading-[1.6] mt-3 sm:mt-4 font-normal whitespace-normal xl:whitespace-nowrap">
+            {/* Supporting Text */}
+            <p className="font-sans text-[16px] text-[#333333] leading-[1.6] mt-3 sm:mt-4 font-normal whitespace-normal xl:whitespace-nowrap">
               Recognise any of these challenges? Here’s where growth can get held back.{' '}
               <Link
                 href="/services"
-                className="inline-flex items-center gap-1 font-mono text-[12px] sm:text-[13px] font-semibold text-[#FC6603] hover:text-[#FF8833] transition-colors duration-200 underline underline-offset-4 decoration-[#FC6603]/40 hover:decoration-[#FC6603] whitespace-nowrap ml-1 group/link"
+                className="inline-flex items-center gap-1 font-mono text-[12px] sm:text-[13px] font-semibold text-[#FF5400] hover:text-[#000000] transition-colors duration-200 underline underline-offset-4 decoration-[#FF5400]/40 hover:decoration-[#FF5400] whitespace-nowrap ml-1 group/link"
               >
                 <span>View our services</span>
                 <span className="text-[12px] sm:text-[13px] transition-transform duration-200 group-hover/link:translate-x-1">→</span>
@@ -650,38 +601,27 @@ export const DiagnosisSection: React.FC = () => {
             </p>
           </motion.div>
 
-          {/* Right Column: "Get a Free Audit" Button positioned in front of the section heading on desktop */}
+          {/* Right Column: "Get a Free Audit" Two26 Black Pill Button */}
           <motion.div
-            initial={prefersReduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 24, filter: 'blur(4px)' }}
-            whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            initial={prefersReduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.85, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="lg:shrink-0 mt-2 sm:mt-3 lg:mt-14 xl:mt-16 self-start"
           >
-            <BrandButton to="/contact" variant="orange">
+            <BrandButton to="/contact" variant="black">
               Get a Free Audit
             </BrandButton>
           </motion.div>
         </div>
 
-        {/* Six Diagnosis Cards:
-            - 1 column on mobile (< 640px)
-            - 2 columns on tablet (sm: 640px - 1023px)
-            - 3 columns on laptop / mid-screen (lg: 1024px - 1279px)
-            - 6 columns in ONE horizontal row on wide desktop (xl: >= 1280px)
-        */}
+        {/* Six Diagnosis Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 sm:gap-5 xl:gap-3 2xl:gap-4.5 items-stretch">
           {DIAGNOSIS_CARDS.map((card, idx) => (
             <DiagnosisCard key={card.id} item={card} index={idx} />
           ))}
         </div>
       </div>
-
-      {/* Bottom Ambient Hairline */}
-      <div
-        aria-hidden="true"
-        className="absolute bottom-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-white/[0.08] to-transparent pointer-events-none"
-      />
     </section>
   );
 };

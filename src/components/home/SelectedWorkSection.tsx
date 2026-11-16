@@ -129,38 +129,32 @@ export const SelectedWorkSection: React.FC = () => {
     <section
       id="work"
       aria-label="Recent Projects"
-      className="relative py-20 bg-[#060709] border-b border-white/[0.08] overflow-hidden selection:bg-[#FC6603] selection:text-black"
+      className="relative py-20 bg-[#F8EEE8] border-b border-[#DAD1CC] overflow-hidden selection:bg-[#FF5400] selection:text-white"
     >
-      {/* Background Subtle Ambient Orange Radial Glow */}
-      <div
-        aria-hidden="true"
-        className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[500px] bg-[radial-gradient(ellipse_at_center,rgba(252,102,3,0.05)_0%,transparent_70%)] pointer-events-none"
-      />
-
       {/* =========================================================================
           STANDARD WIDTH CONTAINER: SECTION HEADER (CENTERED)
          ========================================================================= */}
       <motion.div
-        initial={{ opacity: 0, y: 32, filter: 'blur(6px)' }}
-        whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
         className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 xl:px-10 relative z-10 mb-10 sm:mb-12 lg:mb-14 text-center flex flex-col items-center"
       >
         {/* Eyebrow: // SELECTED WORK */}
-        <div className="font-mono text-[11px] sm:text-[12px] font-semibold uppercase tracking-[0.2em] text-[#8E929E] mb-2 sm:mb-2.5 flex items-center justify-center gap-2">
-          <span className="text-[#FC6603] font-bold">//</span>
+        <div className="font-mono text-[11px] sm:text-[12px] font-semibold uppercase tracking-[0.2em] text-[#555555] mb-2 sm:mb-2.5 flex items-center justify-center gap-2">
+          <span className="text-[#FF5400] font-bold">//</span>
           <span>SELECTED WORK</span>
         </div>
 
         {/* Headline: Our work. Your next possibility. */}
-        <h2 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-[-0.03em] leading-[1.08] text-white">
-          <span className="block text-[#F4F4F5]">Our work.</span>
-          <span className="block text-[#FC6603]">Your next possibility.</span>
+        <h2 className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-[-0.03em] leading-[1.08] text-[#000000]">
+          <span className="block text-[#000000]">Our work.</span>
+          <span className="block text-[#FF5400]">Your next possibility.</span>
         </h2>
 
         {/* Supporting text */}
-        <p className="font-sans text-[15px] sm:text-[16px] text-[#A1A1AA] leading-relaxed mt-4 max-w-xl mx-auto">
+        <p className="font-sans text-[15px] sm:text-[16px] text-[#333333] leading-relaxed mt-4 max-w-xl mx-auto">
           See how bold ideas become work that moves businesses forward.
         </p>
       </motion.div>
@@ -176,12 +170,12 @@ export const SelectedWorkSection: React.FC = () => {
                 {RECENT_PROJECTS.map((project, idx) => (
                   <motion.div
                     key={project.id}
-                    initial={{ opacity: 0, y: 36, scale: 0.98, filter: 'blur(6px)' }}
-                    whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+                    initial={{ opacity: 0, y: 24, scale: 0.98 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
                     viewport={{ once: true, amount: 0.15 }}
                     transition={{
-                      duration: 0.85,
-                      delay: idx * 0.12,
+                      duration: 0.6,
+                      delay: idx * 0.1,
                       ease: [0.16, 1, 0.3, 1],
                     }}
                     className={`isotope-item projct-order ${project.category.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
@@ -241,7 +235,7 @@ export const SelectedWorkSection: React.FC = () => {
                               <a
                                 href={`#${project.slug}`}
                                 onClick={(e) => {
-                                  e.preventDefault();
+                                   e.preventDefault();
                                   handleProjectClick(project);
                                 }}
                               >
@@ -267,13 +261,13 @@ export const SelectedWorkSection: React.FC = () => {
           BOTTOM CENTER CALL-TO-ACTION BUTTON
          ========================================================================= */}
       <motion.div
-        initial={{ opacity: 0, y: 24, filter: 'blur(4px)' }}
-        whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.2 }}
-        transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
         className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 xl:px-10 relative z-10 mt-10 sm:mt-12 lg:mt-14 flex justify-center"
       >
-        <BrandButton to="/projects" variant="orange" dataCursor="VIEW ALL">
+        <BrandButton to="/projects" variant="black" dataCursor="VIEW ALL">
           View All Projects
         </BrandButton>
       </motion.div>

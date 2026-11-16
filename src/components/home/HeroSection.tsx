@@ -71,52 +71,35 @@ export const HeroSection: React.FC = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative min-h-[100dvh] w-full flex flex-col justify-between pt-28 pb-10 px-4 sm:px-6 md:px-12 overflow-hidden bg-[#0A0A0B]"
+      style={{
+        background: 'linear-gradient(rgb(250, 227, 226) 73%, rgb(248, 238, 232))',
+      }}
+      className="relative min-h-[100dvh] w-full flex flex-col justify-between pt-28 pb-10 px-4 sm:px-6 md:px-12 overflow-hidden"
     >
-      {/* 01. Attractive Layered Orange Glow Gradient Background */}
-      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden bg-[#0A0A0B]">
-        {/* Main glow behind the chain, centered slightly above middle */}
+      {/* 01. Two26 Warm Peachy-Cream Ambient Glow Gradient Background */}
+      <div className="absolute inset-0 pointer-events-none z-0 overflow-hidden">
+        {/* Soft warm peach radial highlight behind the 3D chain */}
         <div
           aria-hidden="true"
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              'radial-gradient(ellipse 60% 50% at 50% 42%, rgba(255, 90, 0, 0.28), rgba(255, 60, 0, 0.10) 45%, transparent 70%)',
+              'radial-gradient(ellipse 65% 55% at 50% 42%, rgba(255, 84, 0, 0.12), rgba(250, 227, 226, 0.4) 45%, transparent 72%)',
           }}
         />
 
-        {/* Second soft glow at top center */}
+        {/* Top subtle warmth */}
         <div
           aria-hidden="true"
           className="absolute inset-0 pointer-events-none"
           style={{
             background:
-              'radial-gradient(ellipse 45% 35% at 50% 0%, rgba(255, 110, 0, 0.14), transparent 70%)',
+              'radial-gradient(ellipse 50% 35% at 50% 0%, rgba(255, 84, 0, 0.08), transparent 70%)',
           }}
         />
 
-        {/* Third faint glow at the bottom */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              'radial-gradient(ellipse 55% 40% at 50% 110%, rgba(255, 70, 0, 0.12), transparent 70%)',
-          }}
-        />
-
-        {/* Subtle vignette at the far edges only (rgba(0,0,0,0.25) at the corners) — center stays bright and glowing */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              'radial-gradient(ellipse 95% 85% at 50% 50%, transparent 65%, rgba(0, 0, 0, 0.25) 100%)',
-          }}
-        />
-
-        {/* Bottom smooth fade to black */}
-        <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#0A0A0B] to-transparent pointer-events-none" />
+        {/* Bottom smooth fade to canvas */}
+        <div className="absolute inset-x-0 bottom-0 h-28 bg-gradient-to-t from-[#F8EEE8] to-transparent pointer-events-none" />
       </div>
 
       {/* 02. Feather-Light Interactive Live Particles */}
@@ -125,8 +108,8 @@ export const HeroSection: React.FC = () => {
       {/* 03. 3D WebGL Canvas Layer (Interlocking Links with Scroll Physics) */}
       <HeroScene3D scroll={scrollRef} />
 
-      {/* 04. Bottom Cinematic Fade (Dips 3D chain smoothly into black on scroll) */}
-      <div className="absolute inset-x-0 bottom-0 h-20 sm:h-56 pointer-events-none bg-gradient-to-t from-[#0A0A0B] via-[#0A0A0B]/80 to-transparent z-[2]" />
+      {/* 04. Bottom Fade (Dips 3D chain smoothly into peachy canvas on scroll) */}
+      <div className="absolute inset-x-0 bottom-0 h-20 sm:h-44 pointer-events-none bg-gradient-to-t from-[#F8EEE8] via-[#F8EEE8]/85 to-transparent z-[2]" />
 
       {/* 05. Vertical Social Media Icons & Links on the Left */}
       <HeroSocialBar />
@@ -140,32 +123,32 @@ export const HeroSection: React.FC = () => {
         }}
         className="relative z-10 my-auto py-8 text-center w-full max-w-7xl mx-auto flex flex-col items-center justify-center will-change-transform px-2 sm:px-4"
       >
-        {/* Main Prominent Headline with Cinematic Mask Reveal (Bricolage Grotesque 800, tracking: -0.03em, leading: 1.02) */}
-        <h1 className="font-display font-extrabold text-[clamp(2.85rem,8.5vw,6.25rem)] text-white tracking-[-0.03em] uppercase leading-[1.05] sm:leading-[1.02] drop-shadow-[0_4px_30px_rgba(0,0,0,0.95)] flex flex-col items-center text-center w-full">
+        {/* Main Prominent Headline (Bricolage Grotesque 800, tracking: -0.03em, leading: 1.02) */}
+        <h1 className="font-display font-extrabold text-[clamp(2.85rem,8.5vw,6.25rem)] text-[#000000] tracking-[-0.03em] uppercase leading-[1.05] sm:leading-[1.02] flex flex-col items-center text-center w-full">
           <span className="block overflow-hidden py-1 sm:py-1.5">
             <span className="block sm:whitespace-nowrap will-change-transform">
-              BE THE <span className="text-[#FC6603]">ALPHA</span>
+              BE THE <span className="text-[#FF5400]">ALPHA</span>
             </span>
           </span>
           <span className="block overflow-hidden py-1 sm:py-1.5">
-            <span className="block sm:whitespace-nowrap mt-1 sm:mt-2 text-white will-change-transform">
+            <span className="block sm:whitespace-nowrap mt-1 sm:mt-2 text-[#000000] will-change-transform">
               IN YOUR MARKET.
             </span>
           </span>
         </h1>
 
-        {/* Clear, Prominent Value Proposition Subtext (Schibsted Grotesk, 17px-20px, text-white, line-height: 1.6) */}
+        {/* Clear, Prominent Value Proposition Subtext (Schibsted Grotesk, 17px-20px, text-[#333333], line-height: 1.6) */}
         <div className="mt-6 sm:mt-8 max-w-xl sm:max-w-2xl md:max-w-3xl mx-auto px-2 sm:px-4">
-          <p className="text-[17px] sm:text-[19px] md:text-[20px] text-white font-normal font-sans leading-[1.6] drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)]">
+          <p className="text-[17px] sm:text-[19px] md:text-[20px] text-[#333333] font-normal font-sans leading-[1.6]">
             Your competitors are taking the customers that should be yours. We change that. We manage your growth and turn yours into an awesome business the first name in your market that people find, trust, and choose.
           </p>
         </div>
 
-        {/* Two CTAs */}
+        {/* Two CTAs: Two26 Signature Black Pill & Surface Pill */}
         <div className="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-4">
           <MagneticButton
             href="/contact"
-            variant="primary"
+            variant="black"
             dataCursor="CONNECT"
           >
             Start a Project
@@ -184,23 +167,23 @@ export const HeroSection: React.FC = () => {
       {/* 06. Interactive Bottom Bar: Clickable "Unlink & Explore" CTA (JetBrains Mono 500, 12px, tracking: 0.18em) */}
       <motion.div
         style={{ opacity: bottomOpacity }}
-        className="relative z-10 w-full flex items-center justify-center font-mono text-[12px] font-medium text-[#8A8A8E] tracking-[0.18em] uppercase"
+        className="relative z-10 w-full flex items-center justify-center font-mono text-[12px] font-medium text-[#555555] tracking-[0.18em] uppercase"
       >
         <button
           type="button"
           onClick={scrollToExplore}
-          className="group flex items-center gap-3 cursor-pointer select-none text-[#8A8A8E] hover:text-white transition-colors duration-200"
+          className="group flex items-center gap-3 cursor-pointer select-none text-[#555555] hover:text-[#000000] transition-colors duration-200"
           data-cursor="SCROLL"
           title="Click to explore and unlink the chain"
         >
-          <span className="tracking-[0.18em] font-mono text-[12px] font-medium uppercase group-hover:text-[#FF5A1F] transition-colors">
+          <span className="tracking-[0.18em] font-mono text-[12px] font-medium uppercase group-hover:text-[#FF5400] transition-colors">
             UNLINK TO EXPLORE THE ENGINE ↓
           </span>
-          <div className="w-4 h-8 rounded-full border border-white/20 group-hover:border-[#FF5A1F]/60 flex items-start justify-center p-1 transition-colors">
+          <div className="w-4 h-8 rounded-full border border-[#DAD1CC] group-hover:border-[#FF5400] flex items-start justify-center p-1 transition-colors bg-[#FDF8F5]">
             <motion.div
               animate={{ y: [0, 12, 0] }}
               transition={{ repeat: Infinity, duration: 1.6, ease: 'easeInOut' }}
-              className="w-1.5 h-1.5 rounded-full bg-[#FF5A1F]"
+              className="w-1.5 h-1.5 rounded-full bg-[#FF5400]"
             />
           </div>
         </button>

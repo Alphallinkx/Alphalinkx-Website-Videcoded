@@ -3,31 +3,32 @@
 @tailwind utilities;
 
 :root {
-  --brand-orange: #FC6603;
-  --brand-orange-glow: rgba(252, 102, 3, 0.4);
-  --bg-deep: #060709;
-  --bg-surface: #0B0D13;
-  --bg-card: #10131C;
+  --brand-orange: #FF5400;
+  --brand-orange-glow: rgba(255, 84, 0, 0.35);
+  --bg-deep: #F8EEE8;
+  --bg-surface: #FDF8F5;
+  --bg-card: #FDF8F5;
 
   /* Chain Section & System Design Variables */
-  --orange: #FC6603;
-  --orange2: #FF7A29;
-  --bg2: #0B0D13;
-  --card: #10131C;
-  --line: rgba(255, 255, 255, 0.08);
-  --line2: rgba(255, 255, 255, 0.14);
+  --orange: #FF5400;
+  --orange2: #FF7729;
+  --bg2: #F8EEE8;
+  --card: #FDF8F5;
+  --line: #DAD1CC;
+  --line2: rgba(0, 0, 0, 0.08);
   --radius: 18px;
   --mono: 'JetBrains Mono', monospace;
   --head: 'Bricolage Grotesque', sans-serif;
-  --muted: #8E929E;
-  --faint: rgba(255, 255, 255, 0.3);
-  --body: #C2C2C2;
+  --muted: #666666;
+  --faint: rgba(0, 0, 0, 0.15);
+  --body: #333333;
 }
 
 /* Global Font Consistency */
 body {
   font-family: 'Schibsted Grotesk', system-ui, -apple-system, sans-serif;
-  color: #C2C2C2;
+  background-color: #F8EEE8;
+  color: #333333;
 }
 
 h1, h2, h3, h4, h5, h6, .font-display {
@@ -839,13 +840,9 @@ html.lenis, html.lenis body {
   z-index: 1;
 }
 
-/* Seamless radial vignette: leaves the top, left, and right flanks completely open, bright, and visible */
+/* Seamless radial vignette */
 .chain-bg-radial-vignette {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at 50% 50%, rgba(10, 10, 11, 0.25) 0%, rgba(10, 10, 11, 0.65) 60%, rgba(10, 10, 11, 0.9) 100%);
-  pointer-events: none;
-  z-index: 2;
+  display: none;
 }
 
 /* Foreground scrollable container */
@@ -927,7 +924,7 @@ html.lenis, html.lenis body {
   font-family: var(--head);
   font-weight: 800;
   font-size: clamp(28px, 7.2vw, 54px);
-  color: #ffffff;
+  color: #000000;
   line-height: 1.12;
   letter-spacing: -0.03em;
   margin: 0 0 14px;
@@ -999,7 +996,7 @@ html.lenis, html.lenis body {
   bottom: 40px;
   width: 2px;
   transform: translateX(-50%);
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--line);
   border-radius: 2px;
   pointer-events: none;
   will-change: transform;
@@ -1012,8 +1009,8 @@ html.lenis, html.lenis body {
   top: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(180deg, var(--orange), var(--orange2));
-  box-shadow: 0 0 16px rgba(252, 102, 3, 0.8), 0 0 28px rgba(252, 102, 3, 0.4);
+  background: var(--orange);
+  box-shadow: 0 0 16px rgba(255, 84, 0, 0.6);
   border-radius: 2px;
   will-change: transform;
 }
@@ -1025,8 +1022,8 @@ html.lenis, html.lenis body {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: #ffffff;
-  box-shadow: 0 0 12px var(--orange), 0 0 22px var(--orange);
+  background: #000000;
+  box-shadow: 0 0 10px var(--orange);
   will-change: top, opacity;
   pointer-events: none;
 }
@@ -1051,8 +1048,8 @@ html.lenis, html.lenis body {
   width: 56px;
   height: 56px;
   border-radius: 50%;
-  background: var(--bg2);
-  border: 2px solid var(--line2);
+  background: var(--card);
+  border: 2px solid var(--line);
   display: grid;
   place-items: center;
   z-index: 10;
@@ -1063,7 +1060,7 @@ html.lenis, html.lenis body {
 .link-node svg {
   width: 26px;
   height: 26px;
-  stroke: var(--faint);
+  stroke: #555555;
   fill: none;
   stroke-width: 2;
   transition: stroke 0.4s ease, transform 0.4s ease, filter 0.4s ease;
@@ -1080,14 +1077,14 @@ html.lenis, html.lenis body {
 
 .link-block.lit .link-node {
   border-color: var(--orange);
-  background: #0E1119;
-  box-shadow: 0 0 28px rgba(252, 102, 3, 0.7), inset 0 0 14px rgba(252, 102, 3, 0.3);
+  background: #000000;
+  box-shadow: 0 0 20px rgba(255, 84, 0, 0.4);
   transform: translate(-50%, -50%) scale(1.08);
 }
 
 .link-block.lit .link-node svg {
-  stroke: var(--orange);
-  filter: drop-shadow(0 0 8px var(--orange));
+  stroke: #FFFFFF;
+  filter: drop-shadow(0 0 6px var(--orange));
   transform: rotate(6deg) scale(1.06);
 }
 
@@ -1108,11 +1105,11 @@ html.lenis, html.lenis body {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--line);
   display: grid;
   place-items: center;
   pointer-events: none;
-  opacity: 0.4;
+  opacity: 0.6;
   transition: opacity 0.4s ease, border-color 0.4s ease;
 }
 
@@ -1121,13 +1118,13 @@ html.lenis, html.lenis body {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: var(--faint);
+  background: #888888;
   transition: background-color 0.4s ease;
 }
 
 .link-block.lit .node-aux-dot {
   opacity: 1;
-  border-color: rgba(252, 102, 3, 0.5);
+  border-color: var(--orange);
 }
 
 .link-block.lit .node-aux-dot::after {
@@ -1162,7 +1159,7 @@ html.lenis, html.lenis body {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at top right, rgba(252, 102, 3, 0.1), transparent 70%);
+  background: radial-gradient(circle at top right, rgba(255, 84, 0, 0.08), transparent 70%);
   opacity: 0;
   transition: opacity 0.35s ease;
   pointer-events: none;
@@ -1171,14 +1168,14 @@ html.lenis, html.lenis body {
 .link-block.lit .link-card {
   opacity: 1;
   transform: translateY(0);
-  border-color: rgba(252, 102, 3, 0.35);
-  box-shadow: 0 16px 36px -12px rgba(0, 0, 0, 0.6), 0 0 24px rgba(252, 102, 3, 0.08);
+  border-color: var(--orange);
+  box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.06);
 }
 
 .link-block.lit .link-card:hover {
-  border-color: rgba(252, 102, 3, 0.6);
+  border-color: var(--orange);
   transform: translateY(-4px);
-  box-shadow: 0 20px 44px -12px rgba(0, 0, 0, 0.7), 0 0 32px rgba(252, 102, 3, 0.15);
+  box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.1);
 }
 
 .link-block.lit .link-card:hover::before {
@@ -1201,19 +1198,19 @@ html.lenis, html.lenis body {
   font-size: 25px;
   text-transform: uppercase;
   margin: 12px 0 14px;
-  color: #ffffff;
+  color: #000000;
   letter-spacing: -0.02em;
   line-height: 1.15;
 }
 
 .link-card .pain {
-  color: var(--muted);
+  color: var(--body);
   font-size: 16px;
   line-height: 1.6;
 }
 
 .link-card .pain b {
-  color: #ffffff;
+  color: #000000;
   font-weight: 600;
 }
 
@@ -1229,12 +1226,18 @@ html.lenis, html.lenis body {
   font-size: 10.5px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--body);
-  border: 1px solid var(--line2);
+  color: #000000;
+  border: 1px solid var(--line);
   border-radius: 999px;
   padding: 6px 12px;
-  background: rgba(255, 255, 255, 0.02);
+  background: #ECEAE5;
   transition: border-color 0.25s, color 0.25s, background-color 0.25s;
+}
+
+.services-line span:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+  background: #FDF8F5;
 }
 
 .services-line span:hover {
@@ -1321,7 +1324,7 @@ html.lenis, html.lenis body {
   font-family: var(--head);
   font-weight: 800;
   font-size: clamp(40px, 5vw, 68px);
-  color: rgba(255, 255, 255, 0.08);
+  color: rgba(0, 0, 0, 0.08);
   line-height: 1;
   text-transform: uppercase;
   letter-spacing: -0.01em;
@@ -1330,10 +1333,10 @@ html.lenis, html.lenis body {
   transition: color 0.5s cubic-bezier(0.16, 1, 0.3, 1), text-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Text becomes pure white + intense orange glow in behind */
+/* Lit state: stark deep black with subtle brand accent aura */
 .link-block.lit .link-badge .big {
-  color: #FFFFFF !important;
-  text-shadow: 0 0 24px rgba(252, 102, 3, 0.9), 0 0 48px rgba(252, 102, 3, 0.5), 0 0 80px rgba(252, 102, 3, 0.25);
+  color: #000000 !important;
+  text-shadow: 0 0 24px rgba(255, 84, 0, 0.25);
 }
 
 .link-badge .small {
@@ -1341,7 +1344,7 @@ html.lenis, html.lenis body {
   font-size: 11px;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: var(--faint);
+  color: #888888;
   margin-top: 12px;
   position: relative;
   z-index: 1;
@@ -1351,7 +1354,6 @@ html.lenis, html.lenis body {
 .link-block.lit .link-badge .small {
   color: var(--orange);
   font-weight: 600;
-  text-shadow: 0 0 12px rgba(252, 102, 3, 0.65);
 }
 
 /* Alternating flip layout */

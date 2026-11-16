@@ -300,10 +300,10 @@ export const WhyChooseWaveBackground: React.FC<WhyChooseWaveBackgroundProps> = (
       <canvas ref={canvasRef} className="w-full h-full block" />
 
       {/* Top subtle vignette so header remains 100% legible */}
-      <div className="absolute top-0 inset-x-0 h-44 bg-gradient-to-b from-[#060709] via-[#060709]/80 to-transparent pointer-events-none" />
+      <div className="absolute top-0 inset-x-0 h-44 bg-gradient-to-b from-[#F8EEE8] via-[#F8EEE8]/80 to-transparent pointer-events-none" />
 
       {/* Bottom fade into section border */}
-      <div className="absolute bottom-0 inset-x-0 h-28 bg-gradient-to-t from-[#060709] to-transparent pointer-events-none" />
+      <div className="absolute bottom-0 inset-x-0 h-28 bg-gradient-to-t from-[#F8EEE8] to-transparent pointer-events-none" />
     </div>
   );
 };

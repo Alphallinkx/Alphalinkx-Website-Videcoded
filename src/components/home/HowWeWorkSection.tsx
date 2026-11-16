@@ -462,16 +462,10 @@ export const HowWeWorkSection: React.FC = () => {
       ref={sectionRef}
       id="process"
       aria-labelledby="how-we-work-heading"
-      className={`hww-section relative w-full bg-[#060709] py-20 overflow-x-clip selection:bg-[#FC6603] selection:text-black border-b border-white/[0.08] ${
+      className={`hww-section relative w-full bg-[#F8EEE8] py-20 overflow-x-clip selection:bg-[#FF5400] selection:text-white border-b border-[#DAD1CC] ${
         isAnimReady ? 'hww-anim-ready' : ''
       } ${isInView ? 'hww-in-view' : ''} ${isSettled ? 'hww-settled' : ''}`}
     >
-      {/* Background ambient radial glow matching mockup */}
-      <div
-        aria-hidden="true"
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[450px] bg-[radial-gradient(ellipse_at_center,rgba(252,102,3,0.06)_0%,transparent_70%)] pointer-events-none"
-      />
-
       <div className="relative z-10 max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 xl:px-10 w-full">
         {/* =========================================================================
             SECTION HEADER: HEADINGS ON LEFT, CTA ON RIGHT (MIDDLE ALIGNED)
@@ -480,35 +474,35 @@ export const HowWeWorkSection: React.FC = () => {
           {/* LEFT SIDE: Section Eyebrow, Heading, and Single-Line Subtext */}
           <div className="flex flex-col items-start text-left max-w-2xl">
             {/* Eyebrow: // HOW WE WORK */}
-            <div className="hww-eyebrow font-mono text-[11px] sm:text-[12px] font-semibold text-[#FC6603] uppercase tracking-[0.2em] mb-2 sm:mb-2.5 flex items-center gap-2">
+            <div className="hww-eyebrow font-mono text-[11px] sm:text-[12px] font-semibold text-[#FF5400] uppercase tracking-[0.2em] mb-2 sm:mb-2.5 flex items-center gap-2">
               <span className="font-bold">//</span>
-              <span className="text-white/80">HOW WE WORK</span>
+              <span className="text-[#555555]">HOW WE WORK</span>
             </div>
 
             {/* Heading: Four steps. One clear direction. */}
             <h2
               id="how-we-work-heading"
-              className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-[-0.03em] leading-[1.08] text-white"
+              className="font-display font-extrabold text-3xl sm:text-4xl md:text-5xl lg:text-[54px] tracking-[-0.03em] leading-[1.08] text-[#000000]"
             >
               <span className="block overflow-hidden pb-1">
-                <span className="hww-heading-line hww-line-1">Four steps.</span>
+                <span className="hww-heading-line hww-line-1 text-[#000000]">Four steps.</span>
               </span>
               <span className="block overflow-hidden pb-1">
-                <span className="hww-heading-line hww-line-2 text-[#FC6603]">
+                <span className="hww-heading-line hww-line-2 text-[#FF5400]">
                   One clear direction.
                 </span>
               </span>
             </h2>
 
-            {/* Supporting Text (Strictly Single Line on Desktop) */}
-            <p className="hww-subtext font-sans text-[15px] sm:text-[16px] text-[#A1A1AA] leading-relaxed mt-2.5 whitespace-normal sm:whitespace-nowrap">
+            {/* Supporting Text */}
+            <p className="hww-subtext font-sans text-[15px] sm:text-[16px] text-[#333333] leading-relaxed mt-2.5 whitespace-normal sm:whitespace-nowrap">
               From understanding your business to building what comes next.
             </p>
           </div>
 
-          {/* RIGHT SIDE: Brand CTA Button (Middle Aligned to Title) */}
+          {/* RIGHT SIDE: Two26 Signature Black Pill CTA */}
           <div className="hww-cta-row flex items-center gap-3 shrink-0 self-start sm:self-center">
-            <BrandButton to="/contact" variant="orange" dataCursor="CONNECT">
+            <BrandButton to="/contact" variant="black" dataCursor="CONNECT">
               LET&apos;S TALK
             </BrandButton>
           </div>
@@ -562,7 +556,7 @@ export const HowWeWorkSection: React.FC = () => {
                 L 1200,209
                 C 1215,209 1235,175 1250,165
               "
-              stroke="rgba(255, 255, 255, 0.12)"
+              stroke="#DAD1CC"
               strokeWidth="2"
               fill="none"
               strokeLinecap="round"
@@ -610,15 +604,15 @@ export const HowWeWorkSection: React.FC = () => {
                   cx={node.cx}
                   cy={node.cy}
                   r="6.5"
-                  stroke="#FC6603"
+                  stroke="#FF5400"
                   strokeWidth="1.5"
-                  fill="#060709"
+                  fill="#FDF8F5"
                 />
                 <circle
                   cx={node.cx}
                   cy={node.cy}
                   r="3"
-                  fill="#FC6603"
+                  fill="#FF5400"
                   className={`hww-node-dot hww-node-dot-${i}`}
                 />
               </g>
@@ -648,7 +642,7 @@ export const HowWeWorkSection: React.FC = () => {
                 C 300,500 305,500 320,500
                 L 580,500
               "
-              stroke="rgba(255, 255, 255, 0.10)"
+              stroke="#DAD1CC"
               strokeWidth="2"
               fill="none"
               strokeLinecap="round"
@@ -666,7 +660,7 @@ export const HowWeWorkSection: React.FC = () => {
                 C 300,500 305,500 320,500
                 L 580,500
               "
-              stroke="#FC6603"
+              stroke="#FF5400"
               strokeWidth="2.5"
               fill="none"
               strokeLinecap="round"
@@ -679,19 +673,17 @@ export const HowWeWorkSection: React.FC = () => {
           */}
           <div
             aria-hidden="true"
-            className="md:hidden absolute left-3 top-8 bottom-8 w-[2px] bg-white/[0.08] pointer-events-none z-0 overflow-hidden"
+            className="md:hidden absolute left-3 top-8 bottom-8 w-[2px] bg-[#DAD1CC] pointer-events-none z-0 overflow-hidden"
           >
-            <div className="hww-wave-path-mobile w-full h-full bg-[#FC6603] origin-top shadow-[0_0_8px_#FC6603]" />
+            <div className="hww-wave-path-mobile w-full h-full bg-[#FF5400] origin-top" />
           </div>
 
           {/*
             RESPONSIVE 4-CARD CONTAINER
-            Rides the wave in left-to-right (400ms, 550ms, 700ms, 850ms)
           */}
           <ol className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 xl:gap-5 relative z-10 list-none p-0 m-0 pl-6 sm:pl-8 md:pl-0">
             {PROCESS_STEPS.map((step, idx) => {
               const isHovered = hoveredCard === idx;
-              // Card 04 only receives permanent active orange border once wave entrance animation settles
               const hasOrangeBorder = isHovered || (step.isDefaultActive && isSettled && hoveredCard === null);
 
               return (
@@ -705,67 +697,56 @@ export const HowWeWorkSection: React.FC = () => {
                   <div
                     onMouseEnter={() => setHoveredCard(idx)}
                     onMouseLeave={() => setHoveredCard(null)}
-                    className={`group hww-card-inner relative flex flex-col justify-between h-full min-h-[290px] sm:min-h-[305px] p-5 sm:p-6 rounded-2xl bg-[#0C0D12]/95 border backdrop-blur-md cursor-default select-none transition-all duration-300 ${
+                    className={`group hww-card-inner relative flex flex-col justify-between h-full min-h-[290px] sm:min-h-[305px] p-5 sm:p-6 rounded-2xl bg-[#FDF8F5] border cursor-default select-none transition-all duration-300 ${
                       hasOrangeBorder
-                        ? 'border-[#FC6603] shadow-[0_0_28px_rgba(252,102,3,0.22)]'
-                        : 'border-white/[0.12] shadow-[0_4px_20px_rgba(0,0,0,0.5)]'
+                        ? 'border-[#FF5400] shadow-sm'
+                        : 'border-[#DAD1CC] shadow-sm'
                     }`}
                   >
-                    {/* Orange wave glow overlay (pulses across cards and stays on card 04) */}
+                    {/* Orange wave glow overlay */}
                     <div
                       aria-hidden="true"
                       className="hww-card-glow-overlay pointer-events-none absolute inset-0 rounded-2xl"
                     />
 
-                    {/* Top specular rim reflection */}
-                    <div
-                      aria-hidden="true"
-                      className="absolute top-0 inset-x-6 h-[1px] bg-gradient-to-r from-transparent via-white/15 to-transparent pointer-events-none"
-                    />
-
                     {/* ================= CARD HEADER ================= */}
                     <div>
                       <div className="flex items-center justify-between mb-4">
-                        {/* Upper-Left Icon with soft pop (200ms after card starts) */}
+                        {/* Upper-Left Icon */}
                         <div className="hww-inner-icon shrink-0">
                           <div
-                            className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl p-2 sm:p-2.5 flex items-center justify-center relative overflow-hidden transition-all duration-300 shadow-[inset_0_1px_1px_rgba(255,255,255,0.12)] ${
+                            className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl p-2 sm:p-2.5 flex items-center justify-center relative overflow-hidden transition-all duration-300 ${
                               hasOrangeBorder
-                                ? 'bg-[#FC6603]/[0.08] border border-[#FC6603]/50 shadow-[0_0_20px_rgba(252,102,3,0.25)]'
-                                : 'bg-white/[0.04] border border-white/[0.12] group-hover:border-[#FC6603]/40 group-hover:bg-[#FC6603]/[0.06] group-hover:shadow-[0_0_20px_rgba(252,102,3,0.2)]'
+                                ? 'bg-[#FF5400]/10 border border-[#FF5400]/40'
+                                : 'bg-[#F8EEE8] border border-[#DAD1CC] group-hover:border-[#FF5400]/40 group-hover:bg-[#FF5400]/10'
                             }`}
                           >
-                            {/* Specular top rim reflection */}
-                            <div
-                              aria-hidden="true"
-                              className="absolute top-0 inset-x-2 h-[1px] bg-gradient-to-r from-transparent via-white/25 to-transparent pointer-events-none"
-                            />
                             {step.renderIcon()}
                           </div>
                         </div>
 
                         {/* Upper-Right Small Step Number */}
-                        <span className="hww-inner-header font-mono text-xs sm:text-[13px] font-bold tracking-[0.16em] text-[#8E929E]">
+                        <span className="hww-inner-header font-mono text-xs sm:text-[13px] font-bold tracking-[0.16em] text-[#888888]">
                           {step.number}
                         </span>
                       </div>
 
                       {/* Title with reserved height for natural 2-line wrapping */}
                       <div className="hww-inner-header min-h-[58px] sm:min-h-[64px] flex items-center">
-                        <h3 className="font-display font-bold text-[25px] text-[#F4F4F5] tracking-[-0.02em] leading-[1.2]">
+                        <h3 className="font-display font-bold text-[25px] text-[#000000] tracking-[-0.02em] leading-[1.2]">
                           {step.title}
                         </h3>
                       </div>
 
                       {/* Description (+80ms delayed) */}
-                      <p className="hww-inner-desc font-sans text-[16px] text-[#A1A1AA] leading-relaxed mt-2.5">
+                      <p className="hww-inner-desc font-sans text-[16px] text-[#333333] leading-relaxed mt-2.5">
                         {step.description}
                       </p>
                     </div>
 
                     {/* ================= CARD FOOTER ================= */}
-                    <div className="hww-inner-divider pt-3.5 mt-5 border-t border-white/[0.08]">
-                      <span className="hww-inner-label font-mono text-[9.5px] sm:text-[10px] font-semibold text-[#8E929E] tracking-[0.18em] uppercase">
+                    <div className="hww-inner-divider pt-3.5 mt-5 border-t border-[#DAD1CC]">
+                      <span className="hww-inner-label font-mono text-[9.5px] sm:text-[10px] font-semibold text-[#888888] tracking-[0.18em] uppercase">
                         {step.bottomLabel}
                       </span>
                     </div>

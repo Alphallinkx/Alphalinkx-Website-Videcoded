@@ -73,7 +73,7 @@ export const Navbar: React.FC = () => {
           isVisible ? 'translate-y-0' : '-translate-y-full'
         } ${
           isScrolled
-            ? 'bg-[#0A0A0B]/85 backdrop-blur-xl border-b border-white/[0.08] py-3 shadow-2xl'
+            ? 'bg-[#F8EEE8]/92 backdrop-blur-xl border-b border-[#DAD1CC] py-3 shadow-[0_2px_12px_rgba(0,0,0,0.04)]'
             : 'bg-transparent py-5'
         }`}
       >
@@ -81,7 +81,7 @@ export const Navbar: React.FC = () => {
           {/* Logo on Left */}
           <Link
             href="/"
-            className="flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF5A1F] rounded-lg transition-transform hover:scale-105 duration-200 shrink-0"
+            className="flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF5400] rounded-lg transition-transform hover:scale-105 duration-200 shrink-0"
             aria-label="AlphaLinkx Home"
           >
             <img
@@ -92,12 +92,12 @@ export const Navbar: React.FC = () => {
           </Link>
 
           {/* Mobile Social Bar (positioned directly between Logo and Hamburger) */}
-          <div className="md:hidden flex items-center gap-1 sm:gap-1.5 px-2 py-1 rounded-full bg-[#121215]/85 border border-white/10 backdrop-blur-md shadow-lg">
+          <div className="md:hidden flex items-center gap-1 sm:gap-1.5 px-2 py-1 rounded-full bg-[#FDF8F5]/90 border border-[#DAD1CC] backdrop-blur-md shadow-sm">
             <a
               href="https://x.com/alphalinkx"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-7 h-7 rounded-full flex items-center justify-center text-[#9E9EA4] hover:text-[#FF5A1F] hover:bg-white/5 active:scale-95 transition-all"
+              className="w-7 h-7 rounded-full flex items-center justify-center text-[#555555] hover:text-[#FF5400] hover:bg-black/5 active:scale-95 transition-all"
               aria-label="X (Twitter)"
             >
               <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
@@ -108,7 +108,7 @@ export const Navbar: React.FC = () => {
               href="https://linkedin.com/company/alphalinkx"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-7 h-7 rounded-full flex items-center justify-center text-[#9E9EA4] hover:text-[#FF5A1F] hover:bg-white/5 active:scale-95 transition-all"
+              className="w-7 h-7 rounded-full flex items-center justify-center text-[#555555] hover:text-[#FF5400] hover:bg-black/5 active:scale-95 transition-all"
               aria-label="LinkedIn"
             >
               <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
@@ -119,7 +119,7 @@ export const Navbar: React.FC = () => {
               href="https://instagram.com/alphalinkx"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-7 h-7 rounded-full flex items-center justify-center text-[#9E9EA4] hover:text-[#FF5A1F] hover:bg-white/5 active:scale-95 transition-all"
+              className="w-7 h-7 rounded-full flex items-center justify-center text-[#555555] hover:text-[#FF5400] hover:bg-black/5 active:scale-95 transition-all"
               aria-label="Instagram"
             >
               <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
@@ -130,7 +130,7 @@ export const Navbar: React.FC = () => {
               href="https://github.com/alphalinkx"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-7 h-7 rounded-full flex items-center justify-center text-[#9E9EA4] hover:text-[#FF5A1F] hover:bg-white/5 active:scale-95 transition-all"
+              className="w-7 h-7 rounded-full flex items-center justify-center text-[#555555] hover:text-[#FF5400] hover:bg-black/5 active:scale-95 transition-all"
               aria-label="GitHub"
             >
               <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
@@ -142,11 +142,11 @@ export const Navbar: React.FC = () => {
           {/* Links Center (Desktop) */}
           <nav
             aria-label="Main Navigation"
-            className="hidden md:flex items-center gap-1 bg-[#111113]/80 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/[0.08]"
+            className="hidden md:flex items-center gap-1 bg-[#FDF8F5]/90 backdrop-blur-md px-3 py-1.5 rounded-full border border-[#DAD1CC] shadow-sm"
           >
             <a
               href="/#work"
-              className="px-4 py-1.5 font-mono text-[12px] font-medium tracking-[0.18em] uppercase text-white hover:text-[#FF5A1F] transition-colors duration-150"
+              className="px-4 py-1.5 font-mono text-[12px] font-semibold tracking-[0.18em] uppercase text-[#333333] hover:text-[#FF5400] transition-colors duration-150"
             >
               Work
             </a>
@@ -155,14 +155,14 @@ export const Navbar: React.FC = () => {
             <button
               type="button"
               onClick={() => setIsMegaMenuOpen(!isMegaMenuOpen)}
-              className={`px-4 py-1.5 font-mono text-[12px] font-medium tracking-[0.18em] uppercase flex items-center gap-1.5 transition-colors duration-150 ${
-                isMegaMenuOpen ? 'text-[#FF5A1F]' : 'text-white hover:text-[#FF5A1F]'
+              className={`px-4 py-1.5 font-mono text-[12px] font-semibold tracking-[0.18em] uppercase flex items-center gap-1.5 transition-colors duration-150 ${
+                isMegaMenuOpen ? 'text-[#FF5400]' : 'text-[#333333] hover:text-[#FF5400]'
               }`}
             >
               <span>Services</span>
               <svg
                 className={`w-3 h-3 transition-transform duration-200 ${
-                  isMegaMenuOpen ? 'rotate-180 text-[#FF5A1F]' : ''
+                  isMegaMenuOpen ? 'rotate-180 text-[#FF5400]' : ''
                 }`}
                 fill="none"
                 viewBox="0 0 24 24"
@@ -174,21 +174,21 @@ export const Navbar: React.FC = () => {
 
             <a
               href="/#about"
-              className="px-4 py-1.5 font-mono text-[12px] font-medium tracking-[0.18em] uppercase text-white hover:text-[#FF5A1F] transition-colors duration-150"
+              className="px-4 py-1.5 font-mono text-[12px] font-semibold tracking-[0.18em] uppercase text-[#333333] hover:text-[#FF5400] transition-colors duration-150"
             >
               About
             </a>
 
             <a
               href="/#process"
-              className="px-4 py-1.5 font-mono text-[12px] font-medium tracking-[0.18em] uppercase text-white hover:text-[#FF5A1F] transition-colors duration-150"
+              className="px-4 py-1.5 font-mono text-[12px] font-semibold tracking-[0.18em] uppercase text-[#333333] hover:text-[#FF5400] transition-colors duration-150"
             >
               Process
             </a>
 
             <a
               href="/#faq"
-              className="px-4 py-1.5 font-mono text-[12px] font-medium tracking-[0.18em] uppercase text-white hover:text-[#FF5A1F] transition-colors duration-150"
+              className="px-4 py-1.5 font-mono text-[12px] font-semibold tracking-[0.18em] uppercase text-[#333333] hover:text-[#FF5400] transition-colors duration-150"
             >
               FAQ
             </a>
@@ -198,7 +198,7 @@ export const Navbar: React.FC = () => {
           <div className="flex items-center gap-4">
             <BrandButton
               to="/contact"
-              variant="orange"
+              variant="black"
               dataCursor="CONNECT"
               className="hidden sm:inline-flex"
             >
@@ -209,17 +209,17 @@ export const Navbar: React.FC = () => {
             <button
               type="button"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-full bg-[#111113] border border-white/10 text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF5A1F]"
+              className="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-full bg-[#FDF8F5] border border-[#DAD1CC] text-[#000000] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#FF5400] shadow-sm"
               aria-label="Toggle navigation menu"
               aria-expanded={isMobileMenuOpen}
             >
               <span
-                className={`w-5 h-0.5 bg-white transition-all duration-200 ${
+                className={`w-5 h-0.5 bg-[#000000] transition-all duration-200 ${
                   isMobileMenuOpen ? 'rotate-45 translate-y-1' : '-translate-y-1'
                 }`}
               />
               <span
-                className={`w-5 h-0.5 bg-white transition-all duration-200 ${
+                className={`w-5 h-0.5 bg-[#000000] transition-all duration-200 ${
                   isMobileMenuOpen ? '-rotate-45 -translate-y-0.5' : 'translate-y-1'
                 }`}
               />
@@ -234,22 +234,22 @@ export const Navbar: React.FC = () => {
           role="dialog"
           aria-modal="true"
           aria-label="Services Mega Menu"
-          className="fixed inset-0 top-[76px] z-40 bg-[#0A0A0B]/95 backdrop-blur-2xl border-b border-white/[0.08] overflow-y-auto animate-in fade-in duration-200"
+          className="fixed inset-0 top-[76px] z-40 bg-[#F8EEE8]/98 backdrop-blur-2xl border-b border-[#DAD1CC] overflow-y-auto animate-in fade-in duration-200 shadow-xl"
         >
           <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-12">
-            <div className="flex items-center justify-between pb-6 mb-8 border-b border-white/10">
+            <div className="flex items-center justify-between pb-6 mb-8 border-b border-[#DAD1CC]">
               <div>
-                <p className="font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-[#FF5A1F]">
+                <p className="font-mono text-[12px] font-bold uppercase tracking-[0.18em] text-[#FF5400]">
                   // CORE CAPABILITIES
                 </p>
-                <h3 className="font-display text-2xl font-bold tracking-[-0.01em] text-white mt-1">
+                <h3 className="font-display text-2xl font-bold tracking-[-0.01em] text-[#000000] mt-1">
                   Engineered for Search, AI, and Revenue Conversion
                 </h3>
               </div>
               <button
                 type="button"
                 onClick={() => setIsMegaMenuOpen(false)}
-                className="font-mono text-[12px] font-medium text-[#8A8A8E] hover:text-white uppercase tracking-[0.18em] px-3 py-1.5 rounded border border-white/10"
+                className="font-mono text-[12px] font-medium text-[#333333] hover:text-[#000000] uppercase tracking-[0.18em] px-3.5 py-1.5 rounded-full border border-[#DAD1CC] bg-[#FDF8F5] hover:bg-[#F3EEEB] transition-colors"
               >
                 Close ✕
               </button>
@@ -261,22 +261,22 @@ export const Navbar: React.FC = () => {
                   key={cat.id}
                   href={`/services/${cat.slug}`}
                   onClick={() => setIsMegaMenuOpen(false)}
-                  className="group flex flex-col p-5 rounded-2xl bg-[#111113]/60 border border-white/[0.07] hover:border-[#FF5A1F]/50 hover:bg-[#161619] transition-all duration-200"
+                  className="group flex flex-col p-5 rounded-2xl bg-[#FDF8F5] border border-[#DAD1CC] hover:border-[#FF5400] hover:bg-[#F3EEEB] transition-all duration-200 shadow-sm"
                 >
-                  <span className="font-mono text-[12px] font-medium text-[#FF5A1F] tracking-[0.18em]">
+                  <span className="font-mono text-[12px] font-bold text-[#FF5400] tracking-[0.18em]">
                     {cat.number}
                   </span>
-                  <h4 className="font-display font-bold text-base text-white tracking-[-0.01em] mt-2 group-hover:text-[#FF5A1F] transition-colors">
+                  <h4 className="font-display font-bold text-base text-[#000000] tracking-[-0.01em] mt-2 group-hover:text-[#FF5400] transition-colors">
                     {cat.name}
                   </h4>
-                  <p className="font-sans text-[15px] text-[#C2C2C2] mt-2 line-clamp-2 leading-[1.6]">
+                  <p className="font-sans text-[15px] text-[#333333] mt-2 line-clamp-2 leading-[1.6]">
                     {cat.description}
                   </p>
-                  <div className="mt-4 pt-3 border-t border-white/5 flex flex-wrap gap-1.5">
+                  <div className="mt-4 pt-3 border-t border-[#DAD1CC]/60 flex flex-wrap gap-1.5">
                     {cat.chips.slice(0, 3).map((chip) => (
                       <span
                         key={chip}
-                        className="text-[11px] font-mono font-medium uppercase tracking-[0.18em] text-[#8A8A8E] bg-white/[0.04] px-2 py-0.5 rounded"
+                        className="text-[11px] font-mono font-medium uppercase tracking-[0.18em] text-[#555555] bg-[#ECEAE5] px-2 py-0.5 rounded"
                       >
                         {chip}
                       </span>
@@ -286,18 +286,18 @@ export const Navbar: React.FC = () => {
               ))}
             </div>
 
-            <div className="mt-10 p-6 rounded-2xl bg-gradient-to-r from-[#FF5A1F]/10 via-transparent to-transparent border border-[#FF5A1F]/20 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="mt-10 p-6 rounded-2xl bg-[#FDF8F5] border border-[#DAD1CC] flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm">
               <div>
-                <span className="font-mono text-[12px] font-medium text-[#FF5A1F] uppercase tracking-[0.18em]">
+                <span className="font-mono text-[12px] font-bold text-[#FF5400] uppercase tracking-[0.18em]">
                   Need a full-stack growth retainer?
                 </span>
-                <p className="font-sans text-[15px] sm:text-[16px] text-white mt-1 leading-[1.6]">
+                <p className="font-sans text-[15px] sm:text-[16px] text-[#333333] mt-1 leading-[1.6]">
                   We unite web engineering, AI answer optimization, and paid acquisition into one compounding machine.
                 </p>
               </div>
               <BrandButton
                 to="/contact"
-                variant="orange"
+                variant="black"
                 onClick={() => setIsMegaMenuOpen(false)}
               >
                 Request Growth Audit
@@ -312,23 +312,23 @@ export const Navbar: React.FC = () => {
         <div
           role="dialog"
           aria-modal="true"
-          className="fixed inset-0 z-40 bg-[#0A0A0B] flex flex-col justify-between px-8 pt-28 pb-12 overflow-y-auto animate-in fade-in duration-200"
+          className="fixed inset-0 z-40 bg-[#F8EEE8] flex flex-col justify-between px-8 pt-28 pb-12 overflow-y-auto animate-in fade-in duration-200"
         >
           <div className="flex flex-col gap-6">
-            <span className="font-mono text-[12px] font-medium text-[#FF5A1F] tracking-[0.18em] uppercase">
+            <span className="font-mono text-[12px] font-bold text-[#FF5400] tracking-[0.18em] uppercase">
               // ALPHALINKX MENU
             </span>
 
             <a
               href="/#work"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="font-display text-4xl font-extrabold text-white hover:text-[#FF5A1F] tracking-[-0.02em] transition-colors"
+              className="font-display text-4xl font-extrabold text-[#000000] hover:text-[#FF5400] tracking-[-0.02em] transition-colors"
             >
               Work
             </a>
 
-            <div className="flex flex-col gap-3 py-2 border-y border-white/10">
-              <span className="font-mono text-[12px] font-medium text-[#8A8A8E] tracking-[0.18em] uppercase">
+            <div className="flex flex-col gap-3 py-2 border-y border-[#DAD1CC]">
+              <span className="font-mono text-[12px] font-medium text-[#555555] tracking-[0.18em] uppercase">
                 Services:
               </span>
               {SERVICE_CATEGORIES.map((cat) => (
@@ -336,10 +336,10 @@ export const Navbar: React.FC = () => {
                   key={cat.id}
                   href={`/services/${cat.slug}`}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="font-display text-xl text-white/90 hover:text-[#FF5A1F] pl-3 flex items-center justify-between"
+                  className="font-display text-xl text-[#000000] hover:text-[#FF5400] pl-3 flex items-center justify-between"
                 >
                   <span>{cat.name}</span>
-                  <span className="font-mono text-[12px] font-medium text-[#FF5A1F] tracking-[0.18em]">{cat.number}</span>
+                  <span className="font-mono text-[12px] font-bold text-[#FF5400] tracking-[0.18em]">{cat.number}</span>
                 </Link>
               ))}
             </div>
@@ -347,7 +347,7 @@ export const Navbar: React.FC = () => {
             <a
               href="/#about"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="font-display text-4xl font-extrabold text-white hover:text-[#FF5A1F] tracking-[-0.02em] transition-colors"
+              className="font-display text-4xl font-extrabold text-[#000000] hover:text-[#FF5400] tracking-[-0.02em] transition-colors"
             >
               About
             </a>
@@ -355,7 +355,7 @@ export const Navbar: React.FC = () => {
             <a
               href="/#process"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="font-display text-4xl font-extrabold text-white hover:text-[#FF5A1F] tracking-[-0.02em] transition-colors"
+              className="font-display text-4xl font-extrabold text-[#000000] hover:text-[#FF5400] tracking-[-0.02em] transition-colors"
             >
               Process
             </a>
@@ -363,23 +363,23 @@ export const Navbar: React.FC = () => {
             <a
               href="/#faq"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="font-display text-4xl font-extrabold text-white hover:text-[#FF5A1F] tracking-[-0.02em] transition-colors"
+              className="font-display text-4xl font-extrabold text-[#000000] hover:text-[#FF5400] tracking-[-0.02em] transition-colors"
             >
               FAQ
             </a>
           </div>
 
-          <div className="pt-8 border-t border-white/10 flex flex-col gap-4">
+          <div className="pt-8 border-t border-[#DAD1CC] flex flex-col gap-4">
             <BrandButton
               to="/contact"
-              variant="orange"
+              variant="black"
               dataCursor="CONNECT"
               onClick={() => setIsMobileMenuOpen(false)}
               className="w-full justify-between"
             >
               Let&apos;s Talk
             </BrandButton>
-            <div className="flex items-center justify-between font-mono text-[12px] font-medium text-[#8A8A8E] tracking-[0.18em]">
+            <div className="flex items-center justify-between font-mono text-[12px] font-medium text-[#555555] tracking-[0.18em]">
               <span>{BRAND.email}</span>
               <span>{BRAND.est}</span>
             </div>

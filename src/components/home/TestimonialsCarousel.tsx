@@ -209,37 +209,18 @@ export const TestimonialsCarousel: React.FC = () => {
       ref={sectionRef}
       id="testimonials"
       aria-labelledby="testimonials-title"
-      className="relative isolation-isolate overflow-hidden bg-[#070708] text-[#F7F7F5] border-t border-white/[0.06]"
+      className="relative isolation-isolate overflow-hidden bg-[#F8EEE8] text-[#000000] border-t border-[#DAD1CC]"
     >
-      {/* Multi-layered Atmospheric Orange Glow Gradients over Obsidian Black */}
+      {/* Subtle Noise Texture Overlay */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: [
-            'radial-gradient(ellipse 58% 58% at 74% 48%, rgba(252, 102, 3, 0.22) 0%, rgba(235, 84, 0, 0.09) 38%, rgba(160, 48, 0, 0.025) 62%, transparent 78%)',
-            'radial-gradient(ellipse 46% 48% at 24% 52%, rgba(252, 102, 3, 0.11) 0%, rgba(252, 102, 3, 0.035) 45%, transparent 74%)',
-            'linear-gradient(to top, rgba(252, 102, 3, 0.08) 0%, transparent 32%)',
-          ].join(', '),
-        }}
-      />
-
-      {/* Focused Soft Spotlight Halo Behind Stacked Cards */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 right-[4%] lg:right-[7%] -translate-y-1/2 w-[360px] sm:w-[480px] lg:w-[560px] h-[300px] sm:h-[380px] rounded-full bg-[#FC6603]/[0.13] blur-[95px]"
-      />
-
-      {/* Subtle Noise Texture Overlay (prevents gradient banding & adds tactile depth) */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 pointer-events-none opacity-[0.035]"
+        className="absolute inset-0 pointer-events-none opacity-[0.03]"
         style={
           noiseUrl
             ? {
-                backgroundImage: `url("${noiseUrl}")`,
-                backgroundRepeat: 'repeat',
-              }
+              backgroundImage: `url("${noiseUrl}")`,
+              backgroundRepeat: 'repeat',
+            }
             : undefined
         }
       />
@@ -266,23 +247,23 @@ export const TestimonialsCarousel: React.FC = () => {
             {/* Loop Group 1 */}
             <div className="flex max-md:flex-row max-md:gap-[28px] max-md:pr-[28px] md:flex-col md:items-center md:gap-8 md:pb-8">
               <span
-                className="block font-display font-extrabold text-[#646464] tracking-[0em] leading-none select-none
+                className="block font-display font-extrabold text-[#DAD1CC] tracking-[0em] leading-none select-none
                   max-md:text-[56px] max-md:[writing-mode:horizontal-tb]
                   md:text-[clamp(74px,7.2vw,128px)] md:[writing-mode:vertical-rl]"
               >
                 TESTIMONIALS
               </span>
-              <b className="block font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[clamp(56px,5.5vw,94px)] my-1 md:my-3">
+              <b className="block font-normal text-[#FF5400] leading-none select-none max-md:text-[42px] md:text-[clamp(56px,5.5vw,94px)] my-1 md:my-3">
                 /
               </b>
               <span
-                className="block font-display font-extrabold text-[#646464] tracking-[0em] leading-none select-none
+                className="block font-display font-extrabold text-[#DAD1CC] tracking-[0em] leading-none select-none
                   max-md:text-[56px] max-md:[writing-mode:horizontal-tb]
                   md:text-[clamp(74px,7.2vw,128px)] md:[writing-mode:vertical-rl]"
               >
                 TESTIMONIALS
               </span>
-              <b className="block font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[clamp(56px,5.5vw,94px)] my-1 md:my-3">
+              <b className="block font-normal text-[#FF5400] leading-none select-none max-md:text-[42px] md:text-[clamp(56px,5.5vw,94px)] my-1 md:my-3">
                 /
               </b>
             </div>
@@ -293,23 +274,23 @@ export const TestimonialsCarousel: React.FC = () => {
               aria-hidden="true"
             >
               <span
-                className="block font-display font-extrabold text-[#646464] tracking-[0em] leading-none select-none
+                className="block font-display font-extrabold text-[#DAD1CC] tracking-[0em] leading-none select-none
                   max-md:text-[56px] max-md:[writing-mode:horizontal-tb]
                   md:text-[clamp(74px,7.2vw,128px)] md:[writing-mode:vertical-rl]"
               >
                 TESTIMONIALS
               </span>
-              <b className="block font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[clamp(56px,5.5vw,94px)] my-1 md:my-3">
+              <b className="block font-normal text-[#FF5400] leading-none select-none max-md:text-[42px] md:text-[clamp(56px,5.5vw,94px)] my-1 md:my-3">
                 /
               </b>
               <span
-                className="block font-display font-extrabold text-[#646464] tracking-[0em] leading-none select-none
+                className="block font-display font-extrabold text-[#DAD1CC] tracking-[0em] leading-none select-none
                   max-md:text-[56px] max-md:[writing-mode:horizontal-tb]
                   md:text-[clamp(74px,7.2vw,128px)] md:[writing-mode:vertical-rl]"
               >
                 TESTIMONIALS
               </span>
-              <b className="block font-normal text-[#FC6603] leading-none select-none max-md:text-[42px] md:text-[clamp(56px,5.5vw,94px)] my-1 md:my-3">
+              <b className="block font-normal text-[#FF5400] leading-none select-none max-md:text-[42px] md:text-[clamp(56px,5.5vw,94px)] my-1 md:my-3">
                 /
               </b>
             </div>
@@ -325,35 +306,35 @@ export const TestimonialsCarousel: React.FC = () => {
                 ZONE 2: INWARD SECTION INTRODUCTION & WRITE A REVIEW BUTTON
                ========================================================================= */}
             <motion.header
-              initial={{ opacity: 0, y: 32, filter: 'blur(6px)' }}
-              whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
               className="lg:col-span-5 flex flex-col items-start pt-16 md:pt-0 pb-4 lg:pb-6 max-w-[480px]"
             >
               {/* Eyebrow */}
-              <p className="font-mono text-[11px] sm:text-[12px] font-semibold tracking-[0.2em] text-[#FC6603] uppercase mb-3.5 sm:mb-4">
+              <p className="font-mono text-[11px] sm:text-[12px] font-semibold tracking-[0.2em] text-[#FF5400] uppercase mb-3.5 sm:mb-4">
                 // CLIENT STORIES
               </p>
 
               {/* Bold Three-Line Display Heading */}
               <h2
                 id="testimonials-title"
-                className="font-display font-extrabold text-[38px] sm:text-[48px] md:text-[54px] lg:text-[46px] xl:text-[56px] 2xl:text-[62px] leading-[1.03] tracking-[-0.03em] text-white mb-5 sm:mb-6"
+                className="font-display font-extrabold text-[38px] sm:text-[48px] md:text-[54px] lg:text-[46px] xl:text-[56px] 2xl:text-[62px] leading-[1.03] tracking-[-0.03em] text-[#000000] mb-5 sm:mb-6"
               >
                 <span className="block whitespace-nowrap">Our clients</span>
                 <span className="block whitespace-nowrap">don&apos;t just stay.</span>
-                <span className="block whitespace-nowrap text-[#FC6603]">They grow.</span>
+                <span className="block whitespace-nowrap text-[#FF5400]">They grow.</span>
               </h2>
 
-              {/* Expanded Supporting Description (Consistent 16px) */}
-              <p className="font-sans text-[16px] text-[#A1A1AA] leading-[1.65] max-w-[420px] mb-8 sm:mb-9">
+              {/* Expanded Supporting Description */}
+              <p className="font-sans text-[16px] text-[#333333] leading-[1.65] max-w-[420px] mb-8 sm:mb-9">
                 A closer look at the experience of working with us — from clear strategy and thoughtful design to seamless engineering that helps your business grow with confidence.
               </p>
 
-              {/* CTA Button: Write a review (Site-consistent Glowing Orange Pill) */}
+              {/* CTA Button: Write a review */}
               <div>
-                <BrandButton to="/contact" variant="orange">
+                <BrandButton to="/contact" variant="black">
                   Write a review
                 </BrandButton>
               </div>
@@ -364,8 +345,8 @@ export const TestimonialsCarousel: React.FC = () => {
              ========================================================================= */}
             <motion.div
               ref={reviewAreaRef}
-              initial={{ opacity: 0, y: 36, filter: 'blur(6px)' }}
-              whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
               role="region"
@@ -402,12 +383,12 @@ export const TestimonialsCarousel: React.FC = () => {
                   const isRear = slot === 2;
                   const isExited = slot === REVIEWS.length - 1;
 
-                  // Color themes matching the approved design
+                  // Two26 Color-blocked layered card styling
                   const cardTheme = isFront
-                    ? 'bg-[#F5EFE5] text-[#191919] border border-white/40 shadow-[0_14px_30px_rgba(0,0,0,0.2)]'
+                    ? 'bg-[#FDF8F5] text-[#000000] border border-[#DAD1CC] shadow-sm'
                     : isMiddle
-                      ? 'bg-[#B9B2A8] text-[#71695F] border border-white/20 shadow-[0_8px_20px_rgba(0,0,0,0.12)]'
-                      : 'bg-[#292827] text-[#77736E] border border-white/[0.08] shadow-none';
+                      ? 'bg-[#ECEAE5] text-[#333333] border border-[#DAD1CC]'
+                      : 'bg-[#F3EEEB] text-[#555555] border border-[#DAD1CC] shadow-none';
 
                   return (
                     <motion.article
@@ -463,13 +444,13 @@ export const TestimonialsCarousel: React.FC = () => {
                       {/* Subtle Paper Texture Overlay */}
                       <div
                         aria-hidden="true"
-                        className="absolute inset-0 pointer-events-none opacity-[0.04]"
+                        className="absolute inset-0 pointer-events-none opacity-[0.03]"
                         style={
                           noiseUrl
                             ? {
-                                backgroundImage: `url("${noiseUrl}")`,
-                                backgroundRepeat: 'repeat',
-                              }
+                              backgroundImage: `url("${noiseUrl}")`,
+                              backgroundRepeat: 'repeat',
+                            }
                             : undefined
                         }
                       />
@@ -477,14 +458,14 @@ export const TestimonialsCarousel: React.FC = () => {
                       {/* Small Orange Curved Accent in Bottom-Right Corner (Fades out when not front) */}
                       <div
                         aria-hidden="true"
-                        className={`absolute bottom-0 right-0 w-[9cqw] h-[9cqw] bg-[#FC6603] rounded-tl-full pointer-events-none transition-opacity duration-500 ${isFront ? 'opacity-100' : 'opacity-0'
+                        className={`absolute bottom-0 right-0 w-[9cqw] h-[9cqw] bg-[#FF5400] rounded-tl-full pointer-events-none transition-opacity duration-500 ${isFront ? 'opacity-100' : 'opacity-0'
                           }`}
                       />
 
                       {/* Card Top Row: Quotation Icon & Counter */}
                       <div className="flex items-center justify-between mb-[3cqw] relative z-10">
                         <svg
-                          className={`w-[8cqw] h-[5.5cqw] transition-colors duration-500 ${isFront ? 'fill-[#FC6603]' : 'fill-[#77736E]'
+                          className={`w-[8cqw] h-[5.5cqw] transition-colors duration-500 ${isFront ? 'fill-[#FF5400]' : 'fill-[#DAD1CC]'
                             }`}
                           viewBox="0 0 52 42"
                           aria-hidden="true"
@@ -492,7 +473,7 @@ export const TestimonialsCarousel: React.FC = () => {
                           <path d="M0 42V21C0 8 8 1 22 0v10C15 11 12 15 12 21h10v21H0zm30 0V21C30 8 38 1 52 0v10c-7 1-10 5-10 11h10v21H30z" />
                         </svg>
                         <span
-                          className={`font-mono text-[2.35cqw] transition-colors duration-500 ${isFront ? 'text-[#D65300]' : 'text-[#77736E]'
+                          className={`font-mono text-[2.35cqw] font-semibold transition-colors duration-500 ${isFront ? 'text-[#FF5400]' : 'text-[#888888]'
                             }`}
                         >
                           {pad(i + 1)} / {pad(REVIEWS.length)}
@@ -500,37 +481,39 @@ export const TestimonialsCarousel: React.FC = () => {
                       </div>
 
                       {/* Category Label */}
-                      <p className="font-mono font-bold text-[2.6cqw] leading-[1.2] tracking-[0.08em] uppercase mb-[1.8cqw] relative z-10">
+                      <p className={`font-mono font-bold text-[2.6cqw] leading-[1.2] tracking-[0.08em] uppercase mb-[1.8cqw] relative z-10 ${
+                        isFront ? 'text-[#FF5400]' : 'text-[#666666]'
+                      }`}>
                         {r.category}
                       </p>
 
                       {/* Testimonial Quote */}
-                      <blockquote className="font-display font-medium text-[6.5cqw] leading-[1.1] tracking-[-0.04em] mb-[4cqw] max-w-full relative z-10">
+                      <blockquote className="font-display font-medium text-[6.5cqw] leading-[1.1] tracking-[-0.04em] mb-[4cqw] max-w-full relative z-10 text-[#000000]">
                         “{r.quote}”
                       </blockquote>
 
                       {/* Author Footer */}
-                      <footer className="mt-auto flex items-center gap-[3.4cqw] border-t border-[#262626]/20 pt-[3.5cqw] relative z-10">
+                      <footer className="mt-auto flex items-center gap-[3.4cqw] border-t border-[#DAD1CC] pt-[3.5cqw] relative z-10">
                         {/* Initials Avatar */}
                         <div
                           aria-hidden="true"
-                          className="w-[7.8cqw] h-[7.8cqw] shrink-0 bg-[#232323] text-white rounded-full grid place-items-center text-[2.6cqw] font-bold"
+                          className="w-[7.8cqw] h-[7.8cqw] shrink-0 bg-[#000000] text-white rounded-full grid place-items-center text-[2.6cqw] font-bold"
                         >
                           {r.initials}
                         </div>
 
                         {/* Name & Role */}
-                        <div className="border-l border-[#262626]/20 pl-[3.4cqw]">
-                          <div className="font-sans font-bold text-[3.2cqw] leading-tight mb-[0.5cqw] text-inherit">
+                        <div className="border-l border-[#DAD1CC] pl-[3.4cqw]">
+                          <div className="font-sans font-bold text-[3.2cqw] leading-tight mb-[0.5cqw] text-[#000000]">
                             {r.name}
                           </div>
-                          <div className="font-sans text-[2.6cqw] text-[#726C65] leading-tight">
+                          <div className="font-sans text-[2.6cqw] text-[#666666] leading-tight">
                             {r.role}
                           </div>
                         </div>
 
                         {/* Illustrative Sample Label */}
-                        <span className="ml-auto font-mono text-[2cqw] tracking-[0.035em] text-[#766E64] text-right whitespace-nowrap leading-[1.4]">
+                        <span className="ml-auto font-mono text-[2cqw] tracking-[0.035em] text-[#888888] text-right whitespace-nowrap leading-[1.4]">
                           ILLUSTRATIVE REVIEW
                         </span>
                       </footer>
@@ -545,7 +528,7 @@ export const TestimonialsCarousel: React.FC = () => {
               <div className="flex items-center gap-3 sm:gap-5 mt-10 sm:mt-12">
                 {/* Counter: 01 / 05 */}
                 <span
-                  className="font-mono text-[12px] text-[#A1A1AA] whitespace-nowrap min-w-[58px] select-none"
+                  className="font-mono text-[12px] text-[#666666] whitespace-nowrap min-w-[58px] select-none"
                   aria-hidden="true"
                 >
                   {pad(index + 1)} / {pad(REVIEWS.length)}
@@ -568,16 +551,16 @@ export const TestimonialsCarousel: React.FC = () => {
                         aria-selected={isCurrent}
                         aria-label={`Show review ${i + 1}: ${r.category.toLowerCase()}`}
                         onClick={() => changeReview(i, true)}
-                        className="group relative h-6 flex-1 bg-transparent border-0 py-2.5 px-0 cursor-pointer focus-visible:outline-2 focus-visible:outline-[#FC6603] focus-visible:outline-offset-2"
+                        className="group relative h-6 flex-1 bg-transparent border-0 py-2.5 px-0 cursor-pointer focus-visible:outline-2 focus-visible:outline-[#FF5400] focus-visible:outline-offset-2"
                       >
                         {/* Base Track */}
-                        <span className="absolute left-0 right-0 top-2.5 h-1 bg-[#454544] rounded-full transition-colors group-hover:bg-[#5A5A58]" />
+                        <span className="absolute left-0 right-0 top-2.5 h-1 bg-[#DAD1CC] rounded-full transition-colors group-hover:bg-[#C5BCB6]" />
                         {/* Active Progress Bar (updated via ref so hover/focus re-renders never reset progress) */}
                         <span
                           ref={(el) => {
                             barRefs.current[i] = el;
                           }}
-                          className="block h-1 relative origin-left bg-[#FC6603] rounded-full"
+                          className="block h-1 relative origin-left bg-[#FF5400] rounded-full"
                         />
                       </button>
                     );
@@ -593,7 +576,7 @@ export const TestimonialsCarousel: React.FC = () => {
                       changeReview((index + REVIEWS.length - 1) % REVIEWS.length, true)
                     }
                     aria-label="Previous review"
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-[#888888] bg-transparent text-[#EEEEEE] grid place-items-center transition-all duration-200 hover:bg-white/[0.08] hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-[#FC6603] focus-visible:outline-offset-2"
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-[#DAD1CC] bg-[#FDF8F5] text-[#000000] grid place-items-center transition-all duration-200 hover:bg-[#F3EEEB] hover:border-[#FF5400] hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-[#FF5400] focus-visible:outline-offset-2"
                   >
                     <svg
                       className="w-4 h-4"
@@ -619,9 +602,9 @@ export const TestimonialsCarousel: React.FC = () => {
                           ? 'Play animations'
                           : 'Pause animations'
                     }
-                    className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full grid place-items-center transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-[#FC6603] focus-visible:outline-offset-2 ${manualPause
-                      ? 'bg-transparent border border-[#888888] text-white hover:bg-white/[0.08]'
-                      : 'bg-[#FC6603] border border-[#FC6603] text-white shadow-[0_0_15px_rgba(252,102,3,0.3)]'
+                    className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full grid place-items-center transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-[#FF5400] focus-visible:outline-offset-2 ${manualPause
+                      ? 'bg-[#FDF8F5] border border-[#DAD1CC] text-[#000000] hover:bg-[#F3EEEB]'
+                      : 'bg-[#000000] border border-[#000000] text-white hover:bg-[#1A1A1A]'
                       }`}
                   >
                     {manualPause ? (
@@ -652,7 +635,7 @@ export const TestimonialsCarousel: React.FC = () => {
                     type="button"
                     onClick={() => changeReview((index + 1) % REVIEWS.length, true)}
                     aria-label="Next review"
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-[#888888] bg-transparent text-[#EEEEEE] grid place-items-center transition-all duration-200 hover:bg-white/[0.08] hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-[#FC6603] focus-visible:outline-offset-2"
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border border-[#DAD1CC] bg-[#FDF8F5] text-[#000000] grid place-items-center transition-all duration-200 hover:bg-[#F3EEEB] hover:border-[#FF5400] hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-[#FF5400] focus-visible:outline-offset-2"
                   >
                     <svg
                       className="w-4 h-4"

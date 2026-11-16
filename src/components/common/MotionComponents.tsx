@@ -12,8 +12,8 @@ export const smoothEase = [0.16, 1, 0.3, 1] as const;
 export function SmoothReveal({
   children,
   delay = 0,
-  y = 36,
-  duration = 0.85,
+  y = 24,
+  duration = 0.6,
   className = "",
   amount = 0.15,
 }: {
@@ -30,8 +30,8 @@ export function SmoothReveal({
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y, filter: 'blur(6px)' }}
-      whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+      initial={{ opacity: 0, y }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount }}
       transition={{ duration, ease: smoothEase, delay }}
     >
@@ -79,8 +79,8 @@ export function StaggerContainer({
 
 export function StaggerItem({
   children,
-  y = 32,
-  duration = 0.8,
+  y = 20,
+  duration = 0.55,
   className = "",
 }: {
   children: ReactNode;
@@ -95,11 +95,10 @@ export function StaggerItem({
     <motion.div
       className={className}
       variants={{
-        hidden: { opacity: 0, y, filter: 'blur(6px)' },
+        hidden: { opacity: 0, y },
         visible: {
           opacity: 1,
           y: 0,
-          filter: 'blur(0px)',
           transition: { duration, ease: smoothEase },
         },
       }}
@@ -180,26 +179,25 @@ export function MagneticButton({
   const isInternalRoute = href.startsWith("/") && !href.startsWith("/#") && !href.includes("#");
 
   const styles =
-    variant === "primary"
+    variant === "black"
       ? {
           container:
-            "bg-gradient-to-r from-[#FF5A1F] via-[#FF6926] to-[#FC6603] text-white shadow-[0_4px_24px_rgba(255,90,31,0.45)] hover:shadow-[0_6px_32px_rgba(255,90,31,0.7)] hover:brightness-105 focus-visible:ring-[#FF5A1F]",
-          badge: "bg-white text-[#FC6603] shadow-[0_2px_8px_rgba(0,0,0,0.2)]",
-          arrow: "text-[#FC6603]",
-        }
-      : variant === "black"
-      ? {
-          container:
-            "bg-[#0A0A0B] text-white border border-white/15 shadow-[0_6px_24px_rgba(0,0,0,0.45)] hover:bg-[#141416] hover:border-[#FF5A1F]/60 hover:shadow-[0_8px_28px_rgba(255,90,31,0.3)] focus-visible:ring-[#FF5A1F]",
-          badge: "bg-[#FF5A1F] text-white shadow-[0_0_14px_rgba(255,90,31,0.5)]",
+            "bg-[#000000] text-white border border-[#000000] hover:bg-[#1A1A1A] hover:border-[#FF5400] shadow-sm focus-visible:ring-[#FF5400]",
+          badge: "bg-[#FF5400] text-white shadow-sm",
           arrow: "text-white",
         }
-      : {
-          // White pill with theme orange circular badge (user requested)
+      : variant === "white"
+        ? {
           container:
-            "bg-white text-[#0A0A0B] border border-white/20 shadow-[0_4px_20px_rgba(255,255,255,0.18)] hover:bg-[#F4F4F5] hover:shadow-[0_8px_26px_rgba(255,255,255,0.3)] focus-visible:ring-white",
-          badge: "bg-[#FF5A1F] text-white shadow-[0_0_14px_rgba(255,90,31,0.45)]",
+            "bg-[#FDF8F5] text-[#000000] border border-[#DAD1CC] hover:bg-[#F3EEEB] hover:border-[#FF5400] shadow-sm focus-visible:ring-[#000000]",
+          badge: "bg-[#000000] text-white shadow-sm",
           arrow: "text-white",
+        }
+        : {
+          container:
+            "bg-[#FF5400] text-white border border-[#FF5400] hover:bg-[#EB4D00] shadow-sm focus-visible:ring-[#FF5400]",
+          badge: "bg-white text-[#FF5400] shadow-sm",
+          arrow: "text-[#FF5400]",
         };
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {

@@ -20,19 +20,16 @@ export const InquirySection: React.FC = () => {
 
   const stepVariants = {
     enter: (dir: number) => ({
-      x: dir > 0 ? 32 : -32,
+      x: dir > 0 ? 24 : -24,
       opacity: 0,
-      filter: 'blur(4px)',
     }),
     center: {
       x: 0,
       opacity: 1,
-      filter: 'blur(0px)',
     },
     exit: (dir: number) => ({
-      x: dir > 0 ? -32 : 32,
+      x: dir > 0 ? -24 : 24,
       opacity: 0,
-      filter: 'blur(4px)',
     }),
   };
 
@@ -276,22 +273,16 @@ export const InquirySection: React.FC = () => {
       ref={sectionRef}
       id="contact"
       aria-label="Multi-Step Project Inquiry"
-      className="relative py-20 bg-[#0A0A0B] overflow-hidden"
+      className="relative py-20 bg-[#F8EEE8] border-b border-[#DAD1CC] overflow-hidden"
     >
       {/* Subtle Technical Dot Grid Matrix */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.22]"
+        className="pointer-events-none absolute inset-0 opacity-[0.2]"
         style={{
-          backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.22) 1px, transparent 1px)',
+          backgroundImage: 'radial-gradient(rgba(0, 0, 0, 0.15) 1px, transparent 1px)',
           backgroundSize: '28px 28px',
         }}
-      />
-
-      {/* Soft Static Corner/Top Vignette */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_70%_at_50%_40%,transparent_25%,rgba(10,10,11,0.88)_100%)]"
       />
 
       {/* Interactive GPU Mouse-Tracking Orange Glow Layer (pure translate3d, zero repaints) */}
@@ -299,14 +290,14 @@ export const InquirySection: React.FC = () => {
         ref={glowWrapRef}
         aria-hidden="true"
         className="pointer-events-none absolute top-0 left-0 will-change-transform transition-opacity duration-500"
-        style={{ opacity: 0.72 }}
+        style={{ opacity: 0.45 }}
       >
         {/* Outer atmospheric orange halo */}
         <div
           className="w-[780px] h-[780px] -ml-[390px] -mt-[390px] rounded-full"
           style={{
             background:
-              'radial-gradient(circle, rgba(252,102,3,0.22) 0%, rgba(255,90,31,0.10) 32%, rgba(255,90,31,0.03) 56%, transparent 72%)',
+              'radial-gradient(circle, rgba(255,84,0,0.14) 0%, rgba(255,84,0,0.06) 32%, rgba(255,84,0,0.015) 56%, transparent 72%)',
           }}
         />
         {/* Inner warm core hotspot */}
@@ -314,51 +305,46 @@ export const InquirySection: React.FC = () => {
           className="absolute top-0 left-0 w-[340px] h-[340px] -ml-[170px] -mt-[170px] rounded-full"
           style={{
             background:
-              'radial-gradient(circle, rgba(255,138,61,0.18) 0%, rgba(252,102,3,0.06) 45%, transparent 72%)',
+              'radial-gradient(circle, rgba(255,84,0,0.12) 0%, rgba(255,84,0,0.04) 45%, transparent 72%)',
           }}
         />
       </div>
 
       <div id="free-audit" className="absolute -top-24 left-0 pointer-events-none" aria-hidden="true" />
       <div className="relative z-10 max-w-[1400px] mx-auto px-6 md:px-10">
-        {/* Massive Headline with Mouse-Follow Gradient */}
+        {/* Headline */}
         <motion.div
-          initial={{ opacity: 0, y: 32, filter: 'blur(6px)' }}
-          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.15 }}
           transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
           className="text-center mb-16"
         >
-          <span className="font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-[#FF5A1F] block mb-3">
+          <span className="font-mono text-[12px] font-medium uppercase tracking-[0.18em] text-[#FF5400] block mb-3">
             // KICKOFF SPRINT
           </span>
           <h2
             ref={headlineRef}
             onMouseMove={handleHeadlineMouseMove}
-            className="font-display font-extrabold text-5xl sm:text-7xl md:text-8xl tracking-[-0.03em] uppercase select-none transition-colors duration-150 leading-[1.05]"
-            style={{
-              backgroundImage: `radial-gradient(circle at var(--hx, 50%) var(--hy, 50%), #FF8A3D 0%, #FF5A1F 30%, #FFFFFF 70%)`,
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-            }}
+            className="font-display font-extrabold text-5xl sm:text-7xl md:text-8xl tracking-[-0.03em] uppercase select-none transition-colors duration-150 leading-[1.05] text-[#000000]"
           >
             LET'S LINK UP.
           </h2>
-          <p className="font-sans text-[16px] text-[#C2C2C2] mt-4 max-w-xl mx-auto leading-[1.6]">
+          <p className="font-sans text-[16px] text-[#333333] mt-4 max-w-xl mx-auto leading-[1.6]">
             Configure your growth parameters below to receive an engineered roadmap from our specialist squad.
           </p>
         </motion.div>
 
-        {/* Multi-Step Chip Selection Card with Interactive Mouse-Tracking Border Glow */}
+        {/* Multi-Step Chip Selection Card */}
         <motion.div
           ref={cardShellRef}
-          initial={{ opacity: 0, y: 36, scale: 0.98, filter: 'blur(6px)' }}
-          whileInView={{ opacity: 1, y: 0, scale: 1, filter: 'blur(0px)' }}
+          initial={{ opacity: 0, y: 24, scale: 0.98 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, amount: 0.15 }}
           transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-          className="max-w-3xl mx-auto rounded-3xl p-[1.5px] bg-white/10 shadow-2xl relative overflow-hidden"
+          className="max-w-3xl mx-auto rounded-3xl p-[1px] bg-[#DAD1CC] shadow-sm relative overflow-hidden"
         >
-          {/* Mouse-Tracking Luminous Orange Border Glow */}
+          {/* Mouse-Tracking Luminous Border Glow */}
           <div
             ref={cardBorderGlowRef}
             aria-hidden="true"
@@ -366,29 +352,17 @@ export const InquirySection: React.FC = () => {
             style={{
               opacity: 0,
               background:
-                'radial-gradient(circle, rgba(255,154,77,1) 0%, rgba(252,102,3,0.85) 28%, rgba(255,90,31,0.32) 52%, transparent 72%)',
+                'radial-gradient(circle, rgba(255,84,0,0.5) 0%, rgba(255,84,0,0.2) 35%, transparent 70%)',
             }}
           />
 
           {/* Inner Card Surface */}
-          <div className="relative rounded-[calc(1.5rem-1.5px)] bg-[#111113] p-8 sm:p-14 overflow-hidden">
-            {/* Subtle Inner Ambient Pointer Sheen */}
-            <div
-              ref={cardSurfaceGlowRef}
-              aria-hidden="true"
-              className="pointer-events-none absolute top-0 left-0 w-[500px] h-[500px] -ml-[250px] -mt-[250px] rounded-full will-change-transform transition-opacity duration-300"
-              style={{
-                opacity: 0,
-                background:
-                  'radial-gradient(circle, rgba(252,102,3,0.09) 0%, rgba(255,90,31,0.03) 40%, transparent 70%)',
-              }}
-            />
-
+          <div className="relative rounded-[calc(1.5rem-1px)] bg-[#FDF8F5] p-8 sm:p-14 border border-[#DAD1CC] overflow-hidden">
             <div className="relative z-10">
               {/* Progress Bar */}
-              <div className="w-full h-1.5 bg-white/10 rounded-full mb-10 overflow-hidden">
+              <div className="w-full h-1.5 bg-[#DAD1CC] rounded-full mb-10 overflow-hidden">
                 <div
-                  className="h-full bg-gradient-to-r from-[#FF5A1F] to-[#FF8A3D] transition-all duration-500 ease-out"
+                  className="h-full bg-[#FF5400] transition-all duration-500 ease-out"
                   style={{ width: `${(currentStep / totalSteps) * 100}%` }}
                 />
               </div>
@@ -396,21 +370,21 @@ export const InquirySection: React.FC = () => {
           {/* Success State */}
           {isSuccess ? (
             <div className="text-center py-12 space-y-4">
-              <div className="w-16 h-16 rounded-full bg-[#FF5A1F]/20 border border-[#FF5A1F] text-[#FF5A1F] font-bold text-2xl flex items-center justify-center mx-auto">
+              <div className="w-16 h-16 rounded-full bg-[#FF5400]/15 border border-[#FF5400] text-[#FF5400] font-bold text-2xl flex items-center justify-center mx-auto">
                 ✓
               </div>
-              <h3 className="font-display font-bold text-3xl sm:text-4xl text-white tracking-[-0.01em]">
+              <h3 className="font-display font-bold text-3xl sm:text-4xl text-[#000000] tracking-[-0.01em]">
                 Nodes linked. Brief received.
               </h3>
-              <p className="font-sans text-[16px] text-[#C2C2C2] max-w-md mx-auto leading-[1.6]">
-                Telemetry review has begun. Our team will contact you at <span className="text-white font-mono">{email}</span> within 24 hours.
+              <p className="font-sans text-[16px] text-[#333333] max-w-md mx-auto leading-[1.6]">
+                Telemetry review has begun. Our team will contact you at <span className="text-[#000000] font-mono font-semibold">{email}</span> within 24 hours.
               </p>
               <div className="pt-6">
                 <a
                   href={BRAND.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 font-mono text-[12px] font-medium text-[#FF5A1F] hover:text-[#FF8A3D] uppercase tracking-[0.18em]"
+                  className="inline-flex items-center gap-2 font-mono text-[12px] font-semibold text-[#FF5400] hover:text-[#000000] uppercase tracking-[0.18em]"
                 >
                   <span>Need urgent kickoff? Chat on WhatsApp</span>
                   <span>→</span>
@@ -433,10 +407,10 @@ export const InquirySection: React.FC = () => {
                     className="space-y-6"
                   >
                     <div className="flex items-center justify-between">
-                      <h3 className="font-display font-bold text-xl sm:text-2xl text-white tracking-[-0.01em]">
+                      <h3 className="font-display font-bold text-xl sm:text-2xl text-[#000000] tracking-[-0.01em]">
                         1. What nodes are you looking to activate?
                       </h3>
-                      <span className="font-mono text-[12px] font-medium text-[#8A8A8E] tracking-[0.18em]">01 / 04</span>
+                      <span className="font-mono text-[12px] font-medium text-[#888888] tracking-[0.18em]">01 / 04</span>
                     </div>
 
                     <div className="flex flex-wrap gap-3 pt-2">
@@ -449,8 +423,8 @@ export const InquirySection: React.FC = () => {
                             onClick={() => handleSelectInterest(opt)}
                             className={`px-5 py-3 rounded-full text-[12px] font-mono font-medium tracking-[0.18em] transition-all duration-200 cursor-pointer ${
                               isSelected
-                                ? 'bg-[#FF5A1F] text-black shadow-[0_0_24px_rgba(255,90,31,0.55)] scale-105 border border-[#FF5A1F]'
-                                : 'bg-white/5 text-[#8A8A8E] hover:text-white hover:bg-white/10 border border-white/10 hover:border-[#FF5A1F]/50 hover:scale-[1.02]'
+                                ? 'bg-[#000000] text-white shadow-sm scale-105 border border-[#000000]'
+                                : 'bg-[#F8EEE8] text-[#333333] hover:text-[#000000] hover:bg-[#F3EEEB] border border-[#DAD1CC] hover:border-[#FF5400] hover:scale-[1.02]'
                             }`}
                           >
                             {opt}
@@ -474,10 +448,10 @@ export const InquirySection: React.FC = () => {
                     className="space-y-6"
                   >
                     <div className="flex items-center justify-between">
-                      <h3 className="font-display font-bold text-xl sm:text-2xl text-white tracking-[-0.01em]">
+                      <h3 className="font-display font-bold text-xl sm:text-2xl text-[#000000] tracking-[-0.01em]">
                         2. What is your estimated investment budget?
                       </h3>
-                      <span className="font-mono text-[12px] font-medium text-[#8A8A8E] tracking-[0.18em]">02 / 04</span>
+                      <span className="font-mono text-[12px] font-medium text-[#888888] tracking-[0.18em]">02 / 04</span>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
@@ -490,8 +464,8 @@ export const InquirySection: React.FC = () => {
                             onClick={() => handleSelectBudget(b)}
                             className={`p-4 rounded-2xl text-left font-mono text-[12px] font-medium tracking-[0.18em] transition-all duration-200 cursor-pointer ${
                               isSelected
-                                ? 'bg-[#FF5A1F] text-black shadow-[0_0_24px_rgba(255,90,31,0.55)] scale-[1.02] border border-[#FF5A1F]'
-                                : 'bg-white/5 text-[#8A8A8E] hover:text-white hover:bg-white/10 border border-white/10 hover:border-[#FF5A1F]/50 hover:scale-[1.01]'
+                                ? 'bg-[#000000] text-white shadow-sm scale-[1.02] border border-[#000000]'
+                                : 'bg-[#F8EEE8] text-[#333333] hover:text-[#000000] hover:bg-[#F3EEEB] border border-[#DAD1CC] hover:border-[#FF5400] hover:scale-[1.01]'
                             }`}
                           >
                             {b}
@@ -504,7 +478,7 @@ export const InquirySection: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => goToStep(1)}
-                        className="font-mono text-[12px] font-medium text-[#8A8A8E] hover:text-white uppercase tracking-[0.18em] transition-colors"
+                        className="font-mono text-[12px] font-medium text-[#666666] hover:text-[#000000] uppercase tracking-[0.18em] transition-colors"
                       >
                         ← Back
                       </button>
@@ -525,15 +499,15 @@ export const InquirySection: React.FC = () => {
                     className="space-y-6"
                   >
                     <div className="flex items-center justify-between">
-                      <h3 className="font-display font-bold text-xl sm:text-2xl text-white tracking-[-0.01em]">
+                      <h3 className="font-display font-bold text-xl sm:text-2xl text-[#000000] tracking-[-0.01em]">
                         3. Where should we deliver the growth plan?
                       </h3>
-                      <span className="font-mono text-[12px] font-medium text-[#8A8A8E] tracking-[0.18em]">03 / 04</span>
+                      <span className="font-mono text-[12px] font-medium text-[#888888] tracking-[0.18em]">03 / 04</span>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em] mb-1.5">
+                        <label className="block font-mono text-[12px] font-medium text-[#555555] uppercase tracking-[0.18em] mb-1.5">
                           Your Name *
                         </label>
                         <input
@@ -545,11 +519,11 @@ export const InquirySection: React.FC = () => {
                             if (step3Error) setStep3Error('');
                           }}
                           placeholder="Marcus Vance"
-                          className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-sans text-[15px] focus:outline-none focus:border-[#FF5A1F] transition-colors"
+                          className="w-full px-4 py-3 rounded-xl bg-[#F8EEE8] border border-[#DAD1CC] text-[#000000] font-sans text-[15px] focus:outline-none focus:border-[#FF5400] focus:bg-white transition-colors placeholder:text-[#888888]"
                         />
                       </div>
                       <div>
-                        <label className="block font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em] mb-1.5">
+                        <label className="block font-mono text-[12px] font-medium text-[#555555] uppercase tracking-[0.18em] mb-1.5">
                           Work Email *
                         </label>
                         <input
@@ -561,11 +535,11 @@ export const InquirySection: React.FC = () => {
                             if (step3Error) setStep3Error('');
                           }}
                           placeholder="marcus@company.com"
-                          className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-sans text-[15px] focus:outline-none focus:border-[#FF5A1F] transition-colors"
+                          className="w-full px-4 py-3 rounded-xl bg-[#F8EEE8] border border-[#DAD1CC] text-[#000000] font-sans text-[15px] focus:outline-none focus:border-[#FF5400] focus:bg-white transition-colors placeholder:text-[#888888]"
                         />
                       </div>
                       <div>
-                        <label className="block font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em] mb-1.5">
+                        <label className="block font-mono text-[12px] font-medium text-[#555555] uppercase tracking-[0.18em] mb-1.5">
                           Phone / WhatsApp
                         </label>
                         <CountryPhoneInput
@@ -574,7 +548,7 @@ export const InquirySection: React.FC = () => {
                         />
                       </div>
                       <div>
-                        <label className="block font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em] mb-1.5">
+                        <label className="block font-mono text-[12px] font-medium text-[#555555] uppercase tracking-[0.18em] mb-1.5">
                           Website or Domain URL
                         </label>
                         <input
@@ -582,13 +556,13 @@ export const InquirySection: React.FC = () => {
                           value={website}
                           onChange={(e) => setWebsite(e.target.value)}
                           placeholder="company.com"
-                          className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-sans text-[15px] focus:outline-none focus:border-[#FF5A1F] transition-colors"
+                          className="w-full px-4 py-3 rounded-xl bg-[#F8EEE8] border border-[#DAD1CC] text-[#000000] font-sans text-[15px] focus:outline-none focus:border-[#FF5400] focus:bg-white transition-colors placeholder:text-[#888888]"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="block font-mono text-[12px] font-medium text-[#8A8A8E] uppercase tracking-[0.18em] mb-1.5">
+                      <label className="block font-mono text-[12px] font-medium text-[#555555] uppercase tracking-[0.18em] mb-1.5">
                         Brief Description / Core Challenge
                       </label>
                       <textarea
@@ -596,12 +570,12 @@ export const InquirySection: React.FC = () => {
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         placeholder="Outline your primary growth bottleneck or target goals..."
-                        className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-sans text-[15px] focus:outline-none focus:border-[#FF5A1F] transition-colors"
+                        className="w-full px-4 py-3 rounded-xl bg-[#F8EEE8] border border-[#DAD1CC] text-[#000000] font-sans text-[15px] focus:outline-none focus:border-[#FF5400] focus:bg-white transition-colors placeholder:text-[#888888]"
                       />
                     </div>
 
                     {step3Error && (
-                      <p className="font-mono text-[12px] font-medium text-[#FF5A1F] bg-[#FF5A1F]/10 px-4 py-2.5 rounded-xl border border-[#FF5A1F]/30 animate-in fade-in">
+                      <p className="font-mono text-[12px] font-medium text-[#FF5400] bg-[#FF5400]/10 px-4 py-2.5 rounded-xl border border-[#FF5400]/30 animate-in fade-in">
                         ⚠ {step3Error}
                       </p>
                     )}
@@ -610,12 +584,13 @@ export const InquirySection: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => goToStep(2)}
-                        className="font-mono text-[12px] font-medium text-[#8A8A8E] hover:text-white uppercase tracking-[0.18em] transition-colors"
+                        className="font-mono text-[12px] font-medium text-[#666666] hover:text-[#000000] uppercase tracking-[0.18em] transition-colors"
                       >
                         ← Back
                       </button>
                       <BrandButton
                         type="button"
+                        variant="black"
                         onClick={handleNextFromStep3}
                       >
                         Next: Final Step
@@ -636,13 +611,6 @@ export const InquirySection: React.FC = () => {
                     transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
                     className="space-y-6"
                   >
-                    <div className="flex items-center justify-between">
-                      <h3 className="font-display font-bold text-xl sm:text-2xl text-white tracking-[-0.01em]">
-                        4. How did you discover AlphaLinkx?
-                      </h3>
-                      <span className="font-mono text-[12px] font-medium text-[#8A8A8E] tracking-[0.18em]">04 / 04</span>
-                    </div>
-
                     <div className="flex flex-wrap gap-3 pt-2">
                       {FORM_OPTIONS.referralSources.map((source) => {
                         const isSelected = referral === source;
@@ -651,10 +619,10 @@ export const InquirySection: React.FC = () => {
                             key={source}
                             type="button"
                             onClick={() => setReferral(source)}
-                            className={`px-5 py-3 rounded-full text-[12px] font-mono font-medium tracking-[0.18em] transition-all duration-200 ${
+                            className={`px-5 py-3 rounded-full text-[12px] font-mono font-medium tracking-[0.18em] transition-all duration-200 cursor-pointer ${
                               isSelected
-                                ? 'bg-[#FF5A1F] text-black shadow-[0_0_20px_rgba(255,90,31,0.4)]'
-                                : 'bg-white/5 text-[#8A8A8E] hover:text-white border border-white/10 hover:border-white/20'
+                                ? 'bg-[#000000] text-white border border-[#000000] shadow-sm'
+                                : 'bg-[#F8EEE8] text-[#333333] hover:text-[#000000] border border-[#DAD1CC] hover:border-[#FF5400]'
                             }`}
                           >
                             {source}
@@ -673,12 +641,13 @@ export const InquirySection: React.FC = () => {
                       <button
                         type="button"
                         onClick={() => goToStep(3)}
-                        className="font-mono text-[12px] font-medium text-[#8A8A8E] hover:text-white uppercase tracking-[0.18em]"
+                        className="font-mono text-[12px] font-medium text-[#666666] hover:text-[#000000] uppercase tracking-[0.18em]"
                       >
                         ← Back
                       </button>
                       <BrandButton
                         type="submit"
+                        variant="black"
                         disabled={isSubmitting}
                       >
                         {isSubmitting ? 'Submitting Brief…' : 'Submit Brief'}

@@ -4,6 +4,7 @@ import React, { useRef } from 'react';
 import { motion } from 'motion/react';
 import { MagneticHeading } from '../common/MagneticHeading';
 import { Two26Button } from '../common/Two26Button';
+import { Two26HeroConversion } from './Two26HeroConversion';
 
 export const Two26Hero: React.FC = () => {
   const containerRef = useRef<HTMLElement>(null);
@@ -16,35 +17,69 @@ export const Two26Hero: React.FC = () => {
         background: 'linear-gradient(rgb(250, 227, 226) 73%, rgb(248, 238, 232))',
       }}
     >
-      {/* Decorative Left Serpentine SVG Path */}
-      <div
+      {/* Decorative Left Serpentine Loop Path with Entrance Animation */}
+      <motion.div
         aria-hidden="true"
-        className="pointer-events-none absolute left-0 top-1/4 -translate-y-12 w-[140px] sm:w-[200px] lg:w-[240px] opacity-40 lg:opacity-75 z-0"
+        animate={{
+          y: [-6, 6, -6],
+          rotate: [-1.2, 1.2, -1.2],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: 'easeInOut',
+          delay: 1.8,
+        }}
+        className="pointer-events-none absolute left-0 top-1/4 -translate-y-12 w-[140px] sm:w-[200px] lg:w-[250px] opacity-40 lg:opacity-80 z-0"
       >
-        <svg viewBox="0 0 229 599" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
-          <path
-            d="M33.502 584.112C104.502 557.112 147.911 474.964 143.002 393.612C139.502 335.612 106.002 281.612 59.0025 252.612C7.82072 221.032 -4.20053 385.572 52.5031 405.612C140.218 436.612 225.002 369.612 225.002 245.612C225.002 121.612 110.502 20.6123 10.502 6.6123"
+        <svg viewBox="0 0 229 599" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto overflow-visible">
+          <motion.path
+            d="M33.502 584.112C104.502 557.112 147.911 474.964 143.002 393.612C139.502 335.612 106.002 281.612 59.0025 252.612C7.82072 221.032 -4.20053 385.572 52.5031 405.612C140.218 436.612 225.002 369.112 212.002 252.612C208.376 220.111 192.539 178.612 152.002 121.612C117.866 73.6124 42.0029 11.6124 42.0029 11.6124"
             stroke="#FF5400"
-            strokeWidth="18"
+            strokeWidth="24"
             strokeLinecap="round"
+            strokeLinejoin="round"
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={{ pathLength: 1, opacity: 1 }}
+            transition={{
+              pathLength: { duration: 1.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] },
+              opacity: { duration: 0.4, delay: 0.2 },
+            }}
           />
         </svg>
-      </div>
+      </motion.div>
 
-      {/* Decorative Right Serpentine SVG Path */}
-      <div
+      {/* Decorative Right Serpentine Loop Path with Entrance Animation */}
+      <motion.div
         aria-hidden="true"
-        className="pointer-events-none absolute right-0 top-1/3 -translate-y-8 w-[140px] sm:w-[200px] lg:w-[240px] opacity-40 lg:opacity-75 z-0 scale-x-[-1]"
+        animate={{
+          y: [6, -6, 6],
+          rotate: [1.2, -1.2, 1.2],
+        }}
+        transition={{
+          duration: 8.5,
+          repeat: Infinity,
+          ease: 'easeInOut',
+          delay: 2.0,
+        }}
+        className="pointer-events-none absolute right-0 top-1/4 -translate-y-8 w-[160px] sm:w-[220px] lg:w-[280px] opacity-40 lg:opacity-80 z-0"
       >
-        <svg viewBox="0 0 229 599" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto">
-          <path
-            d="M33.502 584.112C104.502 557.112 147.911 474.964 143.002 393.612C139.502 335.612 106.002 281.612 59.0025 252.612C7.82072 221.032 -4.20053 385.572 52.5031 405.612C140.218 436.612 225.002 369.612 225.002 245.612C225.002 121.612 110.502 20.6123 10.502 6.6123"
+        <svg viewBox="0 0 354 487" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-auto overflow-visible">
+          <motion.path
+            d="M250.687 12.2982C192.69 52.7982 114.69 199.814 245.687 315.798C376.684 431.783 364.19 140.889 235.187 83.2982C153.19 46.6926 54.8365 106.798 30.1893 172.298C-59.5565 410.798 277.687 471.798 277.687 471.798"
             stroke="#FF5400"
-            strokeWidth="18"
+            strokeWidth="26"
             strokeLinecap="round"
+            strokeLinejoin="round"
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={{ pathLength: 1, opacity: 1 }}
+            transition={{
+              pathLength: { duration: 2.0, delay: 0.45, ease: [0.16, 1, 0.3, 1] },
+              opacity: { duration: 0.4, delay: 0.3 },
+            }}
           />
         </svg>
-      </div>
+      </motion.div>
 
       {/* Main Hero Centerpiece */}
       <div className="relative z-10 w-full max-w-[1360px] mx-auto px-6 sm:px-10 flex flex-col items-center text-center">
@@ -116,7 +151,7 @@ export const Two26Hero: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.35, ease: [0.16, 1, 0.3, 1] }}
-          className="flex items-center justify-center gap-4 sm:gap-6 flex-wrap mb-14 sm:mb-16"
+          className="flex items-center justify-center gap-4 sm:gap-6 flex-wrap mb-10 sm:mb-12"
         >
           <Two26Button to="/contact" variant="black">
             Start a Project
@@ -126,26 +161,8 @@ export const Two26Hero: React.FC = () => {
           </Two26Button>
         </motion.div>
 
-        {/* Central Showcase Showcase Window / Video Loop */}
-        <motion.div
-          initial={{ opacity: 0, y: 36, scale: 0.98 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 1, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full max-w-4xl aspect-[16/9] sm:aspect-[21/9] rounded-[24px] sm:rounded-[36px] overflow-hidden border border-[#DAD1CC] bg-[#FDF8F5] shadow-[0_20px_50px_rgba(0,0,0,0.06)] group"
-        >
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            poster="https://cdn.prod.website-files.com/6a7d9d7d7c99784ba2cac874/6a7db9b17a581584f4171aad_Hero_poster.0000000.jpg"
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-          >
-            <source src="https://cdn.prod.website-files.com/6aaad679fdb9d914f7f52049/6aaad679fdb9d914f7f52055_Hero_mp4.mp4" type="video/mp4" />
-          </video>
-          {/* Subtle warm light vignette */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent pointer-events-none" />
-        </motion.div>
+        {/* 3D Conversion Journey: Search -> 3D Storefront -> Consultation Booked */}
+        <Two26HeroConversion />
       </div>
     </section>
   );
